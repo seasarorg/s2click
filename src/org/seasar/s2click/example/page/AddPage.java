@@ -5,6 +5,10 @@ import net.sf.click.control.Form;
 import net.sf.click.control.Submit;
 import net.sf.click.extras.control.IntegerField;
 
+/**
+ * 
+ * @author Naoki Takezoe
+ */
 public class AddPage extends Page {
 	
 	public Form form = new Form("form");
@@ -22,7 +26,6 @@ public class AddPage extends Page {
 	
 	public boolean doAdd(){
 		if(form.isValid()){
-			System.out.println(num1.getInteger() + num2.getInteger());
 			result.setValue(String.valueOf(num1.getInteger() + num2.getInteger()));
 		}
 		return true;

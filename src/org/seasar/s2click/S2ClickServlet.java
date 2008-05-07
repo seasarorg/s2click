@@ -9,6 +9,7 @@ import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 
 /**
+ * Seasar2とClick Frameworkを連携させるためのサーブレット。
  * 
  * @author Naoki Takezoe
  */
@@ -16,6 +17,9 @@ public class S2ClickServlet extends ClickServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * S2Containerからページクラスのインスタンスを取得します。
+	 */
 	@SuppressWarnings("unchecked")
 	@Override protected Page newPageInstance(String path, Class pageClass,
 			HttpServletRequest request) throws Exception {
