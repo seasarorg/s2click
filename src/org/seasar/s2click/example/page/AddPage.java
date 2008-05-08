@@ -15,7 +15,7 @@ public class AddPage extends Page {
 	private IntegerField num1 = new IntegerField("num1", true);
 	private IntegerField num2 = new IntegerField("num2", true);
 	private IntegerField result = new IntegerField("result");
-	private Submit submit = new Submit("Add", this, "doAdd");
+	private Submit submit = new Submit("add", this, "doAdd");
 	
 	public AddPage(){
 		form.add(num1);
