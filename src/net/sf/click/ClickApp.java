@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -24,7 +23,6 @@ import javax.servlet.ServletContext;
 import net.sf.click.util.ClickLogger;
 import net.sf.click.util.ClickUtils;
 import net.sf.click.util.Format;
-import ognl.Ognl;
 
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -35,6 +33,10 @@ import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.tools.view.servlet.WebappLoader;
+import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.framework.convention.NamingConvention;
+import org.seasar.framework.convention.impl.NamingConventionImpl;
+import org.seasar.s2click.S2ClickConfig;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -165,8 +167,8 @@ class ClickApp implements EntityResolver {
      */
     private int mode;
 
-    /** The page automapping override page class for path list. */
-    private final List excludesList = new ArrayList();
+//    /** The page automapping override page class for path list. */
+//    private final List excludesList = new ArrayList();
 
     /** The map of ClickApp.PageElm keyed on path. */
     private final Map pageByPathMap = new HashMap();
@@ -223,62 +225,54 @@ class ClickApp implements EntityResolver {
 
         ClickLogger.setInstance(logger);
 
-        InputStream inputStream = ClickUtils.getClickConfig(getServletContext());
+    	S2ClickConfig config = (S2ClickConfig) 
+    		SingletonS2ContainerFactory.getContainer().getComponent(S2ClickConfig.class);
+    	
+        // Load the application mode and set the logger levels
+        loadMode(config);
 
-        try {
-            Document document = ClickUtils.buildDocument(inputStream, this);
+        // Load the format class
+        loadFormatClass(config);
 
-            Element rootElm = document.getDocumentElement();
+        // Load the Commons Upload file item factory
+        loadFileItemFactory(config);
 
-            // Load the application mode and set the logger levels
-            loadMode(rootElm);
+        // Load the common headers
+        loadHeaders(config);
 
-            // Load the format class
-            loadFormatClass(rootElm);
+        // Load the pages
+        loadPages(config);
 
-            // Load the Commons Upload file item factory
-            loadFileItemFactory(rootElm);
+        // Load the error and not-found pages
+        loadDefaultPages();
 
-            // Load the common headers
-            loadHeaders(rootElm);
+        // Load the charset
+        loadCharset(config);
 
-            // Load the pages
-            loadPages(rootElm);
+        // Load the locale
+        loadLocale(config);
 
-            // Load the error and not-found pages
-            loadDefaultPages();
+        // Deploy the application files if not present
+        deployFiles(config);
 
-            // Load the charset
-            loadCharset(rootElm);
+        // Set ServletContext instance for WebappLoader
+        String className = ServletContext.class.getName();
+        velocityEngine.setApplicationAttribute(className, servletContext);
 
-            // Load the locale
-            loadLocale(rootElm);
+        // Load velocity properties
+        Properties properties = getVelocityProperties(servletContext);
 
-            // Deploy the application files if not present
-            deployFiles(rootElm);
+        // Initialize VelocityEngine
+        velocityEngine.init(properties);
 
-            // Set ServletContext instance for WebappLoader
-            String className = ServletContext.class.getName();
-            velocityEngine.setApplicationAttribute(className, servletContext);
-
-            // Load velocity properties
-            Properties properties = getVelocityProperties(servletContext);
-
-            // Initialize VelocityEngine
-            velocityEngine.init(properties);
-
-            // Turn down the Velocity logging level
-            if (mode == DEBUG || mode == TRACE) {
-                ClickLogger velocityLogger = ClickLogger.getInstance(velocityEngine);
-                velocityLogger.setLevel(ClickLogger.WARN_ID);
-            }
-
-            // Cache page templates.
-            loadTemplates();
-
-        } finally {
-            ClickUtils.close(inputStream);
+        // Turn down the Velocity logging level
+        if (mode == DEBUG || mode == TRACE) {
+            ClickLogger velocityLogger = ClickLogger.getInstance(velocityEngine);
+            velocityLogger.setLevel(ClickLogger.WARN_ID);
         }
+
+        // Cache page templates.
+        loadTemplates();
     }
 
     // --------------------------------------------------------- Public Methods
@@ -327,9 +321,8 @@ class ClickApp implements EntityResolver {
      * @return a new format object
      */
     Format getFormat() {
-        try {
-            return (Format) formatClass.newInstance();
-
+    	try {
+    		return (Format) formatClass.newInstance();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -504,14 +497,14 @@ class ClickApp implements EntityResolver {
      * @return the page not found <tt>Page</tt> <tt>Class</tt>
      */
     Class getNotFoundPageClass() {
-//        PageElm page = (PageElm) pageByPathMap.get(NOT_FOUND_PATH);
-//
-//        if (page != null) {
-//            return page.getPageClass();
-//
-//        } else {
+        PageElm page = (PageElm) pageByPathMap.get(NOT_FOUND_PATH);
+
+        if (page != null) {
+            return page.getPageClass();
+
+        } else {
             return net.sf.click.Page.class;
-//        }
+        }
     }
 
     /**
@@ -520,14 +513,14 @@ class ClickApp implements EntityResolver {
      * @return the error handling page <tt>Page</tt> <tt>Class</tt>
      */
     Class getErrorPageClass() {
-//        PageElm page = (PageElm) pageByPathMap.get(ERROR_PATH);
-//
-//        if (page != null) {
-//            return page.getPageClass();
-//
-//        } else {
+        PageElm page = (PageElm) pageByPathMap.get(ERROR_PATH);
+
+        if (page != null) {
+            return page.getPageClass();
+
+        } else {
             return net.sf.click.util.ErrorPage.class;
-//        }
+        }
     }
 
     /**
@@ -635,64 +628,62 @@ class ClickApp implements EntityResolver {
         }
     }
 
-    private void deployControls(Element rootElm) throws Exception {
-
-        if (rootElm == null) {
-            return;
-        }
-
-        Element controlsElm = ClickUtils.getChild(rootElm, "controls");
-
-        if (controlsElm == null) {
-            return;
-        }
-
-        List deployableList = getChildren(controlsElm, "control");
-
-        for (int i = 0; i < deployableList.size(); i++) {
-            Element deployableElm = (Element) deployableList.get(i);
-
-            String classname = deployableElm.getAttribute("classname");
-            if (StringUtils.isBlank(classname)) {
-                String msg =
-                    "'control' element missing 'classname' attribute.";
-                throw new RuntimeException(msg);
-            }
-
-            Class deployClass = ClickUtils.classForName(classname);
-            Control control = (Control) deployClass.newInstance();
-
-            control.onDeploy(getServletContext());
-        }
+    private void deployControls(Class[] deployClasses) throws Exception {
+    	if(deployClasses != null){
+    		for(Class clazz: deployClasses){
+    			Control control = (Control) clazz.newInstance();
+    			control.onDeploy(getServletContext());
+    		}
+    	}
     }
 
-    private void deployControlSets(Element rootElm) throws Exception {
-        if (rootElm == null) {
+    private void deployControlSets(S2ClickConfig config) throws Exception {
+        if (config.controlSets == null) {
             return;
         }
-
-        Element controlsElm = ClickUtils.getChild(rootElm, "controls");
-
-        if (controlsElm == null) {
-            return;
-        }
-
-        List controlSets = getChildren(controlsElm, "control-set");
-
-        for (int i = 0; i < controlSets.size(); i++) {
-            Element controlSet = (Element) controlSets.get(i);
-            String name = controlSet.getAttribute("name");
+        for (String name: config.controlSets) {
             if (StringUtils.isBlank(name)) {
                 String msg =
                         "'control-set' element missing 'name' attribute.";
                 throw new RuntimeException(msg);
             }
-            deployControls(getResourceRootElement("/" + name));
+            deployControls(getDeployClasses(getResourceRootElement("/" + name)));
         }
+    }
+    
+    private Class[] getDeployClasses(Element rootElm){
+      if (rootElm == null) {
+			return null;
+		}
 
+		Element controlsElm = ClickUtils.getChild(rootElm, "controls");
+
+		if (controlsElm == null) {
+			return null;
+		}
+
+		List deployableList = getChildren(controlsElm, "control");
+		List<Class> deployClasses = new ArrayList<Class>();
+
+		for (int i = 0; i < deployableList.size(); i++) {
+			Element deployableElm = (Element) deployableList.get(i);
+
+			String classname = deployableElm.getAttribute("classname");
+			if (StringUtils.isBlank(classname)) {
+				String msg = "'control' element missing 'classname' attribute.";
+				throw new RuntimeException(msg);
+			}
+
+			Class deployClass = loadClass(classname);
+			if(deployClass != null){
+				deployClasses.add(deployClass);
+			}
+		}
+		
+		return deployClasses.toArray(new Class[deployClasses.size()]);
     }
 
-    private void deployFiles(Element rootElm) throws Exception {
+    private void deployFiles(S2ClickConfig config) throws Exception {
 
         ClickUtils.deployFile(servletContext,
                               "/net/sf/click/control/control.css",
@@ -714,23 +705,22 @@ class ClickApp implements EntityResolver {
                               "/net/sf/click/control/VM_global_library.vm",
                               "click");
 
-        deployControls(getResourceRootElement("/click-controls.xml"));
-        deployControls(getResourceRootElement("/extras-controls.xml"));
-        deployControls(rootElm);
-        deployControlSets(rootElm);
+        deployControls(getDeployClasses(getResourceRootElement("/click-controls.xml")));
+        deployControls(getDeployClasses(getResourceRootElement("/extras-controls.xml")));
+        
+        if(config.controls != null){
+        	deployControls(config.controls.toArray(new Class[config.controls.size()]));
+        }
+        deployControlSets(config);
     }
 
-    private void loadMode(Element rootElm) {
-        Element modeElm = ClickUtils.getChild(rootElm, "mode");
-
+    private void loadMode(S2ClickConfig config) {
         String modeValue = "development";
-
-        if (modeElm != null) {
-            if (StringUtils.isNotBlank(modeElm.getAttribute("value"))) {
-                modeValue = modeElm.getAttribute("value");
-            }
+        
+        if(config.mode != null){
+        	modeValue = config.mode;
         }
-
+        
         modeValue = System.getProperty("click.mode", modeValue);
 
         if (modeValue.equalsIgnoreCase("production")) {
@@ -789,82 +779,33 @@ class ClickApp implements EntityResolver {
         }
     }
 
-    private void loadHeaders(Element rootElm) {
-        Element headersElm = ClickUtils.getChild(rootElm, "headers");
-
-        if (headersElm != null) {
+    private void loadHeaders(S2ClickConfig config) {
+        if (config.headers != null || !config.headers.isEmpty()) {
             commonHeaders =
-                Collections.unmodifiableMap(loadHeadersMap(headersElm));
+                Collections.unmodifiableMap(config.headers);
         } else {
             commonHeaders = Collections.unmodifiableMap(DEFAULT_HEADERS);
         }
     }
 
-    private void loadFormatClass(Element rootElm)
+    private void loadFormatClass(S2ClickConfig config)
             throws ClassNotFoundException {
 
-        Element formatElm = ClickUtils.getChild(rootElm, "format");
+            Class clazz = config.formatClass;
 
-        if (formatElm != null) {
-            String classname = formatElm.getAttribute("classname");
-
-            if (classname == null) {
-                String msg = "'format' element missing 'classname' attribute.";
-                throw new RuntimeException(msg);
+            if(clazz != null){
+            	formatClass = clazz;
+            } else {
+            	formatClass = net.sf.click.util.Format.class;
             }
-
-            formatClass = ClickUtils.classForName(classname);
-
-        } else {
-            formatClass = net.sf.click.util.Format.class;
-        }
     }
 
-    private void loadFileItemFactory(Element rootElm) throws Exception {
-
-        Element fileItemFactoryElm = ClickUtils.getChild(rootElm, "file-item-factory");
-
-        if (fileItemFactoryElm != null) {
-            String classname = fileItemFactoryElm.getAttribute("classname");
-
-            if (classname == null) {
-                String msg = "'file-item-factory' element missing 'classname' attribute.";
-                throw new RuntimeException(msg);
-            }
-
-            Class fifClass = ClickUtils.classForName(classname);
-
-            fileItemFactory = (FileItemFactory) fifClass.newInstance();
-
-            Map propertyMap = loadPropertyMap(fileItemFactoryElm);
-
-            for (Iterator i = propertyMap.keySet().iterator(); i.hasNext();) {
-                String name = i.next().toString();
-                String value = propertyMap.get(name).toString();
-
-                Ognl.setValue(name, fileItemFactory, value);
-            }
-
+    private void loadFileItemFactory(S2ClickConfig config) throws Exception {
+        if (config.fileItemFactory != null) {
+        	fileItemFactory = config.fileItemFactory;
         } else {
             fileItemFactory = new DiskFileItemFactory();
         }
-    }
-
-    private static Map loadPropertyMap(Element parentElm) {
-        Map propertyMap = new HashMap();
-
-        List propertyList = getChildren(parentElm, "property");
-
-        for (int i = 0, size = propertyList.size(); i < size; i++) {
-            Element property = (Element) propertyList.get(i);
-
-            String name = property.getAttribute("name");
-            String value = property.getAttribute("value");
-
-            propertyMap.put(name, value);
-        }
-
-        return propertyMap;
     }
 
     private void loadTemplates() throws Exception {
@@ -888,15 +829,19 @@ class ClickApp implements EntityResolver {
         }
     }
 
-    private void loadPages(Element rootElm) throws ClassNotFoundException {
-        Element pagesElm = ClickUtils.getChild(rootElm, "pages");
-
-        if (pagesElm == null) {
-            String msg = "required configuration 'pages' element missing.";
-            throw new RuntimeException(msg);
-        }
-
-        pagesPackage = pagesElm.getAttribute("package");
+    private void loadPages(S2ClickConfig config) throws ClassNotFoundException {
+    	// TODO 自動マッピングを使わない場合はどうする？？
+    	
+//        Element pagesElm = ClickUtils.getChild(rootElm, "pages");
+//
+//        if (pagesElm == null) {
+//            String msg = "required configuration 'pages' element missing.";
+//            throw new RuntimeException(msg);
+//        }
+    	
+    	NamingConvention naming = (NamingConvention) 
+    		SingletonS2ContainerFactory.getContainer().getComponent(NamingConventionImpl.class);
+        pagesPackage = naming.getRootPackageNames()[0] + "." + naming.getPageSuffix().toLowerCase();
         if (StringUtils.isBlank(pagesPackage)) {
             pagesPackage = "";
         }
@@ -908,67 +853,52 @@ class ClickApp implements EntityResolver {
         }
 
         boolean automap = true;
-        String automapStr = pagesElm.getAttribute("automapping");
-        if (StringUtils.isBlank(automapStr)) {
-            automapStr = "true";
-        }
-
-        if ("true".equalsIgnoreCase(automapStr)) {
-            automap = true;
-        } else if ("false".equalsIgnoreCase(automapStr)) {
-            automap = false;
-        } else {
-            String msg = "Invalid pages automapping attribute: " + automapStr;
-            throw new RuntimeException(msg);
-        }
-
-
-        String autobindingStr = pagesElm.getAttribute("autobinding");
-        if (StringUtils.isBlank(autobindingStr)) {
-            autobindingStr = "true";
-        }
-
-        if ("true".equalsIgnoreCase(autobindingStr)) {
-            autobinding = true;
-        } else if ("false".equalsIgnoreCase(autobindingStr)) {
-            autobinding = false;
-        } else {
-            String msg = "Invalid pages autobinding attribute: " + autobindingStr;
-            throw new RuntimeException(msg);
-        }
+//        String automapStr = pagesElm.getAttribute("automapping");
+//        if (StringUtils.isBlank(automapStr)) {
+//            automapStr = "true";
+//        }
+//
+//        if ("true".equalsIgnoreCase(automapStr)) {
+//            automap = true;
+//        } else if ("false".equalsIgnoreCase(automapStr)) {
+//            automap = false;
+//        } else {
+//            String msg = "Invalid pages automapping attribute: " + automapStr;
+//            throw new RuntimeException(msg);
+//        }
 
 
-        List pageList = getChildren(pagesElm, "page");
+//        String autobindingStr = pagesElm.getAttribute("autobinding");
+//        if (StringUtils.isBlank(autobindingStr)) {
+//            autobindingStr = "true";
+//        }
+        
+        autobinding = config.autoBinding;
 
-        if (!pageList.isEmpty() && logger.isDebugEnabled()) {
-            logger.debug("click.xml pages:");
-        }
-
-        for (int i = 0; i < pageList.size(); i++) {
-            Element pageElm = (Element) pageList.get(i);
-
-            ClickApp.PageElm page =
-                new ClickApp.PageElm(pageElm, pagesPackage, commonHeaders);
-
-            pageByPathMap.put(page.getPath(), page);
-
-            if (logger.isDebugEnabled()) {
-                String msg =
-                    page.getPath() + " -> " + page.getPageClass().getName();
-                logger.debug(msg);
-            }
-        }
+//        List pageList = getChildren(pagesElm, "page");
+//
+//        if (!pageList.isEmpty() && logger.isDebugEnabled()) {
+//            logger.debug("click.xml pages:");
+//        }
+//
+//        for (int i = 0; i < pageList.size(); i++) {
+//            Element pageElm = (Element) pageList.get(i);
+//
+//            ClickApp.PageElm page =
+//                new ClickApp.PageElm(pageElm, pagesPackage, commonHeaders);
+//
+//            pageByPathMap.put(page.getPath(), page);
+//
+//            if (logger.isDebugEnabled()) {
+//                String msg =
+//                    page.getPath() + " -> " + page.getPageClass().getName();
+//                logger.debug(msg);
+//            }
+//        }
 
         if (automap) {
 
             // Build list of automap path page class overrides
-            excludesList.clear();
-            for (Iterator i = getChildren(pagesElm, "excludes").iterator();
-                 i.hasNext();) {
-
-                excludesList.add(new ClickApp.ExcludesElm((Element) i.next()));
-            }
-
             if (logger.isDebugEnabled()) {
                 logger.debug("automapped pages:");
             }
@@ -1023,15 +953,15 @@ class ClickApp implements EntityResolver {
         }
     }
 
-    private void loadCharset(Element rootElm) {
-        String charset = rootElm.getAttribute("charset");
+    private void loadCharset(S2ClickConfig config) {
+        String charset = config.charset;
         if (charset != null && charset.length() > 0) {
             this.charset = charset;
         }
     }
 
-    private void loadLocale(Element rootElm) {
-        String value = rootElm.getAttribute("locale");
+    private void loadLocale(S2ClickConfig config) {
+        String value = config.locale;
         if (value != null && value.length() > 0) {
             StringTokenizer tokenizer = new StringTokenizer(value, "_");
             if (tokenizer.countTokens() == 1) {
@@ -1226,11 +1156,6 @@ class ClickApp implements EntityResolver {
 		// Strip off .htm extension
 		String path = pagePath.substring(0, pagePath.lastIndexOf("."));
 
-		// Class excludePageClass = getExcludesPageClass(path);
-		// if (excludePageClass != null) {
-		// return excludePageClass;
-		// }
-
 		if (path.indexOf("/") != -1) {
 			StringTokenizer tokenizer = new StringTokenizer(path, "/");
 			while (tokenizer.hasMoreTokens()) {
@@ -1295,19 +1220,6 @@ class ClickApp implements EntityResolver {
 			}
 		}
         return className;
-    }
-
-    private Class getExcludesPageClass(String path) {
-        for (int i = 0; i < excludesList.size(); i++) {
-            ClickApp.ExcludesElm override =
-                (ClickApp.ExcludesElm) excludesList.get(i);
-
-            if (override.isMatch(path)) {
-                return override.getPageClass();
-            }
-        }
-
-        return null;
     }
 
     private static List getChildren(Element element, String name) {
@@ -1411,78 +1323,6 @@ class ClickApp implements EntityResolver {
 
         private String getPath() {
             return path;
-        }
-    }
-
-    private static class ExcludesElm {
-
-        private Set pathSet = new HashSet();
-        private Set fileSet = new HashSet();
-
-        private ExcludesElm(Element element) throws ClassNotFoundException {
-
-            String pattern = element.getAttribute("pattern");
-
-            if (StringUtils.isNotBlank(pattern)) {
-                StringTokenizer tokenizer = new StringTokenizer(pattern, ", ");
-                while (tokenizer.hasMoreTokens()) {
-                    String token = tokenizer.nextToken();
-
-                    if (token.charAt(0) != '/') {
-                        token = "/" + token;
-                    }
-
-                    int index = token.lastIndexOf(".");
-                    if (index != -1) {
-                        token = token.substring(0, index);
-                        fileSet.add(token);
-
-                    } else {
-                        index = token.indexOf("*");
-                        if (index != -1) {
-                            token = token.substring(0, index);
-                        }
-                        pathSet.add(token);
-                    }
-                }
-            }
-        }
-
-        private Class getPageClass() {
-            return ClickApp.ExcludePage.class;
-        }
-
-        private boolean isMatch(String resourcePath) {
-            if (fileSet.contains(resourcePath)) {
-                return true;
-            }
-
-            for (Iterator i = pathSet.iterator(); i.hasNext();) {
-                String path = i.next().toString();
-                if (resourcePath.startsWith(path)) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public String toString() {
-            return getClass().getName()
-                + "[fileSet=" + fileSet + ",pathSet=" + pathSet + "]";
-        }
-    }
-
-    public static class ExcludePage extends Page {
-
-        private static final Map HEADERS = new HashMap();
-
-        static {
-            HEADERS.put("Cache-Control", "max-age=3600, public");
-        }
-
-        public Map getHeaders() {
-            return HEADERS;
         }
     }
 

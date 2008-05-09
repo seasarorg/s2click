@@ -1,0 +1,71 @@
+package org.seasar.s2click;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.click.Control;
+import net.sf.click.util.Format;
+
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+
+/**
+ * diconファイルでClickの設定を行うためのクラス。
+ * 
+ * @author Naoki Takezoe
+ */
+public class S2ClickConfig {
+	
+	/**
+	 * 文字コード。デフォルトはUTF-8です。
+	 */
+	public String charset = "UTF-8";
+	
+	/**
+	 * ページテンプレートで利用可能なフォーマットクラス。
+	 * デフォルトは<code>net.sf.click.util.Format</code>です。
+	 */
+	public Class<? extends Format> formatClass = Format.class;
+	
+	/**
+	 * Clickの動作モード。デフォルトはdevelopmentです。
+	 * <p>
+	 * TODO modeに指定可能な値をJavadocに記述する
+	 */
+	public String mode = "development";
+	
+	/**
+	 * 共通レスポンスヘッダ。
+	 */
+	public Map<String, String> headers = new HashMap<String, String>();
+	
+	/**
+	 * ロケール。
+	 */
+	public String locale;
+	
+	/**
+	 * ページクラスにリクエストパラメータを自動バインドするかどうか。
+	 * デフォルトはtrueです。
+	 */
+	public boolean autoBinding = true;
+	
+	/**
+	 * コントロールセットを定義した設定ファイル群のパス。
+	 */
+	public List<String> controlSets = new ArrayList<String>();
+	
+	/**
+	 * デプロイ（ファイルの展開）が必要なコントロールクラス群。
+	 */
+	public List<Class<? extends Control>> controls = new ArrayList<Class<? extends Control>>();
+	
+	/**
+	 * ClickのFileFieldが使用するCommons FileUploadの<code>FileItemFactory</code>のインスタンス。
+	 * デフォルトは<code>org.apache.commons.fileupload.disk.DiskFileItemFactory</code>です。
+	 */
+	public FileItemFactory fileItemFactory = new DiskFileItemFactory();
+	
+}

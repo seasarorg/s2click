@@ -4,28 +4,10 @@
 
 <components>
 	<include path="aop.dicon"/>
-        
-<!--
-          <component class="com.shimura.logic.TestLogicImpl">
-         <aspect pointcut=".*">
-               aop.traceInterceptor
-          </aspect>
-</component> 
-    <component class="com.shimura.page.HomePage"/>
-        <component class="com.shimura.Logic.TestImpl"/>
-        <component class="com.shimura.page.HomePage"/>
-  
+	<include path="convention.dicon"/>
+	
+	<component class="org.seasar.s2click.S2ClickConfig">
+	  <property name="formatClass">@org.seasar.s2click.example.util.S2ClickFormat@class</property>
+	</component>
 
-<component class="org.seasar.framework.container.autoregister.FileSystemComponentAutoRegister">
-   <property name ="instanceDef">@org.seasar.framework.container.deployer.InstanceDefFactory@REQUEST
-   </property>
-    <initMethod name="addClassPattern">
-        <arg>"com.shimura"</arg>
-        <arg>".*Page"</arg>
-    </initMethod>
-   
-</component>
-    <component class="com.shimura.page.LoginPage"/>
-   <include condition="#ENV != 'ut'" path="cooldeploy.dicon"/>
-    -->
 </components>
