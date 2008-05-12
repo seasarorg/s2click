@@ -47,6 +47,8 @@ import org.xml.sax.SAXException;
 
 /**
  * Seasar2のHOT deployに対応するために改編されたClickAppクラス。
+ * <p>
+ * TODO WARM deploy、COOL deploy時の性能改善（フィールドリフレクションのキャッシュ）
  *
  * @author Malcolm Edgar
  * @author Naoki Takezoe
@@ -166,9 +168,6 @@ class ClickApp implements EntityResolver {
      * [ PRODUCTION | PROFILE | DEVELOPMENT | DEBUG | TRACE ].
      */
     private int mode;
-
-//    /** The page automapping override page class for path list. */
-//    private final List excludesList = new ArrayList();
 
     /** The map of ClickApp.PageElm keyed on path. */
     private final Map pageByPathMap = new HashMap();
@@ -565,7 +564,7 @@ class ClickApp implements EntityResolver {
      * @return an array public fields for the given page class
      */
     Field[] getPageFieldArray(Class pageClass) {
-        Object object = pageByClassMap.get(pageClass.getName());
+    	Object object = pageByClassMap.get(getRawClassname(pageClass));
 
         if (object instanceof ClickApp.PageElm) {
             ClickApp.PageElm page = (ClickApp.PageElm) object;
@@ -588,7 +587,7 @@ class ClickApp implements EntityResolver {
      * @return a Map of public fields for the given page class
      */
     Map getPageFields(Class pageClass) {
-        Object object = pageByClassMap.get(pageClass.getName());
+        Object object = pageByClassMap.get(getRawClassname(pageClass));
 
         if (object instanceof ClickApp.PageElm) {
             ClickApp.PageElm page = (ClickApp.PageElm) object;
@@ -605,7 +604,16 @@ class ClickApp implements EntityResolver {
     }
 
     // -------------------------------------------------------- Private Methods
-
+    
+    private String getRawClassname(Class clazz){
+    	String className = clazz.getName();
+    	int index = className.indexOf("$$EnhancedByS2AOP$$");
+    	if(index >= 0){
+    		className = className.substring(0, index);
+    	}
+    	return className;
+    }
+    
     private Element getResourceRootElement(String path) throws IOException {
         Document document = null;
         InputStream inputStream = null;
@@ -914,14 +922,12 @@ class ClickApp implements EntityResolver {
 
                     if (pageClassName != null) {
                         ClickApp.PageElm page = new ClickApp.PageElm(pagePath,
-                                pageClassName,
-                                commonHeaders);
+                                pageClassName, commonHeaders);
 
                         pageByPathMap.put(page.getPath(), page);
 
                         if (logger.isDebugEnabled()) {
-                            String msg =
-                                pagePath + " -> " + pageClassName;
+                            String msg = pagePath + " -> " + pageClassName;
                             logger.debug(msg);
                         }
                     }
