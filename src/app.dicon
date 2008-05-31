@@ -5,9 +5,5 @@
 <components>
 	<include path="aop.dicon"/>
 	<include path="convention.dicon"/>
-	
-	<component class="org.seasar.s2click.S2ClickConfig">
-	  <property name="formatClass">@org.seasar.s2click.example.util.S2ClickFormat@class</property>
-	</component>
-
+	<include path="s2click.dicon"/>
 </components>

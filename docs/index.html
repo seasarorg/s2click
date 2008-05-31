@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <title>S2Click</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
+  <link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
+  <script src="seasar_b.js" type="text/JavaScript" language="JavaScript">
+  </script>
+</head>
+<body onload="preload('ja')">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="left">
+<tr>
+<td align="left" valign="top" width="780">
+<table width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr>
+<td colspan="7"><img height="5" width="780" src="images/top01_b.gif" alt="" /></td>
+</tr>
+<tr>
+<td><img height="117" width="235" src="images/top02_b.gif" alt="Seasar" /></td>
+<td colspan="3"><img height="117" width="289" src="images/top03.gif" alt="DI Container with AOP" /></td>
+<td colspan="3"><img height="117" width="256" src="images/spacer.gif" alt="" /></td>
+</tr>
+<tr>
+<td rowspan="2"><img src="images/top04.gif" alt="" height="49" width="235" /></td>
+<td><a href="http://www.seasar.org/index.html"><img src="images/menu01_b_ja.gif" height="30" width="78" border="0" alt="" id="menu01" onmouseover="swap(1)" onmouseout="restore(1)" name="menu01" /></a></td>
+<td><a href="http://www.seasar.org/projects.html"><img src="images/menu02_b_ja.gif" height="30" width="101" border="0" alt="" id="menu02" onmouseover="swap(2)" onmouseout="restore(2)" name="menu02" /></a></td>
+<td><a href="http://www.seasar.org/products.html"><img src="images/menu03_b_ja.gif" height="30" width="110" border="0" alt="" id="menu03" onmouseover="swap(3)" onmouseout="restore(3)" name="menu03" /></a></td>
+<td><a href="http://www.seasar.org/resources.html"><img src="images/menu04_b_ja.gif" height="30" width="113" border="0" alt="" id="menu04" onmouseover="swap(4)" onmouseout="restore(4)" name="menu04" /></a></td>
+<td><img src="images/menu05_b_ja.gif" height="30" width="109" border="0" alt="" id="menu05" onmouseover="swap(5)" onmouseout="restore(5)" name="menu05" /></td>
+<td><img height="30" width="34" src="images/menu06.gif" alt="" /></td>
+</tr>
+<tr>
+<td colspan="6"><img height="19" width="545" src="images/spacer.gif" alt="" /></td>
+</tr>
+</table>
+<table width="780" border="0" cellspacing="0" cellpadding="0" class="white">
+<tr align="left" valign="top">
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt="" /></td>
+<td width="740" class="main"><!-- don't edit end -->
+<!-- document start -->
+
+<h1>S2Click</h1>
+<p>
+  S2Clickとは、Seasar2とClick Frameworkを組み合わせて利用するためのアダプタです。
+  以下のような機能を提供します。
+</p>
+<ul>
+  <li>ClickのページクラスをS2Containerで管理することができます</li>
+  <li>ClickのページクラスのHOT deployに対応します</li>
+  <li>Seasar2が推奨するpublicフィールドをClickで扱いやすくするための機能を提供します</li>
+  <li>Clickの設定をSeasar2のdiconファイルに集約します</li>
+  <li>Click標準では提供されていない便利なコントロールやユーティリティを提供します</li>
+</ul>
+
+<h2>S2Clickの設定</h2>
+<p>
+  <strong>s2click.dicon</strong>でS2Clickの設定を行います。
+  <strong>org.seasar.s2click.S2ClickConfig</strong>のプロパティをセットすることで、
+  Clickの設定ファイルとほとんど同じ設定を行うことができます。
+  Clickの設定ファイルであるclick.xmlは作成する必要はありません（作成しても無視されます）。
+</p>
+<pre class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+  "http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components&gt;
+  &lt;component class="org.seasar.s2click.S2ClickConfig"&gt;
+    &lt;property name="formatClass"&gt;
+      @org.seasar.s2click.example.util.S2ClickFormat@class
+    &lt;/property&gt;
+  &lt;/component&gt;
+&lt;/components&gt; </pre>
+
+<p>
+  <code>S2ClickConfig</code>には以下のプロパティを設定可能です。
+</p>
+
+<table class="indent" border="1" cellspacing="0">
+<tr bgcolor="#D1F3F4">
+  <th>プロパティ</th>
+  <th>説明</th>
+  <th>設定例</th>
+</tr>
+<tr>
+  <td>charset</td>
+  <td>文字コード</td>
+  <td><pre class="table">
+&lt;property name="charset"&gt;"Windows-31J"&lt;/property&gt;</pre>
+  </td>
+</tr>
+<tr>
+  <td>formatClass</td>
+  <td>Velocityテンプレートで使用可能なFormatオブジェクト</td>
+  <td><pre class="table">
+&lt;property name="formatClass"&gt;
+  @example.util.S2ClickFormat@class
+&lt;/property&gt;</pre>
+  </td>
+</tr>
+<tr>
+  <td>mode</td>
+  <td>Clickの動作モード</td>
+  <td><pre class="table">
+&lt;property name="mode"&gt;"development"&lt;/property&gt;</pre></td>
+</tr>
+<tr>
+  <td>headers</td>
+  <td>共通ヘッダ</td>
+  <td></td>
+</tr>
+<tr>
+  <td>locale</td>
+  <td>ロケール</td>
+  <td></td>
+</tr>
+<tr>
+  <td>autoBinding</td>
+  <td>自動バインディングを有効にするかどうか</td>
+  <td><pre class="table">
+&lt;property name="autoBinding"&gt;false&lt;/property&gt;</pre></td>
+</tr>
+<tr>
+  <td>controlSets</td>
+  <td>コントロールセットを定義した設定ファイル群のパス</td>
+  <td></td>
+</tr>
+<tr>
+  <td>controls</td>
+  <td>デプロイ（ファイルの展開）が必要なコントロールクラス群</td>
+  <td></td>
+</tr>
+<tr>
+  <td>fileItemFactory</td>
+  <td>Clickの<code>FileField</code>が使用するCommons FileUploadの<code>FileItemFactory</code>のインスタンス</td>
+  <td></td>
+</tr>
+</table>
+
+<p>
+  S2Clickではページの自動マッピングは常に有効です。
+    また、ページクラスを配置するパッケージはSeasar2の規約に従って<strong>convension.dicon</strong>の設定を使用します。
+</p>
+<pre class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+  "http://www.seasar.org/dtd/components24.dtd"&gt;
+&lt;components&gt;
+  &lt;component class="org.seasar.framework.convention.impl.NamingConventionImpl"&gt;
+    &lt;initMethod name="addRootPackageName"&gt;
+      &lt;arg&gt;"org.seasar.s2click.example"&lt;/arg&gt;
+    &lt;/initMethod&gt;
+  &lt;/component&gt;
+&lt;/components&gt; </pre>
+
+<p>
+  この場合、ルートパッケージに.pageをつけたorg.seasar.s2click.example.pageパッケージにXxxxPageというクラス名（末尾がPageで終わるようにする）
+  でページクラスを作成しておくと、自動的にS2Containerに登録されます。
+</p>
+
+<h2>publicフィールドの活用</h2>
+<p>
+  Seasar2ではJavaBeanに無用なアクセサを設けず、publicフィールドを活用することが推奨されています（もちろんカプセル化の観点からアクセサメソッドを用意したほうがよいケースもあります）。
+   しかし、ClickはJavaBean規約に従いアクセサメソッドを持ったJavaBeanの利用が想定されています。
+  そこで、S2ClickではClickでもpublicフィールドを活用するための機能を提供します。
+</p>
+<dl>
+  <dt>Velocityテンプレート</dt>
+  <dd>
+    Clickではビュー技術としてVelocityを使用します（JSPを利用することも可能です）。
+    Velocityは標準ではpublicフィールドの利用をサポートしていませんが、
+    S2Clickではプロパティアクセスの構文でpublicフィールドにもアクセスすることができます。
+  </dd>
+  <dt>Tableコントロール</dt>
+  <dd>
+    Clickの<code>Table</code>コントロールはJavaBeanのリストを表形式で表示することができますが、
+    ゲッターメソッドを持ったJavaBeanの利用しかサポートされていません。
+    Clickが標準で提供している<code>net.sf.click.control.Column</code>の代わりに
+    <strong>org.seasar.s2click.control.PublicFieldColumn</strong>を利用することでTableコントロールでpublicフィールドを使用することが可能になります。
+  </dd>
+</dl>
+
+<!-- don't edit start --></td>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt="" /></td>
+</tr>
+<tr>
+<td width="14"><img height="30" width="14" src="images/spacer.gif" alt="" /></td>
+<td width="766"><img height="30" width="592" src="images/spacer.gif" alt="" /></td>
+</tr>
+<tr>
+<td width="14"><img height="14" width="14" src="images/spacer.gif" alt="" /></td>
+<td width="766" class="copyright">Copyrightc 2004-2008, The Seasar Foundation and the others. All rights reserved.</td>
+</tr>
+</table>
+</td>
+<td class="backright" align="left" valign="top">&nbsp;</td>
+</tr>
+<tr>
+<td class="backunder" align="left" valign="top" width="780" height="16">&nbsp;</td>
+<td class="backcorner" align="left" valign="top" height="16">&nbsp;</td>
+</tr>
+</table>
+<!-- don't edit end -->
+
+</body>
+</html>
