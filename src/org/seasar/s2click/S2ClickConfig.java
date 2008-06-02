@@ -30,9 +30,16 @@ public class S2ClickConfig {
 	public Class<? extends Format> formatClass = Format.class;
 	
 	/**
-	 * Clickの動作モード。デフォルトはdevelopmentです。
-	 * <p>
-	 * TODO modeに指定可能な値をJavadocに記述する
+	 * Clickの動作モード。以下の値が指定可能です。デフォルトはdevelopmentです。
+	 * <ul>
+	 *   <li>production</li>
+	 *   <li>profile</li>
+	 *   <li>development</li>
+	 *   <li>debug</li>
+	 *   <li>trace</li>
+	 * </ul>
+	 * モードによってClickの動作（HTMLテンプレートのリロードを行うかどうか等）やログに出力される内容が変化します。
+	 * 詳細については<a href="http://click.sourceforge.net/docs/configuration.html#application-configuration">Clickのドキュメント</a>を参照してください。
 	 */
 	public String mode = "development";
 	
@@ -48,7 +55,7 @@ public class S2ClickConfig {
 	
 	/**
 	 * ページクラスにリクエストパラメータを自動バインドするかどうか。
-	 * デフォルトはtrueです。
+	 * デフォルトは<code>true</code>です。
 	 */
 	public boolean autoBinding = true;
 	
@@ -63,9 +70,18 @@ public class S2ClickConfig {
 	public List<Class<? extends Control>> controls = new ArrayList<Class<? extends Control>>();
 	
 	/**
-	 * ClickのFileFieldが使用するCommons FileUploadの<code>FileItemFactory</code>のインスタンス。
+	 * Clickの<code>FileField</code>コントロールが使用するCommons FileUploadの<code>FileItemFactory</code>のインスタンス。
 	 * デフォルトは<code>org.apache.commons.fileupload.disk.DiskFileItemFactory</code>です。
 	 */
 	public FileItemFactory fileItemFactory = new DiskFileItemFactory();
+	
+	/**
+	 * ページのパスとページクラスを明示的にマッピングする場合はこのマップにパスとページクラス名を指定します。
+	 * <p>
+	 * ClickではHTMLテンプレートが存在しない場合はページクラスの自動マッピングが行われないため、
+	 * HTMLテンプレートが存在しないページクラス（ページクラス内でレスポンスを行う場合など）を使用する場合に
+	 * この設定を利用するとよいでしょう。
+	 */
+	public Map<String, String> pages = new HashMap<String, String>();
 	
 }

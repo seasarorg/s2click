@@ -838,14 +838,6 @@ class ClickApp implements EntityResolver {
     }
 
     private void loadPages(S2ClickConfig config) throws ClassNotFoundException {
-    	// TODO 自動マッピングを使わない場合はどうする？？
-    	
-//        Element pagesElm = ClickUtils.getChild(rootElm, "pages");
-//
-//        if (pagesElm == null) {
-//            String msg = "required configuration 'pages' element missing.";
-//            throw new RuntimeException(msg);
-//        }
     	
     	NamingConvention naming = (NamingConvention) 
     		SingletonS2ContainerFactory.getContainer().getComponent(NamingConventionImpl.class);
@@ -859,77 +851,51 @@ class ClickApp implements EntityResolver {
             pagesPackage =
                 pagesPackage.substring(0, pagesPackage.length() - 2);
         }
-
-        boolean automap = true;
-//        String automapStr = pagesElm.getAttribute("automapping");
-//        if (StringUtils.isBlank(automapStr)) {
-//            automapStr = "true";
-//        }
-//
-//        if ("true".equalsIgnoreCase(automapStr)) {
-//            automap = true;
-//        } else if ("false".equalsIgnoreCase(automapStr)) {
-//            automap = false;
-//        } else {
-//            String msg = "Invalid pages automapping attribute: " + automapStr;
-//            throw new RuntimeException(msg);
-//        }
-
-
-//        String autobindingStr = pagesElm.getAttribute("autobinding");
-//        if (StringUtils.isBlank(autobindingStr)) {
-//            autobindingStr = "true";
-//        }
         
         autobinding = config.autoBinding;
 
-//        List pageList = getChildren(pagesElm, "page");
-//
-//        if (!pageList.isEmpty() && logger.isDebugEnabled()) {
-//            logger.debug("click.xml pages:");
-//        }
-//
-//        for (int i = 0; i < pageList.size(); i++) {
-//            Element pageElm = (Element) pageList.get(i);
-//
-//            ClickApp.PageElm page =
-//                new ClickApp.PageElm(pageElm, pagesPackage, commonHeaders);
-//
-//            pageByPathMap.put(page.getPath(), page);
-//
-//            if (logger.isDebugEnabled()) {
-//                String msg =
-//                    page.getPath() + " -> " + page.getPageClass().getName();
-//                logger.debug(msg);
-//            }
-//        }
+        // Build list of automap path page class overrides
+        if (logger.isDebugEnabled()) {
+            logger.debug("automapped pages:");
+        }
 
-        if (automap) {
+        List templates = getTemplateFiles();
 
-            // Build list of automap path page class overrides
-            if (logger.isDebugEnabled()) {
-                logger.debug("automapped pages:");
+        for (int i = 0; i < templates.size(); i++) {
+            String pagePath = (String) templates.get(i);
+
+            if (!pageByPathMap.containsKey(pagePath)) {
+
+                String pageClassName = getPageClassName(pagePath, pagesPackage);
+
+                if (pageClassName != null) {
+                    ClickApp.PageElm page = new ClickApp.PageElm(pagePath,
+                            pageClassName, commonHeaders);
+
+                    pageByPathMap.put(page.getPath(), page);
+
+                    if (logger.isDebugEnabled()) {
+                        String msg = pagePath + " -> " + pageClassName;
+                        logger.debug(msg);
+                    }
+                }
             }
+        }
+        
+        for(Map.Entry<String, String> entry: config.pages.entrySet()){
+        	String pagePath = entry.getKey();
+        	String pageClassName = entry.getValue();
+        	
+            if (!pageByPathMap.containsKey(pagePath)) {
+                if (pageClassName != null) {
+                    ClickApp.PageElm page = new ClickApp.PageElm(pagePath,
+                            pageClassName, commonHeaders);
 
-            List templates = getTemplateFiles();
+                    pageByPathMap.put(page.getPath(), page);
 
-            for (int i = 0; i < templates.size(); i++) {
-                String pagePath = (String) templates.get(i);
-
-                if (!pageByPathMap.containsKey(pagePath)) {
-
-                    String pageClassName = getPageClassName(pagePath, pagesPackage);
-
-                    if (pageClassName != null) {
-                        ClickApp.PageElm page = new ClickApp.PageElm(pagePath,
-                                pageClassName, commonHeaders);
-
-                        pageByPathMap.put(page.getPath(), page);
-
-                        if (logger.isDebugEnabled()) {
-                            String msg = pagePath + " -> " + pageClassName;
-                            logger.debug(msg);
-                        }
+                    if (logger.isDebugEnabled()) {
+                        String msg = pagePath + " -> " + pageClassName;
+                        logger.debug(msg);
                     }
                 }
             }
