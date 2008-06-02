@@ -53,6 +53,33 @@
   <li>Click標準では提供されていない便利なコントロールやユーティリティを提供します</li>
 </ul>
 
+<h2>スタートアップ</h2>
+<p>
+  s2click-x.x.x.zipはS2Clickを使用したWebアプリケーションのサンプルプロジェクトになっています。
+  そのままEclipseにインポートしてご利用ください。なお、プロジェクトは以下の環境が前提となっています。
+</p>
+<ul>
+  <li>Eclipse 3.3以上</li>
+  <li>WTP 2.0以上</li>
+  <li>Java 5.0以上</li>
+  <li>Apache Tomcat 6.0がServersビューに登録されていること</li>
+</ul>
+<p>
+  プロジェクトをインポートしたらWebContent/add.htmを右クリックし、
+  コンテキストメニューから[Run As] &gt; [Run on Server]を選択してください。
+  Tomcatが起動し、足し算アプリが表示されるはずです。
+</p>
+<p>
+  なお、S2ClickのHOT deploy機能を利用する場合、Tomcat側でコンテキストのリロードが実行されないようにしておくと便利です。
+  WTPでは以下の手順でコンテキストのリロードを無効にすることができます。
+</p>
+<ol>
+  <li>Serversビューで登録されているTomcatをダブルクリックする</li>
+  <li>Tomcatの設定を行うためのエディタが表示されるので、[Modules]タブを選択する</li>
+  <li>S2Clickのプロジェクトを選択して[Edit]ボタンをクリック</li>
+  <li>[Auto reloading enabled]のチェックボックスのチェックを外す</li>
+</ol>
+
 <h2>S2Clickの設定</h2>
 <p>
   <strong>s2click.dicon</strong>でS2Clickの設定を行います。
@@ -84,14 +111,17 @@
 </tr>
 <tr>
   <td>charset</td>
-  <td>文字コード</td>
+  <td>文字コードを指定します。デフォルトはUTF-8です。</td>
   <td><pre class="table">
-&lt;property name="charset"&gt;"Windows-31J"&lt;/property&gt;</pre>
+&lt;property name="charset"&gt;
+  "Windows-31J"
+&lt;/property&gt;</pre>
   </td>
 </tr>
 <tr>
   <td>formatClass</td>
-  <td>Velocityテンプレートで使用可能なFormatオブジェクト</td>
+  <td>Velocityテンプレートで使用可能なFormatオブジェクトを指定します。
+    デフォルトは<a href="http://click.sourceforge.net/docs/click-api/net/sf/click/util/Format.html">net.sf.click.util.Format</a>です。</td>
   <td><pre class="table">
 &lt;property name="formatClass"&gt;
   @example.util.S2ClickFormat@class
@@ -100,9 +130,14 @@
 </tr>
 <tr>
   <td>mode</td>
-  <td>Clickの動作モード</td>
+  <td>Clickの動作モード。production、profile、development、debug、traceのいずれかを指定します。デフォルトはdevelopmentです。<br>
+    モードによってClickの動作（HTMLテンプレートのリロードを行うかどうか等）やログに出力される内容が変化します。
+    詳細については<a href="http://click.sourceforge.net/docs/configuration.html#application-configuration">Clickのドキュメント</a>を参照してください。  
+  </td>
   <td><pre class="table">
-&lt;property name="mode"&gt;"development"&lt;/property&gt;</pre></td>
+&lt;property name="mode"&gt;
+  "development"
+&lt;/property&gt;</pre></td>
 </tr>
 <tr>
   <td>headers</td>
@@ -116,24 +151,37 @@
 </tr>
 <tr>
   <td>autoBinding</td>
-  <td>自動バインディングを有効にするかどうか</td>
+  <td>自動バインディングを有効にするかどうかを指定します。デフォルトはtrueです。</td>
   <td><pre class="table">
-&lt;property name="autoBinding"&gt;false&lt;/property&gt;</pre></td>
+&lt;property name="autoBinding"&gt;
+  false
+&lt;/property&gt;</pre></td>
 </tr>
 <tr>
   <td>controlSets</td>
-  <td>コントロールセットを定義した設定ファイル群のパス</td>
+  <td>コントロールセットを定義した設定ファイル群のパスを指定します。</td>
   <td></td>
 </tr>
 <tr>
   <td>controls</td>
-  <td>デプロイ（ファイルの展開）が必要なコントロールクラス群</td>
+  <td>デプロイ（ファイルの展開）が必要なコントロールクラス群を指定します。</td>
   <td></td>
 </tr>
 <tr>
   <td>fileItemFactory</td>
-  <td>Clickの<code>FileField</code>が使用するCommons FileUploadの<code>FileItemFactory</code>のインスタンス</td>
+  <td>Clickの<code>FileField</code>コントロールが使用するCommons FileUploadの<code>FileItemFactory</code>のインスタンス</td>
   <td></td>
+</tr>
+<tr>
+  <td>pages</td>
+  <td>ページのパスとページクラスを明示的にマッピングする場合はこのマップにパスとページクラス名を指定します。<br>
+    ClickではHTMLテンプレートが存在しない場合はページクラスの自動マッピングが行われないため、
+    HTMLテンプレートが存在しないページクラス（ページクラス内でレスポンスを行う場合など）を使用する場合にこの設定を利用するとよいでしょう。</td>
+  <td><pre class="table">
+&lt;property name="pages"&gt;
+  #{"/test.htm": "example.page.TestPage",
+    "/hoge.htm": "example.page.HogePage"}
+&lt;/property&gt; </pre></td>
 </tr>
 </table>
 
