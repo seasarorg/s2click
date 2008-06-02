@@ -20,11 +20,13 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<!--
 		<buildCommand>
 			<name>net.sf.clickide.ClickProjectBuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
+		-->
 		<buildCommand>
 			<name>org.seasar.kijimuna.core.builder</name>
 			<arguments>
@@ -41,7 +43,9 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
 		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
+		<!--
 		<nature>net.sf.clickide.ClickProjectNature</nature>
+		-->
 		<nature>org.seasar.kijimuna.core.nature</nature>
 	</natures>
 </projectDescription>
