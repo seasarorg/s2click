@@ -6,7 +6,7 @@
   <servlet>
   	<servlet-name>ClickServlet</servlet-name>
   	<servlet-class>org.seasar.s2click.S2ClickServlet</servlet-class>
-  	<load-on-startup>1</load-on-startup>
+  	<load-on-startup>2</load-on-startup>
   </servlet>
   
   <servlet>
@@ -22,7 +22,7 @@
       <param-name>debug</param-name>
       <param-value>true</param-value>
     </init-param>
-    <load-on-startup>0</load-on-startup>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   
   <servlet-mapping>
