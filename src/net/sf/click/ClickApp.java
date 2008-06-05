@@ -842,15 +842,15 @@ class ClickApp implements EntityResolver {
     	NamingConvention naming = (NamingConvention) 
     		SingletonS2ContainerFactory.getContainer().getComponent(NamingConventionImpl.class);
         pagesPackage = naming.getRootPackageNames()[0] + "." + naming.getPageSuffix().toLowerCase();
-        if (StringUtils.isBlank(pagesPackage)) {
-            pagesPackage = "";
-        }
-
-        pagesPackage = pagesPackage.trim();
-        if (pagesPackage.endsWith(".")) {
-            pagesPackage =
-                pagesPackage.substring(0, pagesPackage.length() - 2);
-        }
+        
+//        if (StringUtils.isBlank(pagesPackage)) {
+//            pagesPackage = "";
+//        }
+//        pagesPackage = pagesPackage.trim();
+//        if (pagesPackage.endsWith(".")) {
+//            pagesPackage =
+//                pagesPackage.substring(0, pagesPackage.length() - 2);
+//        }
         
         autobinding = config.autoBinding;
 
