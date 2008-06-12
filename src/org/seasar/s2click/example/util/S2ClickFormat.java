@@ -1,7 +1,6 @@
 package org.seasar.s2click.example.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import org.seasar.s2click.S2ClickUtils;
 
 import net.sf.click.util.Format;
 
@@ -18,11 +17,17 @@ public class S2ClickFormat extends Format {
 	 * @return URLエンコード後の文字列
 	 */
 	public String url(String value){
-		try {
-			return URLEncoder.encode(value, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
-		}
+		return S2ClickUtils.urlEncode(value);
+	}
+	
+    /**
+     * JavaScriptの文字列をエスケープします。
+     *
+     * @param value 文字列
+     * @return エスケープされた文字列
+     */
+	public String escapeJavaString(String value){
+		return S2ClickUtils.escapeJavaScript(value);
 	}
 	
 }

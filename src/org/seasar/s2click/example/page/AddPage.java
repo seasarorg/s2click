@@ -1,32 +1,25 @@
 package org.seasar.s2click.example.page;
 
-import net.sf.click.Page;
-import net.sf.click.control.Form;
-import net.sf.click.control.Submit;
-import net.sf.click.extras.control.IntegerField;
+import org.seasar.s2click.example.form.AddForm;
 
 /**
+ * 足し算アプリケーションのページクラス。
  * 
+ * @see AddForm
  * @author Naoki Takezoe
  */
-public class AddPage extends Page {
+public class AddPage extends LayoutPage {
 	
-	public Form form = new Form("form");
-	private IntegerField num1 = new IntegerField("num1", true);
-	private IntegerField num2 = new IntegerField("num2", true);
-	private IntegerField result = new IntegerField("result");
-	private Submit submit = new Submit("add", this, "doAdd");
+	public AddForm form = new AddForm("form");
 	
 	public AddPage(){
-		form.add(num1);
-		form.add(num2);
-		form.add(result);
-		form.add(submit);
+		form.submit.setListener(this, "doAdd");
 	}
 	
 	public boolean doAdd(){
 		if(form.isValid()){
-			result.setValue(String.valueOf(num1.getInteger() + num2.getInteger()));
+			form.result.setValue(String.valueOf(
+					form.num1.getInteger() + form.num2.getInteger()));
 		}
 		return true;
 	}
