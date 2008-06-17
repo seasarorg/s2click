@@ -37,6 +37,7 @@ import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.s2click.S2ClickConfig;
+import org.seasar.s2click.S2ClickUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -224,8 +225,8 @@ class ClickApp implements EntityResolver {
 
         ClickLogger.setInstance(logger);
 
-    	S2ClickConfig config = (S2ClickConfig) 
-    		SingletonS2ContainerFactory.getContainer().getComponent(S2ClickConfig.class);
+    	S2ClickConfig config = 
+    		(S2ClickConfig)  S2ClickUtils.getComponent(S2ClickConfig.class);
     	
         // Load the application mode and set the logger levels
         loadMode(config);
@@ -842,15 +843,6 @@ class ClickApp implements EntityResolver {
     	NamingConvention naming = (NamingConvention) 
     		SingletonS2ContainerFactory.getContainer().getComponent(NamingConventionImpl.class);
         pagesPackage = naming.getRootPackageNames()[0] + "." + naming.getPageSuffix().toLowerCase();
-        
-//        if (StringUtils.isBlank(pagesPackage)) {
-//            pagesPackage = "";
-//        }
-//        pagesPackage = pagesPackage.trim();
-//        if (pagesPackage.endsWith(".")) {
-//            pagesPackage =
-//                pagesPackage.substring(0, pagesPackage.length() - 2);
-//        }
         
         autobinding = config.autoBinding;
 
