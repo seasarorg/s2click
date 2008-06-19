@@ -1,0 +1,12 @@
+* リクエストごとに自動マッピングを更新する？
+  →ページ数が多いと重くなりそう…
+
+* COOL deploy、SMART deploy
+* HOT deploy時以外はリフレクション情報をキャッシュする？
+
+* Ajaxの受け側にもなんらかのサポートを？
+
+* extrasのJavaScriptがデプロイされていない？
+  →prototype.jsとか
+
+* 配布形態どうする？
