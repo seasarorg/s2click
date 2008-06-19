@@ -50,6 +50,7 @@
   <li>ClickのページクラスのHOT deployに対応します</li>
   <li>Seasar2が推奨するpublicフィールドをClickで扱いやすくするための機能を提供します</li>
   <li>Clickの設定をSeasar2のdiconファイルに集約します</li>
+  <li>JSON、ファイルダウンロードをサポートする機能を提供します</li>
   <li>Click標準では提供されていない便利なコントロールやユーティリティを提供します</li>
 </ul>
 
@@ -228,6 +229,37 @@
     <strong>org.seasar.s2click.control.PublicFieldColumn</strong>を利用することでTableコントロールでpublicフィールドを使用することが可能になります。
   </dd>
 </dl>
+
+<h2>JSON</h2>
+<p>
+  S2ClickはAjaxでの利用を想定し、JSONを返却するページクラスの抽象基底クラスを提供しています。
+  JSONを返却するページを作成するには<strong>org.seasar.s2click.page.AbstractJsonPage</strong>を継承してページクラスを実装します。
+</p>
+<pre class="code">
+@Path("/sample-json.htm")
+public SampleJsonPage extends AbstractJsonPage {
+  public SampleJSONPage(){
+    List&lt;Employee&gt; list = new ArrayList&lt;Employee&gt;();
+    ...
+    setContents(list);
+  }
+}
+</pre>
+<p>
+  <code>setContents()</code>メソッドにセットされたオブジェクトはJSONICによってJSONに変換され、クライアントに返却されます。
+</p>
+<p>
+  <strong>注意：</strong>
+  JSONを返却するページにはHTMLテンプレートは不要ですが、ClickはHTMLテンプレートと対応するページクラスを自動マッピング対象として扱います。
+  したがって上記の実装例では<strong>@Pathアノテーション</strong>で自動マッピングするパスを明示的に指定しています。
+  S2Clickはこのアノテーションを読み取り、自動マッピングの対象に加えます。
+</p>
+
+<h2>ファイルダウンロード</h2>
+<p>
+  JSONを返却するページと同様、ファイルダウンロードを行うページの抽象基底クラスも存在します。
+</p>
+
 
 <h2>情報源</h2>
 <dl>

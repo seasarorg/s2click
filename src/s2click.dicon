@@ -3,6 +3,7 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
 	<component class="org.seasar.s2click.S2ClickConfig">
+	  <property name="mode">"debug"</property>
 	  <property name="formatClass">@org.seasar.s2click.example.util.S2ClickFormat@class</property>
 	</component>
 </components>

@@ -36,8 +36,10 @@ import org.apache.velocity.tools.view.servlet.WebappLoader;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.convention.impl.NamingConventionImpl;
+import org.seasar.s2click.PageClassLoader;
 import org.seasar.s2click.S2ClickConfig;
 import org.seasar.s2click.S2ClickUtils;
+import org.seasar.s2click.annotation.Path;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -849,6 +851,23 @@ class ClickApp implements EntityResolver {
         // Build list of automap path page class overrides
         if (logger.isDebugEnabled()) {
             logger.debug("automapped pages:");
+        }
+        
+        // @Pathアノテーションを処理
+        List<String> classes = new PageClassLoader(pagesPackage).getPageClasses();
+        for(String className: classes){
+        	Class<?> clazz = loadClass(className);
+        	Path path = clazz.getAnnotation(Path.class);
+        	if(path != null){
+        		String value = path.value();
+        		if(StringUtils.isNotEmpty(value)){
+        			config.pages.put(value, className);
+                    if (logger.isDebugEnabled()) {
+                        String msg = value + " -> " + className;
+                        logger.debug(msg);
+                    }
+        		}
+        	}
         }
 
         List templates = getTemplateFiles();

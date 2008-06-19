@@ -1,0 +1,42 @@
+<form>
+  <input type="button" value="書籍情報を取得" onclick="getJson()">
+  <input type="button" value="クリア" onclick="clearResult()">
+</form>
+<div id="result">
+</div>
+<script type="text/javascript" src="$context/js/prototype.js"></script>
+<script type="text/javascript">
+/**
+ * JSONデータを取得します。
+ */
+function getJson(){
+  new Ajax.Request('json-sample.htm', 
+    {method: 'post', onComplete: displayResult});
+}
+
+/**
+ * 取得した結果をクリアします。
+ */
+function clearResult(){
+  $('result').innerHTML = '';
+}
+
+/**
+ * 取得したJSONをテーブルで表示するためのコールバック関数
+ */
+function displayResult(req){
+  var data = req.responseText.evalJSON();
+  var html = '<table border="1">';
+  html += '<tr><th>書籍名</th><th>出版社</th><th>価格</th><th>著者</th></tr>';
+  for(var i=0;i<data.length;i++){
+    html += '<tr>';
+    html += '<td>' + data[i].title.escapeHTML() + '</td>';
+    html += '<td>' + data[i].publisher.escapeHTML() + '</td>';
+    html += '<td>' + data[i].price + '</td>';
+    html += '<td>' + data[i].author.escapeHTML() + '</td>';
+    html += '</tr>';
+  }
+  html += '</html>';
+  $('result').innerHTML = html;
+}
+</script>
