@@ -9,11 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.click.Page;
 
 import org.apache.commons.io.IOUtils;
+import org.seasar.s2click.annotation.Path;
 
 /**
- * The base class of file download pages.
+ * ファイルをダウンロードするページのための抽象基底クラスです。
  * <p>
- * For example:
+ * 以下に実装例を示します：
  * <pre>
  * <span class="kw">public</span> SampleDownloadPage <span class="kw">extends</span> AbstractDownloadPage {
  *   <span class="kw">public</span> SampleDownloadPage(){
@@ -21,9 +22,9 @@ import org.apache.commons.io.IOUtils;
  *     setContents(SampleDownloadPage.class.getResourceAsStream(<span class="st">"sample.txt"</span>));
  *   }
  * }</pre>
- * This page class does not have a template because response is written by this class.
- * So auto-mapping does not work for file download pages.
- * You have to register extended page class to <tt>click.xml</tt>.
+ * ファイルダウンロードページはダウンロードするコンテンツを自分自身でレスポンスに書き込むため、HTMLテンプレートは不要です。
+ * ただし、ClickはHTMLテンプレートが存在しないページクラスは自動マッピングの対象外となるため、
+ * クラスに{@link Path}アノテーションを付与することでパスを明示するとよいでしょう。
  * 
  * @author Naoki Takezoe
  */
@@ -35,10 +36,10 @@ public abstract class AbstractDownloadPage extends Page {
 	protected InputStream contents;
 	
 	/**
-	 * Sets the Content-Type header value.
+	 * Content-Typeヘッダの値を設定します。
 	 * 
-	 * @param contentType the content type,
-	 *   default value is <code>"application/octet-stream"</code>.
+	 * @param contentType コンテンツタイプ。
+	 *   デフォルト値は<code>"application/octet-stream"</code>です。
 	 */
 	protected void setContentType(String contentType){
 		if(contentType == null){
@@ -48,18 +49,18 @@ public abstract class AbstractDownloadPage extends Page {
 	}
 	
 	/**
-	 * Sets the download filename.
+	 * ダウンロードファイル名をセットします。
 	 * 
-	 * @param fileName the filename
+	 * @param fileName ファイル名
 	 */
 	protected void setFileName(String fileName){
 		this.fileName = fileName;
 	}
 	
 	/**
-	 * Sets the <code>InputStream</code> of donwload contents.
+	 * ダウンロードするコンテンツの<code>InputStream</code>をセットします。
 	 * 
-	 * @param contents the donwload contents
+	 * @param contents ダウンロードするコンテンツ
 	 */
 	protected void setContents(InputStream contents){
 		if(contents == null){
@@ -69,25 +70,25 @@ public abstract class AbstractDownloadPage extends Page {
 	}
 	
 	/**
-	 * Sets the Content-Disposition header value.
+	 * Content-Dispositionヘッダの値をセットします。
 	 * 
-	 * @param contentDisposition <code>"attachment"</code> or <code>"inline"</code>,
-	 *    default value is <code>"attachment"</code>.
+	 * @param contentDisposition <code>"attachment"</code>もしくは<code>"inline"</code>。
+	 *    デフォルト値は<code>"attachment"</code>です。
 	 */
 	protected void setContentDisposition(String contentDisposition){
 		this.contentDisposition = contentDisposition;
 	}
 
 	/**
-	 * This method returns <code>null</code> to not render template,
-	 * because this class writes response contents for file download.
+	 * ファイルダウンロードページではHTMLテンプレートが不要であるため、
+	 * このメソッドは常に<code>null</code>を返すよう実装されています。
 	 */
 	@Override public String getPath() {
 		return null;
 	}
 
 	/**
-	 * Writes response for file download in this method.
+	 * このメソッド内でダウンロードコンテンツをレスポンスに書き出します。
 	 */
 	@Override public void onRender() {
 		if(this.contents == null){

@@ -16,7 +16,7 @@ import net.sf.click.Page;
  * {@link #setContents(Object)}にPOJO、配列、<code>java.util.List</code>、<code>java.util.Map</code>をセットすることで、
  * <a href="http://jsonic.sourceforge.jp/">JSONIC</a>によってJSONに変換したテキストをレスポンスとして返却することができます。
  * <p>
- * For example:
+ * 以下に実装例を示します：
  * <pre>
  * <span class="kw">public</span> SampleJsonPage <span class="kw">extends</span> AbstractJSONPage {
  *   <span class="kw">public</span> SampleJSONPage(){
