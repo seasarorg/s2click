@@ -28,12 +28,14 @@ public class FileUploadPage extends LayoutPage {
 		return new File(path);
 	}
 	
-	@Override
-	public void onRender() {
+	@Override public void onRender() {
 		File folder = getFolder();
 		addModel("files", folder.listFiles());
 	}
 
+	/**
+	 * ファイルをアップロードします。
+	 */
 	public boolean doUpload(){
 		if(form.isValid()){
 			FileItem item = form.file.getFileItem();

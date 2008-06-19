@@ -17,8 +17,7 @@ public class FileDownloadPage extends AbstractDownloadPage {
 	
 	public String name;
 
-	@Override
-	public void onInit() {
+	@Override public void onInit() {
 		if(StringUtils.isEmpty(name)){
 			throw new RuntimeException("ファイル名が指定されていません。");
 		}
