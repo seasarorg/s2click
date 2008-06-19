@@ -3,19 +3,57 @@
   <META HTTP-EQUIV="Content-Type" CONTENT="text/html;charset=UTF-8">
   <title>S2Click</title>
   $imports
+  <style type="text/css">
+  body {
+    margin: 0px;
+  }
+  
+  table.contents {
+    width: 100%;
+    height: 100%;
+  }
+  
+  td.title {
+    font-size: 200%;
+    font-weight: bold;
+    background-color: navy;
+    color: white;
+    margin: 0px;
+    height: 1px;
+    padding: 4px;
+  }
+  
+  td.menu {
+    padding-top: 20px;
+    border-right: navy 1px dotted;
+    font-size: 80%;
+    background-color: #EEEEFF;
+  }
+  
+  td.main {
+    padding-top: 20px;
+  }
+  
+  h1 {
+    margin: 0px;
+    padding: 0px;
+    font-size: 140%;
+    text-align: right;
+  }
+  </style>
 </head>
 <body>
-<h1>S2Click Examples</h1>
-<table>
+<table class="contents">
+<tr><td colspan="2" class="title">S2Click Examples</td></tr>
 <tr>
-  <td width="150" valign="top">
+  <td width="180" valign="top" class="menu">
     <ul>
       <li><a href="add.htm">足し算</a></li>
       <li><a href="json.htm">JSON</a></li>
       <li><a href="file-upload.htm">ファイルアップロード</a></li>
     </ul>
   </td>
-  <td valign="top">
+  <td valign="top" class="main">
     #parse($path)
   </td>
 </tr>
