@@ -9,4 +9,6 @@
 * extrasのJavaScriptがデプロイされていない？
   →prototype.jsとか
 
+* ツールチップヘルプコントロール（overLIB？）
+
 * 配布形態どうする？
