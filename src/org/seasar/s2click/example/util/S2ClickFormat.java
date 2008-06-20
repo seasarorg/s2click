@@ -2,6 +2,7 @@ package org.seasar.s2click.example.util;
 
 import org.seasar.s2click.S2ClickUtils;
 
+import net.arnx.jsonic.JSON;
 import net.sf.click.util.Format;
 
 /**
@@ -28,6 +29,16 @@ public class S2ClickFormat extends Format {
      */
 	public String escapeJavaString(String value){
 		return S2ClickUtils.escapeJavaScript(value);
+	}
+	
+	/**
+	 * JavaオブジェクトをJSONに変換します。
+	 * 
+	 * @param obj オブジェクト
+	 * @return JSON
+	 */
+	public String json(Object obj){
+		return JSON.encode(obj);
 	}
 	
 }
