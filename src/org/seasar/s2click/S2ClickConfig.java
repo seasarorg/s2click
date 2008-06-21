@@ -75,13 +75,4 @@ public class S2ClickConfig {
 	 */
 	public FileItemFactory fileItemFactory = new DiskFileItemFactory();
 	
-	/**
-	 * ページのパスとページクラスを明示的にマッピングする場合はこのマップにパスとページクラス名を指定します。
-	 * <p>
-	 * ClickではHTMLテンプレートが存在しない場合はページクラスの自動マッピングが行われないため、
-	 * HTMLテンプレートが存在しないページクラス（ページクラス内でレスポンスを行う場合など）を使用する場合に
-	 * この設定を利用するとよいでしょう。
-	 */
-	public Map<String, String> pages = new HashMap<String, String>();
-	
 }

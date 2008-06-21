@@ -861,7 +861,11 @@ class ClickApp implements EntityResolver {
         	if(path != null){
         		String value = path.value();
         		if(StringUtils.isNotEmpty(value)){
-        			config.pages.put(value, className);
+                    ClickApp.PageElm page = new ClickApp.PageElm(value,
+                            className, commonHeaders);
+
+                    pageByPathMap.put(page.getPath(), page);
+
                     if (logger.isDebugEnabled()) {
                         String msg = value + " -> " + className;
                         logger.debug(msg);
@@ -893,25 +897,6 @@ class ClickApp implements EntityResolver {
             }
         }
         
-        for(Map.Entry<String, String> entry: config.pages.entrySet()){
-        	String pagePath = entry.getKey();
-        	String pageClassName = entry.getValue();
-        	
-            if (!pageByPathMap.containsKey(pagePath)) {
-                if (pageClassName != null) {
-                    ClickApp.PageElm page = new ClickApp.PageElm(pagePath,
-                            pageClassName, commonHeaders);
-
-                    pageByPathMap.put(page.getPath(), page);
-
-                    if (logger.isDebugEnabled()) {
-                        String msg = pagePath + " -> " + pageClassName;
-                        logger.debug(msg);
-                    }
-                }
-            }
-        }
-
         // Build pages by class map
         for (Iterator i = pageByPathMap.values().iterator(); i.hasNext();) {
             ClickApp.PageElm page = (ClickApp.PageElm) i.next();
