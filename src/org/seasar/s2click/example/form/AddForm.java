@@ -18,13 +18,11 @@ public class AddForm extends AutoForm {
 		super(name);
 		setFieldAutoRegisteration(true);
 		setJavaScriptValidation(true);
-		addNoJavaScriptValidateAction("add2");
 	}
 	
 	public IntegerField num1 = new IntegerField("num1", "”’l1", true);
 	public IntegerField num2 = new IntegerField("num2", "”’l2", true);
 	public IntegerField result = new IntegerField("result", "Œ‹‰Ê");
 	public Submit submit = new Submit("add", "‘«‚µZ");
-	public Submit submit2 = new Submit("add2", "‘«‚µZ");
 
 }
