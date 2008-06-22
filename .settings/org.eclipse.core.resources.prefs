@@ -1,9 +1,11 @@
-#Sat Jun 21 12:09:08 JST 2008
+#Sun Jun 22 14:46:37 JST 2008
 eclipse.preferences.version=1
 encoding//WebContent/add.htm=UTF-8
 encoding//WebContent/controls.htm=UTF-8
 encoding//WebContent/file-upload.htm=UTF-8
 encoding//WebContent/graph.htm=UTF-8
+encoding//WebContent/help.html=UTF-8
 encoding//WebContent/index.htm=UTF-8
 encoding//WebContent/json.htm=UTF-8
+encoding//WebContent/tooltip.htm=UTF-8
 encoding//src/s2click.dicon=UTF-8

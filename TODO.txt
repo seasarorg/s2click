@@ -6,9 +6,7 @@
 
 * Ajaxの受け側にもなんらかのサポートを？
 
-* extrasのJavaScriptがデプロイされていない？
-  →prototype.jsとか
-
 * ツールチップヘルプコントロール（overLIB？）
+  →jQuery + jTipでやってみる
 
 * 配布形態どうする？
