@@ -2,6 +2,11 @@ package org.seasar.s2click.example.page;
 
 import net.sf.click.extras.graph.JSBarChart;
 
+/**
+ * グラフコントロールのサンプルページ。
+ * 
+ * @author Naoki Takezoe
+ */
 public class GraphPage extends LayoutPage {
 	
 	public JSBarChart barChart = new JSBarChart("barChart", "棒グラフ");

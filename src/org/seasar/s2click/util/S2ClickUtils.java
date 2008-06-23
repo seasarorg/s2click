@@ -1,10 +1,11 @@
-package org.seasar.s2click;
+package org.seasar.s2click.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.s2click.S2ClickConfig;
 
 /**
  * S2Click内で使用するユーティリティメソッドを提供します。
@@ -13,21 +14,6 @@ import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
  */
 public class S2ClickUtils {
 	
-    /**
-     * JavaScriptの文字列をエスケープします。
-     *
-     * @param value 文字列
-     * @return エスケープされた文字列
-     */
-    public static String escapeJavaScript(String value) {
-        if (value == null) {
-            return "";
-        }
-        value = value.replaceAll("\\\\", "\\\\\\\\");
-        value = value.replaceAll("'", "\\\\'");
-        return value;
-    }
-    
 	/**
 	 * 引数に渡された文字列を<tt>s2click.dicon</tt>で指定された文字コードでURLエンコードします。
 	 * 
@@ -41,6 +27,32 @@ public class S2ClickUtils {
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	/**
+	 * 連続する半角スペースの2文字目以降をを&nbspに変換します。
+	 * 
+	 * @param value 文字列
+	 * @return 変換後の文字列
+	 */
+	public static String convertNbsp(String value){
+		StringBuilder sb = new StringBuilder();
+		boolean flag = false;
+		for(int i=0;i<value.length();i++){
+			char c = value.charAt(i);
+			if(c == ' '){
+				if(flag){
+					sb.append("&nbsp;");
+				} else {
+					sb.append(c);
+					flag = true;
+				}
+			} else {
+				sb.append(c);
+				flag = false;
+			}
+		}
+		return sb.toString();
 	}
 
 	/**

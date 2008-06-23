@@ -2,6 +2,12 @@ package org.seasar.s2click.example.page;
 
 import org.seasar.s2click.control.ToolTip;
 
+/**
+ * {@link ToolTip}コントロールのサンプルページ。
+ * 
+ * @author Naoki Takezoe
+ * @see ToolTip
+ */
 public class TooltipPage extends LayoutPage {
 	
 	public ToolTip tooltipIcon = new ToolTip("tooltipIcon", "help.html", "ヘルプ");

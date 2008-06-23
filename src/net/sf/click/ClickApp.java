@@ -36,10 +36,9 @@ import org.apache.velocity.tools.view.servlet.WebappLoader;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.convention.impl.NamingConventionImpl;
-import org.seasar.s2click.PageClassLoader;
 import org.seasar.s2click.S2ClickConfig;
-import org.seasar.s2click.S2ClickUtils;
 import org.seasar.s2click.annotation.Path;
+import org.seasar.s2click.util.S2ClickUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -861,10 +860,13 @@ class ClickApp implements EntityResolver {
         	if(path != null){
         		String value = path.value();
         		if(StringUtils.isNotEmpty(value)){
+        			if(!value.startsWith("/")){
+        				value = "/" + value;
+        			}
                     ClickApp.PageElm page = new ClickApp.PageElm(value,
                             className, commonHeaders);
 
-                    pageByPathMap.put(page.getPath(), page);
+                    pageByPathMap.put(value, page);
 
                     if (logger.isDebugEnabled()) {
                         String msg = value + " -> " + className;

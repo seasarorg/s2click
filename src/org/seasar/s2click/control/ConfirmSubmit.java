@@ -1,8 +1,8 @@
 package org.seasar.s2click.control;
 
-import org.seasar.s2click.S2ClickUtils;
-
 import net.sf.click.control.Submit;
+
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * 確認ダイアログを表示する機能を備えた<code>Submit</code>の拡張コントロール。
@@ -42,7 +42,7 @@ public class ConfirmSubmit extends Submit {
 	
 	public void setConfirmMessage(String message){
 		setAttribute("onclick", "return confirm('" 
-				+ S2ClickUtils.escapeJavaScript(message) + "');");
+				+ StringEscapeUtils.escapeJavaScript(message) + "');");
 	}
 	
 }

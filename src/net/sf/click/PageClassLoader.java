@@ -1,4 +1,4 @@
-package org.seasar.s2click;
+package net.sf.click;
 
 import java.io.File;
 import java.net.URL;
@@ -22,7 +22,7 @@ import org.seasar.framework.util.ClassTraversal.ClassHandler;
  * 
  * @author Naoki Takezoe
  */
-public class PageClassLoader implements ClassHandler {
+class PageClassLoader implements ClassHandler {
 	
 	private String rootPackage;
 	private List<String> classes = new ArrayList<String>();
@@ -53,12 +53,14 @@ public class PageClassLoader implements ClassHandler {
 	 * @return ページクラス名のリスト
 	 */
     public List<String> getPageClasses(){
+    	classes.clear();
+    	
         final String rootDir = rootPackage.replace('.', '/');
         for (final Iterator<?> it = ClassLoaderUtil.getResources(rootDir); it.hasNext();) {
         	final URL url = (URL) it.next();
         	final Strategy strategy = getStrategy(
         			URLUtil.toCanonicalProtocol(url.getProtocol()));
-        		strategy.getPages(rootDir, url);
+        		strategy.processPages(rootDir, url);
         }
         return classes;
     }
@@ -68,12 +70,12 @@ public class PageClassLoader implements ClassHandler {
     }
     
     private interface Strategy {
-        void getPages(String path, URL url);
+        void processPages(String path, URL url);
     }
     
     private class FileSystemStrategy implements Strategy {
 
-        public void getPages(String path, URL url) {
+        public void processPages(String path, URL url) {
             File rootDir = getRootDir(path, url);
             ClassTraversal.forEach(rootDir, rootPackage, PageClassLoader.this);
         }
@@ -90,7 +92,7 @@ public class PageClassLoader implements ClassHandler {
 
     private class JarFileStrategy implements Strategy {
 
-        public void getPages(String path, URL url) {
+        public void processPages(String path, URL url) {
             JarFile jarFile = createJarFile(url);
             ClassTraversal.forEach(jarFile, PageClassLoader.this);
         }
@@ -102,7 +104,7 @@ public class PageClassLoader implements ClassHandler {
 
     private class ZipFileStrategy implements Strategy {
 
-        public void getPages(String path, URL url) {
+        public void processPages(String path, URL url) {
             final JarFile jarFile = createJarFile(url);
             ClassTraversal.forEach(jarFile, PageClassLoader.this);
         }
@@ -115,7 +117,7 @@ public class PageClassLoader implements ClassHandler {
 
     private class CodeSourceFileStrategy implements Strategy {
 
-        public void getPages(String path, URL url) {
+        public void processPages(String path, URL url) {
             final JarFile jarFile = createJarFile(url);
             ClassTraversal.forEach(jarFile, PageClassLoader.this);
         }

@@ -22,10 +22,9 @@ import org.seasar.framework.container.util.SmartDeployUtil;
 public class S2ClickServlet extends ClickServlet {
 
 	private static final long serialVersionUID = 1L;
-	private boolean initialized = false;
 
 	/**
-	 * HOT deployではない場合、このメソッドでClickの初期化を行います。
+	 * HOT deployではない場合、このメソッドでClick Frameworkの初期化を行います。
 	 */
 	@Override public void init() throws ServletException {
 		S2Container container = SingletonS2ContainerFactory.getContainer();
@@ -35,17 +34,16 @@ public class S2ClickServlet extends ClickServlet {
 	}
 	
 	/**
-	 * HOT deployの場合、初回リクエストの受付時にClickの初期化を行います。
+	 * HOT deployの場合、リクエスト毎にClick Frameworkの初期化を行います。
+	 * <p>
+	 * TODO ページ数が多くなると遅くなるか…？
 	 */
 	@Override public void service(ServletRequest req, ServletResponse res)
 			throws ServletException, IOException {
 		S2Container container = SingletonS2ContainerFactory.getContainer();
 		if(SmartDeployUtil.isHotdeployMode(container)){
 			synchronized(this){
-				if(!initialized){
-					super.init();
-					initialized = true;
-				}
+				super.init();
 			}
 		}
 		

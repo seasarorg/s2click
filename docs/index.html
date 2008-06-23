@@ -274,6 +274,28 @@ public SampleDownloadPage extends AbstractDownloadPage {
 </p>
 
 <h2>コントロール</h2>
+<table class="indent" border="1" cellspacing="0">
+<tr bgcolor="#D1F3F4">
+  <th>クラス名</th>
+  <th>説明</th>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.AutoForm</td>
+  <td>入力フォームを作成する際に便利な機能を備えた抽象基底クラスです。</td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.ConfirmSubmit</td>
+  <td>フォームの送信前に確認ダイアログを表示する機能を備えた<code>Submit</code>コントロールです。</td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.DateFieldYYYYMMDD</td>
+  <td>日付をYYYY/MM/DD形式で表示する<code>DateField</code>コントロールです。</td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.ToolTip</td>
+  <td>jTipを使用したツールチップを表示するコントロールです。</td>
+</tr>
+</table>
 
 <h2>ユーティリティ</h2>
 <h3>org.seasar.s2click.example.util.S2ClickFormat</h3>
@@ -288,7 +310,7 @@ public SampleDownloadPage extends AbstractDownloadPage {
 </tr>
 <tr>
   <td>String url(String value)</td>
-  <td>引数に渡された文字列をclick.xmlで指定された文字コードでURLエンコードします。</td>
+  <td>引数に渡された文字列を<tt>s2click.dicon</tt>で指定された文字コードでURLエンコードします。</td>
 </tr>
 <tr>
   <td>String escapeJavaString(String value)</td>

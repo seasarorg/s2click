@@ -1,6 +1,5 @@
-package org.seasar.s2click.example.util;
+package org.seasar.s2click.util;
 
-import org.seasar.s2click.S2ClickUtils;
 
 import net.arnx.jsonic.JSON;
 import net.sf.click.util.Format;
@@ -21,16 +20,6 @@ public class S2ClickFormat extends Format {
 		return S2ClickUtils.urlEncode(value);
 	}
 	
-    /**
-     * JavaScriptの文字列をエスケープします。
-     *
-     * @param value 文字列
-     * @return エスケープされた文字列
-     */
-	public String escapeJavaString(String value){
-		return S2ClickUtils.escapeJavaScript(value);
-	}
-	
 	/**
 	 * JavaオブジェクトをJSONに変換します。
 	 * 
@@ -39,6 +28,16 @@ public class S2ClickFormat extends Format {
 	 */
 	public String json(Object obj){
 		return JSON.encode(obj);
+	}
+	
+	/**
+	 * 連続する半角スペースの2文字目以降を&nbsp;に変換します。
+	 * 
+	 * @param value 文字列
+	 * @return 変換後の文字列
+	 */
+	public String nbsp(String value){
+		return S2ClickUtils.convertNbsp(value);
 	}
 	
 }
