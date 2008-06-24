@@ -54,7 +54,7 @@ import net.sf.click.util.HtmlStringBuffer;
  * 
  * @author Naoki Takezoe
  */
-public class AutoForm extends net.sf.click.control.Form {
+public abstract class AutoForm extends net.sf.click.control.Form {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -100,8 +100,9 @@ public class AutoForm extends net.sf.click.control.Form {
 	 * This method is called from {@link #onProcess()}.
 	 */
 	protected void init(){
-		add(new HiddenField("action", ""));
-		
+		if(getValidate() && getJavaScriptValidation()){
+			add(new HiddenField("action", ""));
+		}
 		if(isFieldAutoRegistration()){
 	    	for(java.lang.reflect.Field field: getClass().getDeclaredFields()){
 	       		if(Field.class.isAssignableFrom(field.getType())){
@@ -122,7 +123,10 @@ public class AutoForm extends net.sf.click.control.Form {
 	@Override public void add(Field field) {
 		super.add(field);
 		if(field instanceof Submit){
-			field.setAttribute("onclick", getName() + ".action.value='" + field.getName() + "'");
+			if(getValidate() && getJavaScriptValidation()){
+				field.setAttribute("onclick", 
+						getName() + ".action.value='" + field.getName() + "'");
+			}
 		}
 //		return field;
 	}
@@ -137,24 +141,10 @@ public class AutoForm extends net.sf.click.control.Form {
 		renderErrors(buffer, true);
 		buffer.append("</table>");
 		
-//		String script = "on_" + getId() + "_confirm()";
-		String script = "";
 		if(getJavaScriptValidation()){
-			script = "on_" + getId() + "_submit() && " + script;
+			String script = "on_" + getId() + "_submit()";
+			setAttribute("onsubmit", "return " + script + ";");
 		}
-		setAttribute("onsubmit", "return " + script + ";");
-		
-//		buffer.append("<script type=\"text/javascript\">\n");
-//		buffer.append("function on_" + getId() + "_confirm(){\n");
-//		buffer.append("  var action = " + getName() + ".action.value;\n");
-//		for(Map.Entry<String, String> entry: confirmMessages.entrySet()){
-//			buffer.append("  if(action == '" + entry.getKey() + "'){\n");
-//			buffer.append("    return confirm('" + entry.getValue() + "');\n");
-//			buffer.append("  }\n");
-//		}
-//		buffer.append("  return true;\n");
-//		buffer.append("}\n");
-//		buffer.append("</script>\n");
 		
 		return super.startTag() + buffer.toString();
 	}

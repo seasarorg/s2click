@@ -298,7 +298,7 @@ public SampleDownloadPage extends AbstractDownloadPage {
 </table>
 
 <h2>ユーティリティ</h2>
-<h3>org.seasar.s2click.example.util.S2ClickFormat</h3>
+<h3>org.seasar.s2click.util.S2ClickFormat</h3>
 <p>
   Click標準の<code>net.sf.click.util.Format</code>を拡張し、便利なメソッドを追加しています。
   HTMLテンプレートでは<code>$format</code>で参照することができます。
@@ -312,13 +312,19 @@ public SampleDownloadPage extends AbstractDownloadPage {
   <td>String url(String value)</td>
   <td>引数に渡された文字列を<tt>s2click.dicon</tt>で指定された文字コードでURLエンコードします。</td>
 </tr>
+<!--
 <tr>
   <td>String escapeJavaString(String value)</td>
   <td>JavaScriptの文字列をエスケープします。</td>
 </tr>
+-->
 <tr>
   <td>String json(Object obj)</td>
   <td>JavaオブジェクトをJSONに変換します。</td>
+</tr>
+<tr>
+  <td>String nbsp(String value)</td>
+  <td>連続する半角スペースの2つめ以降を&amp;nbsp;に変換します。</td>
 </tr>
 </table>
 
