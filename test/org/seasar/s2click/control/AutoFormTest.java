@@ -1,18 +1,16 @@
 package org.seasar.s2click.control;
 
-import java.io.IOException;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.sf.click.MockContext;
 import net.sf.click.control.HiddenField;
 import net.sf.click.control.Submit;
 import net.sf.click.control.TextField;
 import net.sf.click.util.HtmlStringBuffer;
 
-import org.apache.commons.io.IOUtils;
+import org.seasar.s2click.S2ClickTestCase;
 
-public class AutoFormTest extends TestCase {
+public class AutoFormTest extends S2ClickTestCase {
 
 	/**
 	 * <code>onProcess()</code>Ç©ÇÁ<code>init()</code>Ç™åƒÇ—èoÇ≥ÇÍÇÈÇ±Ç∆ÅB
@@ -58,7 +56,7 @@ public class AutoFormTest extends TestCase {
 		assertTrue(form.isFieldAutoRegistration());
 	}
 
-	public void testAddNoJavaScriptValidateAction() throws IOException {
+	public void testAddNoJavaScriptValidateAction() {
 		MockContext.initContext();
 		
 		AutoForm form = new AutoForm("form"){
@@ -73,8 +71,7 @@ public class AutoFormTest extends TestCase {
 		HtmlStringBuffer buffer = new HtmlStringBuffer();
 		form.renderValidationJavaScript(buffer, form.getFieldList());
 		
-		assertEquals(IOUtils.toString(AutoFormTest.class.getResourceAsStream(
-				"AutoFormTest_testAddNoJavaScriptValidateAction.js"), "UTF-8"),
+		assertEquals(load("AutoFormTest_testAddNoJavaScriptValidateAction.js"),
 				buffer.toString());
 	}
 
