@@ -5,7 +5,7 @@
   
   <servlet>
   	<servlet-name>ClickServlet</servlet-name>
-  	<servlet-class>org.seasar.s2click.S2ClickServlet</servlet-class>
+  	<servlet-class>net.sf.click.S2ClickServlet</servlet-class>
   	<load-on-startup>2</load-on-startup>
   </servlet>
   

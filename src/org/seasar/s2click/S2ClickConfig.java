@@ -53,11 +53,11 @@ public class S2ClickConfig {
 	 */
 	public String locale;
 	
-	/**
-	 * ページクラスにリクエストパラメータを自動バインドするかどうか。
-	 * デフォルトは<code>true</code>です。
-	 */
-	public boolean autoBinding = true;
+//	/**
+//	 * ページクラスにリクエストパラメータを自動バインドするかどうか。
+//	 * デフォルトは<code>true</code>です。
+//	 */
+//	public boolean autoBinding = true;
 	
 	/**
 	 * コントロールセットを定義した設定ファイル群のパス。

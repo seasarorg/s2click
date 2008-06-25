@@ -845,8 +845,6 @@ class ClickApp implements EntityResolver {
     		SingletonS2ContainerFactory.getContainer().getComponent(NamingConventionImpl.class);
         pagesPackage = naming.getRootPackageNames()[0] + "." + naming.getPageSuffix().toLowerCase();
         
-        autobinding = config.autoBinding;
-
         // Build list of automap path page class overrides
         if (logger.isDebugEnabled()) {
             logger.debug("automapped pages:");

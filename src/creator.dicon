@@ -10,7 +10,9 @@
 	<component class="org.seasar.framework.container.creator.DxoCreator"/>
 	<component class="org.seasar.framework.container.creator.HelperCreator"/>
 	<component class="org.seasar.framework.container.creator.LogicCreator"/>
-	<component class="org.seasar.framework.container.creator.PageCreator"/>
+	<component class="org.seasar.framework.container.creator.PageCreator">
+	  <property name="externalBinding">false</property>
+	</component>
 	<component class="org.seasar.framework.container.creator.ServiceCreator"/>
 	<component class="org.seasar.framework.container.creator.InterceptorCreator"/>
 	<component class="org.seasar.framework.container.creator.ValidatorCreator"/>
