@@ -10,6 +10,7 @@ import net.sf.click.util.Format;
 
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.seasar.s2click.control.ToolTip;
 
 /**
  * diconファイルでClickの設定を行うためのクラス。
@@ -74,5 +75,9 @@ public class S2ClickConfig {
 	 * デフォルトは<code>org.apache.commons.fileupload.disk.DiskFileItemFactory</code>です。
 	 */
 	public FileItemFactory fileItemFactory = new DiskFileItemFactory();
+	
+	public S2ClickConfig(){
+		controls.add(ToolTip.class);
+	}
 	
 }

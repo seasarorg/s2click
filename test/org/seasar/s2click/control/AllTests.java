@@ -11,6 +11,7 @@ public class AllTests {
 		suite.addTestSuite(ConfirmSubmitTest.class);
 		suite.addTestSuite(AutoFormTest.class);
 		suite.addTestSuite(DateFieldYYYYMMDDTest.class);
+		suite.addTestSuite(PublicFieldColumnTest.class);
 		//$JUnit-END$
 		return suite;
 	}

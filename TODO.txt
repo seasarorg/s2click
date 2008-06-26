@@ -3,6 +3,7 @@
 
 * COOL deploy、SMART deploy
 * HOT deploy時以外はリフレクション情報をキャッシュする？
+* コントロールやフォーマットオブジェクトのHOT deployが効かない
 
 * Ajaxの受け側にもなんらかのサポートを？
 
