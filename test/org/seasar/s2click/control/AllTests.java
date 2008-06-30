@@ -12,6 +12,7 @@ public class AllTests {
 		suite.addTestSuite(AutoFormTest.class);
 		suite.addTestSuite(DateFieldYYYYMMDDTest.class);
 		suite.addTestSuite(PublicFieldColumnTest.class);
+		suite.addTestSuite(ToolTipTest.class);
 		//$JUnit-END$
 		return suite;
 	}

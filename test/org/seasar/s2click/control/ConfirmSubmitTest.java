@@ -4,10 +4,39 @@ import junit.framework.TestCase;
 
 public class ConfirmSubmitTest extends TestCase {
 
+	public void testConfirmSubmit1() {
+		ConfirmSubmit submit = new ConfirmSubmit();
+		assertNull(submit.getName());
+		assertNull(submit.getOnClick());
+		assertNull(submit.getAttribute("onclick"));
+	}
+	
+	public void testConfirmSubmit2() {
+		ConfirmSubmit submit = new ConfirmSubmit("submit");
+		assertEquals("submit", submit.getName());
+		assertNull(submit.getOnClick());
+		assertNull(submit.getAttribute("onclick"));
+	}
+	
+	public void testConfirmSubmit3() {
+		ConfirmSubmit submit = new ConfirmSubmit("submit", "送信ボタン");
+		assertEquals("submit", submit.getName());
+		assertEquals("送信ボタン", submit.getLabel());
+		assertNull(submit.getOnClick());
+		assertNull(submit.getAttribute("onclick"));
+	}
+	
+	public void testConfirmSubmit4() {
+		ConfirmSubmit submit = new ConfirmSubmit("submit", this, "onSubmit");
+		assertEquals("submit", submit.getName());
+		assertNull(submit.getOnClick());
+		assertNull(submit.getAttribute("onclick"));
+	}
+	
 	/**
 	 * コンストラクタで与えたメッセージを用いて確認ダイアログを表示するJavaScriptが生成されること。
 	 */
-	public void testConfirmSubmitStringStringObjectStringString() {
+	public void testConfirmSubmit5() {
 		ConfirmSubmit submit = new ConfirmSubmit("submit", "送信", this, "onSubmit",
 				"送信してよろしいですか？");
 		

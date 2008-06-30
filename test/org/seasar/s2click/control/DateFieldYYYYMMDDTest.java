@@ -34,4 +34,52 @@ public class DateFieldYYYYMMDDTest extends TestCase {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 		assertEquals(format.parse("2000/01/01"), dateField.getDate());
 	}
+	
+	public void testDateFieldYYYYMMDD3() throws Exception {
+		MockContext.initContext();
+		DateFieldYYYYMMDD dateField = new DateFieldYYYYMMDD("name");
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		dateField.setDate(format.parse("2000/01/01"));
+		
+		assertEquals("2000/01/01", dateField.getValue());
+		assertEquals("name", dateField.getName());
+	}
+
+	public void testDateFieldYYYYMMDD4() throws Exception {
+		MockContext.initContext();
+		DateFieldYYYYMMDD dateField = new DateFieldYYYYMMDD("name", true);
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		dateField.setDate(format.parse("2000/01/01"));
+		
+		assertEquals("2000/01/01", dateField.getValue());
+		assertEquals("name", dateField.getName());
+		assertTrue(dateField.isRequired());
+	}
+
+	public void testDateFieldYYYYMMDD5() throws Exception {
+		MockContext.initContext();
+		DateFieldYYYYMMDD dateField = new DateFieldYYYYMMDD("name", "日付");
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		dateField.setDate(format.parse("2000/01/01"));
+		
+		assertEquals("2000/01/01", dateField.getValue());
+		assertEquals("name", dateField.getName());
+		assertEquals("日付", dateField.getLabel());
+	}
+
+	public void testDateFieldYYYYMMDD6() throws Exception {
+		MockContext.initContext();
+		DateFieldYYYYMMDD dateField = new DateFieldYYYYMMDD("name", "日付", true);
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		dateField.setDate(format.parse("2000/01/01"));
+		
+		assertEquals("2000/01/01", dateField.getValue());
+		assertEquals("name", dateField.getName());
+		assertEquals("日付", dateField.getLabel());
+		assertTrue(dateField.isRequired());
+	}
 }
