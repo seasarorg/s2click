@@ -7,5 +7,7 @@ package org.seasar.s2click.example.page;
  * @see JsonSamplePage
  */
 public class JsonPage extends LayoutPage {
-
+	
+	public String title = "JSONを使用したAjaxアプリケーション";
+	
 }

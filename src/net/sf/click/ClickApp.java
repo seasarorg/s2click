@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1187,6 +1188,12 @@ class ClickApp implements EntityResolver {
 				return null;
 			}
 		}
+		
+		// abstractƒNƒ‰ƒX‚Í“o˜^‚µ‚È‚¢
+    	if(Modifier.isAbstract(pageClass.getModifiers())){
+    		return null;
+    	}
+		
         return className;
     }
 

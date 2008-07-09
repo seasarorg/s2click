@@ -14,6 +14,12 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Request {
 
+	/**
+	 * リクエストパラメータ名。
+	 * 省略した場合はフィールド名をパラメータ名とみなします。
+	 * 
+	 * @return リクエストパラメータ名
+	 */
 	String value() default "";
 	
 }

@@ -10,6 +10,8 @@ import org.seasar.s2click.control.ToolTip;
  */
 public class TooltipPage extends LayoutPage {
 	
+	public String title = "ツールチップヘルプ";
+	
 	public ToolTip tooltipIcon = new ToolTip("tooltipIcon", "help.html", "ヘルプ");
 	
 	public ToolTip tooltipText = new ToolTip("tooltipText", "help.html", "ヘルプ");

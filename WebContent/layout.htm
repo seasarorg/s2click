@@ -64,7 +64,12 @@
     </ul>
   </td>
   <td valign="top" class="main">
-    #parse($path)
+    <h1>$title</h1>
+    #if($template)
+      #parse($template)
+    #else
+      #parse($path)
+    #end
   </td>
 </tr>
 </table>

@@ -9,6 +9,7 @@ import net.sf.click.extras.graph.JSBarChart;
  */
 public class GraphPage extends LayoutPage {
 	
+	public String title = "JSGraphicsによるグラフチャート";
 	public JSBarChart barChart = new JSBarChart("barChart", "棒グラフ");
 	
 	public GraphPage() {

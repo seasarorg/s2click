@@ -9,6 +9,9 @@ import net.sf.click.Page;
  */
 public abstract class LayoutPage extends Page {
 
+	/**
+	 * 共通テンプレート <tt>/layout.htm</tt> を返します。
+	 */
 	@Override public String getTemplate() {
         return "/layout.htm";
     }

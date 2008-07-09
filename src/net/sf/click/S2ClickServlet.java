@@ -140,6 +140,4 @@ public class S2ClickServlet extends ClickServlet {
 		return null;
 	}
 	
-	
-	
 }
