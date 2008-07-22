@@ -7,7 +7,9 @@
 	<property name="bin.dir" value="./bin"/>
 	<property name="lib.dir" value="../WebContent/WEB-INF/lib"/>
 	<property name="example.dir" value="s2click"/>
-	<property name="example.war.name" value="s2click.war"/>
+	<property name="example.war.name" value="s2click-example.war"/>
+	<property name="blank.dir" value="blank"/>
+	<property name="blank.zip.name" value="s2click-blank.zip"/>
 	<property name="release.dir" value="s2click-${version}"/>
 	<property name="release.zip.name" value="s2click-${version}.zip"/>
 
@@ -67,6 +69,14 @@
 		<war destfile="${release.dir}/${example.war.name}" basedir="${example.dir}" />
 	</target>
 	
+	<target name="build-blank" depends="jar">
+    	<copy todir="${blank.dir}/s2click/WebContent/WEB-INF/lib">
+    		<fileset dir="../WebContent/WEB-INF/lib" includes="*.jar"/>
+    		<fileset dir="${release.dir}" includes="${jar.name}"/>
+    	</copy>
+		<zip destfile="${release.dir}/${blank.zip.name}" basedir="${blank.dir}" includes="s2click/**"/>
+	</target>
+
 	<target name="release" depends="clean, build-example">
 		<mkdir dir="${release.dir}/lib"/>
     	<copy todir="${release.dir}/lib">
@@ -86,5 +96,8 @@
 		<delete dir="${example.dir}"/>
 		<delete dir="${release.dir}"/>
 		<delete file="${release.zip.name}"/>
+		<delete>
+			<fileset dir="${blank.dir}/s2click/WebContent/WEB-INF/lib" includes="*.jar" />
+		</delete>
 	</target>
 </project>
