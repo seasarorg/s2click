@@ -11,12 +11,12 @@ import net.arnx.jsonic.JSON;
 import net.sf.click.Page;
 
 /**
- * JSON‚ğ•Ô‹p‚·‚éƒy[ƒWƒNƒ‰ƒX‚Ì‚½‚ß‚Ì’ŠÛŠî’êƒNƒ‰ƒX‚Å‚·B
+ * JSONã‚’è¿”å´ã™ã‚‹ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã®ãŸã‚ã®æŠ½è±¡åŸºåº•ã‚¯ãƒ©ã‚¹ã§ã™ã€‚
  * <p>
- * {@link #setContents(Object)}‚ÉPOJOA”z—ñA<code>java.util.List</code>A<code>java.util.Map</code>‚ğƒZƒbƒg‚·‚é‚±‚Æ‚ÅA
- * <a href="http://jsonic.sourceforge.jp/">JSONIC</a>‚É‚æ‚Á‚ÄJSON‚É•ÏŠ·‚µ‚½ƒeƒLƒXƒg‚ğƒŒƒXƒ|ƒ“ƒX‚Æ‚µ‚Ä•Ô‹p‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+ * {@link #setContents(Object)}ã«POJOã€é…åˆ—ã€<code>java.util.List</code>ã€<code>java.util.Map</code>ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã“ã¨ã§ã€
+ * <a href="http://jsonic.sourceforge.jp/">JSONIC</a>ã«ã‚ˆã£ã¦JSONã«å¤‰æ›ã—ãŸãƒ†ã‚­ã‚¹ãƒˆã‚’ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã¨ã—ã¦è¿”å´ã™ã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚
  * <p>
- * ˆÈ‰º‚ÉÀ‘•—á‚ğ¦‚µ‚Ü‚·F
+ * ä»¥ä¸‹ã«å®Ÿè£…ä¾‹ã‚’ç¤ºã—ã¾ã™ï¼š
  * <pre>
  * <span class="kw">public</span> SampleJsonPage <span class="kw">extends</span> AbstractJSONPage {
  *   <span class="kw">public</span> SampleJSONPage(){
@@ -25,9 +25,9 @@ import net.sf.click.Page;
  *     setContents(list);
  *   }
  * }</pre>
- * <code>AbstractJSONPage</code>‚ÌƒTƒuƒNƒ‰ƒX‚Å‚ÍAƒy[ƒWƒNƒ‰ƒX“à‚ÅJSON‚ªƒŒƒXƒ|ƒ“ƒX‚É‘‚«o‚³‚ê‚é‚½‚ßAHTMLƒeƒ“ƒvƒŒ[ƒg‚Í•s—v‚Å‚·B
- * ‚½‚¾‚µAClick‚ÍHTMLƒeƒ“ƒvƒŒ[ƒg‚ª‘¶İ‚µ‚È‚¢ƒy[ƒWƒNƒ‰ƒX‚Í©“®ƒ}ƒbƒsƒ“ƒO‚Ì‘ÎÛŠO‚Æ‚È‚é‚½‚ßA
- * ƒNƒ‰ƒX‚É{@link Path}ƒAƒmƒe[ƒVƒ‡ƒ“‚ğ•t—^‚·‚é‚±‚Æ‚ÅƒpƒX‚ğ–¾¦‚·‚é‚Æ‚æ‚¢‚Å‚µ‚å‚¤B
+ * <code>AbstractJSONPage</code>ã®ã‚µãƒ–ã‚¯ãƒ©ã‚¹ã§ã¯ã€ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹å†…ã§JSONãŒãƒ¬ã‚¹ãƒãƒ³ã‚¹ã«æ›¸ãå‡ºã•ã‚Œã‚‹ãŸã‚ã€HTMLãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã¯ä¸è¦ã§ã™ã€‚
+ * ãŸã ã—ã€Clickã¯HTMLãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãŒå­˜åœ¨ã—ãªã„ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã¯è‡ªå‹•ãƒãƒƒãƒ”ãƒ³ã‚°ã®å¯¾è±¡å¤–ã¨ãªã‚‹ãŸã‚ã€
+ * ã‚¯ãƒ©ã‚¹ã«{@link Path}ã‚¢ãƒãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ä»˜ä¸ã™ã‚‹ã“ã¨ã§ãƒ‘ã‚¹ã‚’æ˜ç¤ºã™ã‚‹ã¨ã‚ˆã„ã§ã—ã‚‡ã†ã€‚
  * 
  * @author Naoki Takezoe
  */
@@ -37,9 +37,9 @@ public class AbstractJSONPage extends Page {
 	protected Object contents;
 	
 	/**
-	 * JSON‚Æ‚µ‚Ä•Ô‹p‚·‚éJavaBean‚ğƒZƒbƒg‚µ‚Ü‚·B
+	 * JSONã¨ã—ã¦è¿”å´ã™ã‚‹JavaBeanã‚’ã‚»ãƒƒãƒˆã—ã¾ã™ã€‚
 	 * 
-	 * @param contents JSON‚Æ‚µ‚Ä•Ô‹p‚·‚éJavaBean
+	 * @param contents JSONã¨ã—ã¦è¿”å´ã™ã‚‹JavaBean
 	 */
 	protected void setContents(Object contents){
 		if(contents == null){
@@ -49,10 +49,10 @@ public class AbstractJSONPage extends Page {
 	}
 	
 	/**
-	 * Content-Typeƒwƒbƒ_‚ğƒZƒbƒg‚µ‚Ü‚·B
+	 * Content-Typeãƒ˜ãƒƒãƒ€ã‚’ã‚»ãƒƒãƒˆã—ã¾ã™ã€‚
 	 * 
-	 * @param contentType Content-Typeƒwƒbƒ_‚Ì’lB
-	 *   ƒfƒtƒHƒ‹ƒg’l‚Í<code>"application/x-javascript; charset=utf-8"</code>‚Å‚·B
+	 * @param contentType Content-Typeãƒ˜ãƒƒãƒ€ã®å€¤ã€‚
+	 *   ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã¯<code>"application/x-javascript; charset=utf-8"</code>ã§ã™ã€‚
 	 */
 	protected void setContentType(String contentType){
 		if(contentType == null){
@@ -62,15 +62,15 @@ public class AbstractJSONPage extends Page {
 	}
 	
 	/**
-	 * JSON‚ğ•Ô‹p‚·‚éƒy[ƒW‚Å‚ÍHTMLƒeƒ“ƒvƒŒ[ƒg‚ª•s—v‚Å‚ ‚é‚½‚ßA
-	 * ‚±‚Ìƒƒ\ƒbƒh‚Íí‚É<code>null</code>‚ğ•Ô‚·‚æ‚¤À‘•‚³‚ê‚Ä‚¢‚Ü‚·B
+	 * JSONã‚’è¿”å´ã™ã‚‹ãƒšãƒ¼ã‚¸ã§ã¯HTMLãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãŒä¸è¦ã§ã‚ã‚‹ãŸã‚ã€
+	 * ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯å¸¸ã«<code>null</code>ã‚’è¿”ã™ã‚ˆã†å®Ÿè£…ã•ã‚Œã¦ã„ã¾ã™ã€‚
 	 */
 	@Override public String getPath() {
 		return null;
 	}
 	
 	/**
-	 * ‚±‚Ìƒƒ\ƒbƒh“à‚ÅJSONƒŒƒXƒ|ƒ“ƒX‚ğo—Í‚µ‚Ü‚·B
+	 * ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰å†…ã§JSONãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’å‡ºåŠ›ã—ã¾ã™ã€‚
 	 */
 	@Override public void onRender() {
 		if(this.contents == null){

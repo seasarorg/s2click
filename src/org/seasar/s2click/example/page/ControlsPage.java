@@ -6,7 +6,7 @@ import org.seasar.s2click.example.form.ControlsForm;
 @Path("/controls.htm")
 public class ControlsPage extends LayoutPage {
 	
-	public String title = "Click標準のコントロール";
+	public String title = "Click讓呎ｺ悶�ｮ繧ｳ繝ｳ繝医Ο繝ｼ繝ｫ";
 	public String template = "/form.htm";
 	public ControlsForm form = new ControlsForm("form");
 

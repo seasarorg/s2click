@@ -13,25 +13,25 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.seasar.s2click.control.ToolTip;
 
 /**
- * diconƒtƒ@ƒCƒ‹‚ÅClick‚Ìİ’è‚ğs‚¤‚½‚ß‚ÌƒNƒ‰ƒXB
+ * diconãƒ•ã‚¡ã‚¤ãƒ«ã§Clickã®è¨­å®šã‚’è¡Œã†ãŸã‚ã®ã‚¯ãƒ©ã‚¹ã€‚
  * 
  * @author Naoki Takezoe
  */
 public class S2ClickConfig {
 	
 	/**
-	 * •¶šƒR[ƒhBƒfƒtƒHƒ‹ƒg‚ÍUTF-8‚Å‚·B
+	 * æ–‡å­—ã‚³ãƒ¼ãƒ‰ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯UTF-8ã§ã™ã€‚
 	 */
 	public String charset = "UTF-8";
 	
 	/**
-	 * ƒy[ƒWƒeƒ“ƒvƒŒ[ƒg‚Å—˜—p‰Â”\‚ÈƒtƒH[ƒ}ƒbƒgƒNƒ‰ƒXB
-	 * ƒfƒtƒHƒ‹ƒg‚Í<code>net.sf.click.util.Format</code>‚Å‚·B
+	 * ãƒšãƒ¼ã‚¸ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã§åˆ©ç”¨å¯èƒ½ãªãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚¯ãƒ©ã‚¹ã€‚
+	 * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯<code>net.sf.click.util.Format</code>ã§ã™ã€‚
 	 */
 	public Class<? extends Format> formatClass = Format.class;
 	
 	/**
-	 * Click‚Ì“®ìƒ‚[ƒhBˆÈ‰º‚Ì’l‚ªw’è‰Â”\‚Å‚·BƒfƒtƒHƒ‹ƒg‚Ídevelopment‚Å‚·B
+	 * Clickã®å‹•ä½œãƒ¢ãƒ¼ãƒ‰ã€‚ä»¥ä¸‹ã®å€¤ãŒæŒ‡å®šå¯èƒ½ã§ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯developmentã§ã™ã€‚
 	 * <ul>
 	 *   <li>production</li>
 	 *   <li>profile</li>
@@ -39,40 +39,40 @@ public class S2ClickConfig {
 	 *   <li>debug</li>
 	 *   <li>trace</li>
 	 * </ul>
-	 * ƒ‚[ƒh‚É‚æ‚Á‚ÄClick‚Ì“®ìiHTMLƒeƒ“ƒvƒŒ[ƒg‚ÌƒŠƒ[ƒh‚ğs‚¤‚©‚Ç‚¤‚©“™j‚âƒƒO‚Éo—Í‚³‚ê‚é“à—e‚ª•Ï‰»‚µ‚Ü‚·B
-	 * Ú×‚É‚Â‚¢‚Ä‚Í<a href="http://click.sourceforge.net/docs/configuration.html#application-configuration">Click‚ÌƒhƒLƒ…ƒƒ“ƒg</a>‚ğQÆ‚µ‚Ä‚­‚¾‚³‚¢B
+	 * ãƒ¢ãƒ¼ãƒ‰ã«ã‚ˆã£ã¦Clickã®å‹•ä½œï¼ˆHTMLãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®ãƒªãƒ­ãƒ¼ãƒ‰ã‚’è¡Œã†ã‹ã©ã†ã‹ç­‰ï¼‰ã‚„ãƒ­ã‚°ã«å‡ºåŠ›ã•ã‚Œã‚‹å†…å®¹ãŒå¤‰åŒ–ã—ã¾ã™ã€‚
+	 * è©³ç´°ã«ã¤ã„ã¦ã¯<a href="http://click.sourceforge.net/docs/configuration.html#application-configuration">Clickã®ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ</a>ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚
 	 */
 	public String mode = "development";
 	
 	/**
-	 * ‹¤’ÊƒŒƒXƒ|ƒ“ƒXƒwƒbƒ_B
+	 * å…±é€šãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ˜ãƒƒãƒ€ã€‚
 	 */
 	public Map<String, String> headers = new HashMap<String, String>();
 	
 	/**
-	 * ƒƒP[ƒ‹B
+	 * ãƒ­ã‚±ãƒ¼ãƒ«ã€‚
 	 */
 	public String locale;
 	
 //	/**
-//	 * ƒy[ƒWƒNƒ‰ƒX‚ÉƒŠƒNƒGƒXƒgƒpƒ‰ƒ[ƒ^‚ğ©“®ƒoƒCƒ“ƒh‚·‚é‚©‚Ç‚¤‚©B
-//	 * ƒfƒtƒHƒ‹ƒg‚Í<code>true</code>‚Å‚·B
+//	 * ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã«ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’è‡ªå‹•ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹ã‹ã©ã†ã‹ã€‚
+//	 * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯<code>true</code>ã§ã™ã€‚
 //	 */
 //	public boolean autoBinding = true;
 	
 	/**
-	 * ƒRƒ“ƒgƒ[ƒ‹ƒZƒbƒg‚ğ’è‹`‚µ‚½İ’èƒtƒ@ƒCƒ‹ŒQ‚ÌƒpƒXB
+	 * ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚»ãƒƒãƒˆã‚’å®šç¾©ã—ãŸè¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ç¾¤ã®ãƒ‘ã‚¹ã€‚
 	 */
 	public List<String> controlSets = new ArrayList<String>();
 	
 	/**
-	 * ƒfƒvƒƒCiƒtƒ@ƒCƒ‹‚Ì“WŠJj‚ª•K—v‚ÈƒRƒ“ƒgƒ[ƒ‹ƒNƒ‰ƒXŒQB
+	 * ãƒ‡ãƒ—ãƒ­ã‚¤ï¼ˆãƒ•ã‚¡ã‚¤ãƒ«ã®å±•é–‹ï¼‰ãŒå¿…è¦ãªã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚¯ãƒ©ã‚¹ç¾¤ã€‚
 	 */
 	public List<Class<? extends Control>> controls = new ArrayList<Class<? extends Control>>();
 	
 	/**
-	 * Click‚Ì<code>FileField</code>ƒRƒ“ƒgƒ[ƒ‹‚ªg—p‚·‚éCommons FileUpload‚Ì<code>FileItemFactory</code>‚ÌƒCƒ“ƒXƒ^ƒ“ƒXB
-	 * ƒfƒtƒHƒ‹ƒg‚Í<code>org.apache.commons.fileupload.disk.DiskFileItemFactory</code>‚Å‚·B
+	 * Clickã®<code>FileField</code>ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãŒä½¿ç”¨ã™ã‚‹Commons FileUploadã®<code>FileItemFactory</code>ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã€‚
+	 * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯<code>org.apache.commons.fileupload.disk.DiskFileItemFactory</code>ã§ã™ã€‚
 	 */
 	public FileItemFactory fileItemFactory = new DiskFileItemFactory();
 	

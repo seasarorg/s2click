@@ -8,7 +8,7 @@ import org.seasar.s2click.annotation.Path;
 import org.seasar.s2click.page.AbstractDownloadPage;
 
 /**
- * ƒtƒ@ƒCƒ‹ƒ_ƒEƒ“ƒ[ƒh‚ÌƒTƒ“ƒvƒ‹B
+ * ãƒ•ã‚¡ã‚¤ãƒ«ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã®ã‚µãƒ³ãƒ—ãƒ«ã€‚
  * 
  * @author Naoki Takezoe
  */
@@ -19,12 +19,12 @@ public class FileDownloadPage extends AbstractDownloadPage {
 
 	@Override public void onInit() {
 		if(StringUtils.isEmpty(name)){
-			throw new RuntimeException("ƒtƒ@ƒCƒ‹–¼‚ªw’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB");
+			throw new RuntimeException("ãƒ•ã‚¡ã‚¤ãƒ«åãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚");
 		}
 		
 		File folder = new File(getContext().getServletContext().getRealPath("WEB-INF/files"));
 		if(!folder.exists()){
-			throw new RuntimeException("ƒtƒ@ƒCƒ‹‚ğ•Û‘¶‚·‚éƒtƒHƒ‹ƒ_‚ª‘¶İ‚µ‚Ü‚¹‚ñB");
+			throw new RuntimeException("ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜ã™ã‚‹ãƒ•ã‚©ãƒ«ãƒ€ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚");
 		}
 		
 		try {

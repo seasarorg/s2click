@@ -5,7 +5,7 @@ import net.sf.click.control.Submit;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /**
- * Šm”Fƒ_ƒCƒAƒƒO‚ğ•\¦‚·‚é‹@”\‚ğ”õ‚¦‚½<code>Submit</code>‚ÌŠg’£ƒRƒ“ƒgƒ[ƒ‹B
+ * ç¢ºèªãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’è¡¨ç¤ºã™ã‚‹æ©Ÿèƒ½ã‚’å‚™ãˆãŸ<code>Submit</code>ã®æ‹¡å¼µã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã€‚
  * 
  * @author Naoki Takezoe
  */

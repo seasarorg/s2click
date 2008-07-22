@@ -3,14 +3,14 @@ package org.seasar.s2click.example.page;
 import net.sf.click.Page;
 
 /**
- * ‹¤’ÊƒŒƒCƒAƒEƒg‚ğÀŒ»‚·‚éƒy[ƒWƒNƒ‰ƒX‚Ì’ŠÛŠî’êƒNƒ‰ƒXB
+ * å…±é€šãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’å®Ÿç¾ã™ã‚‹ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã®æŠ½è±¡åŸºåº•ã‚¯ãƒ©ã‚¹ã€‚
  * 
  * @author Naoki Takezoe
  */
 public abstract class LayoutPage extends Page {
 
 	/**
-	 * ‹¤’Êƒeƒ“ƒvƒŒ[ƒg <tt>/layout.htm</tt> ‚ğ•Ô‚µ‚Ü‚·B
+	 * å…±é€šãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ <tt>/layout.htm</tt> ã‚’è¿”ã—ã¾ã™ã€‚
 	 */
 	@Override public String getTemplate() {
         return "/layout.htm";

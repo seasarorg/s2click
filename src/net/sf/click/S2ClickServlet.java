@@ -22,7 +22,7 @@ import org.seasar.framework.container.util.SmartDeployUtil;
 import org.seasar.s2click.annotation.Request;
 
 /**
- * Seasar2‚ÆClick Framework‚ğ˜AŒg‚³‚¹‚é‚½‚ß‚ÌƒT[ƒuƒŒƒbƒgB
+ * Seasar2ã¨Click Frameworkã‚’é€£æºã•ã›ã‚‹ãŸã‚ã®ã‚µãƒ¼ãƒ–ãƒ¬ãƒƒãƒˆã€‚
  * 
  * @author Naoki Takezoe
  */
@@ -32,7 +32,7 @@ public class S2ClickServlet extends ClickServlet {
 	private boolean initialized = false;
 
 	/**
-	 * HOT deploy‚Å‚Í‚È‚¢ê‡A‚±‚Ìƒƒ\ƒbƒh‚ÅClick Framework‚Ì‰Šú‰»‚ğs‚¢‚Ü‚·B
+	 * HOT deployã§ã¯ãªã„å ´åˆã€ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã§Click Frameworkã®åˆæœŸåŒ–ã‚’è¡Œã„ã¾ã™ã€‚
 	 */
 	@Override public void init() throws ServletException {
 		S2Container container = SingletonS2ContainerFactory.getContainer();
@@ -43,9 +43,9 @@ public class S2ClickServlet extends ClickServlet {
 	}
 	
 	/**
-	 * HOT deploy‚Ìê‡AƒŠƒNƒGƒXƒg–ˆ‚ÉClick Framework‚Ì‰Šú‰»‚ğs‚¢‚Ü‚·B
+	 * HOT deployã®å ´åˆã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆæ¯ã«Click Frameworkã®åˆæœŸåŒ–ã‚’è¡Œã„ã¾ã™ã€‚
 	 * <p>
-	 * TODO ƒy[ƒW”‚ª‘½‚­‚È‚é‚Æ’x‚­‚È‚é‚©cH
+	 * TODO ãƒšãƒ¼ã‚¸æ•°ãŒå¤šããªã‚‹ã¨é…ããªã‚‹ã‹â€¦ï¼Ÿ
 	 */
 	@Override public void service(ServletRequest req, ServletResponse res)
 			throws ServletException, IOException {
@@ -57,7 +57,7 @@ public class S2ClickServlet extends ClickServlet {
 	}
 
 	/**
-	 * S2Container‚©‚çƒy[ƒWƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾‚µ‚Ü‚·B
+	 * S2Containerã‹ã‚‰ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã—ã¾ã™ã€‚
 	 */
 	@SuppressWarnings("unchecked")
 	@Override protected Page newPageInstance(String path, Class pageClass,
@@ -67,7 +67,7 @@ public class S2ClickServlet extends ClickServlet {
 	}
 	
 	/**
-	 * {@link Request}ƒAƒmƒe[ƒVƒ‡ƒ“‚ª•t—^‚³‚ê‚Ä‚¢‚éƒtƒB[ƒ‹ƒh‚ÉƒŠƒNƒGƒXƒgƒpƒ‰ƒ[ƒ^‚ğƒoƒCƒ“ƒh‚µ‚Ü‚·B
+	 * {@link Request}ã‚¢ãƒãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ãŒä»˜ä¸ã•ã‚Œã¦ã„ã‚‹ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ãƒã‚¤ãƒ³ãƒ‰ã—ã¾ã™ã€‚
 	 */
 	@SuppressWarnings("unchecked")
 	@Override protected void processPageRequestParams(Page page) throws OgnlException {
@@ -116,11 +116,11 @@ public class S2ClickServlet extends ClickServlet {
     }
 	
 	/**
-	 * ƒŠƒNƒGƒXƒgƒpƒ‰ƒ[ƒ^‚ğƒoƒCƒ“ƒh‚·‚éƒy[ƒWƒNƒ‰ƒX‚ÌƒtƒB[ƒ‹ƒh‚ğæ“¾‚µ‚Ü‚·B
+	 * ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’å–å¾—ã—ã¾ã™ã€‚
 	 * 
-	 * @param clazz ƒy[ƒWƒNƒ‰ƒX‚Ì<code>Class</code>ƒIƒuƒWƒFƒNƒg
-	 * @param name ƒŠƒNƒGƒXƒgƒpƒ‰ƒ[ƒ^–¼
-	 * @return ƒtƒB[ƒ‹ƒhiŠY“–‚ÌƒtƒB[ƒ‹ƒh‚ª‘¶İ‚µ‚Èê‡‚Í<code>null</code>j
+	 * @param clazz ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã®<code>Class</code>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	 * @param name ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å
+	 * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ï¼ˆè©²å½“ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ãŒå­˜åœ¨ã—ãªå ´åˆã¯<code>null</code>ï¼‰
 	 */
 	private Field getRequestBindField(Class<? extends Page> clazz, String name){
 		for(Field field: clickApp.getPageFieldArray(clazz)){

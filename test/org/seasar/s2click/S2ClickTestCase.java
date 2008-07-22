@@ -25,7 +25,7 @@ public class S2ClickTestCase extends S2TestCase {
 				}
 				clazz = clazz.getSuperclass();
 			}
-			throw new RuntimeException("ƒtƒB[ƒ‹ƒh‚ª‘¶İ‚µ‚Ü‚¹‚ñB");
+			throw new RuntimeException("ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚");
 			
 		} catch(Exception ex){
 			throw new RuntimeException(ex);
@@ -33,13 +33,13 @@ public class S2ClickTestCase extends S2TestCase {
 	}
 	
 	/**
-	 * ƒeƒXƒgƒP[ƒX‚Æ“¯‚¶ƒpƒbƒP[ƒW‚É‚ ‚éƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İA•¶š—ñ‚Æ‚µ‚Ä•Ô‹p‚µ‚Ü‚·B
-	 * ƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚Ì•¶šƒR[ƒh‚ÍUTF-8‚Å‚ ‚é•K—v‚ª‚ ‚è‚Ü‚·B
-	 * ‚Ü‚½A‰üsƒR[ƒh‚ÍLF‚É“ˆê‚³‚ê‚Ü‚·B
+	 * ãƒ†ã‚¹ãƒˆã‚±ãƒ¼ã‚¹ã¨åŒã˜ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã«ã‚ã‚‹ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿ã€æ–‡å­—åˆ—ã¨ã—ã¦è¿”å´ã—ã¾ã™ã€‚
+	 * ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã¯UTF-8ã§ã‚ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
+	 * ã¾ãŸã€æ”¹è¡Œã‚³ãƒ¼ãƒ‰ã¯LFã«çµ±ä¸€ã•ã‚Œã¾ã™ã€‚
 	 * 
-	 * @param fileName ƒtƒ@ƒCƒ‹–¼
-	 * @return ƒtƒ@ƒCƒ‹‚Ì“à—e
-	 * @throws RuntimeException ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ‚É¸”s‚µ‚½ê‡
+	 * @param fileName ãƒ•ã‚¡ã‚¤ãƒ«å
+	 * @return ãƒ•ã‚¡ã‚¤ãƒ«ã®å†…å®¹
+	 * @throws RuntimeException ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ãŸå ´åˆ
 	 */
 	protected String load(String fileName){
 		try {

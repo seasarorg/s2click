@@ -30,17 +30,17 @@ public class ToolTipTest extends TestCase {
 	}
 	
 	public void testToolTip5() {
-		ToolTip tooltip = new ToolTip("tooltip", "index.html", "タイトル");
+		ToolTip tooltip = new ToolTip("tooltip", "index.html", "繧ｿ繧､繝医Ν");
 		assertEquals("tooltip", tooltip.getName());
 		assertEquals("index.html", tooltip.getContents());
-		assertEquals("タイトル", tooltip.getTitle());
+		assertEquals("繧ｿ繧､繝医Ν", tooltip.getTitle());
 	}
 	
 	public void testToolTip6() {
-		ToolTip tooltip = new ToolTip("tooltip", "index.html", "タイトル", 999);
+		ToolTip tooltip = new ToolTip("tooltip", "index.html", "繧ｿ繧､繝医Ν", 999);
 		assertEquals("tooltip", tooltip.getName());
 		assertEquals("index.html", tooltip.getContents());
-		assertEquals("タイトル", tooltip.getTitle());
+		assertEquals("繧ｿ繧､繝医Ν", tooltip.getTitle());
 		assertEquals(999, tooltip.getWidth());
 	}
 	
@@ -61,15 +61,15 @@ public class ToolTipTest extends TestCase {
 	public void testGetTitle() {
 		ToolTip tooltip = new ToolTip();
 		assertNull(tooltip.getTitle());
-		tooltip.setTitle("タイトル");
-		assertEquals("タイトル", tooltip.getTitle());
+		tooltip.setTitle("繧ｿ繧､繝医Ν");
+		assertEquals("繧ｿ繧､繝医Ν", tooltip.getTitle());
 	}
 
 	public void testGetLabel() {
 		ToolTip tooltip = new ToolTip();
 		assertNull(tooltip.getLabel());
-		tooltip.setLabel("ラベル");
-		assertEquals("ラベル", tooltip.getLabel());
+		tooltip.setLabel("繝ｩ繝吶Ν");
+		assertEquals("繝ｩ繝吶Ν", tooltip.getLabel());
 	}
 
 }

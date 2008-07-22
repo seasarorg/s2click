@@ -12,9 +12,9 @@ import org.apache.commons.io.IOUtils;
 import org.seasar.s2click.annotation.Path;
 
 /**
- * ƒtƒ@ƒCƒ‹‚ğƒ_ƒEƒ“ƒ[ƒh‚·‚éƒy[ƒW‚Ì‚½‚ß‚Ì’ŠÛŠî’êƒNƒ‰ƒX‚Å‚·B
+ * ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ãƒšãƒ¼ã‚¸ã®ãŸã‚ã®æŠ½è±¡åŸºåº•ã‚¯ãƒ©ã‚¹ã§ã™ã€‚
  * <p>
- * ˆÈ‰º‚ÉÀ‘•—á‚ğ¦‚µ‚Ü‚·F
+ * ä»¥ä¸‹ã«å®Ÿè£…ä¾‹ã‚’ç¤ºã—ã¾ã™ï¼š
  * <pre>
  * <span class="kw">public</span> SampleDownloadPage <span class="kw">extends</span> AbstractDownloadPage {
  *   <span class="kw">public</span> SampleDownloadPage(){
@@ -22,9 +22,9 @@ import org.seasar.s2click.annotation.Path;
  *     setContents(SampleDownloadPage.class.getResourceAsStream(<span class="st">"sample.txt"</span>));
  *   }
  * }</pre>
- * ƒtƒ@ƒCƒ‹ƒ_ƒEƒ“ƒ[ƒhƒy[ƒW‚Íƒ_ƒEƒ“ƒ[ƒh‚·‚éƒRƒ“ƒeƒ“ƒc‚ğ©•ª©g‚ÅƒŒƒXƒ|ƒ“ƒX‚É‘‚«‚Ş‚½‚ßAHTMLƒeƒ“ƒvƒŒ[ƒg‚Í•s—v‚Å‚·B
- * ‚½‚¾‚µAClick‚ÍHTMLƒeƒ“ƒvƒŒ[ƒg‚ª‘¶İ‚µ‚È‚¢ƒy[ƒWƒNƒ‰ƒX‚Í©“®ƒ}ƒbƒsƒ“ƒO‚Ì‘ÎÛŠO‚Æ‚È‚é‚½‚ßA
- * ƒNƒ‰ƒX‚É{@link Path}ƒAƒmƒe[ƒVƒ‡ƒ“‚ğ•t—^‚·‚é‚±‚Æ‚ÅƒpƒX‚ğ–¾¦‚·‚é‚Æ‚æ‚¢‚Å‚µ‚å‚¤B
+ * ãƒ•ã‚¡ã‚¤ãƒ«ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒšãƒ¼ã‚¸ã¯ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚’è‡ªåˆ†è‡ªèº«ã§ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã«æ›¸ãè¾¼ã‚€ãŸã‚ã€HTMLãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã¯ä¸è¦ã§ã™ã€‚
+ * ãŸã ã—ã€Clickã¯HTMLãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãŒå­˜åœ¨ã—ãªã„ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã¯è‡ªå‹•ãƒãƒƒãƒ”ãƒ³ã‚°ã®å¯¾è±¡å¤–ã¨ãªã‚‹ãŸã‚ã€
+ * ã‚¯ãƒ©ã‚¹ã«{@link Path}ã‚¢ãƒãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ä»˜ä¸ã™ã‚‹ã“ã¨ã§ãƒ‘ã‚¹ã‚’æ˜ç¤ºã™ã‚‹ã¨ã‚ˆã„ã§ã—ã‚‡ã†ã€‚
  * 
  * @author Naoki Takezoe
  */
@@ -36,10 +36,10 @@ public abstract class AbstractDownloadPage extends Page {
 	protected InputStream contents;
 	
 	/**
-	 * Content-Typeƒwƒbƒ_‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+	 * Content-Typeãƒ˜ãƒƒãƒ€ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
 	 * 
-	 * @param contentType ƒRƒ“ƒeƒ“ƒcƒ^ƒCƒvB
-	 *   ƒfƒtƒHƒ‹ƒg’l‚Í<code>"application/octet-stream"</code>‚Å‚·B
+	 * @param contentType ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚¿ã‚¤ãƒ—ã€‚
+	 *   ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã¯<code>"application/octet-stream"</code>ã§ã™ã€‚
 	 */
 	protected void setContentType(String contentType){
 		if(contentType == null){
@@ -49,18 +49,18 @@ public abstract class AbstractDownloadPage extends Page {
 	}
 	
 	/**
-	 * ƒ_ƒEƒ“ƒ[ƒhƒtƒ@ƒCƒ‹–¼‚ğƒZƒbƒg‚µ‚Ü‚·B
+	 * ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ã‚»ãƒƒãƒˆã—ã¾ã™ã€‚
 	 * 
-	 * @param fileName ƒtƒ@ƒCƒ‹–¼
+	 * @param fileName ãƒ•ã‚¡ã‚¤ãƒ«å
 	 */
 	protected void setFileName(String fileName){
 		this.fileName = fileName;
 	}
 	
 	/**
-	 * ƒ_ƒEƒ“ƒ[ƒh‚·‚éƒRƒ“ƒeƒ“ƒc‚Ì<code>InputStream</code>‚ğƒZƒbƒg‚µ‚Ü‚·B
+	 * ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã®<code>InputStream</code>ã‚’ã‚»ãƒƒãƒˆã—ã¾ã™ã€‚
 	 * 
-	 * @param contents ƒ_ƒEƒ“ƒ[ƒh‚·‚éƒRƒ“ƒeƒ“ƒc
+	 * @param contents ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã‚³ãƒ³ãƒ†ãƒ³ãƒ„
 	 */
 	protected void setContents(InputStream contents){
 		if(contents == null){
@@ -70,25 +70,25 @@ public abstract class AbstractDownloadPage extends Page {
 	}
 	
 	/**
-	 * Content-Dispositionƒwƒbƒ_‚Ì’l‚ğƒZƒbƒg‚µ‚Ü‚·B
+	 * Content-Dispositionãƒ˜ãƒƒãƒ€ã®å€¤ã‚’ã‚»ãƒƒãƒˆã—ã¾ã™ã€‚
 	 * 
-	 * @param contentDisposition <code>"attachment"</code>‚à‚µ‚­‚Í<code>"inline"</code>B
-	 *    ƒfƒtƒHƒ‹ƒg’l‚Í<code>"attachment"</code>‚Å‚·B
+	 * @param contentDisposition <code>"attachment"</code>ã‚‚ã—ãã¯<code>"inline"</code>ã€‚
+	 *    ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã¯<code>"attachment"</code>ã§ã™ã€‚
 	 */
 	protected void setContentDisposition(String contentDisposition){
 		this.contentDisposition = contentDisposition;
 	}
 
 	/**
-	 * ƒtƒ@ƒCƒ‹ƒ_ƒEƒ“ƒ[ƒhƒy[ƒW‚Å‚ÍHTMLƒeƒ“ƒvƒŒ[ƒg‚ª•s—v‚Å‚ ‚é‚½‚ßA
-	 * ‚±‚Ìƒƒ\ƒbƒh‚Íí‚É<code>null</code>‚ğ•Ô‚·‚æ‚¤À‘•‚³‚ê‚Ä‚¢‚Ü‚·B
+	 * ãƒ•ã‚¡ã‚¤ãƒ«ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒšãƒ¼ã‚¸ã§ã¯HTMLãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãŒä¸è¦ã§ã‚ã‚‹ãŸã‚ã€
+	 * ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯å¸¸ã«<code>null</code>ã‚’è¿”ã™ã‚ˆã†å®Ÿè£…ã•ã‚Œã¦ã„ã¾ã™ã€‚
 	 */
 	@Override public String getPath() {
 		return null;
 	}
 
 	/**
-	 * ‚±‚Ìƒƒ\ƒbƒh“à‚Åƒ_ƒEƒ“ƒ[ƒhƒRƒ“ƒeƒ“ƒc‚ğƒŒƒXƒ|ƒ“ƒX‚É‘‚«o‚µ‚Ü‚·B
+	 * ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰å†…ã§ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚’ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã«æ›¸ãå‡ºã—ã¾ã™ã€‚
 	 */
 	@Override public void onRender() {
 		if(this.contents == null){

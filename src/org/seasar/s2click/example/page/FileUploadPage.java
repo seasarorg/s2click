@@ -12,14 +12,14 @@ import org.apache.commons.io.IOUtils;
 import org.seasar.s2click.example.form.FileUploadForm;
 
 /**
- * ƒtƒ@ƒCƒ‹ƒAƒbƒvƒ[ƒh‚ÌƒTƒ“ƒvƒ‹ƒy[ƒWB
+ * ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã®ã‚µãƒ³ãƒ—ãƒ«ãƒšãƒ¼ã‚¸ã€‚
  * 
  * @see FileUploadForm
  * @author Naoki Takezoe
  */
 public class FileUploadPage extends LayoutPage {
 
-	public String title = "ƒtƒ@ƒCƒ‹ƒAƒbƒvƒ[ƒh•ƒ_ƒEƒ“ƒ[ƒh";
+	public String title = "ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ï¼†ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰";
 	public FileUploadForm form = new FileUploadForm("form");
 	
 	public FileUploadPage(){
@@ -31,7 +31,7 @@ public class FileUploadPage extends LayoutPage {
 		File folder = new File(path);
 		if(!folder.exists() || !folder.isDirectory()){
 			if(!folder.mkdir()){
-				throw new RuntimeException("“Y•tƒtƒ@ƒCƒ‹‚Ì•Û‘¶—pƒtƒHƒ‹ƒ_‚Ìì¬‚É¸”s‚µ‚Ü‚µ‚½B");
+				throw new RuntimeException("æ·»ä»˜ãƒ•ã‚¡ã‚¤ãƒ«ã®ä¿å­˜ç”¨ãƒ•ã‚©ãƒ«ãƒ€ã®ä½œæˆã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
 			}
 		}
 		return folder;
@@ -43,7 +43,7 @@ public class FileUploadPage extends LayoutPage {
 	}
 
 	/**
-	 * ƒtƒ@ƒCƒ‹‚ğƒAƒbƒvƒ[ƒh‚µ‚Ü‚·B
+	 * ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã—ã¾ã™ã€‚
 	 */
 	public boolean doUpload(){
 		if(form.isValid()){

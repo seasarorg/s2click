@@ -4,7 +4,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * S2Clickのすべてのテストケースを実行します。
+ * S2Click縺ｮ縺吶∋縺ｦ縺ｮ繝�繧ｹ繝医こ繝ｼ繧ｹ繧貞ｮ溯｡後＠縺ｾ縺吶�
  * 
  * @author Naoki Takezoe
  */

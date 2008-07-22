@@ -18,7 +18,7 @@ import org.seasar.framework.util.ZipFileUtil;
 import org.seasar.framework.util.ClassTraversal.ClassHandler;
 
 /**
- * ©“®“o˜^‚³‚ê‚éƒy[ƒWƒNƒ‰ƒX‚ÌƒNƒ‰ƒX–¼‚ğæ“¾‚·‚é‚½‚ß‚Ìƒ†[ƒeƒBƒŠƒeƒBƒNƒ‰ƒXB
+ * è‡ªå‹•ç™»éŒ²ã•ã‚Œã‚‹ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã®ã‚¯ãƒ©ã‚¹åã‚’å–å¾—ã™ã‚‹ãŸã‚ã®ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ã‚¯ãƒ©ã‚¹ã€‚
  * 
  * @author Naoki Takezoe
  */
@@ -29,9 +29,9 @@ class PageClassLoader implements ClassHandler {
 	private Map<String, Strategy> strategies = new HashMap<String, Strategy>();
 	
 	/**
-	 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^B
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã€‚
 	 * 
-	 * @param rootPackage ƒy[ƒWƒNƒ‰ƒX‚Ìƒ‹[ƒgƒpƒbƒP[ƒW–¼
+	 * @param rootPackage ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã®ãƒ«ãƒ¼ãƒˆãƒ‘ãƒƒã‚±ãƒ¼ã‚¸å
 	 */
 	public PageClassLoader(String rootPackage){
 		this.rootPackage = rootPackage;
@@ -48,9 +48,9 @@ class PageClassLoader implements ClassHandler {
 	}
 	
 	/**
-	 * ©“®“o˜^‚³‚ê‚éƒy[ƒWƒNƒ‰ƒX‚ÌŠ®‘SCüƒNƒ‰ƒX–¼‚ÌƒŠƒXƒg‚ğ•Ô‹p‚µ‚Ü‚·B
+	 * è‡ªå‹•ç™»éŒ²ã•ã‚Œã‚‹ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã®å®Œå…¨ä¿®é£¾ã‚¯ãƒ©ã‚¹åã®ãƒªã‚¹ãƒˆã‚’è¿”å´ã—ã¾ã™ã€‚
 	 * 
-	 * @return ƒy[ƒWƒNƒ‰ƒX–¼‚ÌƒŠƒXƒg
+	 * @return ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹åã®ãƒªã‚¹ãƒˆ
 	 */
     public List<String> getPageClasses(){
     	classes.clear();

@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * ƒy[ƒWƒNƒ‰ƒX‚É‚±‚ÌƒAƒmƒe[ƒVƒ‡ƒ“‚ğ•t—^‚·‚é‚±‚Æ‚ÅA
- * ”CˆÓ‚ÌƒpƒX‚Éƒy[ƒWƒNƒ‰ƒX‚ğƒ}ƒbƒsƒ“ƒO‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+ * ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã«ã“ã®ã‚¢ãƒãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ä»˜ä¸ã™ã‚‹ã“ã¨ã§ã€
+ * ä»»æ„ã®ãƒ‘ã‚¹ã«ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã‚’ãƒãƒƒãƒ”ãƒ³ã‚°ã™ã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚
  * 
  * @author Naoki Takezoe
  */
@@ -16,8 +16,8 @@ import java.lang.annotation.Target;
 public @interface Path {
 	
 	/**
-	 * ƒy[ƒW‚ÌƒpƒX
-	 * @return@ƒy[ƒW‚ÌƒpƒX
+	 * ãƒšãƒ¼ã‚¸ã®ãƒ‘ã‚¹
+	 * @returnã€€ãƒšãƒ¼ã‚¸ã®ãƒ‘ã‚¹
 	 */
 	String value() default "";
 	

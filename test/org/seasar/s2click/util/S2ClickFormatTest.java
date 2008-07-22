@@ -17,7 +17,7 @@ public class S2ClickFormatTest extends S2TestCase {
 		assertEquals("ABCDEFG", format.url("ABCDEFG"));
 		assertEquals("Click+Framework", format.url("Click Framework"));
 		assertEquals("%E3%81%82%E3%81%84%E3%81%86%E3%81%88%E3%81%8A", 
-				format.url("Ç†Ç¢Ç§Ç¶Ç®"));
+				format.url("„ÅÇ„ÅÑ„ÅÜ„Åà„Åä"));
 	}
 
 	public void testJson() {

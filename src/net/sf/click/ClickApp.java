@@ -49,9 +49,9 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
- * Seasar2‚ÌHOT deploy‚É‘Î‰‚·‚é‚½‚ß‚É‰ü•Ò‚³‚ê‚½ClickAppƒNƒ‰ƒXB
+ * Seasar2ã®HOT deployã«å¯¾å¿œã™ã‚‹ãŸã‚ã«æ”¹ç·¨ã•ã‚ŒãŸClickAppã‚¯ãƒ©ã‚¹ã€‚
  * <p>
- * TODO WARM deployACOOL deploy‚Ì«”\‰ü‘PiƒtƒB[ƒ‹ƒhƒŠƒtƒŒƒNƒVƒ‡ƒ“‚ÌƒLƒƒƒbƒVƒ…j
+ * TODO WARM deployã€COOL deployæ™‚ã®æ€§èƒ½æ”¹å–„ï¼ˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ãƒªãƒ•ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ï¼‰
  *
  * @author Malcolm Edgar
  * @author Naoki Takezoe
@@ -851,7 +851,7 @@ class ClickApp implements EntityResolver {
             logger.debug("automapped pages:");
         }
         
-        // @PathƒAƒmƒe[ƒVƒ‡ƒ“‚ğˆ—
+        // @Pathã‚¢ãƒãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å‡¦ç†
         List<String> classes = new PageClassLoader(pagesPackage).getPageClasses();
         for(String className: classes){
         	Class<?> clazz = loadClass(className);
@@ -1189,7 +1189,7 @@ class ClickApp implements EntityResolver {
 			}
 		}
 		
-		// abstractƒNƒ‰ƒX‚Í“o˜^‚µ‚È‚¢
+		// abstractã‚¯ãƒ©ã‚¹ã¯ç™»éŒ²ã—ãªã„
     	if(Modifier.isAbstract(pageClass.getModifiers())){
     		return null;
     	}

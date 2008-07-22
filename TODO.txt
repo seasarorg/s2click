@@ -1,20 +1,20 @@
-* HOT deployƒ‚[ƒh‚Å‚ÍƒŠƒNƒGƒXƒg‚²‚Æ‚ÉClick‚Ì‰Šú‰»‚ðs‚Á‚Ä‚¢‚é
-  ¨‚â‚Á‚Ä‚Ý‚½‚¯‚Çƒy[ƒW”‚ª‘½‚¢‚Æd‚­‚È‚è‚»‚¤c
+* HOT deployãƒ¢ãƒ¼ãƒ‰ã§ã¯ãƒªã‚¯ã‚¨ã‚¹ãƒˆã”ã¨ã«Clickã®åˆæœŸåŒ–ã‚’è¡Œã£ã¦ã„ã‚‹
+  â†’ã‚„ã£ã¦ã¿ãŸã‘ã©ãƒšãƒ¼ã‚¸æ•°ãŒå¤šã„ã¨é‡ããªã‚Šãã†â€¦
 
-* COOL deployASMART deploy
-* HOT deployŽžˆÈŠO‚ÍƒŠƒtƒŒƒNƒVƒ‡ƒ“î•ñ‚ðƒLƒƒƒbƒVƒ…‚·‚éH
-* ƒRƒ“ƒgƒ[ƒ‹‚âƒtƒH[ƒ}ƒbƒgƒIƒuƒWƒFƒNƒg‚ÌHOT deploy‚ªŒø‚©‚È‚¢
+* COOL deployã€SMART deploy
+* HOT deployæ™‚ä»¥å¤–ã¯ãƒªãƒ•ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³æƒ…å ±ã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã™ã‚‹ï¼Ÿ
+* ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚„ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®HOT deployãŒåŠ¹ã‹ãªã„
 
-* Ajax‚ÌŽó‚¯‘¤‚É‚à‚È‚ñ‚ç‚©‚ÌƒTƒ|[ƒg‚ðH
+* Ajaxã®å—ã‘å´ã«ã‚‚ãªã‚“ã‚‰ã‹ã®ã‚µãƒãƒ¼ãƒˆã‚’ï¼Ÿ
 
-* ƒc[ƒ‹ƒ`ƒbƒvƒwƒ‹ƒvƒRƒ“ƒgƒ[ƒ‹ioverLIBHj
-  ¨jQuery + jTip‚Å‚â‚Á‚Ä‚Ý‚½
-  ¨“®“I‚Èƒwƒ‹ƒv‚Í‚Ç‚¤‚·‚éHH
+* ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ãƒ˜ãƒ«ãƒ—ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ï¼ˆoverLIBï¼Ÿï¼‰
+  â†’jQuery + jTipã§ã‚„ã£ã¦ã¿ãŸ
+  â†’å‹•çš„ãªãƒ˜ãƒ«ãƒ—ã¯ã©ã†ã™ã‚‹ï¼Ÿï¼Ÿ
 
-* ƒeƒXƒg‚ð‘‚­
-  ¨Click 1.5‚ÉˆÚs‚·‚éHH
+* ãƒ†ã‚¹ãƒˆã‚’æ›¸ã
+  â†’Click 1.5ã«ç§»è¡Œã™ã‚‹ï¼Ÿï¼Ÿ
 
-* ƒ\[ƒXƒR[ƒh‚ÌUTF-8‰»
+* ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã®UTF-8åŒ–
 
-* ”z•zŒ`‘Ô‚Ç‚¤‚·‚éH
-  ¨Ant‚Ìƒrƒ‹ƒhƒtƒ@ƒCƒ‹‚ðì¬‚µ‚Ü‚µ‚½B
+* é…å¸ƒå½¢æ…‹ã©ã†ã™ã‚‹ï¼Ÿ
+  â†’Antã®ãƒ“ãƒ«ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã—ã¾ã—ãŸã€‚

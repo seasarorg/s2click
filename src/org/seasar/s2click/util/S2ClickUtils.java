@@ -8,17 +8,17 @@ import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.s2click.S2ClickConfig;
 
 /**
- * S2Click“à‚Åg—p‚·‚éƒ†[ƒeƒBƒŠƒeƒBƒƒ\ƒbƒh‚ğ’ñ‹Ÿ‚µ‚Ü‚·B
+ * S2Clickå†…ã§ä½¿ç”¨ã™ã‚‹ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ãƒ¡ã‚½ãƒƒãƒ‰ã‚’æä¾›ã—ã¾ã™ã€‚
  * 
  * @author Naoki Takezoe
  */
 public class S2ClickUtils {
 	
 	/**
-	 * ˆø”‚É“n‚³‚ê‚½•¶š—ñ‚ğ<tt>s2click.dicon</tt>‚Åw’è‚³‚ê‚½•¶šƒR[ƒh‚ÅURLƒGƒ“ƒR[ƒh‚µ‚Ü‚·B
+	 * å¼•æ•°ã«æ¸¡ã•ã‚ŒãŸæ–‡å­—åˆ—ã‚’<tt>s2click.dicon</tt>ã§æŒ‡å®šã•ã‚ŒãŸæ–‡å­—ã‚³ãƒ¼ãƒ‰ã§URLã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã—ã¾ã™ã€‚
 	 * 
-	 * @param value •¶š—ñ
-	 * @return URLƒGƒ“ƒR[ƒhŒã‚Ì•¶š—ñ
+	 * @param value æ–‡å­—åˆ—
+	 * @return URLã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰å¾Œã®æ–‡å­—åˆ—
 	 */
 	public static String urlEncode(String value){
 		try {
@@ -30,10 +30,10 @@ public class S2ClickUtils {
 	}
 	
 	/**
-	 * ˜A‘±‚·‚é”¼ŠpƒXƒy[ƒX‚Ì2•¶š–ÚˆÈ~‚ğ‚ğ&nbsp‚É•ÏŠ·‚µ‚Ü‚·B
+	 * é€£ç¶šã™ã‚‹åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ã®2æ–‡å­—ç›®ä»¥é™ã‚’ã‚’&nbspã«å¤‰æ›ã—ã¾ã™ã€‚
 	 * 
-	 * @param value •¶š—ñ
-	 * @return •ÏŠ·Œã‚Ì•¶š—ñ
+	 * @param value æ–‡å­—åˆ—
+	 * @return å¤‰æ›å¾Œã®æ–‡å­—åˆ—
 	 */
 	public static String convertNbsp(String value){
 		StringBuilder sb = new StringBuilder();
@@ -56,11 +56,11 @@ public class S2ClickUtils {
 	}
 
 	/**
-	 * <code>SingletonS2ContainerFactory</code>‚©‚çƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾‚µ‚Ü‚·B
+	 * <code>SingletonS2ContainerFactory</code>ã‹ã‚‰ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—ã—ã¾ã™ã€‚
 	 * 
-	 * @param <T> æ“¾‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^
-	 * @param clazz æ“¾‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŒ^
-	 * @return ƒRƒ“ƒ|[ƒlƒ“ƒg
+	 * @param <T> å–å¾—ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹
+	 * @param clazz å–å¾—ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å‹
+	 * @return ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getComponent(Class<T> clazz){

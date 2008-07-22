@@ -16,7 +16,7 @@ public class S2ClickUtilsTest extends S2TestCase {
 		assertEquals("Click+Framework", 
 				S2ClickUtils.urlEncode("Click Framework"));
 		assertEquals("%E3%81%82%E3%81%84%E3%81%86%E3%81%88%E3%81%8A", 
-				S2ClickUtils.urlEncode("Ç†Ç¢Ç§Ç¶Ç®"));
+				S2ClickUtils.urlEncode("„ÅÇ„ÅÑ„ÅÜ„Åà„Åä"));
 	}
 
 	public void testConvertNbsp() {

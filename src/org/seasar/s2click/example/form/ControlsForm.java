@@ -26,12 +26,12 @@ public class ControlsForm extends AutoForm {
 		pickList.add(new Option("Python"));
 	}
 	
-	public DateFieldYYYYMMDD dateField = new DateFieldYYYYMMDD("date", "“ú•t");
-	public CheckList checkList = new CheckList("checkList", "ƒ`ƒFƒbƒNƒŠƒXƒg");
-	public PickList pickList = new PickList("pickList", "ƒsƒbƒNƒŠƒXƒg");
+	public DateFieldYYYYMMDD dateField = new DateFieldYYYYMMDD("date", "æ—¥ä»˜");
+	public CheckList checkList = new CheckList("checkList", "ãƒã‚§ãƒƒã‚¯ãƒªã‚¹ãƒˆ");
+	public PickList pickList = new PickList("pickList", "ãƒ”ãƒƒã‚¯ãƒªã‚¹ãƒˆ");
 	
 //	public AutoCompleteTextField completion 
-//		= new AutoCompleteTextField("completion", "“ü—Í•âŠ®"){
+//		= new AutoCompleteTextField("completion", "å…¥åŠ›è£œå®Œ"){
 //
 //		private static final long serialVersionUID = 1L;
 //		

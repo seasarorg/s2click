@@ -4,7 +4,7 @@ import org.seasar.s2click.annotation.Path;
 import org.seasar.s2click.example.form.AddForm;
 
 /**
- * ‘«‚µZƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ìƒy[ƒWƒNƒ‰ƒXB
+ * è¶³ã—ç®—ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã€‚
  * 
  * @see AddForm
  * @author Naoki Takezoe
@@ -12,7 +12,7 @@ import org.seasar.s2click.example.form.AddForm;
 @Path("/add.htm")
 public class AddPage extends LayoutPage {
 	
-	public String title = "‘«‚µZƒAƒvƒŠƒP[ƒVƒ‡ƒ“";
+	public String title = "è¶³ã—ç®—ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³";
 	public String template = "/form.htm";
 	public AddForm form = new AddForm("form");
 	

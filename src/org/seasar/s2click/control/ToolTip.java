@@ -17,7 +17,7 @@ public class ToolTip extends AbstractControl {
 	
 	private static final long serialVersionUID = 1L;
 	
-	/** jTip‚ÌƒŠƒ\[ƒXiclick/jquery‚ÉƒfƒvƒƒC‚³‚ê‚Ü‚·j */
+	/** jTipã®ãƒªã‚½ãƒ¼ã‚¹ï¼ˆclick/jqueryã«ãƒ‡ãƒ—ãƒ­ã‚¤ã•ã‚Œã¾ã™ï¼‰ */
     public static final String[] JQUERY_RESOURCES = {
         "/org/seasar/s2click/control/jquery/jquery.js",
         "/org/seasar/s2click/control/jquery/jtip.js",
@@ -28,7 +28,7 @@ public class ToolTip extends AbstractControl {
         "/org/seasar/s2click/control/jquery/help.png",
     };
     
-	/** HTML‚Ìhead—v‘f“à‚Éo—Í‚·‚éƒCƒ“ƒ|[ƒgƒXƒe[ƒgƒƒ“ƒg */
+	/** HTMLã®headè¦ç´ å†…ã«å‡ºåŠ›ã™ã‚‹ã‚¤ãƒ³ãƒãƒ¼ãƒˆã‚¹ãƒ†ãƒ¼ãƒˆãƒ¡ãƒ³ãƒˆ */
     public static final String HTML_IMPORTS =
         "<link type=\"text/css\" rel=\"stylesheet\" href=\"{0}/click/jquery/jtip.css\"/>\n"
         + "<script type=\"text/javascript\" src=\"{0}/click/jquery/jquery.js\"></script>\n"
@@ -135,72 +135,72 @@ public class ToolTip extends AbstractControl {
 	}
 
 	/**
-	 * ƒc[ƒ‹ƒ`ƒbƒv‚É•\¦‚·‚éHTML‚ÌƒpƒX‚ğæ“¾‚µ‚Ü‚·B
+	 * ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ã«è¡¨ç¤ºã™ã‚‹HTMLã®ãƒ‘ã‚¹ã‚’å–å¾—ã—ã¾ã™ã€‚
 	 * 
-	 * @return ƒc[ƒ‹ƒ`ƒbƒv‚É•\¦‚·‚éHTML‚ÌƒpƒX
+	 * @return ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ã«è¡¨ç¤ºã™ã‚‹HTMLã®ãƒ‘ã‚¹
 	 */
 	public String getContents() {
 		return contents;
 	}
 
 	/**
-	 * ƒc[ƒ‹ƒ`ƒbƒv‚É•\¦‚·‚éHTML‚ÌƒpƒX‚ğİ’è‚µ‚Ü‚·B
+	 * ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ã«è¡¨ç¤ºã™ã‚‹HTMLã®ãƒ‘ã‚¹ã‚’è¨­å®šã—ã¾ã™ã€‚
 	 * 
-	 * @param contents ƒc[ƒ‹ƒ`ƒbƒv‚É•\¦‚·‚éHTML‚ÌƒpƒX
+	 * @param contents ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ã«è¡¨ç¤ºã™ã‚‹HTMLã®ãƒ‘ã‚¹
 	 */
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
 
 	/**
-	 * ƒc[ƒ‹ƒ`ƒbƒv‚Ì•‚ğæ“¾‚µ‚Ü‚·B
+	 * ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ã®å¹…ã‚’å–å¾—ã—ã¾ã™ã€‚
 	 * 
-	 * @return ƒc[ƒ‹ƒ`ƒbƒv‚Ì•iƒsƒNƒZƒ‹’PˆÊj
+	 * @return ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ã®å¹…ï¼ˆãƒ”ã‚¯ã‚»ãƒ«å˜ä½ï¼‰
 	 */
 	public int getWidth() {
 		return width;
 	}
 
 	/**
-	 * ƒc[ƒ‹ƒ`ƒbƒv‚Ì•‚ğİ’è‚µ‚Ü‚·B
+	 * ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ã®å¹…ã‚’è¨­å®šã—ã¾ã™ã€‚
 	 * 
-	 * @param width ƒc[ƒ‹ƒ`ƒbƒv‚Ì•iƒsƒNƒZƒ‹’PˆÊj
+	 * @param width ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ã®å¹…ï¼ˆãƒ”ã‚¯ã‚»ãƒ«å˜ä½ï¼‰
 	 */
 	public void setWidth(int width) {
 		this.width = width;
 	}
 
 	/**
-	 * ƒc[ƒ‹ƒ`ƒbƒv‚Ìƒ^ƒCƒgƒ‹‚ğæ“¾‚µ‚Ü‚·B
+	 * ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ã®ã‚¿ã‚¤ãƒˆãƒ«ã‚’å–å¾—ã—ã¾ã™ã€‚
 	 * 
-	 * @return ƒc[ƒ‹ƒ`ƒbƒv‚Ìƒ^ƒCƒgƒ‹
+	 * @return ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ã®ã‚¿ã‚¤ãƒˆãƒ«
 	 */
 	public String getTitle() {
 		return title;
 	}
 
 	/**
-	 * ƒc[ƒ‹ƒ`ƒbƒv‚Ìƒ^ƒCƒgƒ‹‚ğİ’è‚µ‚Ü‚·B
+	 * ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ã®ã‚¿ã‚¤ãƒˆãƒ«ã‚’è¨­å®šã—ã¾ã™ã€‚
 	 * 
-	 * @param title ƒc[ƒ‹ƒ`ƒbƒv‚Ìƒ^ƒCƒgƒ‹
+	 * @param title ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ã®ã‚¿ã‚¤ãƒˆãƒ«
 	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
 	/**
-	 * ƒAƒCƒRƒ“‚Ì‘ã‚í‚è‚É•\¦‚·‚éƒeƒLƒXƒg‚ğæ“¾‚µ‚Ü‚·B
+	 * ã‚¢ã‚¤ã‚³ãƒ³ã®ä»£ã‚ã‚Šã«è¡¨ç¤ºã™ã‚‹ãƒ†ã‚­ã‚¹ãƒˆã‚’å–å¾—ã—ã¾ã™ã€‚
 	 * 
-	 * @return ƒAƒCƒRƒ“‚Ì‘ã‚í‚è‚É•\¦‚·‚éƒeƒLƒXƒg
+	 * @return ã‚¢ã‚¤ã‚³ãƒ³ã®ä»£ã‚ã‚Šã«è¡¨ç¤ºã™ã‚‹ãƒ†ã‚­ã‚¹ãƒˆ
 	 */
 	public String getLabel() {
 		return label;
 	}
 
 	/**
-	 * ƒAƒCƒRƒ“‚Ì‘ã‚í‚è‚É•\¦‚·‚éƒeƒLƒXƒg‚ğİ’è‚µ‚Ü‚·B
+	 * ã‚¢ã‚¤ã‚³ãƒ³ã®ä»£ã‚ã‚Šã«è¡¨ç¤ºã™ã‚‹ãƒ†ã‚­ã‚¹ãƒˆã‚’è¨­å®šã—ã¾ã™ã€‚
 	 * 
-	 * @param label ƒAƒCƒRƒ“‚Ì‘ã‚í‚è‚É•\¦‚·‚éƒeƒLƒXƒg
+	 * @param label ã‚¢ã‚¤ã‚³ãƒ³ã®ä»£ã‚ã‚Šã«è¡¨ç¤ºã™ã‚‹ãƒ†ã‚­ã‚¹ãƒˆ
 	 */
 	public void setLabel(String label) {
 		this.label = label;

@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * ƒŠƒNƒGƒXƒgƒpƒ‰ƒ[ƒ^‚ğƒoƒCƒ“ƒh‚·‚éƒy[ƒWƒNƒ‰ƒX‚ÌpublicƒtƒB[ƒ‹ƒh‚É•t—^‚µ‚Ü‚·B
+ * ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ãƒã‚¤ãƒ³ãƒ‰ã™ã‚‹ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã®publicãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ä»˜ä¸ã—ã¾ã™ã€‚
  * 
  * @author Naoki Takezoe
  */
@@ -15,10 +15,10 @@ import java.lang.annotation.Target;
 public @interface Request {
 
 	/**
-	 * ƒŠƒNƒGƒXƒgƒpƒ‰ƒ[ƒ^–¼B
-	 * È—ª‚µ‚½ê‡‚ÍƒtƒB[ƒ‹ƒh–¼‚ğƒpƒ‰ƒ[ƒ^–¼‚Æ‚İ‚È‚µ‚Ü‚·B
+	 * ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿åã€‚
+	 * çœç•¥ã—ãŸå ´åˆã¯ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã‚’ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿åã¨ã¿ãªã—ã¾ã™ã€‚
 	 * 
-	 * @return ƒŠƒNƒGƒXƒgƒpƒ‰ƒ[ƒ^–¼
+	 * @return ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å
 	 */
 	String value() default "";
 	

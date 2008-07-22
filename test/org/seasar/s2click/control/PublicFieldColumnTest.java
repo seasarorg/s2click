@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 public class PublicFieldColumnTest extends TestCase {
 
 	/**
-	 * {@link PublicFieldColumn#getProperty(String, Object)}‚ÅpublicƒtƒB[ƒ‹ƒh‚Ì’l‚ğæ“¾‚Å‚«‚é‚±‚ÆB
+	 * {@link PublicFieldColumn#getProperty(String, Object)}ã§publicãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®å€¤ã‚’å–å¾—ã§ãã‚‹ã“ã¨ã€‚
 	 */
 	public void testGetPropertyStringObject() {
 		PublicFieldColumn column = new PublicFieldColumn();

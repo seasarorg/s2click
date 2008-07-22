@@ -1,13 +1,13 @@
 package org.seasar.s2click.example.page;
 
 /**
- * JSON‚ğg—p‚µ‚½Ajax‚ÌƒTƒ“ƒvƒ‹ƒy[ƒWB
+ * JSONã‚’ä½¿ç”¨ã—ãŸAjaxã®ã‚µãƒ³ãƒ—ãƒ«ãƒšãƒ¼ã‚¸ã€‚
  * 
  * @author Naoki Takezoe
  * @see JsonSamplePage
  */
 public class JsonPage extends LayoutPage {
 	
-	public String title = "JSON‚ğg—p‚µ‚½AjaxƒAƒvƒŠƒP[ƒVƒ‡ƒ“";
+	public String title = "JSONã‚’ä½¿ç”¨ã—ãŸAjaxã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³";
 	
 }

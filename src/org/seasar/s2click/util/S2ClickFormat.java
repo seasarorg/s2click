@@ -11,19 +11,19 @@ import net.sf.click.util.Format;
 public class S2ClickFormat extends Format {
 	
 	/**
-	 * ˆø”‚É“n‚³‚ê‚½•¶š—ñ‚ğclick.xml‚Åw’è‚³‚ê‚½•¶šƒR[ƒh‚ÅURLƒGƒ“ƒR[ƒh‚µ‚Ü‚·B
+	 * å¼•æ•°ã«æ¸¡ã•ã‚ŒãŸæ–‡å­—åˆ—ã‚’click.xmlã§æŒ‡å®šã•ã‚ŒãŸæ–‡å­—ã‚³ãƒ¼ãƒ‰ã§URLã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã—ã¾ã™ã€‚
 	 * 
-	 * @param value •¶š—ñ
-	 * @return URLƒGƒ“ƒR[ƒhŒã‚Ì•¶š—ñ
+	 * @param value æ–‡å­—åˆ—
+	 * @return URLã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰å¾Œã®æ–‡å­—åˆ—
 	 */
 	public String url(String value){
 		return S2ClickUtils.urlEncode(value);
 	}
 	
 	/**
-	 * JavaƒIƒuƒWƒFƒNƒg‚ğJSON‚É•ÏŠ·‚µ‚Ü‚·B
+	 * Javaã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’JSONã«å¤‰æ›ã—ã¾ã™ã€‚
 	 * 
-	 * @param obj ƒIƒuƒWƒFƒNƒg
+	 * @param obj ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	 * @return JSON
 	 */
 	public String json(Object obj){
@@ -31,10 +31,10 @@ public class S2ClickFormat extends Format {
 	}
 	
 	/**
-	 * ˜A‘±‚·‚é”¼ŠpƒXƒy[ƒX‚Ì2•¶š–ÚˆÈ~‚ğ&nbsp;‚É•ÏŠ·‚µ‚Ü‚·B
+	 * é€£ç¶šã™ã‚‹åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ã®2æ–‡å­—ç›®ä»¥é™ã‚’&nbsp;ã«å¤‰æ›ã—ã¾ã™ã€‚
 	 * 
-	 * @param value •¶š—ñ
-	 * @return •ÏŠ·Œã‚Ì•¶š—ñ
+	 * @param value æ–‡å­—åˆ—
+	 * @return å¤‰æ›å¾Œã®æ–‡å­—åˆ—
 	 */
 	public String nbsp(String value){
 		return S2ClickUtils.convertNbsp(value);

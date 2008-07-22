@@ -9,7 +9,7 @@ import junit.framework.TestCase;
 public class DateFieldYYYYMMDDTest extends TestCase {
 
 	/**
-	 * <code>getValue()</code>ƒƒ\ƒbƒh‚Å‚Åyyyy/MM/ddŒ`®‚ÅƒtƒH[ƒ}ƒbƒg‚³‚ê‚½“ú•t‚ªæ“¾‚Å‚«‚é‚±‚ÆB
+	 * <code>getValue()</code>ãƒ¡ã‚½ãƒƒãƒ‰ã§ã§yyyy/MM/ddå½¢å¼ã§ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã•ã‚ŒãŸæ—¥ä»˜ãŒå–å¾—ã§ãã‚‹ã“ã¨ã€‚
 	 */
 	public void testDateFieldYYYYMMDD1() throws Exception {
 		MockContext.initContext();
@@ -22,8 +22,8 @@ public class DateFieldYYYYMMDDTest extends TestCase {
 	}
 
 	/**
-	 * <code>setValue()</code>ƒƒ\ƒbƒh‚Åyyyy/MM/ddŒ`®‚Ì•¶š—ñ‚Æ‚µ‚ÄƒZƒbƒg‚µ‚½“ú•t‚ª
-	 * <code>getDate()</code>ƒƒ\ƒbƒh‚Åæ“¾‚Å‚«‚é‚±‚ÆB
+	 * <code>setValue()</code>ãƒ¡ã‚½ãƒƒãƒ‰ã§yyyy/MM/ddå½¢å¼ã®æ–‡å­—åˆ—ã¨ã—ã¦ã‚»ãƒƒãƒˆã—ãŸæ—¥ä»˜ãŒ
+	 * <code>getDate()</code>ãƒ¡ã‚½ãƒƒãƒ‰ã§å–å¾—ã§ãã‚‹ã“ã¨ã€‚
 	 */
 	public void testDateFieldYYYYMMDD2() throws Exception {
 		MockContext.initContext();
@@ -60,26 +60,26 @@ public class DateFieldYYYYMMDDTest extends TestCase {
 
 	public void testDateFieldYYYYMMDD5() throws Exception {
 		MockContext.initContext();
-		DateFieldYYYYMMDD dateField = new DateFieldYYYYMMDD("name", "“ú•t");
+		DateFieldYYYYMMDD dateField = new DateFieldYYYYMMDD("name", "æ—¥ä»˜");
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 		dateField.setDate(format.parse("2000/01/01"));
 		
 		assertEquals("2000/01/01", dateField.getValue());
 		assertEquals("name", dateField.getName());
-		assertEquals("“ú•t", dateField.getLabel());
+		assertEquals("æ—¥ä»˜", dateField.getLabel());
 	}
 
 	public void testDateFieldYYYYMMDD6() throws Exception {
 		MockContext.initContext();
-		DateFieldYYYYMMDD dateField = new DateFieldYYYYMMDD("name", "“ú•t", true);
+		DateFieldYYYYMMDD dateField = new DateFieldYYYYMMDD("name", "æ—¥ä»˜", true);
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 		dateField.setDate(format.parse("2000/01/01"));
 		
 		assertEquals("2000/01/01", dateField.getValue());
 		assertEquals("name", dateField.getName());
-		assertEquals("“ú•t", dateField.getLabel());
+		assertEquals("æ—¥ä»˜", dateField.getLabel());
 		assertTrue(dateField.isRequired());
 	}
 }

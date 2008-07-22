@@ -3,14 +3,14 @@ package org.seasar.s2click.example.page;
 import net.sf.click.extras.graph.JSBarChart;
 
 /**
- * ƒOƒ‰ƒtƒRƒ“ƒgƒ[ƒ‹‚ÌƒTƒ“ƒvƒ‹ƒy[ƒWB
+ * ã‚°ãƒ©ãƒ•ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã®ã‚µãƒ³ãƒ—ãƒ«ãƒšãƒ¼ã‚¸ã€‚
  * 
  * @author Naoki Takezoe
  */
 public class GraphPage extends LayoutPage {
 	
-	public String title = "JSGraphics‚É‚æ‚éƒOƒ‰ƒtƒ`ƒƒ[ƒg";
-	public JSBarChart barChart = new JSBarChart("barChart", "–_ƒOƒ‰ƒt");
+	public String title = "JSGraphicsã«ã‚ˆã‚‹ã‚°ãƒ©ãƒ•ãƒãƒ£ãƒ¼ãƒˆ";
+	public JSBarChart barChart = new JSBarChart("barChart", "æ£’ã‚°ãƒ©ãƒ•");
 	
 	public GraphPage() {
 		super.onInit();

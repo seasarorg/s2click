@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import net.sf.click.control.Column;
 
 /**
- * publicƒtƒB[ƒ‹ƒh‚ðƒe[ƒuƒ‹—ñ‚Æ‚µ‚Äˆµ‚¤‚½‚ß‚Ì<code>Column</code>Šg’£ƒNƒ‰ƒX‚Å‚·B
+ * publicãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’ãƒ†ãƒ¼ãƒ–ãƒ«åˆ—ã¨ã—ã¦æ‰±ã†ãŸã‚ã®<code>Column</code>æ‹¡å¼µã‚¯ãƒ©ã‚¹ã§ã™ã€‚
  * 
  * @author Naoki Takezoe
  */

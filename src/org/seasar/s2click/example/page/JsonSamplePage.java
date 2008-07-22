@@ -7,7 +7,7 @@ import org.seasar.s2click.annotation.Path;
 import org.seasar.s2click.page.AbstractJSONPage;
 
 /**
- * JSON‚ğ•Ô‹p‚·‚éƒy[ƒWƒNƒ‰ƒX‚ÌƒTƒ“ƒvƒ‹B
+ * JSONã‚’è¿”å´ã™ã‚‹ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã®ã‚µãƒ³ãƒ—ãƒ«ã€‚
  * 
  * @author Naoki Takezoe
  * @see JsonPage
@@ -31,10 +31,10 @@ public class JsonSamplePage extends AbstractJSONPage {
 	
 	public JsonSamplePage(){
 		List<Book> books = new ArrayList<Book>();
-		books.add(new Book("“ü–åWiki", "–ˆ“úƒRƒ~ƒ…ƒjƒP[ƒVƒ‡ƒ“ƒY", "’|“Y ’¼÷", 1000));
-		books.add(new Book("Eclipseƒvƒ‰ƒOƒCƒ“ŠJ”­“O’êU—ª", "–ˆ“úƒRƒ~ƒ…ƒjƒP[ƒVƒ‡ƒ“ƒY", "’|“Y ’¼÷", 1000));
-		books.add(new Book("Eclipse‹tˆø‚«ƒNƒCƒbƒNƒŠƒtƒ@ƒŒƒ“ƒX", "–ˆ“úƒRƒ~ƒ…ƒjƒP[ƒVƒ‡ƒ“ƒY", "’|“Y ’¼÷", 1000));
-		books.add(new Book("“ÆKJavaScript", "ãÄ‰jĞ", "’|“Y ’¼÷", 1000));
+		books.add(new Book("å…¥é–€Wiki", "æ¯æ—¥ã‚³ãƒŸãƒ¥ãƒ‹ã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚º", "ç«¹æ·» ç›´æ¨¹", 1000));
+		books.add(new Book("Eclipseãƒ—ãƒ©ã‚°ã‚¤ãƒ³é–‹ç™ºå¾¹åº•æ”»ç•¥", "æ¯æ—¥ã‚³ãƒŸãƒ¥ãƒ‹ã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚º", "ç«¹æ·» ç›´æ¨¹", 1000));
+		books.add(new Book("Eclipseé€†å¼•ãã‚¯ã‚¤ãƒƒã‚¯ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹", "æ¯æ—¥ã‚³ãƒŸãƒ¥ãƒ‹ã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚º", "ç«¹æ·» ç›´æ¨¹", 1000));
+		books.add(new Book("ç‹¬ç¿’JavaScript", "ç¿”æ³³ç¤¾", "ç«¹æ·» ç›´æ¨¹", 1000));
 		
 		setContents(books);
 	}

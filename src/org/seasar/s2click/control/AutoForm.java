@@ -12,14 +12,14 @@ import net.sf.click.control.Submit;
 import net.sf.click.util.HtmlStringBuffer;
 
 /**
- * publicƒtƒB[ƒ‹ƒh‚ğ©“®“I‚ÉƒRƒ“ƒgƒ[ƒ‹‚Æ‚µ‚Ä“o˜^‚µ‚Ä‚­‚ê‚é<code>Form</code>Šg’£ƒNƒ‰ƒXB
- * SubmitƒRƒ“ƒgƒ[ƒ‹‚É‚æ‚Á‚ÄJavaScriptƒoƒŠƒf[ƒVƒ‡ƒ“‚ğs‚¤‚©‚Ç‚¤‚©‚ğ§Œä‚·‚é‹@”\‚à”õ‚¦‚Ä‚¢‚Ü‚·B
+ * publicãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’è‡ªå‹•çš„ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã¨ã—ã¦ç™»éŒ²ã—ã¦ãã‚Œã‚‹<code>Form</code>æ‹¡å¼µã‚¯ãƒ©ã‚¹ã€‚
+ * Submitã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã«ã‚ˆã£ã¦JavaScriptãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¡Œã†ã‹ã©ã†ã‹ã‚’åˆ¶å¾¡ã™ã‚‹æ©Ÿèƒ½ã‚‚å‚™ãˆã¦ã„ã¾ã™ã€‚
  * 
- * <h2>publicƒtƒB[ƒ‹ƒh‚Ì©“®“o˜^</h2>
+ * <h2>publicãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®è‡ªå‹•ç™»éŒ²</h2>
  * <p>
- *   ‚±‚ÌƒNƒ‰ƒX‚ÌƒTƒuƒNƒ‰ƒX‚Å{@link #setFieldAutoRegisteration(boolean)}‚É<code>true</code>‚ªİ’è‚³‚ê‚½ê‡A
- *   <code>AutoForm</code>‚ÍƒTƒuƒNƒ‰ƒX‚ÌpublicƒtƒB[ƒ‹ƒh‚Æ‚µ‚ÄéŒ¾‚³‚ê‚½ƒRƒ“ƒgƒ[ƒ‹ŒQ‚ğ©“®“I‚É{@link #add(Field)}‚µ‚Ü‚·B
- *   ‰Šú‰»ƒR[ƒh‚Å{@link #add(Field)}‚ğŒÄ‚Ño‚·•K—v‚Í‚ ‚è‚Ü‚¹‚ñB
+ *   ã“ã®ã‚¯ãƒ©ã‚¹ã®ã‚µãƒ–ã‚¯ãƒ©ã‚¹ã§{@link #setFieldAutoRegisteration(boolean)}ã«<code>true</code>ãŒè¨­å®šã•ã‚ŒãŸå ´åˆã€
+ *   <code>AutoForm</code>ã¯ã‚µãƒ–ã‚¯ãƒ©ã‚¹ã®publicãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¨ã—ã¦å®£è¨€ã•ã‚ŒãŸã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ç¾¤ã‚’è‡ªå‹•çš„ã«{@link #add(Field)}ã—ã¾ã™ã€‚
+ *   åˆæœŸåŒ–ã‚³ãƒ¼ãƒ‰ã§{@link #add(Field)}ã‚’å‘¼ã³å‡ºã™å¿…è¦ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚
  * </p>
  * <pre>
  * public SampleForm extends Form {
@@ -34,10 +34,10 @@ import net.sf.click.util.HtmlStringBuffer;
  *   ...
  * } </pre>
  * 
- * <h2>JavaScriptƒoƒŠƒf[ƒVƒ‡ƒ“‚ğs‚í‚È‚¢SubmitƒRƒ“ƒgƒ[ƒ‹</h2>
+ * <h2>JavaScriptãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¡Œã‚ãªã„Submitã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«</h2>
  * <p>
- *   {@link #addNoJavaScriptValidateAction(String)}‚ğg—p‚·‚é‚±‚Æ‚ÅA
- *   JavaScriptƒoƒŠƒf[ƒVƒ‡ƒ“‚ğs‚í‚È‚¢<code>Submit</code>ƒRƒ“ƒgƒ[ƒ‹‚ğw’è‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+ *   {@link #addNoJavaScriptValidateAction(String)}ã‚’ä½¿ç”¨ã™ã‚‹ã“ã¨ã§ã€
+ *   JavaScriptãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¡Œã‚ãªã„<code>Submit</code>ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚’æŒ‡å®šã™ã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚
  * </p>
  * <pre>
  * public SampleForm extends Form {

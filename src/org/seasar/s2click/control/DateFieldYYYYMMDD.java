@@ -3,7 +3,7 @@ package org.seasar.s2click.control;
 import net.sf.click.extras.control.DateField;
 
 /**
- * YYYY/MM/DDŒ`®‚Å“ú•t‚ğ•\¦‚·‚é<code>DateField</code>Šg’£ƒRƒ“ƒgƒ[ƒ‹B
+ * YYYY/MM/DDå½¢å¼ã§æ—¥ä»˜ã‚’è¡¨ç¤ºã™ã‚‹<code>DateField</code>æ‹¡å¼µã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã€‚
  * 
  * @author Naoki Takezoe
  */

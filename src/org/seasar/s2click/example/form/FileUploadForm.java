@@ -7,7 +7,7 @@ import org.seasar.s2click.control.AutoForm;
 import org.seasar.s2click.example.page.FileUploadPage;
 
 /**
- * ƒtƒ@ƒCƒ‹ƒAƒbƒvƒ[ƒh‚ÌƒTƒ“ƒvƒ‹ƒy[ƒW‚Åg—p‚·‚éƒtƒH[ƒ€ƒNƒ‰ƒXB
+ * ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã®ã‚µãƒ³ãƒ—ãƒ«ãƒšãƒ¼ã‚¸ã§ä½¿ç”¨ã™ã‚‹ãƒ•ã‚©ãƒ¼ãƒ ã‚¯ãƒ©ã‚¹ã€‚
  * 
  * @see FileUploadPage
  * @author Naoki Takezoe
@@ -22,6 +22,6 @@ public class FileUploadForm extends AutoForm {
 		setJavaScriptValidation(true);
 	}
 
-	public FileField file = new FileField("file", "ƒtƒ@ƒCƒ‹", true);
-	public Submit submit = new Submit("submit", "ƒAƒbƒvƒ[ƒh");
+	public FileField file = new FileField("file", "ãƒ•ã‚¡ã‚¤ãƒ«", true);
+	public Submit submit = new Submit("submit", "ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰");
 }

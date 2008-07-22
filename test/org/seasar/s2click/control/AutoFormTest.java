@@ -13,7 +13,7 @@ import org.seasar.s2click.S2ClickTestCase;
 public class AutoFormTest extends S2ClickTestCase {
 
 	/**
-	 * <code>onProcess()</code>‚©‚ç<code>init()</code>‚ªŒÄ‚Ño‚³‚ê‚é‚±‚ÆB
+	 * <code>onProcess()</code>ã‹ã‚‰<code>init()</code>ãŒå‘¼ã³å‡ºã•ã‚Œã‚‹ã“ã¨ã€‚
 	 */
 	public void testOnProcess() {
 		MockContext.initContext();
@@ -43,8 +43,8 @@ public class AutoFormTest extends S2ClickTestCase {
 	}
 
 	/**
-	 * <code>isFieldAutoRegistration()</code>‚Ì‰Šú’l‚ª<code>false</code>‚Å‚ ‚é‚±‚ÆA
-	 * <code>setFieldAutoRegisteration()</code>‚ÅƒZƒbƒg‚µ‚½’l‚ª<code>isFieldAutoRegistration()</code>‚Åæ“¾‚Å‚«‚é‚±‚ÆB
+	 * <code>isFieldAutoRegistration()</code>ã®åˆæœŸå€¤ãŒ<code>false</code>ã§ã‚ã‚‹ã“ã¨ã€
+	 * <code>setFieldAutoRegisteration()</code>ã§ã‚»ãƒƒãƒˆã—ãŸå€¤ãŒ<code>isFieldAutoRegistration()</code>ã§å–å¾—ã§ãã‚‹ã“ã¨ã€‚
 	 */
 	public void testSetFieldAutoRegisteration() {
 		AutoForm form = new AutoForm(){
@@ -76,7 +76,7 @@ public class AutoFormTest extends S2ClickTestCase {
 	}
 
 	/**
-	 * ƒtƒB[ƒ‹ƒh‚Ì©“®“o˜^‚ªs‚í‚ê‚é‚±‚ÆB
+	 * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®è‡ªå‹•ç™»éŒ²ãŒè¡Œã‚ã‚Œã‚‹ã“ã¨ã€‚
 	 */
 	public void testInit1() {
 		@SuppressWarnings("unused")

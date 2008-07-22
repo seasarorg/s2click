@@ -3,20 +3,20 @@ package org.seasar.s2click.example.page;
 import org.seasar.s2click.control.ToolTip;
 
 /**
- * {@link ToolTip}ƒRƒ“ƒgƒ[ƒ‹‚ÌƒTƒ“ƒvƒ‹ƒy[ƒWB
+ * {@link ToolTip}ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã®ã‚µãƒ³ãƒ—ãƒ«ãƒšãƒ¼ã‚¸ã€‚
  * 
  * @author Naoki Takezoe
  * @see ToolTip
  */
 public class TooltipPage extends LayoutPage {
 	
-	public String title = "ƒc[ƒ‹ƒ`ƒbƒvƒwƒ‹ƒv";
+	public String title = "ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ãƒ˜ãƒ«ãƒ—";
 	
-	public ToolTip tooltipIcon = new ToolTip("tooltipIcon", "help.html", "ƒwƒ‹ƒv");
+	public ToolTip tooltipIcon = new ToolTip("tooltipIcon", "help.html", "ãƒ˜ãƒ«ãƒ—");
 	
-	public ToolTip tooltipText = new ToolTip("tooltipText", "help.html", "ƒwƒ‹ƒv");
+	public ToolTip tooltipText = new ToolTip("tooltipText", "help.html", "ãƒ˜ãƒ«ãƒ—");
 	
 	public TooltipPage(){
-		tooltipText.setLabel("ƒeƒLƒXƒg");
+		tooltipText.setLabel("ãƒ†ã‚­ã‚¹ãƒˆ");
 	}
 }

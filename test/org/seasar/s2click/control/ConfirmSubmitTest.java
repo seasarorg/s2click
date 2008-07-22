@@ -19,9 +19,9 @@ public class ConfirmSubmitTest extends TestCase {
 	}
 	
 	public void testConfirmSubmit3() {
-		ConfirmSubmit submit = new ConfirmSubmit("submit", "‘—Mƒ{ƒ^ƒ“");
+		ConfirmSubmit submit = new ConfirmSubmit("submit", "é€ä¿¡ãƒœã‚¿ãƒ³");
 		assertEquals("submit", submit.getName());
-		assertEquals("‘—Mƒ{ƒ^ƒ“", submit.getLabel());
+		assertEquals("é€ä¿¡ãƒœã‚¿ãƒ³", submit.getLabel());
 		assertNull(submit.getOnClick());
 		assertNull(submit.getAttribute("onclick"));
 	}
@@ -34,11 +34,11 @@ public class ConfirmSubmitTest extends TestCase {
 	}
 	
 	/**
-	 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Å—^‚¦‚½ƒƒbƒZ[ƒW‚ğ—p‚¢‚ÄŠm”Fƒ_ƒCƒAƒƒO‚ğ•\¦‚·‚éJavaScript‚ª¶¬‚³‚ê‚é‚±‚ÆB
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§ä¸ãˆãŸãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ç”¨ã„ã¦ç¢ºèªãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’è¡¨ç¤ºã™ã‚‹JavaScriptãŒç”Ÿæˆã•ã‚Œã‚‹ã“ã¨ã€‚
 	 */
 	public void testConfirmSubmit5() {
-		ConfirmSubmit submit = new ConfirmSubmit("submit", "‘—M", this, "onSubmit",
-				"‘—M‚µ‚Ä‚æ‚ë‚µ‚¢‚Å‚·‚©H");
+		ConfirmSubmit submit = new ConfirmSubmit("submit", "é€ä¿¡", this, "onSubmit",
+				"é€ä¿¡ã—ã¦ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ");
 		
 		assertEquals("return confirm('\\u9001\\u4FE1\\u3057\\u3066\\u3088\\u308D\\u3057\\u3044\\u3067\\u3059\\u304B\\uFF1F');",
 				submit.getOnClick());
@@ -47,12 +47,12 @@ public class ConfirmSubmitTest extends TestCase {
 	}
 
 	/**
-	 * <code>setConfirmMessage()</code>ƒƒ\ƒbƒh‚Å—^‚¦‚½ƒƒbƒZ[ƒW‚ğ—p‚¢‚Ä
-	 * Šm”Fƒ_ƒCƒAƒƒO‚ğ•\¦‚·‚éJavaScript‚ª¶¬‚³‚ê‚é‚±‚ÆB
+	 * <code>setConfirmMessage()</code>ãƒ¡ã‚½ãƒƒãƒ‰ã§ä¸ãˆãŸãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ç”¨ã„ã¦
+	 * ç¢ºèªãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’è¡¨ç¤ºã™ã‚‹JavaScriptãŒç”Ÿæˆã•ã‚Œã‚‹ã“ã¨ã€‚
 	 */
 	public void testSetConfirmMessage() {
-		ConfirmSubmit submit = new ConfirmSubmit("submit", "‘—M", this, "onSubmit");
-		submit.setConfirmMessage("‘—M‚µ‚Ä‚æ‚ë‚µ‚¢‚Å‚·‚©H");
+		ConfirmSubmit submit = new ConfirmSubmit("submit", "é€ä¿¡", this, "onSubmit");
+		submit.setConfirmMessage("é€ä¿¡ã—ã¦ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ");
 
 		assertEquals("return confirm('\\u9001\\u4FE1\\u3057\\u3066\\u3088\\u308D\\u3057\\u3044\\u3067\\u3059\\u304B\\uFF1F');",
 				submit.getOnClick());
