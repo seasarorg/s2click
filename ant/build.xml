@@ -30,7 +30,7 @@
     <target name="compile">
     	<mkdir dir="${bin.dir}"/>
     	<javac srcdir="${src.dir}" destdir="${bin.dir}" source="1.5"
-    		encoding="Windows-31J" debug="true" classpathref="classpath" 
+    		encoding="UTF-8" debug="true" classpathref="classpath" 
     		excludes="org/seasar/s2click/example/**"/>
     </target>
 	
@@ -59,7 +59,7 @@
     	</copy>
 		<mkdir dir="${example.dir}/WEB-INF/classes"/>
     	<javac srcdir="${src.dir}" destdir="${example.dir}/WEB-INF/classes" source="1.5"
-    		encoding="Windows-31J" debug="true" classpathref="classpath" 
+    		encoding="UTF-8" debug="true" classpathref="classpath" 
     		includes="org/seasar/s2click/example/**"/>
     	<copy todir="${example.dir}/WEB-INF/classes">
     		<fileset dir="${src.dir}" includes="org/seasar/s2click/example/**"/>
@@ -77,7 +77,7 @@
 		<zip destfile="${release.dir}/${blank.zip.name}" basedir="${blank.dir}" includes="s2click/**"/>
 	</target>
 
-	<target name="release" depends="clean, build-example">
+	<target name="release" depends="clean, build-example, build-blank">
 		<mkdir dir="${release.dir}/lib"/>
     	<copy todir="${release.dir}/lib">
     		<fileset dir="../WebContent/WEB-INF/lib" includes="*.jar"/>
