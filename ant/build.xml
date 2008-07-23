@@ -52,7 +52,7 @@
 	<target name="build-example" depends="jar">
 		<mkdir dir="${example.dir}"/>
     	<copy todir="${example.dir}">
-    		<fileset dir="../WebContent" includes="*/**" />
+    		<fileset dir="../WebContent" includes="*/**" excludes="**/src,**/src/*.jar"/>
     	</copy>
     	<copy todir="${example.dir}/WEB-INF/lib">
     		<fileset dir="${release.dir}" includes="${jar.name}" />
