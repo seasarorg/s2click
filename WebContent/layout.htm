@@ -16,7 +16,7 @@
     height: 100%;
   }
   
-  td.title {
+  td.app-title {
     font-size: 200%;
     font-weight: bold;
     background-color: navy;
@@ -26,32 +26,36 @@
     padding: 4px;
   }
   
+  td.page-title {
+    font-weight: bold;
+    background-color: navy;
+    color: white;
+    margin: 0px;
+    height: 1px;
+    padding: 4px;
+    text-align: right;
+  }
+  
   td.menu {
     padding-top: 20px;
     border-right: navy 1px dotted;
     font-size: 80%;
     background-color: #EEEEFF;
   }
-  
-  td.main {
-    padding-top: 20px;
-  }
-  
-  h1 {
-    margin: 0px;
-    padding: 0px;
-    font-size: 140%;
-    text-align: right;
-  }
-  
+
   p {
     text-indent: 10px;
+  }
+  
+  div.menu {
+    text-align: right;
   }
   </style>
 </head>
 <body>
-<table class="contents">
-<tr><td colspan="2" class="title">S2Click Examples</td></tr>
+<table class="contents" cellspacing="0">
+<tr><td colspan="2" class="app-title">S2Click Examples</td></tr>
+<tr><td colspan="2" class="page-title">$title</td></tr>
 <tr>
   <td width="180" valign="top" class="menu">
     <ul>
@@ -65,7 +69,15 @@
     </ul>
   </td>
   <td valign="top" class="main">
-    <h1>$title</h1>
+    <div class="menu">
+      #if($template)
+        [<a href="source-viewer.htm?filename=$template">HTML</a>]
+      #else
+        [<a href="source-viewer.htm?filename=$path">HTML</a>]
+      #end
+      [<a href="">Java</a>]
+    </div>
+    
     #if($template)
       #parse($template)
     #else
