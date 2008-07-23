@@ -5,5 +5,7 @@
 <components>
 	<include path="aop.dicon"/>
 	<include path="convention.dicon"/>
+	<include path="j2ee.dicon"/>
+	<include path="s2jdbc.dicon"/>
 	<include path="s2click.dicon"/>
 </components>
