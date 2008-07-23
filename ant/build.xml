@@ -10,23 +10,33 @@
 	<property name="example.war.name" value="s2click-example.war"/>
 	<property name="blank.dir" value="blank"/>
 	<property name="blank.zip.name" value="s2click-blank.zip"/>
+	<property name="blank-s2jdbc.dir" value="blank-s2jdbc"/>
+	<property name="blank-s2jdbc.zip.name" value="s2click-s2jdbc-blank.zip"/>
 	<property name="release.dir" value="s2click-${version}"/>
 	<property name="release.zip.name" value="s2click-${version}.zip"/>
 
 	<path id="classpath">
-		<pathelement location="${lib.dir}/aopallianve-1.0.jar"/>
+		<pathelement location="${lib.dir}/aopalliance-1.0.jar"/>
 		<pathelement location="${lib.dir}/click-1.4-patch-20080602.jar"/>
 		<pathelement location="${lib.dir}/click-extras-1.4.jar"/>
 		<pathelement location="${lib.dir}/commons-logging-1.1.jar"/>
-		<pathelement location="${lib.dir}/javaassist-3.4.ga.jar"/>
+		<pathelement location="${lib.dir}/javassist-3.4.ga.jar"/>
 		<pathelement location="${lib.dir}/jsonic-0.9.4.jar"/>
 		<pathelement location="${lib.dir}/log4j-1.2.13.jar"/>
 		<pathelement location="${lib.dir}/ognl-2.6.9-patch-20070908.jar"/>
 		<pathelement location="${lib.dir}/s2-extension-2.4.26.jar"/>
 		<pathelement location="${lib.dir}/s2-framework-2.4.26.jar"/>
+		<pathelement location="${lib.dir}/s2-tiger-2.4.26.jar"/>
+		<pathelement location="${lib.dir}/geronimo-ejb_3.0_spec-1.0.jar"/>
+		<pathelement location="${lib.dir}/geronimo-jpa_3.0_spec-1.0.jar"/>
+		<pathelement location="${lib.dir}/geronimo-jta_1.1_spec-1.0.jar"/>
+		<pathelement location="${lib.dir}/hsqldb.jar"/>
 		<pathelement location="./lib/servlet-api-2.3.jar"/>
 	</path>
 	
+	<!--==================================================-->
+	<!-- S2Clickのコンパイル -->
+	<!--==================================================-->
     <target name="compile">
     	<mkdir dir="${bin.dir}"/>
     	<javac srcdir="${src.dir}" destdir="${bin.dir}" source="1.5"
@@ -34,6 +44,9 @@
     		excludes="org/seasar/s2click/example/**"/>
     </target>
 	
+	<!--==================================================-->
+	<!-- S2ClickのJARを作成 -->
+	<!--==================================================-->
 	<target name="jar" depends="compile">
 		<mkdir dir="${release.dir}"/>
     	<copy todir="${bin.dir}">
@@ -49,38 +62,64 @@
 		<jar destfile="${release.dir}/${jar.name}" basedir="${bin.dir}" />
 	</target>
 	
+	<!--==================================================-->
+	<!-- サンプルのwarファイルを作成 -->
+	<!--==================================================-->
 	<target name="build-example" depends="jar">
 		<mkdir dir="${example.dir}"/>
     	<copy todir="${example.dir}">
-    		<fileset dir="../WebContent" includes="*/**" excludes="**/src,**/src/*.jar"/>
+    		<fileset dir="../WebContent" includes="*/**" 
+    			excludes="**/src,**/src/*.jar"/>
     	</copy>
     	<copy todir="${example.dir}/WEB-INF/lib">
     		<fileset dir="${release.dir}" includes="${jar.name}" />
     	</copy>
 		<mkdir dir="${example.dir}/WEB-INF/classes"/>
-    	<javac srcdir="${src.dir}" destdir="${example.dir}/WEB-INF/classes" source="1.5"
-    		encoding="UTF-8" debug="true" classpathref="classpath" 
+    	<javac srcdir="${src.dir}" destdir="${example.dir}/WEB-INF/classes" 
+    		source="1.5" encoding="UTF-8" debug="true" classpathref="classpath" 
     		includes="org/seasar/s2click/example/**"/>
     	<copy todir="${example.dir}/WEB-INF/classes">
     		<fileset dir="${src.dir}" includes="org/seasar/s2click/example/**"/>
+    		<fileset dir="${src.dir}" includes="data/*"/>
     		<fileset dir="${src.dir}" includes="*.dicon"/>
     		<fileset dir="${src.dir}" includes="env.txt"/>
     	</copy>
-		<war destfile="${release.dir}/${example.war.name}" basedir="${example.dir}" />
+		<war destfile="${release.dir}/${example.war.name}" 
+			basedir="${example.dir}" />
 	</target>
 	
+	<!--==================================================-->
+	<!-- S2Clickのブランクプロジェクトを作成 -->
+	<!--==================================================-->
 	<target name="build-blank" depends="jar">
     	<copy todir="${blank.dir}/s2click/WebContent/WEB-INF/lib">
+    		<fileset dir="../WebContent/WEB-INF/lib" includes="*.jar"
+    			excludes="geronimo-*.jar, s2-tiger-*.jar"/>
+    		<fileset dir="${release.dir}" includes="${jar.name}"/>
+    	</copy>
+		<zip destfile="${release.dir}/${blank.zip.name}" 
+			basedir="${blank.dir}" includes="s2click/**"/>
+	</target>
+
+	<!--==================================================-->
+	<!-- S2Click-S2JDBCのブランクプロジェクトを作成 -->
+	<!--==================================================-->
+	<target name="build-blank-s2jdbc" depends="jar">
+    	<copy todir="${blank-s2jdbc.dir}/s2click/WebContent/WEB-INF/lib">
     		<fileset dir="../WebContent/WEB-INF/lib" includes="*.jar"/>
     		<fileset dir="${release.dir}" includes="${jar.name}"/>
     	</copy>
-		<zip destfile="${release.dir}/${blank.zip.name}" basedir="${blank.dir}" includes="s2click/**"/>
+		<zip destfile="${release.dir}/${blank-s2jdbc.zip.name}" 
+			basedir="${blank-s2jdbc.dir}" includes="s2click/**"/>
 	</target>
-
-	<target name="release" depends="clean, build-example, build-blank">
+			
+	<!--==================================================-->
+	<!-- リリースアーカイブを作成 -->
+	<!--==================================================-->
+	<target name="release" depends="clean, build-example, build-blank, build-blank-s2jdbc">
 		<mkdir dir="${release.dir}/lib"/>
     	<copy todir="${release.dir}/lib">
-    		<fileset dir="../WebContent/WEB-INF/lib" includes="*.jar"/>
+    		<fileset dir="../WebContent/WEB-INF/lib" includes="*.jar" />
     	</copy>
 		
 		<mkdir dir="${release.dir}/doc"/>
@@ -88,16 +127,23 @@
     		<fileset dir="../docs" includes="**"/>
     	</copy>
 		
-		<zip destfile="${release.zip.name}" basedir="." includes="${release.dir}/**"/>
+		<zip destfile="${release.zip.name}" basedir="." 
+			includes="${release.dir}/**"/>
 	</target>
 	
+	<!--==================================================-->
+	<!-- ビルドプロセスが生成したリソースを削除 -->
+	<!--==================================================-->
 	<target name="clean">
 		<delete dir="${bin.dir}"/>
 		<delete dir="${example.dir}"/>
 		<delete dir="${release.dir}"/>
 		<delete file="${release.zip.name}"/>
 		<delete>
-			<fileset dir="${blank.dir}/s2click/WebContent/WEB-INF/lib" includes="*.jar" />
+			<fileset dir="${blank.dir}/s2click/WebContent/WEB-INF/lib" 
+				includes="*.jar" />
+			<fileset dir="${blank-s2jdbc.dir}/s2click/WebContent/WEB-INF/lib" 
+				includes="*.jar" />
 		</delete>
 	</target>
 </project>
