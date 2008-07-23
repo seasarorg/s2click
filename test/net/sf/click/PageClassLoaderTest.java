@@ -22,7 +22,15 @@ public class PageClassLoaderTest extends S2ClickTestCase {
 	}
 
 	public void testGetPageClasses() {
-		fail("Not yet implemented");
+		PageClassLoader loader = new PageClassLoader(
+				"org.seasar.s2click.example.page");
+		List<String> classes = loader.getPageClasses();
+		
+		assertEquals(10, classes.size());
+		
+		for(String className: classes){
+			assertTrue(className.endsWith("Page"));
+		}
 	}
 
 }
