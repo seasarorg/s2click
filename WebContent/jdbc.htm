@@ -1,0 +1,9 @@
+$form
+<ul>
+#foreach($message in $messageList)
+  <li>
+    $format.html($message.name) - 
+    $format.html($message.message) 
+    ($format.date($message.date, "yyyy/MM/dd HH:mm:ss"))</li>
+#end
+</ul>
