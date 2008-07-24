@@ -8,7 +8,13 @@ import net.sf.click.Page;
  * @author Naoki Takezoe
  */
 public abstract class LayoutPage extends Page {
-
+	
+	public LayoutPage(){
+		String className = getClass().getName();
+		String sourcePath = className.replaceAll("\\.", "/") + ".java";
+		addModel("sourcePath", "/WEB-INF/classes/" + sourcePath);
+	}
+	
 	/**
 	 * 共通テンプレート <tt>/layout.htm</tt> を返します。
 	 */
