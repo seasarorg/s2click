@@ -1,8 +1,9 @@
 * HOT deployモードではリクエストごとにClickの初期化を行っている
   →やってみたけどページ数が多いと重くなりそう…
 
-* COOL deploy、SMART deploy
+* COOL deploy、WARM deploy
 * HOT deploy時以外はリフレクション情報をキャッシュする？
+  →COOL deployには対応してみました。WARM deployはこれでいいのだろうか…
 * コントロールやフォーマットオブジェクトのHOT deployが効かない
 
 * Ajaxの受け側にもなんらかのサポートを？

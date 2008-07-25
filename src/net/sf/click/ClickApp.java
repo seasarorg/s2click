@@ -35,6 +35,7 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.tools.view.servlet.WebappLoader;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
+import org.seasar.framework.container.util.SmartDeployUtil;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.s2click.S2ClickConfig;
@@ -186,6 +187,8 @@ class ClickApp implements EntityResolver {
 
     /** The VelocityEngine instance. */
     private final VelocityEngine velocityEngine = new VelocityEngine();
+    
+    private boolean hotDeploy;
 
     // --------------------------------------------------------- Public Methods
 
@@ -223,6 +226,8 @@ class ClickApp implements EntityResolver {
             throw new IllegalStateException("servlet context not defined");
         }
 
+        this.hotDeploy = !SmartDeployUtil.isHotdeployMode(
+        		SingletonS2ContainerFactory.getContainer());
         logger = clickLogger;
 
         ClickLogger.setInstance(logger);
@@ -431,7 +436,7 @@ class ClickApp implements EntityResolver {
                     if (resource != null) {
                     		String pageClassName = getPageClassName(path, pagesPackage);
 						if (pageClassName != null) {
-							page = new PageElm(path, pageClassName, commonHeaders);
+							page = new PageElm(path, pageClassName, commonHeaders, hotDeploy);
 
 							pageByPathMap.put(page.getPath(), page);
 
@@ -777,14 +782,14 @@ class ClickApp implements EntityResolver {
 
         if (!pageByPathMap.containsKey(ERROR_PATH)) {
             ClickApp.PageElm page =
-                new ClickApp.PageElm("net.sf.click.util.ErrorPage", ERROR_PATH);
+                new ClickApp.PageElm("net.sf.click.util.ErrorPage", ERROR_PATH, hotDeploy);
 
             pageByPathMap.put(ERROR_PATH, page);
         }
 
         if (!pageByPathMap.containsKey(NOT_FOUND_PATH)) {
             ClickApp.PageElm page =
-                new ClickApp.PageElm("net.sf.click.Page", NOT_FOUND_PATH);
+                new ClickApp.PageElm("net.sf.click.Page", NOT_FOUND_PATH, hotDeploy);
 
             pageByPathMap.put(NOT_FOUND_PATH, page);
         }
@@ -863,7 +868,7 @@ class ClickApp implements EntityResolver {
         				value = "/" + value;
         			}
                     ClickApp.PageElm page = new ClickApp.PageElm(value,
-                            className, commonHeaders);
+                            className, commonHeaders, hotDeploy);
 
                     pageByPathMap.put(value, page);
 
@@ -886,7 +891,7 @@ class ClickApp implements EntityResolver {
 
                 if (pageClassName != null) {
                     ClickApp.PageElm page = new ClickApp.PageElm(pagePath,
-                            pageClassName, commonHeaders);
+                            pageClassName, commonHeaders, hotDeploy);
 
                     pageByPathMap.put(page.getPath(), page);
 
@@ -1228,8 +1233,12 @@ class ClickApp implements EntityResolver {
         private final Map headers;
         private final String path;
         private final String pageClassName;
+        
+        private final Class pageClass;
+        private final Map fields;
+        private final Field[] fieldArray;
 
-        private PageElm(Element element, String pagesPackage, Map commonHeaders)
+        private PageElm(Element element, String pagesPackage, Map commonHeaders, boolean hotDeploy)
             throws ClassNotFoundException {
 
             // Set headers
@@ -1258,21 +1267,69 @@ class ClickApp implements EntityResolver {
             }
             
             pageClassName = value;
+            
+            if(!hotDeploy){
+            	pageClass = loadClass(pageClassName);
+                fieldArray = pageClass.getFields();
+
+                fields = new HashMap();
+                for (int i = 0; i < fieldArray.length; i++) {
+                    Field field = fieldArray[i];
+                    fields.put(field.getName(), field);
+                }            	
+            } else {
+            	pageClass = null;
+            	fields = null;
+            	fieldArray = null;
+            }
         }
 
-        private PageElm(String path, String pageClassName, Map commonHeaders) {
+        private PageElm(String path, String pageClassName, Map commonHeaders, boolean hotDeploy) {
             headers = Collections.unmodifiableMap(commonHeaders);
             this.path = path;
             this.pageClassName = pageClassName;
+            
+            if(!hotDeploy){
+            	pageClass = loadClass(pageClassName);
+                fieldArray = pageClass.getFields();
+
+                fields = new HashMap();
+                for (int i = 0; i < fieldArray.length; i++) {
+                    Field field = fieldArray[i];
+                    fields.put(field.getName(), field);
+                }            	
+            } else {
+            	pageClass = null;
+            	fields = null;
+            	fieldArray = null;
+            }            
         }
 
-        private PageElm(String classname, String path) throws ClassNotFoundException {
+        private PageElm(String classname, String path, boolean hotDeploy) throws ClassNotFoundException {
             this.headers = Collections.EMPTY_MAP;
             this.pageClassName = classname;
             this.path = path;
-        }
+            
+            if(!hotDeploy){
+            	pageClass = loadClass(pageClassName);
+                fieldArray = pageClass.getFields();
 
+                fields = new HashMap();
+                for (int i = 0; i < fieldArray.length; i++) {
+                    Field field = fieldArray[i];
+                    fields.put(field.getName(), field);
+                }            	
+            } else {
+            	pageClass = null;
+            	fields = null;
+            	fieldArray = null;
+            }
+        }
+        
         private Field[] getFieldArray() {
+        	if(fieldArray != null){
+        		return fieldArray;
+        	}
         	try {
 				return loadClass(pageClassName).getFields();
 			} catch (SecurityException e) {
@@ -1281,6 +1338,9 @@ class ClickApp implements EntityResolver {
         }
 
         private Map getFields() {
+        	if(fields != null){
+        		return fields;
+        	}
 			Map fields = new HashMap();
 			for (Field field: getFieldArray()) {
 				fields.put(field.getName(), field);
@@ -1293,6 +1353,9 @@ class ClickApp implements EntityResolver {
         }
 
         private Class getPageClass() {
+        	if(pageClass != null){
+        		return pageClass;
+        	}
         	return loadClass(this.pageClassName);
         }
 
