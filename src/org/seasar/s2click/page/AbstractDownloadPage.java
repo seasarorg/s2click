@@ -48,6 +48,14 @@ public abstract class AbstractDownloadPage extends Page {
 		this.contentType = contentType;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see net.sf.click.Page#getContentType()
+	 */
+	@Override public String getContentType(){
+		return this.contentType;
+	}
+	
 	/**
 	 * ダウンロードファイル名をセットします。
 	 * 
