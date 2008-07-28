@@ -2,7 +2,15 @@ package org.seasar.s2click.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import net.sf.click.control.Field;
+import net.sf.click.control.Form;
+import net.sf.click.util.ClickUtils;
+
+import org.seasar.framework.beans.util.Beans;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.s2click.S2ClickConfig;
@@ -68,4 +76,50 @@ public class S2ClickUtils {
 		return (T) container.getComponent(clazz);
 	}
 	
+	/**
+	 * publicフィールドに対応した{@link ClickUtils#copyObjectToForm(Object, Form, boolean)}です。
+	 * 
+	 * @param object コピー元のオブジェクト
+	 * @param form コピー先のフォーム
+	 * @param debug デバッグログを出力するかどうか
+	 */
+    public static void copyObjectToForm(Object object, Form form,
+            boolean debug) {
+
+        if (object == null) {
+            throw new IllegalArgumentException("Null object parameter");
+        }
+        if (form == null) {
+            throw new IllegalArgumentException("Null form parameter");
+        }
+        Map<Object, Object> map = new HashMap<Object, Object>();
+        Beans.copy(object, map).execute();
+        ClickUtils.copyObjectToForm(map, form, debug);
+    }
+    
+    /**
+     * publicフィールドに対応した{@link ClickUtils#copyFormToObject(Form, Object, boolean)}です。
+     * 
+     * @param form コピー元のフォーム
+     * @param object コピー先のオブジェクト
+     * @param debug デバッグログを出力するかどうか
+     */
+    @SuppressWarnings("unchecked")
+    public static void copyFormToObject(Form form, Object object,
+            boolean debug) {
+        if (form == null) {
+            throw new IllegalArgumentException("Null form parameter");
+        }
+        if (object == null) {
+            throw new IllegalArgumentException("Null object parameter");
+        }
+    	
+        Map map = new HashMap();
+        for(Field field: (List<Field>) form.getFieldList()){
+        	map.put(field.getName(), "");
+        }
+        ClickUtils.copyFormToObject(form, map, debug);
+        Beans.copy(map, object).execute();
+    }
+    
 }

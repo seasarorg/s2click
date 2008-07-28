@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.seasar.s2click.util.S2ClickUtils;
+
 import net.arnx.jsonic.JSON;
 import net.sf.click.control.Field;
 import net.sf.click.control.HiddenField;
@@ -224,6 +226,26 @@ public abstract class AutoForm extends net.sf.click.control.Form {
 	@Override public boolean onProcess() {
 		init();
 		return super.onProcess();
+	}
+
+	@Override
+	public void copyFrom(Object object, boolean debug) {
+		S2ClickUtils.copyObjectToForm(object, this, debug);
+	}
+
+	@Override
+	public void copyFrom(Object object) {
+		S2ClickUtils.copyObjectToForm(object, this, false);
+	}
+
+	@Override
+	public void copyTo(Object object, boolean debug) {
+		S2ClickUtils.copyFormToObject(this, object, debug);
+	}
+
+	@Override
+	public void copyTo(Object object) {
+		S2ClickUtils.copyFormToObject(this, object, false);
 	}
 
 }
