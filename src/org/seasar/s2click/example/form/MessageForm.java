@@ -3,9 +3,9 @@ package org.seasar.s2click.example.form;
 import net.sf.click.control.Submit;
 import net.sf.click.control.TextField;
 
-import org.seasar.s2click.control.AutoForm;
+import org.seasar.s2click.control.S2ClickForm;
 
-public class MessageForm extends AutoForm {
+public class MessageForm extends S2ClickForm {
 
 	private static final long serialVersionUID = 1L;
 	

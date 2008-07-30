@@ -10,7 +10,7 @@ import net.sf.click.util.HtmlStringBuffer;
 
 import org.seasar.s2click.S2ClickTestCase;
 
-public class AutoFormTest extends S2ClickTestCase {
+public class S2ClickFormTest extends S2ClickTestCase {
 
 	/**
 	 * <code>onProcess()</code>から<code>init()</code>が呼び出されること。
@@ -19,7 +19,7 @@ public class AutoFormTest extends S2ClickTestCase {
 		MockContext.initContext();
 		
 		@SuppressWarnings("unused")
-		AutoForm form = new AutoForm("form") {
+		S2ClickForm form = new S2ClickForm("form") {
 			private static final long serialVersionUID = 1L;
 			{
 				setFieldAutoRegisteration(true);
@@ -33,7 +33,7 @@ public class AutoFormTest extends S2ClickTestCase {
 		
 		List<?> fields = form.getFieldList();
 		assertEquals(3, fields.size());
-		assertEquals(AutoForm.FORM_NAME, ((HiddenField) fields.get(0)).getName());
+		assertEquals(S2ClickForm.FORM_NAME, ((HiddenField) fields.get(0)).getName());
 		assertEquals("text1", ((TextField) fields.get(1)).getName());
 		assertEquals("text2", ((TextField) fields.get(2)).getName());
 		
@@ -47,7 +47,7 @@ public class AutoFormTest extends S2ClickTestCase {
 	 * <code>setFieldAutoRegisteration()</code>でセットした値が<code>isFieldAutoRegistration()</code>で取得できること。
 	 */
 	public void testSetFieldAutoRegisteration() {
-		AutoForm form = new AutoForm(){
+		S2ClickForm form = new S2ClickForm(){
 			private static final long serialVersionUID = 1L;
 		};
 		
@@ -59,7 +59,7 @@ public class AutoFormTest extends S2ClickTestCase {
 	public void testAddNoJavaScriptValidateAction() {
 		MockContext.initContext();
 		
-		AutoForm form = new AutoForm("form"){
+		S2ClickForm form = new S2ClickForm("form"){
 			private static final long serialVersionUID = 1L;
 		};
 		
@@ -80,7 +80,7 @@ public class AutoFormTest extends S2ClickTestCase {
 	 */
 	public void testInit1() {
 		@SuppressWarnings("unused")
-		AutoForm form = new AutoForm("form") {
+		S2ClickForm form = new S2ClickForm("form") {
 			private static final long serialVersionUID = 1L;
 			{
 				setFieldAutoRegisteration(true);
@@ -93,7 +93,7 @@ public class AutoFormTest extends S2ClickTestCase {
 		form.init();
 		List<?> fields = form.getFieldList();
 		assertEquals(3, fields.size());
-		assertEquals(AutoForm.FORM_NAME, ((HiddenField) fields.get(0)).getName());
+		assertEquals(S2ClickForm.FORM_NAME, ((HiddenField) fields.get(0)).getName());
 		assertEquals("text1", ((TextField) fields.get(1)).getName());
 		assertEquals("text2", ((TextField) fields.get(2)).getName());
 		
@@ -107,7 +107,7 @@ public class AutoFormTest extends S2ClickTestCase {
 	 */
 	public void testInit2() {
 		@SuppressWarnings("unused")
-		AutoForm form = new AutoForm("form") {
+		S2ClickForm form = new S2ClickForm("form") {
 			private static final long serialVersionUID = 1L;
 			{
 				setFieldAutoRegisteration(false);
@@ -120,7 +120,7 @@ public class AutoFormTest extends S2ClickTestCase {
 		form.init();
 		List<?> fields = form.getFieldList();
 		assertEquals(1, fields.size());
-		assertEquals(AutoForm.FORM_NAME, ((HiddenField) fields.get(0)).getName());
+		assertEquals(S2ClickForm.FORM_NAME, ((HiddenField) fields.get(0)).getName());
 		
 		List<?> buttons = form.getButtonList();
 		assertTrue(buttons.isEmpty());
@@ -128,7 +128,7 @@ public class AutoFormTest extends S2ClickTestCase {
 	
 	public void testInit3() {
 		@SuppressWarnings("unused")
-		AutoForm form = new AutoForm("form") {
+		S2ClickForm form = new S2ClickForm("form") {
 			private static final long serialVersionUID = 1L;
 			{
 				setFieldAutoRegisteration(true);
@@ -141,7 +141,7 @@ public class AutoFormTest extends S2ClickTestCase {
 		form.init();
 		List<?> fields = form.getFieldList();
 		assertEquals(4, fields.size());
-		assertEquals(AutoForm.FORM_NAME, ((HiddenField) fields.get(0)).getName());
+		assertEquals(S2ClickForm.FORM_NAME, ((HiddenField) fields.get(0)).getName());
 		assertEquals("action", ((HiddenField) fields.get(1)).getName());
 		assertEquals("text1", ((TextField) fields.get(2)).getName());
 		assertEquals("text2", ((TextField) fields.get(3)).getName());
@@ -153,7 +153,7 @@ public class AutoFormTest extends S2ClickTestCase {
 	
 	public void testAddField1() {
 		@SuppressWarnings("unused")
-		AutoForm form = new AutoForm("form") {
+		S2ClickForm form = new S2ClickForm("form") {
 			private static final long serialVersionUID = 1L;
 			{
 				setFieldAutoRegisteration(true);
@@ -172,7 +172,7 @@ public class AutoFormTest extends S2ClickTestCase {
 
 	public void testAddField2() {
 		@SuppressWarnings("unused")
-		AutoForm form = new AutoForm("form") {
+		S2ClickForm form = new S2ClickForm("form") {
 			private static final long serialVersionUID = 1L;
 			{
 				setFieldAutoRegisteration(true);

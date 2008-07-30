@@ -9,7 +9,7 @@ public class AllTests {
 		TestSuite suite = new TestSuite("Test for org.seasar.s2click.control");
 		//$JUnit-BEGIN$
 		suite.addTestSuite(ConfirmSubmitTest.class);
-		suite.addTestSuite(AutoFormTest.class);
+		suite.addTestSuite(S2ClickFormTest.class);
 		suite.addTestSuite(DateFieldYYYYMMDDTest.class);
 		suite.addTestSuite(PublicFieldColumnTest.class);
 		suite.addTestSuite(ToolTipTest.class);

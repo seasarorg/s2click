@@ -14,17 +14,17 @@ import net.sf.click.control.Submit;
 import net.sf.click.util.HtmlStringBuffer;
 
 /**
- * publicフィールドを自動的にコントロールとして登録してくれる<code>Form</code>拡張クラス。
- * SubmitコントロールによってJavaScriptバリデーションを行うかどうかを制御する機能も備えています。
+ * publicフィールドを自動的にコントロールとして登録してくれる<code>Form</code>拡張クラスです。
+ * <code>Submit</code>コントロールによってJavaScriptバリデーションを行うかどうかを制御する機能も備えています。
  * 
  * <h2>publicフィールドの自動登録</h2>
  * <p>
  *   このクラスのサブクラスで{@link #setFieldAutoRegisteration(boolean)}に<code>true</code>が設定された場合、
- *   <code>AutoForm</code>はサブクラスのpublicフィールドとして宣言されたコントロール群を自動的に{@link #add(Field)}します。
+ *   <code>S2ClickForm</code>はサブクラスのpublicフィールドとして宣言されたコントロール群を自動的に{@link #add(Field)}します。
  *   初期化コードで{@link #add(Field)}を呼び出す必要はありません。
  * </p>
  * <pre>
- * public SampleForm extends Form {
+ * public SampleForm extends S2ClickForm {
  *   private TextField userId = new TextField("userId");
  *   private PasswordField password = new PasswordField("password");
  *   private Submit submit = new Submit("submit");
@@ -42,7 +42,7 @@ import net.sf.click.util.HtmlStringBuffer;
  *   JavaScriptバリデーションを行わない<code>Submit</code>コントロールを指定することができます。
  * </p>
  * <pre>
- * public SampleForm extends Form {
+ * public SampleForm extends S2ClickForm {
  *   ...
  *   private Submit register = new Submit("register");
  *   private Submit cancel = new Submit("cancel");
@@ -54,9 +54,18 @@ import net.sf.click.util.HtmlStringBuffer;
  *   ...
  * } </pre>
  * 
+ * <h2>copyTo()、copyFrom()のpublicフィールド対応</h2>
+ * <p>
+ *   Clickの<code>Form</code>クラスはJavaBeanとフォームの値を相互変換するために
+ *   <code>copyTo()</code>メソッド、<code>copyFrom()</code>メソッドを備えています。
+ *   <code>S2ClickForm</code>ではこれらのメソッドをpublicフィールドに対応させています。
+ *   なお、{@link S2ClickUtils}を使用することでもpublicフィールドを使用したJavaBeanと
+ *   フォームの値を相互変換することができます。
+ * </p>
+ * 
  * @author Naoki Takezoe
  */
-public abstract class AutoForm extends net.sf.click.control.Form {
+public abstract class S2ClickForm extends net.sf.click.control.Form {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -67,7 +76,7 @@ public abstract class AutoForm extends net.sf.click.control.Form {
 	/**
 	 * Create a Form with no name defined.
 	 */
-	public AutoForm() {
+	public S2ClickForm() {
 		super();
 	}
 
@@ -76,7 +85,7 @@ public abstract class AutoForm extends net.sf.click.control.Form {
 	 * 
 	 * @param name the form name
 	 */
-	public AutoForm(String name) {
+	public S2ClickForm(String name) {
 		super(name);
 	}
 	

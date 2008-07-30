@@ -4,10 +4,10 @@ import net.sf.click.control.Option;
 import net.sf.click.extras.control.CheckList;
 import net.sf.click.extras.control.PickList;
 
-import org.seasar.s2click.control.AutoForm;
+import org.seasar.s2click.control.S2ClickForm;
 import org.seasar.s2click.control.DateFieldYYYYMMDD;
 
-public class ControlsForm extends AutoForm {
+public class ControlsForm extends S2ClickForm {
 	
 	private static final long serialVersionUID = 1L;
 	

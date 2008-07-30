@@ -3,14 +3,14 @@ package org.seasar.s2click.example.form;
 import net.sf.click.control.Submit;
 import net.sf.click.extras.control.IntegerField;
 
-import org.seasar.s2click.control.AutoForm;
+import org.seasar.s2click.control.S2ClickForm;
 
 /**
  * 足し算アプリケーションのフォームクラス。
  * 
  * @author Naoki Takezoe
  */
-public class AddForm extends AutoForm {
+public class AddForm extends S2ClickForm {
 	
 	private static final long serialVersionUID = 1L;
 	
