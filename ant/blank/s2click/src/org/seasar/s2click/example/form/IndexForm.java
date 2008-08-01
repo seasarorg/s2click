@@ -3,14 +3,14 @@ package org.seasar.s2click.example.form;
 import net.sf.click.control.Submit;
 import net.sf.click.extras.control.IntegerField;
 
-import org.seasar.s2click.control.AutoForm;
+import org.seasar.s2click.control.S2ClickForm;
 
 /**
- * ‘«‚µZƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÌƒtƒH[ƒ€ƒNƒ‰ƒXB
+ * è¶³ã—ç®—ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ•ã‚©ãƒ¼ãƒ ã‚¯ãƒ©ã‚¹ã€‚
  * 
  * @author Naoki Takezoe
  */
-public class IndexForm extends AutoForm {
+public class IndexForm extends S2ClickForm {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -20,9 +20,9 @@ public class IndexForm extends AutoForm {
 		setJavaScriptValidation(true);
 	}
 	
-	public IntegerField num1 = new IntegerField("num1", "”’l1", true);
-	public IntegerField num2 = new IntegerField("num2", "”’l2", true);
-	public IntegerField result = new IntegerField("result", "Œ‹‰Ê");
-	public Submit submit = new Submit("add", "‘«‚µZ");
+	public IntegerField num1 = new IntegerField("num1", "æ•°å€¤1", true);
+	public IntegerField num2 = new IntegerField("num2", "æ•°å€¤2", true);
+	public IntegerField result = new IntegerField("result", "çµæœ");
+	public Submit submit = new Submit("add", "è¶³ã—ç®—");
 
 }

@@ -4,7 +4,7 @@ import net.sf.click.Page;
 import org.seasar.s2click.example.form.IndexForm;
 
 /**
- * ‘«‚µZƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ìƒy[ƒWƒNƒ‰ƒXB
+ * è¶³ã—ç®—ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒšãƒ¼ã‚¸ã‚¯ãƒ©ã‚¹ã€‚
  * 
  * @see IndexForm
  * @author Naoki Takezoe
