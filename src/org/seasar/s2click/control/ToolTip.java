@@ -10,6 +10,7 @@ import net.sf.click.util.ClickUtils;
 import org.apache.commons.lang.StringUtils;
 
 /**
+ * <a href="http://www.codylindley.com/blogstuff/js/jtip/">jTip</a>を使用してツールチップを表示するためのコントロールです。
  * 
  * @author Naoki Takezoe
  */
