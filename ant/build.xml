@@ -14,6 +14,7 @@
 	<property name="blank-s2jdbc.zip.name" value="s2click-s2jdbc-blank.zip"/>
 	<property name="release.dir" value="s2click-${version}"/>
 	<property name="release.zip.name" value="s2click-${version}.zip"/>
+	<property name="doc.dir" value="${release.dir}/javadoc"/>
 
 	<path id="classpath">
 		<pathelement location="${lib.dir}/aopalliance-1.0.jar"/>
@@ -42,6 +43,16 @@
     	<javac srcdir="${src.dir}" destdir="${bin.dir}" source="1.5"
     		encoding="UTF-8" debug="true" classpathref="classpath" 
     		excludes="org/seasar/s2click/example/**"/>
+    </target>
+	
+	<!--==================================================-->
+	<!-- S2ClickのJavadocを作成 -->
+	<!--==================================================-->
+    <target name="javadoc">
+    	<mkdir dir="${doc.dir}"/>
+    	<javadoc sourcepath="${src.dir}" destdir="${doc.dir}" source="1.5"
+    		encoding="UTF-8" classpathref="classpath" 
+    		excludepackagenames="org.seasar.s2click.example/**"/>
     </target>
 	
 	<!--==================================================-->
@@ -116,7 +127,7 @@
 	<!--==================================================-->
 	<!-- リリースアーカイブを作成 -->
 	<!--==================================================-->
-	<target name="release" depends="clean, build-example, build-blank, build-blank-s2jdbc">
+	<target name="release" depends="clean, javadoc, build-example, build-blank, build-blank-s2jdbc">
 		<mkdir dir="${release.dir}/lib"/>
     	<copy todir="${release.dir}/lib">
     		<fileset dir="../WebContent/WEB-INF/lib" includes="*.jar" />
