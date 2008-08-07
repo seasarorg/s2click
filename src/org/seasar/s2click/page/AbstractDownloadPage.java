@@ -26,6 +26,7 @@ import org.seasar.s2click.annotation.Path;
  * ただし、ClickはHTMLテンプレートが存在しないページクラスは自動マッピングの対象外となるため、
  * クラスに{@link Path}アノテーションを付与することでパスを明示するとよいでしょう。
  * 
+ * @deprecated このクラスは将来のバージョンで削除される可能性があります。
  * @author Naoki Takezoe
  */
 public abstract class AbstractDownloadPage extends Page {

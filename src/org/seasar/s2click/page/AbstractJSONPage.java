@@ -29,6 +29,7 @@ import net.sf.click.Page;
  * ただし、ClickはHTMLテンプレートが存在しないページクラスは自動マッピングの対象外となるため、
  * クラスに{@link Path}アノテーションを付与することでパスを明示するとよいでしょう。
  * 
+ * @deprecated このクラスは将来のバージョンで削除される可能性があります。
  * @author Naoki Takezoe
  */
 public class AbstractJSONPage extends Page {
