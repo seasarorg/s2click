@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
-  <title>S2Click</title>
+  <title>S2Click - Click Framework with Seasar2</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link href="seasar_b.css" type="text/css" rel="stylesheet" media="screen" />
   <link href="seasar_p.css" type="text/css" rel="stylesheet" media="print" />
@@ -40,7 +40,7 @@
 <td width="740" class="main"><!-- don't edit end -->
 <!-- document start -->
 
-<h1>S2Click</h1>
+<h1>S2Click - Click Framework with Seasar2</h1>
 <p>
   S2Clickとは、Seasar2とClick Frameworkを組み合わせて利用するためのアダプタです。
   以下のような機能を提供します。
@@ -50,8 +50,19 @@
   <li>ClickのページクラスのHOT deployに対応します</li>
   <li>Seasar2が推奨するpublicフィールドをClickで扱いやすくするための機能を提供します</li>
   <li>Clickの設定をSeasar2のdiconファイルに集約します</li>
+  <li>Java 5のアノテーションを活用した機能を提供します</li>
+  <!--
   <li>JSON、ファイルダウンロードをサポートする機能を提供します</li>
+  -->
   <li>Click標準では提供されていない便利なコントロールやユーティリティを提供します</li>
+</ul>
+<p>
+  なお、S2Clickの動作にはJava 5以降が必須です。
+</p>
+
+<h2>ダウンロード</h2>
+<ul>
+  <li><a href="releases/s2click-0.3.0.zip">S2Click 0.3.0</a></li>
 </ul>
 
 <h2>サンプルを動かしてみる</h2>
@@ -278,7 +289,7 @@ public class HelloPage extends Page {
   
 }
 </pre>
-
+<!-- 
 <h2>ページクラスの基底クラス</h2>
 <h3>JSON</h3>
 <p>
@@ -319,6 +330,7 @@ public SampleDownloadPage extends AbstractDownloadPage {
   したがって上記の実装例では<strong>@Pathアノテーション</strong>で自動マッピングするパスを明示的に指定しています。
   S2Clickはこのアノテーションを読み取り、自動マッピングの対象に加えます。
 </p>
+-->
 
 <h2>コントロール</h2>
 <table class="indent" border="1" cellspacing="0">
