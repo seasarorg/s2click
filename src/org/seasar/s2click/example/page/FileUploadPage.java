@@ -1,14 +1,18 @@
 package org.seasar.s2click.example.page;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import net.sf.click.Context;
+import net.sf.click.control.ActionLink;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.seasar.s2click.annotation.Request;
 import org.seasar.s2click.example.form.FileUploadForm;
 
 /**
@@ -21,6 +25,10 @@ public class FileUploadPage extends LayoutPage {
 
 	public String title = "ファイルアップロード＆ダウンロード";
 	public FileUploadForm form = new FileUploadForm("form");
+	public ActionLink link = new ActionLink("link", this, "doDownload");
+	
+	/** ファイルのダウンロード時にファイル名を受け取るためのフィールド */
+	@Request public String name;
 	
 	public FileUploadPage(){
 		form.submit.setListener(this, "doUpload");
@@ -74,4 +82,23 @@ public class FileUploadPage extends LayoutPage {
 		return true;
 	}
 	
+	public boolean doDownload() throws Exception {
+		if(StringUtils.isEmpty(name)){
+			throw new RuntimeException("ファイル名が指定されていません。");
+		}
+		
+		File folder = new File(getContext().getServletContext().getRealPath("WEB-INF/files"));
+		if(!folder.exists()){
+			throw new RuntimeException("ファイルを保存するフォルダが存在しません。");
+		}
+		
+		try {
+			File file = new File(folder, name);
+			renderFile(name, new FileInputStream(file));
+		} catch(Exception ex){
+			throw new RuntimeException(ex);
+		}
+		
+		return false;
+	}
 }

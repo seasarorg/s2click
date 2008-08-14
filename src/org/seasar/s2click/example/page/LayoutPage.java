@@ -1,13 +1,13 @@
 package org.seasar.s2click.example.page;
 
-import net.sf.click.Page;
+import org.seasar.s2click.S2ClickPage;
 
 /**
  * 共通レイアウトを実現するページクラスの抽象基底クラス。
  * 
  * @author Naoki Takezoe
  */
-public abstract class LayoutPage extends Page {
+public abstract class LayoutPage extends S2ClickPage {
 	
 	public LayoutPage(){
 		String className = getClass().getName();
