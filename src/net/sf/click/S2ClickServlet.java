@@ -19,6 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.util.SmartDeployUtil;
+import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.annotation.Request;
 
 /**
@@ -53,7 +54,7 @@ public class S2ClickServlet extends ClickServlet {
 			super.init();
 		}
 		
-		super.service(req, res);
+		super.service(new S2ClickRequestWrapper((HttpServletRequest) req), res);
 	}
 
 	/**
@@ -138,6 +139,14 @@ public class S2ClickServlet extends ClickServlet {
 			}
 		}
 		return null;
+	}
+
+	@Override protected void renderTemplate(Page page) throws Exception {
+		String skipRendering = (String) page.getContext().getRequestAttribute(
+				S2ClickPage.SKIP_RENDERING);
+		if(!"true".equals(skipRendering)){
+			super.renderTemplate(page);
+		}
 	}
 	
 }
