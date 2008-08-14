@@ -8,6 +8,7 @@ import org.seasar.s2click.util.AjaxUtils;
 import net.sf.click.control.ActionButton;
 
 /**
+ * <tt>prototype.js</tt>の<code>Ajax.Request</code>を使用してAjaxを実現するためのアクションボタンです。
  * 
  * @author Naoki Takezoe
  * @since 0.3.1
@@ -43,10 +44,18 @@ public class AjaxRequestButton extends ActionButton implements AjaxControl {
 		super(name);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.seasar.s2click.control.AjaxControl#addAjaxHandler(java.lang.String, java.lang.String)
+	 */
 	public void addAjaxHandler(String event, String handler){
 		this.handlers.put(event, handler);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.seasar.s2click.control.AjaxControl#getAjaxHandlers()
+	 */
 	public Map<String, String> getAjaxHandlers(){
 		return this.handlers;
 	}

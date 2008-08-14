@@ -6,6 +6,8 @@ import java.util.Map;
 import org.seasar.s2click.util.AjaxUtils;
 
 /**
+ * フォームの内容を<tt>prototype.js</tt>の<code>Ajax.Request</code>を使って
+ * 送信するための<code>Submit</code>コントロール。
  * 
  * @author Naoki Takezoe
  * @sibce 0.3.1
