@@ -40,6 +40,11 @@ public class ConfirmSubmit extends Submit {
 		super(name);
 	}
 	
+	/**
+	 * フォーム送信前の確認メッセージを設定します。
+	 * 
+	 * @param message 確認メッセージ
+	 */
 	public void setConfirmMessage(String message){
 		setAttribute("onclick", "return confirm('" 
 				+ StringEscapeUtils.escapeJavaScript(message) + "');");

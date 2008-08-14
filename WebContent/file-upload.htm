@@ -1,6 +1,6 @@
 $form
 <ul>
 #foreach($file in $files)
-  <li><a href="file-download.htm?name=$format.url($file.name)">$file.name</a></li>
+  <li><a href="${link.href}&name=$format.url($file.name)">$file.name</a></li>
 #end
 </ul>

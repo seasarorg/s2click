@@ -3,7 +3,7 @@ package org.seasar.s2click.example.page;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.seasar.s2click.control.AjaxRequestLink;
+import org.seasar.s2click.control.AjaxRequestButton;
 
 /**
  * JSONを使用したAjaxのサンプルページ。
@@ -14,11 +14,11 @@ import org.seasar.s2click.control.AjaxRequestLink;
 public class JsonPage extends LayoutPage {
 	
 	public String title = "JSONを使用したAjaxアプリケーション";
-	public AjaxRequestLink link = new AjaxRequestLink("link", "Ajaxのテスト");
+	public AjaxRequestButton button = new AjaxRequestButton("button", "書籍情報を取得");
 	
 	public JsonPage(){
-		link.addAjaxHandler("onComplete", "displayResult");
-		link.setListener(this, "onAjaxLink");
+		button.addAjaxHandler(AjaxRequestButton.ON_COMPLETE, "displayResult");
+		button.setListener(this, "onAjaxLink");
 	}
 	
 	public boolean onAjaxLink(){

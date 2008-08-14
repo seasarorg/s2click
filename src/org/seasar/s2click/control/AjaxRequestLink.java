@@ -1,5 +1,7 @@
 package org.seasar.s2click.control;
 
+import org.seasar.s2click.util.AjaxUtils;
+
 
 /**
  * <tt>prototype.js</tt>の<code>Ajax.Request</code>を使用してAjaxを実現するためのアクションリンクです。
@@ -36,15 +38,7 @@ public class AjaxRequestLink extends AbstractAjaxLink {
 	}
 	
 	@Override public String toString(){
-		StringBuilder sb = new StringBuilder();
-		sb.append("new Ajax.Request(");
-		sb.append("'").append(getHref(getValue())).append("', ");
-		sb.append("{");
-		sb.append("method: 'post', ");
-		sb.append(getHandlersOption());
-		sb.append("})");
-		
-		setAttribute("onclick", sb.toString());
+		setAttribute("onclick", AjaxUtils.createAjaxRequest(getHref(getValue()), handlers));
 		return super.toString();
 	}
 	

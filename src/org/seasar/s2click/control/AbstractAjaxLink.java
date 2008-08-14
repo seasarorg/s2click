@@ -57,24 +57,7 @@ public abstract class AbstractAjaxLink extends ActionLink implements AjaxControl
 	}
 	
 	@Override public String getHref() {
-		// TODO void(0);
-		return "#";
-	}
-
-//	@Override public String getHref(Object value) {
-//		// TODO void(0);
-//		return "#";
-//	}
-
-	protected String getHandlersOption(){
-		StringBuilder sb = new StringBuilder();
-		for(Map.Entry<String, String> entry: handlers.entrySet()){
-			if(sb.length() != 0){
-				sb.append(", ");
-			}
-			sb.append(entry.getKey()).append(": ").append(entry.getValue());
-		}
-		return sb.toString();
+		return "javascript:void(0)";
 	}
 
 }
