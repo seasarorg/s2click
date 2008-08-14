@@ -14,7 +14,7 @@ import org.seasar.s2click.util.S2ClickUtils;
  * クエリ文字列として受け取ったパラメータを{@link S2ClickConfig#charset}で指定された文字コードでデコードします。
  * 
  * @author Naoki Takezoe
- * @since 0.3.1
+ * @since 0.4.0
  */
 public class S2ClickRequestWrapper extends HttpServletRequestWrapper {
 	

@@ -16,7 +16,7 @@ import org.seasar.s2click.control.AjaxRequestLink;
 /**
  * 
  * @author Naoki Takezoe
- * @since 0.3.1
+ * @since 0.4.0
  */
 public class S2ClickPage extends Page {
 	

@@ -11,7 +11,7 @@ import net.sf.click.control.ActionButton;
  * <tt>prototype.js</tt>の<code>Ajax.Request</code>を使用してAjaxを実現するためのアクションボタンです。
  * 
  * @author Naoki Takezoe
- * @since 0.3.1
+ * @since 0.4.0
  */
 public class AjaxRequestButton extends ActionButton implements AjaxControl {
 

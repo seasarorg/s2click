@@ -9,7 +9,7 @@ import net.sf.click.control.ActionLink;
  * Ajax用のアクションリンクの抽象基底クラスです。
  * 
  * @author Naoki Takezoe
- * @since 0.3.1
+ * @since 0.4.0
  */
 public abstract class AbstractAjaxLink extends ActionLink implements AjaxControl {
 	

@@ -7,7 +7,7 @@ import org.seasar.s2click.util.AjaxUtils;
  * <tt>prototype.js</tt>の<code>Ajax.Request</code>を使用してAjaxを実現するためのアクションリンクです。
  * 
  * @author Naoki Takezoe
- * @since 0.3.1
+ * @since 0.4.0
  */
 public class AjaxRequestLink extends AbstractAjaxLink {
 	

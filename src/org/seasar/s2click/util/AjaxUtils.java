@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * 
  * @author Naoki Takezoe
- * @since 0.3.1
+ * @since 0.4.0
  */
 public class AjaxUtils {
 	

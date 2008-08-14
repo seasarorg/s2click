@@ -8,7 +8,7 @@ import java.util.Map;
  * <tt>prototype.js</tt>を使って非同期通信処理を呼び出すコントロールの共通的なメソッド、定数値を定義します。
  * 
  * @author Naoki Takezoe
- * @since 0.3.1
+ * @since 0.4.0
  */
 public interface AjaxControl {
 	
