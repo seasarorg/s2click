@@ -9,6 +9,9 @@ import org.seasar.s2click.S2ClickConfig;
 import org.seasar.s2click.util.S2ClickUtils;
 
 /**
+ * GETリクエスト時にURLのクエリ文字列に含まれる日本語が文字化けする問題に対処するためのラッパークラスです.
+ * <p>
+ * クエリ文字列として受け取ったパラメータを{@link S2ClickConfig#charset}で指定された文字コードでデコードします。
  * 
  * @author Naoki Takezoe
  * @since 0.3.1
