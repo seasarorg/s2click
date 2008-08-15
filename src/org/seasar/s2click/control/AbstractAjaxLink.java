@@ -53,18 +53,10 @@ public abstract class AbstractAjaxLink extends ActionLink {
         return MessageFormat.format(AjaxUtils.HTML_IMPORTS, args);
     }
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.seasar.s2click.control.AjaxControl#addAjaxHandler(java.lang.String, java.lang.String)
-	 */
 	public void addAjaxHandler(String event, String handler){
 		this.handlers.put(event, handler);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see org.seasar.s2click.control.AjaxControl#getAjaxHandlers()
-	 */
 	public Map<String, String> getAjaxHandlers(){
 		return this.handlers;
 	}
