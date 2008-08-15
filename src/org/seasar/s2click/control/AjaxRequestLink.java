@@ -37,8 +37,10 @@ public class AjaxRequestLink extends AbstractAjaxLink {
 		super(name);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override public String toString(){
-		setAttribute("onclick", AjaxUtils.createAjaxRequest(getHref(getValue()), handlers));
+		setAttribute("onclick", AjaxUtils.createAjaxRequest(
+				getHref(getValue()), handlers, getParameters()));
 		return super.toString();
 	}
 	

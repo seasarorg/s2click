@@ -75,6 +75,7 @@ public class AjaxRequestButton extends ActionButton implements AjaxControl {
 
 	Pattern pattern = Pattern.compile("'(.+?)'");
 	
+	@SuppressWarnings("unchecked")
 	@Override public String getOnClick() {
 		// URLを切り出す
 		String onclick = super.getOnClick();
@@ -83,7 +84,7 @@ public class AjaxRequestButton extends ActionButton implements AjaxControl {
 			onclick = matcher.group(1);
 		}
 		
-		return AjaxUtils.createAjaxRequest(onclick, handlers);
+		return AjaxUtils.createAjaxRequest(onclick, handlers, getParameters());
 	}
 
 }

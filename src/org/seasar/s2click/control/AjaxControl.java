@@ -48,19 +48,4 @@ public interface AjaxControl {
 	 */
 	public Map<String, String> getAjaxHandlers();
 	
-//	/**
-//	 * 送信するリクエストパラメータを追加します。
-//	 * 
-//	 * @param name パラメータ名
-//	 * @param value 値
-//	 */
-//	public void addParameter(String name, String value);
-//	
-//	/**
-//	 * 送信するパラメータを取得します。
-//	 * 
-//	 * @return パラメータ名をキーに値を格納したマップ
-//	 */
-//	public Map<String, String> getParameters();
-	
 }
