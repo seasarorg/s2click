@@ -1,11 +1,15 @@
 package org.seasar.s2click.control;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.seasar.s2click.util.AjaxUtils;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sf.click.control.ActionButton;
+import net.sf.click.util.ClickUtils;
+
+import org.seasar.s2click.util.AjaxUtils;
 
 /**
  * <tt>prototype.js</tt>の<code>Ajax.Request</code>を使用してAjaxを実現するためのアクションボタンです。
@@ -43,6 +47,15 @@ public class AjaxRequestButton extends ActionButton implements AjaxControl {
 	public AjaxRequestButton(String name) {
 		super(name);
 	}
+	
+    public String getHtmlImports() {
+        Object[] args = {
+            getContext().getRequest().getContextPath(),
+            ClickUtils.getResourceVersionIndicator(getContext()),
+        };
+        
+        return MessageFormat.format(HTML_IMPORTS, args);
+    }
 
 	/*
 	 * (non-Javadoc)
@@ -60,11 +73,15 @@ public class AjaxRequestButton extends ActionButton implements AjaxControl {
 		return this.handlers;
 	}
 
+	Pattern pattern = Pattern.compile("'(.+?)'");
+	
 	@Override public String getOnClick() {
 		// URLを切り出す
 		String onclick = super.getOnClick();
-		onclick = onclick.replaceFirst("^javascript:document\\.location\\.href='", "");
-		onclick = onclick.replaceFirst("';$", "");
+		Matcher matcher = pattern.matcher(onclick);
+		if(matcher.find()){
+			onclick = matcher.group(1);
+		}
 		
 		return AjaxUtils.createAjaxRequest(onclick, handlers);
 	}

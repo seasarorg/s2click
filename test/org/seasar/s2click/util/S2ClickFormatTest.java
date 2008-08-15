@@ -3,6 +3,8 @@ package org.seasar.s2click.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import ognl.OgnlException;
+
 import org.seasar.extension.unit.S2TestCase;
 
 public class S2ClickFormatTest extends S2TestCase {
@@ -38,6 +40,13 @@ public class S2ClickFormatTest extends S2TestCase {
 		assertEquals("a b", format.nbsp("a b"));
 		assertEquals("a \n b", format.nbsp("a \n b"));
 		assertEquals("a \n &nbsp;b", format.nbsp("a \n  b"));
+	}
+	
+	public void testOgnl() throws OgnlException {
+		S2ClickFormat format = new S2ClickFormat();
+		assertEquals("test", format.ognl("'test'"));
+		assertEquals(S2ClickFormat.class, 
+				format.ognl("@org.seasar.s2click.util.S2ClickFormat@class"));
 	}
 
 }

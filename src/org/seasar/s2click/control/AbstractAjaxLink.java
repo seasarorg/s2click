@@ -1,9 +1,11 @@
 package org.seasar.s2click.control;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.sf.click.control.ActionLink;
+import net.sf.click.util.ClickUtils;
 
 /**
  * Ajax用のアクションリンクの抽象基底クラスです。
@@ -39,6 +41,15 @@ public abstract class AbstractAjaxLink extends ActionLink implements AjaxControl
 	public AbstractAjaxLink(String name) {
 		super(name);
 	}
+	
+    public String getHtmlImports() {
+        Object[] args = {
+            getContext().getRequest().getContextPath(),
+            ClickUtils.getResourceVersionIndicator(getContext()),
+        };
+        
+        return MessageFormat.format(HTML_IMPORTS, args);
+    }
 
 	/*
 	 * (non-Javadoc)

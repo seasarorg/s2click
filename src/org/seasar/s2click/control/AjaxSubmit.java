@@ -1,7 +1,10 @@
 package org.seasar.s2click.control;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
+
+import net.sf.click.util.ClickUtils;
 
 import org.seasar.s2click.util.AjaxUtils;
 
@@ -43,6 +46,15 @@ public class AjaxSubmit extends ConfirmSubmit implements AjaxControl {
 		super(name);
 	}
 
+    public String getHtmlImports() {
+        Object[] args = {
+            getContext().getRequest().getContextPath(),
+            ClickUtils.getResourceVersionIndicator(getContext()),
+        };
+        
+        return MessageFormat.format(HTML_IMPORTS, args);
+    }
+	
 	public void addAjaxHandler(String event, String handler){
 		this.handlers.put(event, handler);
 	}

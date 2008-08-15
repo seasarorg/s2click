@@ -1,6 +1,8 @@
 package org.seasar.s2click.util;
 
 
+import ognl.Ognl;
+import ognl.OgnlException;
 import net.arnx.jsonic.JSON;
 import net.sf.click.util.Format;
 
@@ -38,6 +40,17 @@ public class S2ClickFormat extends Format {
 	 */
 	public String nbsp(String value){
 		return S2ClickUtils.convertNbsp(value);
+	}
+	
+	/**
+	 * 引数の文字列をOGNLとして評価し、結果を返却します。
+	 * 
+	 * @param expression OGNL式
+	 * @return OGML式を評価した結果
+	 * @throws OgnlException OGNLの評価に失敗した場合
+	 */
+	public Object ognl(String expression) throws OgnlException {
+		return Ognl.getValue(expression, null);
 	}
 	
 }

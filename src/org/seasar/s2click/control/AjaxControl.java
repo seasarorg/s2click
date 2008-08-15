@@ -22,6 +22,17 @@ public interface AjaxControl {
 	
 	public static final String ON_SUCCESS = "onSuccess";
 	
+//    /** The Prototype resource file names. */
+//    public static final String[] PROTOTYPE_RESOURCES = {
+//    	"/net/sf/click/extras/control/prototype/prototype.js"
+//    };
+
+//    public static final String HTML_IMPORTS =
+//        "<script type=\"text/javascript\" src=\"{0}/click/prototype/prototype{1}.js\"></script>\n";
+	// TODO Click付属のprototype.jsはバージョンが古い…
+    public static final String HTML_IMPORTS =
+        "<script type=\"text/javascript\" src=\"{0}/js/prototype.js\"></script>\n";
+	
 	/**
 	 * Ajax.Requestのイベントハンドラを設定します。
 	 * 
@@ -31,9 +42,25 @@ public interface AjaxControl {
 	public void addAjaxHandler(String event, String handler);
 	
 	/**
+	 * Ajax.Requestのイベントハンドラを取得します。
 	 * 
-	 * @return
+	 * @return イベント名をキーにJavaScriptの関数名を格納したマップ
 	 */
 	public Map<String, String> getAjaxHandlers();
+	
+//	/**
+//	 * 送信するリクエストパラメータを追加します。
+//	 * 
+//	 * @param name パラメータ名
+//	 * @param value 値
+//	 */
+//	public void addParameter(String name, String value);
+//	
+//	/**
+//	 * 送信するパラメータを取得します。
+//	 * 
+//	 * @return パラメータ名をキーに値を格納したマップ
+//	 */
+//	public Map<String, String> getParameters();
 	
 }

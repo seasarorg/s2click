@@ -26,7 +26,7 @@ public class PageClassLoaderTest extends S2ClickTestCase {
 				"org.seasar.s2click.example.page");
 		List<String> classes = loader.getPageClasses();
 		
-		assertEquals(12, classes.size());
+		assertEquals(10, classes.size());
 		
 		for(String className: classes){
 			assertTrue(className.endsWith("Page"));
