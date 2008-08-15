@@ -12,6 +12,7 @@ import net.sf.click.Page;
 
 import org.apache.commons.io.IOUtils;
 import org.seasar.s2click.control.AjaxRequestLink;
+import org.seasar.s2click.control.AjaxUpdaterLink;
 
 /**
  * 
@@ -33,6 +34,20 @@ public class S2ClickPage extends Page {
 			renderResponse("application/x-javascript; charset=utf-8", 
 					new ByteArrayInputStream(json));
 			
+		} catch(UnsupportedEncodingException ex){
+			// あり得ない
+		}
+	}
+	
+	/**
+	 * レスポンスにHTMLをレンダリングします。{@link AjaxUpdaterLink}などと組み合わせて使用します。
+	 * 
+	 * @param html 返却するHTML
+	 */
+	protected void renderHTML(String html){
+		try {
+			renderResponse("text/html; cahrset=UTF-8", 
+					new ByteArrayInputStream(html.getBytes("UTF-8")));
 		} catch(UnsupportedEncodingException ex){
 			// あり得ない
 		}

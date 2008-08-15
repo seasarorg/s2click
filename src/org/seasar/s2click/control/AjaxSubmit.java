@@ -15,7 +15,7 @@ import org.seasar.s2click.util.AjaxUtils;
  * @author Naoki Takezoe
  * @sibce 0.4.0
  */
-public class AjaxSubmit extends ConfirmSubmit implements AjaxControl {
+public class AjaxSubmit extends ConfirmSubmit {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -52,7 +52,7 @@ public class AjaxSubmit extends ConfirmSubmit implements AjaxControl {
             ClickUtils.getResourceVersionIndicator(getContext()),
         };
         
-        return MessageFormat.format(HTML_IMPORTS, args);
+        return MessageFormat.format(AjaxUtils.HTML_IMPORTS, args);
     }
 	
 	public void addAjaxHandler(String event, String handler){

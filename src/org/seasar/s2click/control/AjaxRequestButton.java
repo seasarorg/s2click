@@ -17,7 +17,7 @@ import org.seasar.s2click.util.AjaxUtils;
  * @author Naoki Takezoe
  * @since 0.4.0
  */
-public class AjaxRequestButton extends ActionButton implements AjaxControl {
+public class AjaxRequestButton extends ActionButton {
 
 	private static final long serialVersionUID = 1L;
 
@@ -54,7 +54,7 @@ public class AjaxRequestButton extends ActionButton implements AjaxControl {
             ClickUtils.getResourceVersionIndicator(getContext()),
         };
         
-        return MessageFormat.format(HTML_IMPORTS, args);
+        return MessageFormat.format(AjaxUtils.HTML_IMPORTS, args);
     }
 
 	/*

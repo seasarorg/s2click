@@ -3,6 +3,7 @@ package org.seasar.s2click.example.page;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.seasar.s2click.control.AjaxUpdaterLink;
 import org.seasar.s2click.example.form.JsonForm;
 
 /**
@@ -16,11 +17,15 @@ public class JsonPage extends LayoutPage {
 	public String title = "JSONを使用したAjaxアプリケーション";
 	
 	public JsonForm form = new JsonForm("form");
+	public AjaxUpdaterLink link = new AjaxUpdaterLink(
+			"link", "Ajax.Updaterのテスト", this, "onAjaxUpdater");
 	
 	public JsonPage(){
 		form.search.setListener(this, "onSearch");
 		form.searchAll.setListener(this, "onSearchAll");
 		addControl(form.searchAll);
+		
+		link.setElementId("target");
 	}
 	
 	private List<Book> getBookList(){
@@ -51,6 +56,11 @@ public class JsonPage extends LayoutPage {
 	
 	public boolean onSearchAll(){
 		renderJSON(getBookList());
+		return false;
+	}
+	
+	public boolean onAjaxUpdater(){
+		renderHTML("<strong>Ajaxでコンテンツを置換します</strong>");
 		return false;
 	}
 	

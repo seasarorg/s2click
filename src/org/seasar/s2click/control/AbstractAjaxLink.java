@@ -4,6 +4,8 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.seasar.s2click.util.AjaxUtils;
+
 import net.sf.click.control.ActionLink;
 import net.sf.click.util.ClickUtils;
 
@@ -13,7 +15,7 @@ import net.sf.click.util.ClickUtils;
  * @author Naoki Takezoe
  * @since 0.4.0
  */
-public abstract class AbstractAjaxLink extends ActionLink implements AjaxControl {
+public abstract class AbstractAjaxLink extends ActionLink {
 	
 	protected Map<String, String> handlers = new HashMap<String, String>();
 	
@@ -48,7 +50,7 @@ public abstract class AbstractAjaxLink extends ActionLink implements AjaxControl
             ClickUtils.getResourceVersionIndicator(getContext()),
         };
         
-        return MessageFormat.format(HTML_IMPORTS, args);
+        return MessageFormat.format(AjaxUtils.HTML_IMPORTS, args);
     }
 
 	/*

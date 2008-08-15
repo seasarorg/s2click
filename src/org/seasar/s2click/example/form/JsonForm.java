@@ -6,6 +6,7 @@ import net.sf.click.control.TextField;
 import org.seasar.s2click.control.AjaxRequestButton;
 import org.seasar.s2click.control.AjaxSubmit;
 import org.seasar.s2click.control.S2ClickForm;
+import org.seasar.s2click.util.AjaxUtils;
 
 public class JsonForm extends S2ClickForm {
 	
@@ -20,8 +21,8 @@ public class JsonForm extends S2ClickForm {
 		super(name);
 		setFieldAutoRegisteration(true);
 		
-		search.addAjaxHandler(AjaxRequestButton.ON_COMPLETE, "displayResult");
-		searchAll.addAjaxHandler(AjaxRequestButton.ON_COMPLETE, "displayResult");
+		search.addAjaxHandler(AjaxUtils.ON_COMPLETE, "displayResult");
+		searchAll.addAjaxHandler(AjaxUtils.ON_COMPLETE, "displayResult");
 		clear.setAttribute("onclick", "clearResult()");
 	}
 
