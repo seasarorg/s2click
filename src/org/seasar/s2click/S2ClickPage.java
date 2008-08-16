@@ -11,8 +11,7 @@ import net.arnx.jsonic.JSON;
 import net.sf.click.Page;
 
 import org.apache.commons.io.IOUtils;
-import org.seasar.s2click.control.AjaxRequestLink;
-import org.seasar.s2click.control.AjaxUpdaterLink;
+import org.seasar.s2click.control.AjaxLink;
 
 /**
  * 
@@ -24,7 +23,7 @@ public class S2ClickPage extends Page {
 	public static final String SKIP_RENDERING = S2ClickPage.class.getName() + "_skipRendering";
 	
 	/**
-	 * レスポンスにJSONをレンダリングします。{@link AjaxRequestLink}などと組み合わせて使用します。
+	 * レスポンスにJSONをレンダリングします。{@link AjaxLink}などと組み合わせて使用します。
 	 * 
 	 * @param obj JSONとしてレスポンスするオブジェクト
 	 */
@@ -40,7 +39,7 @@ public class S2ClickPage extends Page {
 	}
 	
 	/**
-	 * レスポンスにHTMLをレンダリングします。{@link AjaxUpdaterLink}などと組み合わせて使用します。
+	 * レスポンスにHTMLをレンダリングします。{@link AjaxLink}などと組み合わせて使用します。
 	 * 
 	 * @param html 返却するHTML
 	 */
