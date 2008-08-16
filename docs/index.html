@@ -51,9 +51,7 @@
   <li>Seasar2が推奨するpublicフィールドをClickで扱いやすくするための機能を提供します</li>
   <li>Clickの設定をSeasar2のdiconファイルに集約します</li>
   <li>Java 5のアノテーションを活用した機能を提供します</li>
-  <!--
-  <li>JSON、ファイルダウンロードをサポートする機能を提供します</li>
-  -->
+  <li>Ajax、ファイルダウンロードをサポートする機能を提供します</li>
   <li>Click標準では提供されていない便利なコントロールやユーティリティを提供します</li>
 </ul>
 <p>
@@ -289,50 +287,93 @@ public class HelloPage extends Page {
   
 }
 </pre>
-<!-- 
 <h2>ページクラスの基底クラス</h2>
-<h3>JSON</h3>
+<h3>S2ClickPage</h3>
 <p>
-  S2ClickはAjaxでの利用を想定し、JSONを返却するページクラスの抽象基底クラスを提供しています。
-  JSONを返却するページは<strong>org.seasar.s2click.page.AbstractJsonPage</strong>を継承して実装します。
+  S2ClickはAjaxやファイルダウンロードでの利用を想定し、ページクラスの抽象基底クラスを提供しています。
+  Ajaxやファイルダウンロード機能を使用するページクラスは<strong>org.seasar.s2click.S2ClickPage</strong>を継承して実装します。
+  <code>S2ClickPage</code>には以下のようなメソッドが用意されており、サブクラスではこれらのメソッドを呼び出すことでJSONやHTML、ファイルなどを返却することができます。
+</p>
+<table class="indent" border="1" cellspacing="0">
+<tr bgcolor="#D1F3F4">
+  <th>メソッド名</th>
+  <th>説明</th>
+</tr>
+<tr>
+  <td>renderJSON(Object obj)</td>
+  <td>引数で渡したオブジェクトをJSONとしてレスポンスにレンダリングします。</td>
+</tr>
+<tr>
+  <td>renderHTML(String html)</td>
+  <td>引数で渡した文字列をHTMLとしてレスポンスにレンダリングします。</td>
+</tr>
+<tr>
+  <td>renderFile(String fileName, InputStream in)</td>
+  <td>引数で渡したファイル名と入力ストリームの内容をレスポンスにレンダリングします。</td>
+</tr>
+<tr>
+  <td>renderResponse(String contentType, InputStream in)</td>
+  <td>コンテンツタイプを指定して入力ストリームの内容をレスポンスにレンダリングします。</td>
+</tr>
+</table>
+
+<h3>Ajaxの実装例</h3>
+<p>
+  JSONによるAjaxを実現するページクラスの実装例を以下に示します。
 </p>
 <pre class="code">
-@Path("/sample-json.htm")
-public SampleJsonPage extends AbstractJsonPage {
-  public SampleJSONPage(){
-    List&lt;Employee&gt; list = new ArrayList&lt;Employee&gt;();
-    ...
-    setContents(list);
+public class AjaxPage extends S2ClickPage {
+  
+  public AjaxPage(){
+    AjaxButton button = new AjaxButton("button", "書籍情報を取得", this, "getAllBooks");
+    button.addAjaxHandler(AjaxRequestButton.ON_COMPLETE, "displayResult");
+    addControl(button);
+  }
+  
+  public boolean getAllBooks(){
+    List&lt;Book&gt; books = bookService.getAllBooks();
+    renderJSON(books);
+    return false;
   }
 }
 </pre>
 <p>
-  <code>setContents()</code>メソッドにセットされたオブジェクトはJSONICによってJSONに変換され、クライアントに返却されます。
+  上記の例ではボタンをクリックするとprototype.jsの<code>Ajax.Request</code>によってページクラスの
+  <code>getAllBooks()</code>メソッドが呼び出され、JSONが返却されます。
+  JSONが返却されるとHTML側ではJavaScriptの<code>displayResult()</code>関数が呼び出されます。
 </p>
 
-<h3>ファイルダウンロード</h3>
+<h3>ファイルダウンロードの実装例</h3>
 <p>
-  JSONを返却するページと同様、ファイルダウンロードを行うページの抽象基底クラスも存在します。
-  ファイルダウンロードページは<strong>org.seasar.s2click.page.AbstractJsonPage</strong>を継承して実装します。
+  ファイルダウンロードを実現するページクラスの実装例を以下に示します。
 </p>
 <pre class="code">
-@Path("/sample-download.htm")
-public SampleDownloadPage extends AbstractDownloadPage {
-  public SampleDownloadPage(){
-    setFileName("sample.txt");
-    setContents(SampleDownloadPage.class.getResourceAsStream("sample.txt"));
+public class FileDonwloadPage extends S2ClickPage {
+  
+  public FileDonwloadPage(){
+    ActionLink link = new ActionLink("link", "ダウンロード", this, "onClick");
+    addControl(link);
   }
-}</pre>
+  
+  public boolean onClick(){
+    String fileName = "sample.txt";
+    InputStream in = getClass().getResourceAsStream("sample.txt");
+    renderFile(fileName, in);
+    return false;
+  }
+}
+</pre>
 <p>
-  <strong>注意：</strong>
-  JSONを返却するページやファイルンダウンロードページはページクラス内でレスポンスが書き出されるためHTMLテンプレートは不要ですが、
-  ClickはHTMLテンプレートと対応するページクラスを自動マッピング対象として扱います。
-  したがって上記の実装例では<strong>@Pathアノテーション</strong>で自動マッピングするパスを明示的に指定しています。
-  S2Clickはこのアノテーションを読み取り、自動マッピングの対象に加えます。
+  上記の例ではリンクをクリックするとページクラスの<code>onClick()</code>メソッドが呼び出され、
+  ファイルのダウンロードが行われます。
 </p>
--->
+
 
 <h2>コントロール</h2>
+<p>
+  S2Clickでは以下のような拡張コントロールを提供しています。
+  各コントロールの詳細についてはダウンロードしたアーカイブに含まれるJavadocやサンプルを参照してください。
+</p>
 <table class="indent" border="1" cellspacing="0">
 <tr bgcolor="#D1F3F4">
   <th>クラス名</th>
@@ -351,8 +392,16 @@ public SampleDownloadPage extends AbstractDownloadPage {
   <td>日付をYYYY/MM/DD形式で表示する<code>DateField</code>コントロールです。</td>
 </tr>
 <tr>
-  <td>org.seasar.s2click.control.ToolTip</td>
-  <td>jTipを使用したツールチップを表示するコントロールです。</td>
+  <td>org.seasar.s2click.control.AjaxLink</td>
+  <td>Ajaxでページクラスのイベントハンドラメソッドを呼び出す<code>ActionLink</code>コントロールです。</td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.AjaxButton</td>
+  <td>Ajaxでページクラスのイベントハンドラメソッドを呼び出す<code>ActionButton</code>コントロールです。</td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.AjaxSubmit</td>
+  <td>フォームの内容をAjaxで送信するための<code>Submit</code>コントロールです。</td>
 </tr>
 </table>
 
@@ -384,6 +433,10 @@ public SampleDownloadPage extends AbstractDownloadPage {
 <tr>
   <td>String nbsp(String value)</td>
   <td>連続する半角スペースの2つめ以降を&amp;nbsp;に変換します。</td>
+</tr>
+<tr>
+  <td>String ognl(String expression)</td>
+  <td>引数のOGNL式として評価し、結果を返却します。</td>
 </tr>
 </table>
 
