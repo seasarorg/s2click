@@ -5,6 +5,7 @@ import java.util.Map;
 import net.arnx.jsonic.JSON;
 
 /**
+ * Ajax関連のユーティリティメソッドを提供します。
  * 
  * @author Naoki Takezoe
  * @since 0.4.0
@@ -29,7 +30,14 @@ public class AjaxUtils {
 	public static final String HTML_IMPORTS = 
 		"<script type=\"text/javascript\" src=\"{0}/js/prototype.js\"></script>\n";
 
-	
+	/**
+	 * <tt>prototype.js</tt>の<code>Ajax.Request</code>を呼び出すJavaScriptを生成します。
+	 * 
+	 * @param url URL
+	 * @param options オプション
+	 * @param parameters パラメータ
+	 * @return <code>Ajax.Request</code>を呼び出すJavaScript
+	 */
 	public static String createAjaxRequest(String url, Map<String, String> options,
 			Map<String, String> parameters){
 		StringBuilder sb = new StringBuilder();
