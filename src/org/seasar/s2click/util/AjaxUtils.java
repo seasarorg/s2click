@@ -36,13 +36,13 @@ public class AjaxUtils {
 		sb.append("new Ajax.Request(");
 		sb.append("'").append(url).append("', ");
 		sb.append("{");
-		sb.append("method: 'post', ");
+		sb.append("method: 'post'");
 		if(!parameters.isEmpty()){
-			sb.append("parameters: ");
-			sb.append(JSON.encode(parameters));
-			sb.append(", ");
+			sb.append(", parameters: ").append(JSON.encode(parameters));
 		}
-		sb.append(getOptions(options));
+		if(!options.isEmpty()){
+			sb.append(", ").append(getOptions(options));
+		}
 		sb.append("})");
 		
 		return sb.toString();
@@ -55,13 +55,13 @@ public class AjaxUtils {
 		sb.append("'").append(id).append("', ");
 		sb.append("'").append(url).append("', ");
 		sb.append("{");
-		sb.append("method: 'post', ");
+		sb.append("method: 'post'");
 		if(!parameters.isEmpty()){
-			sb.append("parameters: ");
-			sb.append(JSON.encode(parameters));
-			sb.append(", ");
+			sb.append(", parameters: ").append(JSON.encode(parameters));
 		}
-		sb.append(getOptions(options));
+		if(!options.isEmpty()){
+			sb.append(", ").append(getOptions(options));
+		}
 		sb.append("})");
 		
 		return sb.toString();
