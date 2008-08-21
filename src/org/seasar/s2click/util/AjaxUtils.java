@@ -56,6 +56,15 @@ public class AjaxUtils {
 		return sb.toString();
 	}
 	
+	/**
+	 * <tt>prototype.js</tt>の<code>Ajax.Updater</code>を呼び出すJavaScriptを生成します。
+	 * 
+	 * @param id 置換するHTML要素のid属性
+	 * @param url URL
+	 * @param options オプション
+	 * @param parameters パラメータ
+	 * @return <code>Ajax.Updater</code>を呼び出すJavaScript
+	 */
 	public static String createAjaxUpdater(String id, String url, Map<String, String> options,
 			Map<String, String> parameters){
 		StringBuilder sb = new StringBuilder();
