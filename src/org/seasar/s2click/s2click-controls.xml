@@ -3,6 +3,7 @@
 
   <controls>
     <control classname="org.seasar.s2click.control.ToolTip"/>
+    <control classname="org.seasar.s2click.control.CodePrettify"/>
   </controls>
 
 </click-app>
