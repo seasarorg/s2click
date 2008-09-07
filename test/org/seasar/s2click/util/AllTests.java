@@ -8,6 +8,7 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Test for org.seasar.s2click.util");
 		//$JUnit-BEGIN$
+		suite.addTestSuite(AjaxUtilsTest.class);
 		suite.addTestSuite(S2ClickFormatTest.class);
 		suite.addTestSuite(S2ClickUtilsTest.class);
 		//$JUnit-END$
