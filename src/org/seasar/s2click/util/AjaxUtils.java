@@ -2,7 +2,7 @@ package org.seasar.s2click.util;
 
 import java.util.Map;
 
-import net.arnx.jsonic.JSON;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * Ajax関連のユーティリティメソッドを提供します。
@@ -46,7 +46,7 @@ public class AjaxUtils {
 		sb.append("{");
 		sb.append("method: 'post'");
 		if(!parameters.isEmpty()){
-			sb.append(", parameters: ").append(JSON.encode(parameters));
+			sb.append(", parameters: ").append(encodeParameters(parameters));
 		}
 		if(!options.isEmpty()){
 			sb.append(", ").append(getOptions(options));
@@ -74,7 +74,7 @@ public class AjaxUtils {
 		sb.append("{");
 		sb.append("method: 'post'");
 		if(!parameters.isEmpty()){
-			sb.append(", parameters: ").append(JSON.encode(parameters));
+			sb.append(", parameters: ").append(encodeParameters(parameters));
 		}
 		if(!options.isEmpty()){
 			sb.append(", ").append(getOptions(options));
@@ -82,6 +82,21 @@ public class AjaxUtils {
 		sb.append("})");
 		
 		return sb.toString();
+	}
+	
+	private static String encodeParameters(Map<String, String> parameters){
+		StringBuilder sb = new StringBuilder();
+		for(Map.Entry<String, String> entry: parameters.entrySet()){
+			if(sb.length() != 0){
+				sb.append(", ");
+			}
+			sb.append("'");
+			sb.append(StringEscapeUtils.escapeJavaScript(entry.getKey()));
+			sb.append("': '");
+			sb.append(StringEscapeUtils.escapeJavaScript(entry.getValue()));
+			sb.append("'");
+		}
+		return "{" + sb.toString() + "}";
 	}
 	
 	public static String getOptions(Map<String, String> options){
