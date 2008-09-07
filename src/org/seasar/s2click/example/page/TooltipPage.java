@@ -12,9 +12,11 @@ public class TooltipPage extends LayoutPage {
 	
 	public String title = "ツールチップヘルプ";
 	
-	public ToolTip tooltipIcon = new ToolTip("tooltipIcon", "help.html", "ヘルプ");
+	public ToolTip tooltipIcon = new ToolTip("tooltipIcon", 
+			"ツールチップヘルプに表示されるコンテンツです（タイトルなしバージョン）。");
 	
-	public ToolTip tooltipText = new ToolTip("tooltipText", "help.html", "ヘルプ");
+	public ToolTip tooltipText = new ToolTip("tooltipText", 
+			"ツールチップヘルプに表示されるコンテンツです（タイトルありバージョン）。", "ヘルプ");
 	
 	public TooltipPage(){
 		tooltipText.setLabel("テキスト");

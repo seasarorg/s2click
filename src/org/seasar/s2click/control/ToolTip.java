@@ -7,10 +7,11 @@ import javax.servlet.ServletContext;
 import net.sf.click.control.AbstractControl;
 import net.sf.click.util.ClickUtils;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * <a href="http://www.codylindley.com/blogstuff/js/jtip/">jTip</a>を使用してツールチップを表示するためのコントロールです。
+ * <a href="http://www.bosrup.com/web/overlib/">overLIB</a>を使用してツールチップを表示するためのコントロールです。
  * 
  * @author Naoki Takezoe
  */
@@ -19,21 +20,16 @@ public class ToolTip extends AbstractControl {
 	private static final long serialVersionUID = 1L;
 	
 	/** jTipのリソース（click/jqueryにデプロイされます） */
-    public static final String[] JQUERY_RESOURCES = {
-        "/org/seasar/s2click/control/jquery/jquery.js",
-        "/org/seasar/s2click/control/jquery/jtip.js",
-        "/org/seasar/s2click/control/jquery/jtip.css",
-        "/org/seasar/s2click/control/jquery/arrow_left.gif",
-        "/org/seasar/s2click/control/jquery/arrow_right.gif",
-        "/org/seasar/s2click/control/jquery/loader.gif",
-        "/org/seasar/s2click/control/jquery/help.png",
+    public static final String[] OVERLIB_RESOURCES = {
+        "/org/seasar/s2click/control/overlib/overlib.js",
+        "/org/seasar/s2click/control/overlib/overlib_hideform.js",
+        "/org/seasar/s2click/control/overlib/help.png",
     };
     
 	/** HTMLのhead要素内に出力するインポートステートメント */
     public static final String HTML_IMPORTS =
-        "<link type=\"text/css\" rel=\"stylesheet\" href=\"{0}/click/jquery/jtip.css\"/>\n"
-        + "<script type=\"text/javascript\" src=\"{0}/click/jquery/jquery.js\"></script>\n"
-        + "<script type=\"text/javascript\" src=\"{0}/click/jquery/jtip.js\"></script>\n";
+        "<script type=\"text/javascript\" src=\"{0}/click/overlib/overlib.js\"></script>\n"
+        + "<script type=\"text/javascript\" src=\"{0}/click/overlib/overlib_hideform.js\"></script>\n";
     
 	private String contents;
 	private int width = 300;
@@ -83,8 +79,8 @@ public class ToolTip extends AbstractControl {
 	 */
     public void onDeploy(ServletContext servletContext) {
         ClickUtils.deployFiles(servletContext,
-                               JQUERY_RESOURCES,
-                               "click/jquery");
+                               OVERLIB_RESOURCES,
+                               "click/overlib");
     }
 	
     /*
@@ -117,37 +113,43 @@ public class ToolTip extends AbstractControl {
 		String path = getContext().getRequest().getContextPath();
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("<a href=\"").append(getContents()).append("?width=").append(getWidth()).append("\" ");
-		sb.append("class=\"jTip\" id=\"").append(getId()).append("\" ");
-		
+		sb.append("<a href=\"javascript:void(0);\" ");
+		sb.append("onmouseover=\"");
+		sb.append("return overlib('");
+		sb.append(StringEscapeUtils.escapeJavaScript(getContents()));
+		sb.append("'");
 		if(StringUtils.isNotEmpty(getTitle())){
-			sb.append("name=\"").append(ClickUtils.escapeHtml(getTitle())).append("\"");
+			sb.append(", CAPTION, '");
+			sb.append(StringEscapeUtils.escapeJavaScript(getTitle()));
+			sb.append("'");
 		}
+		sb.append(", WIDTH, ").append(getWidth());
+		sb.append(");\" onmouseout=\"return nd();\">");
 		
-		sb.append(">");
 		if(StringUtils.isNotEmpty(getLabel())){
 			sb.append(ClickUtils.escapeHtml(getLabel()));
 		} else {
-			sb.append("<img src=\"").append(path).append("/click/jquery/help.png\" border=\"0\">");
+			sb.append("<img src=\"").append(path).append("/click/overlib/help.png\" border=\"0\">");
 		}
+		
 		sb.append("</a>");
 		
 		return sb.toString();
 	}
 
 	/**
-	 * ツールチップに表示するHTMLのパスを取得します。
+	 * ツールチップに表示する内容を取得します。
 	 * 
-	 * @return ツールチップに表示するHTMLのパス
+	 * @return ツールチップに表示するHTML
 	 */
 	public String getContents() {
 		return contents;
 	}
 
 	/**
-	 * ツールチップに表示するHTMLのパスを設定します。
+	 * ツールチップに表示する内容を設定します。
 	 * 
-	 * @param contents ツールチップに表示するHTMLのパス
+	 * @param contents ツールチップに表示するHTML
 	 */
 	public void setContents(String contents) {
 		this.contents = contents;
