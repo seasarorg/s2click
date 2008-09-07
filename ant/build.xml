@@ -14,7 +14,7 @@
 	<property name="blank-s2jdbc.zip.name" value="s2click-s2jdbc-blank.zip"/>
 	<property name="release.dir" value="s2click-${version}"/>
 	<property name="release.zip.name" value="s2click-${version}.zip"/>
-	<property name="doc.dir" value="${release.dir}/javadoc"/>
+	<property name="doc.dir" value="docs/javadoc"/>
 
 	<path id="classpath">
 		<pathelement location="${lib.dir}/aopalliance-1.0.jar"/>
@@ -147,6 +147,7 @@
 	<!--==================================================-->
 	<target name="clean">
 		<delete dir="${bin.dir}"/>
+		<delete dir="${doc.dir}"/>
 		<delete dir="${example.dir}"/>
 		<delete dir="${release.dir}"/>
 		<delete file="${release.zip.name}"/>
