@@ -16,6 +16,7 @@ public class MessageForm extends S2ClickForm {
 	public MessageForm(String name){
 		super(name);
 		message.setSize(40);
+		addConfirmMessage(submit.getName(), "メッセージを送信します。よろしいですか？");
 		setFieldAutoRegisteration(true);
 		setJavaScriptValidation(true);
 	}

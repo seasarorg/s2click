@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.click.control.Submit;
 import net.sf.click.util.ClickUtils;
 
 import org.seasar.s2click.util.AjaxUtils;
@@ -15,7 +16,7 @@ import org.seasar.s2click.util.AjaxUtils;
  * @author Naoki Takezoe
  * @sibce 0.4.0
  */
-public class AjaxSubmit extends ConfirmSubmit {
+public class AjaxSubmit extends Submit {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -29,10 +30,10 @@ public class AjaxSubmit extends ConfirmSubmit {
 		super(name, listener, method);
 	}
 
-	public AjaxSubmit(String name, String label, Object listener,
-			String method, String confirmMessage) {
-		super(name, label, listener, method, confirmMessage);
-	}
+//	public AjaxSubmit(String name, String label, Object listener,
+//			String method, String confirmMessage) {
+//		super(name, label, listener, method, confirmMessage);
+//	}
 
 	public AjaxSubmit(String name, String label, Object listener, String method) {
 		super(name, label, listener, method);
@@ -65,15 +66,26 @@ public class AjaxSubmit extends ConfirmSubmit {
 	
 	@Override public String toString() {
 		String formId = getForm().getId();
+//		StringBuilder sb = new StringBuilder();
+//		sb.append(formId).append(".request(");
+//		sb.append("{");
+//		sb.append("method: 'post', ");
+//		sb.append(AjaxUtils.getOptions(handlers));
+//		sb.append("}); return false;");
+//		
+//		setAttribute("onclick", sb.toString());
+		
 		StringBuilder sb = new StringBuilder();
-		sb.append(formId).append(".request(");
-		sb.append("{");
-		sb.append("method: 'post', ");
+		sb.append("<script type=\"text/javascript\">\n");
+		sb.append("$('").append(formId).append("').onsubmit = ");
+		sb.append("function(){\n");
+		sb.append("  this.request({ method: 'post', ");
 		sb.append(AjaxUtils.getOptions(handlers));
 		sb.append("}); return false;");
+		sb.append("}\n");
+		sb.append("</script>\n");
 		
-		setAttribute("onclick", sb.toString());
-		return super.toString();
+		return super.toString() + sb.toString();
 	}
 	
 }
