@@ -18,10 +18,10 @@ public class JdbcPage extends LayoutPage {
 	protected JdbcManager jdbcManager;
 	
 	public String title = "S2JDBC";
-	public MessageForm form = new MessageForm("form");
+	public MessageForm messageForm = new MessageForm("messageForm");
 
 	public JdbcPage(){
-		form.submit.setListener(this, "doAdd");
+		messageForm.submit.setListener(this, "doAdd");
 	}
 	
 	@Override public void onRender() {
@@ -30,10 +30,10 @@ public class JdbcPage extends LayoutPage {
 	}
 	
 	public boolean doAdd(){
-		if(form.isValid()){
+		if(messageForm.isValid()){
 			Message message = new Message();
-			message.name = form.name.getValue();
-			message.message = form.message.getValue();
+			message.name = messageForm.name.getValue();
+			message.message = messageForm.message.getValue();
 			message.date = new Date();
 			jdbcManager.insert(message).execute();
 			
