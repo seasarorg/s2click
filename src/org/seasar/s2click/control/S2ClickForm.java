@@ -147,6 +147,37 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+    @Override public void setName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Null name parameter");
+        }
+        this.name = name;
+
+//        HiddenField nameField = (HiddenField) getField(FORM_NAME);
+//        if (nameField == null) {
+//            nameField = new HiddenField(FORM_NAME, String.class);
+//            add(nameField);
+//        }
+//        nameField.setValue(name);
+    }
+	
+	/**
+	 * {@inheritDoc}
+	 */
+    @Override public void onInit() {
+    	HiddenField nameField = (HiddenField) getField(FORM_NAME);
+    	if (nameField == null) {
+    		nameField = new HiddenField(FORM_NAME, String.class);
+    		add(nameField);
+    	}
+    	nameField.setValue(getName());
+    	
+    	super.onInit();
+    }
+    
 	/*
 	 * (non-Javadoc)
 	 * @see net.sf.click.control.Form#add(net.sf.click.control.Field)
