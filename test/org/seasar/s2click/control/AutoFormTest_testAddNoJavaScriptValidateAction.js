@@ -9,14 +9,26 @@ function validate_form_text() {
    }
 }
 function on_form_submit() {
-   var noValidateActions = ["submit"];
-   for(var i=0;i<noValidateActions.length;i++){
-      if(document.form.action.value == noValidateActions[i]){
-         return true;
-      }
-   }
-   var msgs = new Array(1);
-   msgs[0] = validate_form_text();
-   return validateForm(msgs, 'form', 'left', null);
+  var noValidateActions = ["submit"];
+  var skipValidation = false;
+  var actionName = document.form.action.value;
+  for(var i=0;i<noValidateActions.length;i++){
+    if(actionName == noValidateActions[i]){
+      skipValidation = true;
+      break;
+    }
+  }
+  if(skipValidation == false){
+    var msgs = new Array(1);
+    msgs[0] = validate_form_text();
+    if(!validateForm(msgs, 'form', 'left', null)){
+      return false;
+    }
+  }
+  var confirmMessages = {};
+  var message = confirmMessages[actionName];
+  if(message){
+    return confirm(message);
+  }
 }
 //--></script>
