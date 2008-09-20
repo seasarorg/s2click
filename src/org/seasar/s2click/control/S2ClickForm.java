@@ -11,6 +11,7 @@ import net.arnx.jsonic.JSON;
 import net.sf.click.control.Field;
 import net.sf.click.control.HiddenField;
 import net.sf.click.control.Submit;
+import net.sf.click.util.ClickUtils;
 import net.sf.click.util.HtmlStringBuffer;
 
 import org.seasar.s2click.util.S2ClickUtils;
@@ -146,38 +147,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 	    	}
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-    @Override public void setName(String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("Null name parameter");
-        }
-        this.name = name;
-
-//        HiddenField nameField = (HiddenField) getField(FORM_NAME);
-//        if (nameField == null) {
-//            nameField = new HiddenField(FORM_NAME, String.class);
-//            add(nameField);
-//        }
-//        nameField.setValue(name);
-    }
 	
-	/**
-	 * {@inheritDoc}
-	 */
-    @Override public void onInit() {
-    	HiddenField nameField = (HiddenField) getField(FORM_NAME);
-    	if (nameField == null) {
-    		nameField = new HiddenField(FORM_NAME, String.class);
-    		add(nameField);
-    	}
-    	nameField.setValue(getName());
-    	
-    	super.onInit();
-    }
-    
 	/*
 	 * (non-Javadoc)
 	 * @see net.sf.click.control.Form#add(net.sf.click.control.Field)
@@ -196,7 +166,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 	 * (non-Javadoc)
 	 * @see net.sf.click.control.Form#startTag()
 	 */
-	public String startTag(){
+	@Override public String startTag(){
 		HtmlStringBuffer buffer = new HtmlStringBuffer();
 		buffer.append("<table width=\"100%\">");
 		renderErrors(buffer, true);
@@ -209,6 +179,25 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 		
 		return super.startTag() + buffer.toString();
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see net.sf.click.control.Form#endTag()
+	 */
+	@Override public String endTag() {
+        HtmlStringBuffer buffer = new HtmlStringBuffer();
+
+        List<?> formFields = ClickUtils.getFormFields(this);
+        renderHiddenFields(buffer, formFields);
+
+        buffer.append("</form>\n");
+
+        renderFocusJavaScript(buffer, formFields);
+
+        renderValidationJavaScript(buffer, formFields);
+
+        return buffer.toString();
+    }
 
 	/*
 	 * (non-Javadoc)
@@ -324,6 +313,40 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 	@Override
 	public void copyTo(Object object) {
 		S2ClickUtils.copyFormToObject(this, object, false);
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+    protected void renderHeader(HtmlStringBuffer buffer, List formFields) {
+
+        buffer.elementStart("form");
+
+        buffer.appendAttribute("method", getMethod());
+        buffer.appendAttribute("name", getName());
+        buffer.appendAttribute("id", getId());
+        buffer.appendAttribute("action", getActionURL());
+        buffer.appendAttribute("enctype", getEnctype());
+
+        appendAttributes(buffer);
+
+        if (getJavaScriptValidation()) {
+            String javaScript = "return on_" + getId() + "_submit();";
+            buffer.appendAttribute("onsubmit", javaScript);
+        }
+        buffer.closeTag();
+        buffer.append("\n");
+    }
+	
+	@SuppressWarnings("unchecked")
+	protected void renderHiddenFields(HtmlStringBuffer buffer, List formFields) {
+      // Render hidden fields
+      for (int i = 0, size = formFields.size(); i < size; i++) {
+          Field field = (Field) formFields.get(i);
+          if (field.isHidden()) {
+              buffer.append(field);
+              buffer.append("\n");
+          }
+      }
 	}
 
 }
