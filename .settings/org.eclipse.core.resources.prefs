@@ -1,7 +1,13 @@
-#Sun Sep 21 00:31:41 JST 2008
+#Sun Sep 21 01:07:13 JST 2008
 eclipse.preferences.version=1
 encoding//WebContent/index.htm=UTF-8
 encoding//WebContent/json.htm=UTF-8
 encoding//WebContent/tooltip.htm=UTF-8
+encoding//src/net/sf/click/package.html=UTF-8
+encoding//src/org/apache/velocity/tools/generic/introspection/package.html=UTF-8
+encoding//src/org/seasar/s2click/annotation/package.html=UTF-8
+encoding//src/org/seasar/s2click/control/package.html=UTF-8
+encoding//src/org/seasar/s2click/package.html=UTF-8
+encoding//src/org/seasar/s2click/util/package.html=UTF-8
 encoding//test/org/seasar/s2click/control/S2ClickFormTest_testAddNoJavaScriptValidateAction.js=UTF-8
 encoding/<project>=UTF-8
