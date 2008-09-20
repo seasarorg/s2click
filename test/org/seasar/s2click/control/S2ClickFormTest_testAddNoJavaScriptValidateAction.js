@@ -9,9 +9,9 @@ function validate_form_text() {
    }
 }
 function on_form_submit() {
+  var actionName = document.form.action.value;
   var noValidateActions = ["submit"];
   var skipValidation = false;
-  var actionName = document.form.action.value;
   for(var i=0;i<noValidateActions.length;i++){
     if(actionName == noValidateActions[i]){
       skipValidation = true;
@@ -25,10 +25,6 @@ function on_form_submit() {
       return false;
     }
   }
-  var confirmMessages = {};
-  var message = confirmMessages[actionName];
-  if(message){
-    return confirm(message);
-  }
+  return true;
 }
 //--></script>
