@@ -18,9 +18,8 @@ public class S2ClickFormTest extends S2ClickTestCase {
 	public void testOnProcess() {
 		MockContext.initContext();
 		
-		@SuppressWarnings("unused")
+		@SuppressWarnings({"unused", "serial"})
 		S2ClickForm form = new S2ClickForm("form") {
-			private static final long serialVersionUID = 1L;
 			{
 				setFieldAutoRegisteration(true);
 				setJavaScriptValidation(false);
@@ -47,9 +46,8 @@ public class S2ClickFormTest extends S2ClickTestCase {
 	 * <code>setFieldAutoRegisteration()</code>でセットした値が<code>isFieldAutoRegistration()</code>で取得できること。
 	 */
 	public void testSetFieldAutoRegisteration() {
-		S2ClickForm form = new S2ClickForm(){
-			private static final long serialVersionUID = 1L;
-		};
+		@SuppressWarnings("serial")
+		S2ClickForm form = new S2ClickForm(){ };
 		
 		assertFalse(form.isFieldAutoRegistration());
 		form.setFieldAutoRegisteration(true);
@@ -71,7 +69,7 @@ public class S2ClickFormTest extends S2ClickTestCase {
 		HtmlStringBuffer buffer = new HtmlStringBuffer();
 		form.renderValidationJavaScript(buffer, form.getFieldList());
 		
-		assertEquals(load("AutoFormTest_testAddNoJavaScriptValidateAction.js"),
+		assertEquals(load("S2ClickFormTest_testAddNoJavaScriptValidateAction.js"),
 				buffer.toString());
 	}
 
@@ -79,9 +77,8 @@ public class S2ClickFormTest extends S2ClickTestCase {
 	 * フィールドの自動登録が行われること。
 	 */
 	public void testInit1() {
-		@SuppressWarnings("unused")
+		@SuppressWarnings({"serial", "unused"})
 		S2ClickForm form = new S2ClickForm("form") {
-			private static final long serialVersionUID = 1L;
 			{
 				setFieldAutoRegisteration(true);
 				setJavaScriptValidation(false);
@@ -106,9 +103,8 @@ public class S2ClickFormTest extends S2ClickTestCase {
 	 * 
 	 */
 	public void testInit2() {
-		@SuppressWarnings("unused")
+		@SuppressWarnings({"serial", "unused"})
 		S2ClickForm form = new S2ClickForm("form") {
-			private static final long serialVersionUID = 1L;
 			{
 				setFieldAutoRegisteration(false);
 				setJavaScriptValidation(false);
@@ -127,9 +123,8 @@ public class S2ClickFormTest extends S2ClickTestCase {
 	}
 	
 	public void testInit3() {
-		@SuppressWarnings("unused")
+		@SuppressWarnings({"serial", "unused"})
 		S2ClickForm form = new S2ClickForm("form") {
-			private static final long serialVersionUID = 1L;
 			{
 				setFieldAutoRegisteration(true);
 				setJavaScriptValidation(true);
@@ -152,9 +147,8 @@ public class S2ClickFormTest extends S2ClickTestCase {
 	}
 	
 	public void testAddField1() {
-		@SuppressWarnings("unused")
+		@SuppressWarnings({"serial", "unused"})
 		S2ClickForm form = new S2ClickForm("form") {
-			private static final long serialVersionUID = 1L;
 			{
 				setFieldAutoRegisteration(true);
 				setJavaScriptValidation(true);
@@ -171,9 +165,8 @@ public class S2ClickFormTest extends S2ClickTestCase {
 	}
 
 	public void testAddField2() {
-		@SuppressWarnings("unused")
+		@SuppressWarnings({"serial", "unused"})
 		S2ClickForm form = new S2ClickForm("form") {
-			private static final long serialVersionUID = 1L;
 			{
 				setFieldAutoRegisteration(true);
 				setJavaScriptValidation(false);
@@ -207,5 +200,50 @@ public class S2ClickFormTest extends S2ClickTestCase {
 //		
 //		fail("Not yet implemented");
 //	}
+	
+	public void testCopyTo(){
+		@SuppressWarnings({"serial", "unused"})
+		S2ClickForm form = new S2ClickForm("form"){
+			{
+				setFieldAutoRegisteration(true);
+				setJavaScriptValidation(false);
+			}
+			public TextField name = new TextField("name");
+		};
+		
+		form.init();
+		TextField name = (TextField) form.getField("name");
+		name.setValue("Naoki Takezoe");
+		
+		SampleBean bean = new SampleBean();
+		form.copyTo(bean);
+		
+		assertEquals("Naoki Takezoe", bean.name);
+	}
+	
+	public void testCopyFrom(){
+		@SuppressWarnings({"serial", "unused"})
+		S2ClickForm form = new S2ClickForm("form"){
+			{
+				setFieldAutoRegisteration(true);
+				setJavaScriptValidation(false);
+			}
+			public TextField name = new TextField("name");
+		};
+		
+		form.init();
+		
+		SampleBean bean = new SampleBean();
+		bean.name = "Naoki Takezoe";
+		
+		form.copyFrom(bean);
+		
+		TextField name = (TextField) form.getField("name");
+		assertEquals("Naoki Takezoe", name.getValue());
+	}
+	
+	private class SampleBean {
+		public String name;
+	}
 
 }

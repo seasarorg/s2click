@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 
+import net.sf.click.util.ClickLogger;
+
 import org.apache.commons.io.IOUtils;
 import org.seasar.extension.unit.S2TestCase;
 
@@ -13,6 +15,11 @@ import org.seasar.extension.unit.S2TestCase;
  */
 public class S2ClickTestCase extends S2TestCase {
 	
+	@Override protected void setUp() throws Exception {
+		super.setUp();
+		ClickLogger.setInstance(new ClickLogger());
+	}
+
 	protected Object getField(Object obj, String fieldName){
 		try {
 			Class<?> clazz = obj.getClass();

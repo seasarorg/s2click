@@ -302,7 +302,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 
 	@Override
 	public void copyFrom(Object object) {
-		S2ClickUtils.copyObjectToForm(object, this, false);
+		copyFrom(object, false);
 	}
 
 	@Override
@@ -312,7 +312,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 
 	@Override
 	public void copyTo(Object object) {
-		S2ClickUtils.copyFormToObject(this, object, false);
+		copyTo(object, false);
 	}
 	
 	@Override
