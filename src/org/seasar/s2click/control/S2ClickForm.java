@@ -132,7 +132,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 	 * This method is called from {@link #onProcess()}.
 	 */
 	protected void init(){
-		if(getValidate() && getJavaScriptValidation()){
+		if(requiresJavaScript()){
 			add(new HiddenField("action", ""));
 		}
 		if(isFieldAutoRegistration()){
@@ -148,6 +148,15 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 		}
 	}
 	
+	/**
+	 * JavaScriptを使用する必要があるかどうかを判定します。
+	 * 
+	 * @return JavaScriptを使用する必要がある場合true、必要ない場合false
+	 */
+	protected boolean requiresJavaScript(){
+		return (getValidate() && getJavaScriptValidation()) || !confirmMessages.isEmpty();
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see net.sf.click.control.Form#add(net.sf.click.control.Field)
@@ -155,7 +164,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 	@Override public void add(Field field) {
 		super.add(field);
 		if(field instanceof Submit){
-			if(getValidate() && getJavaScriptValidation()){
+			if(requiresJavaScript()){
 				field.setAttribute("onclick",
 						getName() + ".action.value='" + field.getName() + "'");
 			}
@@ -207,34 +216,36 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
     protected void renderValidationJavaScript(HtmlStringBuffer buffer, List formFields) {
 
         // Render JavaScript form validation code
-        if (getValidate() && getJavaScriptValidation()) {
+        if (requiresJavaScript()) {
             List functionNames = new ArrayList();
 
             buffer.append("<script type=\"text/javascript\"><!--\n");
-
-            // Render field validation functions & build list of function names
-            for (Iterator i = formFields.iterator(); i.hasNext();) {
-                Field field = (Field) i.next();
-                String fieldJS = field.getValidationJavaScript();
-                if (fieldJS != null) {
-                    buffer.append(fieldJS);
-
-                    StringTokenizer tokenizer = new StringTokenizer(fieldJS);
-                    tokenizer.nextToken();
-                    functionNames.add(tokenizer.nextToken());
-                }
+            
+            if(getValidate() && getJavaScriptValidation()){
+	            // Render field validation functions & build list of function names
+	            for (Iterator i = formFields.iterator(); i.hasNext();) {
+	                Field field = (Field) i.next();
+	                String fieldJS = field.getValidationJavaScript();
+	                if (fieldJS != null) {
+	                    buffer.append(fieldJS);
+	
+	                    StringTokenizer tokenizer = new StringTokenizer(fieldJS);
+	                    tokenizer.nextToken();
+	                    functionNames.add(tokenizer.nextToken());
+	                }
+	            }
             }
 
-            if (!functionNames.isEmpty()) {
-                buffer.append("function on_");
-                buffer.append(getId());
-                buffer.append("_submit() {\n");
+            buffer.append("function on_");
+            buffer.append(getId());
+            buffer.append("_submit() {\n");
+            buffer.append("  var actionName = document." + getName() + ".action.value;\n");
                 
+            if (!functionNames.isEmpty()) {
                 buffer.append("  var noValidateActions = ");
                 buffer.append(JSON.encode(noJavaScriptValidateActions));
                 buffer.append(";\n");
                 buffer.append("  var skipValidation = false;\n");
-                buffer.append("  var actionName = document." + getName() + ".action.value;\n");
                 buffer.append("  for(var i=0;i<noValidateActions.length;i++){\n");
                 buffer.append("    if(actionName == noValidateActions[i]){\n");
                 buffer.append("      skipValidation = true;\n");
@@ -269,23 +280,21 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
                 buffer.append("    }\n");
                 
                 buffer.append("  }\n");
-                
+            }
+            
+            if(!confirmMessages.isEmpty()){
                 buffer.append("  var confirmMessages = ");
                 buffer.append(JSON.encode(confirmMessages));
                 buffer.append(";\n");
                 
                 buffer.append("  var message = confirmMessages[actionName];\n");
                 buffer.append("  if(message){\n");
-                buffer.append("    return confirm(message);\n");
+                buffer.append("    if(!confirm(message)){ return false; }\n");
                 buffer.append("  }\n");
-                
-                buffer.append("}\n");
-
-            } else {
-                buffer.append("function on_");
-                buffer.append(getId());
-                buffer.append("_submit() { return true; }\n");
             }
+            
+            buffer.append("  return true;\n");
+            buffer.append("}\n");
             buffer.append("//--></script>\n");
         }
     }
@@ -329,7 +338,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 
         appendAttributes(buffer);
 
-        if (getJavaScriptValidation()) {
+        if (requiresJavaScript()) {
             String javaScript = "return on_" + getId() + "_submit();";
             buffer.appendAttribute("onsubmit", javaScript);
         }
