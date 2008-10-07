@@ -65,6 +65,8 @@
     		<fileset dir="${src.dir}" includes="**/*.gif" />
     		<fileset dir="${src.dir}" includes="**/*.png" />
     		<fileset dir="${src.dir}" includes="**/*.css" />
+    		<fileset dir="${src.dir}" includes="**/*.zip" />
+    		<fileset dir="${src.dir}" includes="**/*.xml" />
     	</copy>
     	<copy todir="${bin.dir}">
     		<fileset dir="${src.dir}" includes="**/*.java" 
