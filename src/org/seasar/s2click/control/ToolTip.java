@@ -19,7 +19,7 @@ public class ToolTip extends AbstractControl {
 	
 	private static final long serialVersionUID = 1L;
 	
-	/** jTipのリソース（click/jqueryにデプロイされます） */
+	/** overLIBのリソース（click/overlibにデプロイされます） */
     public static final String[] OVERLIB_RESOURCES = {
         "/org/seasar/s2click/control/overlib/overlib.js",
         "/org/seasar/s2click/control/overlib/overlib_hideform.js",
