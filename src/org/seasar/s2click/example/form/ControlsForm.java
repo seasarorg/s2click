@@ -4,6 +4,7 @@ import net.sf.click.control.Option;
 import net.sf.click.extras.control.CheckList;
 import net.sf.click.extras.control.PickList;
 
+import org.seasar.s2click.control.FCKEditor;
 import org.seasar.s2click.control.S2ClickForm;
 import org.seasar.s2click.control.DateFieldYYYYMMDD;
 
@@ -29,6 +30,7 @@ public class ControlsForm extends S2ClickForm {
 	public DateFieldYYYYMMDD dateField = new DateFieldYYYYMMDD("date", "日付");
 	public CheckList checkList = new CheckList("checkList", "チェックリスト");
 	public PickList pickList = new PickList("pickList", "ピックリスト");
+	public FCKEditor fckEditor = new FCKEditor("fckEditor", "FCKEditor");
 	
 //	public AutoCompleteTextField completion 
 //		= new AutoCompleteTextField("completion", "入力補完"){
