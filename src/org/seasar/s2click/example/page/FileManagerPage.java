@@ -2,8 +2,11 @@ package org.seasar.s2click.example.page;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,21 +17,16 @@ import net.sf.click.util.ClickUtils;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.annotation.Path;
 
+/**
+ * FCKeditorのファイルマネージャのサーバサイド側実装を提供します。
+ */
 @Path("/fckeditor/filemanager.htm")
 public class FileManagerPage extends S2ClickPage {
-	
-//	@Request("Command")
-//	public String command;
-//	
-//	@Request("Type")
-//	public String type;
-//	
-//	@Request("CurrentFolder")
-//	public String currentFolder;
 	
 	private static List<String> ALLOWED_COMMANDS = new CopyOnWriteArrayList<String>();
 	static {
@@ -83,11 +81,27 @@ public class FileManagerPage extends S2ClickPage {
 		String type = getContext().getRequestParameter("Type");
 		String currentFolder = getContext().getRequestParameter("CurrentFolder");
 		
-		Context context = getContext();
-		System.out.println(context.getFileItem("Command"));
-		
 		if(StringUtils.isEmpty(command) || StringUtils.isEmpty(type) || StringUtils.isEmpty(currentFolder)){
-			return;
+			String queryString = getContext().getRequest().getQueryString();
+			if(StringUtils.isNotEmpty(queryString)){
+				for(String item: queryString.split("&")){
+					String[] dim = item.split("=");
+					try {
+						if(dim[0].equals("Command")){
+							command = URLDecoder.decode(dim[1], "UTF-8");
+						} else if(dim[0].equals("Type")){
+							type = URLDecoder.decode(dim[1], "UTF-8");
+						} else if(dim[0].equals("CurrentFolder")){
+							currentFolder = URLDecoder.decode(dim[1], "UTF-8");
+						}
+					} catch(UnsupportedEncodingException ex){
+						// ありえない
+					}
+				}
+			}
+			if(StringUtils.isEmpty(command) || StringUtils.isEmpty(type) || StringUtils.isEmpty(currentFolder)){
+				return;
+			}
 		}
 		
 		try {
@@ -102,7 +116,7 @@ public class FileManagerPage extends S2ClickPage {
 			}
 			
 			if(command.equals("FileUpload")){
-				fileUpload();
+				fileUpload(command, type, currentFolder, getContext());
 			}
 			
 			createXmlHeader(sb, command, type, currentFolder);
@@ -118,6 +132,10 @@ public class FileManagerPage extends S2ClickPage {
 			setHeader("Pragma", "no-cache");
 			renderResponse("text/xml; charset=UTF-8", new ByteArrayInputStream(sb.toString().getBytes("UTF-8")));
 			
+			System.out.println("****");
+			System.out.println(sb.toString());
+			System.out.println("****");
+			
 		} catch(FCKEditorConnectorException ex){
 			sendError(ex);
 		} catch(UnsupportedEncodingException ex){
@@ -126,11 +144,49 @@ public class FileManagerPage extends S2ClickPage {
 		
 	}
 	
-	private void fileUpload(){
-		FileItem item = getContext().getFileItem("NewFile");
-		System.out.println("** ファイルアップロード **");
-		System.out.println(item.getName());
-		System.out.println(item.getFieldName());
+	/**
+	 * ファイルをアップロードします。
+	 */
+	private void fileUpload(String command, String type, String folderPath, Context context){
+		int code = 0;
+		String fileName = "";
+		try {
+			String root = context.getServletContext().getRealPath("/");
+			String serverDir = serverMapFolder(type, folderPath, command, context);
+			File dir = new File(root, serverDir);
+			
+			FileItem item = getContext().getFileItem("NewFile");
+			fileName = item.getName(); // TODO IEだとフルパスで渡ってきてた気がする。
+			
+			File file = new File(dir, fileName);
+			
+			InputStream in = null;
+			FileOutputStream out = null;
+			try {
+				in = item.getInputStream();
+				out = new FileOutputStream(file);
+				IOUtils.copy(in, out);
+			} catch(IOException ex){
+				throw new FCKEditorConnectorException(202, ex.toString());
+			} finally {
+				IOUtils.closeQuietly(in);
+				IOUtils.closeQuietly(out);
+			}
+		} catch(FCKEditorConnectorException ex){
+			code = ex.code;
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("<script type=\"text/javascript\">");
+		sb.append("(function(){var d=document.domain;while (true){try{var A=window.parent.document.domain;break;}catch(e) {};d=d.replace(/.*?(?:\\.|$)/,'');if (d.length==0) break;try{document.domain=d;}catch (e){break;}}})();");
+		sb.append("window.parent.OnUploadCompleted(").append(code).append(",'").append(fileName).append("','").append(fileName).append("', '');");
+		sb.append("</script>");
+		
+		try {
+			renderResponse("text/javascript", new ByteArrayInputStream(sb.toString().getBytes("UTF-8")));
+		} catch(UnsupportedEncodingException ex){
+			// ありえない
+		}
 	}
 	
 	private void createXmlHeader(StringBuilder sb, String command, String type, String currentFolder){
@@ -187,6 +243,11 @@ public class FileManagerPage extends S2ClickPage {
 		return currentFolder;
 	}
 	
+	/**
+	 * エラー電文を返却します。
+	 * 
+	 * @param ex 例外
+	 */
 	private void sendError(FCKEditorConnectorException ex){
 		setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 		setHeader("Pragma", "no-cache");
@@ -219,7 +280,7 @@ public class FileManagerPage extends S2ClickPage {
 	}
 	
 	private static String createServerFolder(String folderPath, Context context){
-		String root = context.getServletContext().getRealPath("WEB-INF");
+		String root = context.getServletContext().getRealPath("/");
 		File dir = new File(root, folderPath);
 		if(!dir.exists()){
 			try {
@@ -256,7 +317,7 @@ public class FileManagerPage extends S2ClickPage {
 		public void execute(StringBuilder sb, String type, String currentFolder, Context context) {
 			String serverDir = serverMapFolder(type, currentFolder, "GetFolders", context);
 			
-			String root = context.getServletContext().getRealPath("WEB-INF");
+			String root = context.getServletContext().getRealPath("/");
 			File dir = new File(root, serverDir);
 			
 			sb.append("<Folders>\n");
@@ -274,18 +335,23 @@ public class FileManagerPage extends S2ClickPage {
 		public void execute(StringBuilder sb, String type, String currentFolder, Context context) {
 			String serverDir = serverMapFolder(type, currentFolder, "GetFolders", context);
 			
-			String root = context.getServletContext().getRealPath("WEB-INF");
+			String root = context.getServletContext().getRealPath("/");
 			File dir = new File(root, serverDir);
 			
 			sb.append("<Folders>\n");
 			for(File file: dir.listFiles()){
 				if(file.isDirectory()){
 					sb.append("<Folder name=\"").append(ClickUtils.escapeHtml(file.getName())).append("\" />\n");
-				} else if(file.isFile()){
-					sb.append("<File name=\"").append(ClickUtils.escapeHtml(file.getName())).append("\" size=\"").append(file.length()).append("\"/>\n");
 				}
 			}
 			sb.append("</Folders>\n");
+			sb.append("<Files>\n");
+			for(File file: dir.listFiles()){
+				if(file.isFile()){
+					sb.append("<File name=\"").append(ClickUtils.escapeHtml(file.getName())).append("\" size=\"").append(file.length()).append("\" />\n");
+				}
+			}
+			sb.append("</Files>\n");
 		}
 	}
 	
@@ -293,7 +359,7 @@ public class FileManagerPage extends S2ClickPage {
 		public void execute(StringBuilder sb, String type, String currentFolder, Context context) {
 			String serverDir = serverMapFolder(type, currentFolder, "GetFolders", context);
 			
-			String root = context.getServletContext().getRealPath("WEB-INF");
+			String root = context.getServletContext().getRealPath("/");
 			File dir = new File(root, serverDir);
 			
 			String newFolderName = context.getRequestParameter("NewFolderName");
@@ -302,16 +368,6 @@ public class FileManagerPage extends S2ClickPage {
 			if(!newDir.mkdir()){
 				throw new FCKEditorConnectorException(110, newFolderName + "の作成に失敗しました。");
 			}
-			
-//			sb.append("<Folders>\n");
-//			for(File file: dir.listFiles()){
-//				if(file.isDirectory()){
-//					sb.append("<Folder name=\"").append(ClickUtils.escapeHtml(file.getName())).append("\" />\n");
-//				} else if(file.isFile()){
-//					sb.append("<File name=\"").append(ClickUtils.escapeHtml(file.getName())).append("\" size=\"").append(file.length()).append("\"/>\n");
-//				}
-//			}
-//			sb.append("</Folders>\n");
 		}
 	}
 }
