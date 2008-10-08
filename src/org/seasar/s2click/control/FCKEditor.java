@@ -70,11 +70,15 @@ public class FCKEditor extends Field {
     
     public void onDeploy(ServletContext servletContext) {
     	try {
+			File dir = new File(servletContext.getRealPath("click"));
+			if(new File(dir, "fckeditor").exists()){
+				return;
+			}
+			
 			InputStream in = ClickUtils.getResourceAsStream(
 					"org/seasar/s2click/control/FCKeditor_2.6.3.zip", 
 					FCKEditor.class);
 			
-			File dir = new File(servletContext.getRealPath("click"));
 			if(!dir.exists()){
 				dir.mkdir();
 			}

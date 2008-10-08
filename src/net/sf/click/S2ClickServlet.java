@@ -105,7 +105,8 @@ public class S2ClickServlet extends ClickServlet {
                             ognlContext = Ognl.createDefaultContext(page, null, getTypeConverter());
                         }
 
-                        PropertyUtils.setValueOgnl(page, name, value, ognlContext);
+//                        PropertyUtils.setValueOgnl(page, name, value, ognlContext);
+                        PropertyUtils.setValueOgnl(page, field.getName(), value, ognlContext);
 
                         if (logger.isTraceEnabled()) {
                             logger.trace("   auto bound variable: " + name + "=" + value);
