@@ -27,6 +27,9 @@ import org.seasar.s2click.annotation.Path;
 
 /**
  * FCKeditorのファイルマネージャのサーバサイド側実装を提供します。
+ * <p>
+ * クイックアップロード（アップロードタブからのアップロード）はサポートしません。
+ * 
  * <ul>
  *   <li>TODO ファイル名、フォルダ名のサニタイズ</li>
  *   <li>TODO 日本語のファイル名</li>
@@ -41,7 +44,7 @@ public class FCKEditorBrowserPage extends S2ClickPage {
 	
 	private static List<String> ALLOWED_COMMANDS = new CopyOnWriteArrayList<String>();
 	static {
-		ALLOWED_COMMANDS.add("QuickUpload");
+//		ALLOWED_COMMANDS.add("QuickUpload");
 		ALLOWED_COMMANDS.add("FileUpload");
 		ALLOWED_COMMANDS.add("GetFolders");
 		ALLOWED_COMMANDS.add("GetFoldersAndFiles");
@@ -61,13 +64,13 @@ public class FCKEditorBrowserPage extends S2ClickPage {
 	 */
 	private static final String USER_FILES_PATH = "files/";
 	
-	private static Map<String, String> QUICK_UPLOAD_PATH = new ConcurrentHashMap<String, String>();
-	static {
-		QUICK_UPLOAD_PATH.put("File", USER_FILES_PATH);
-		QUICK_UPLOAD_PATH.put("Image", USER_FILES_PATH);
-		QUICK_UPLOAD_PATH.put("Flash", USER_FILES_PATH);
-		QUICK_UPLOAD_PATH.put("Media", USER_FILES_PATH);
-	}
+//	private static Map<String, String> QUICK_UPLOAD_PATH = new ConcurrentHashMap<String, String>();
+//	static {
+//		QUICK_UPLOAD_PATH.put("File", USER_FILES_PATH);
+//		QUICK_UPLOAD_PATH.put("Image", USER_FILES_PATH);
+//		QUICK_UPLOAD_PATH.put("Flash", USER_FILES_PATH);
+//		QUICK_UPLOAD_PATH.put("Media", USER_FILES_PATH);
+//	}
 	
 	private static Map<String, String> FILE_TYPES_PATH = new ConcurrentHashMap<String, String>();
 	static {
@@ -113,13 +116,13 @@ public class FCKEditorBrowserPage extends S2ClickPage {
 					}
 				}
 			}
-			if(StringUtils.isEmpty(command)){
-				command = "QuickUpload";
-				if(StringUtils.isEmpty(type)){
-					type = "File";
-				}
-				currentFolder = "/";
-			}
+//			if(StringUtils.isEmpty(command)){
+//				command = "QuickUpload";
+//				if(StringUtils.isEmpty(type)){
+//					type = "File";
+//				}
+//				currentFolder = "/";
+//			}
 			
 			if(StringUtils.isEmpty(command) || StringUtils.isEmpty(type) || StringUtils.isEmpty(currentFolder)){
 				return;
@@ -137,7 +140,7 @@ public class FCKEditorBrowserPage extends S2ClickPage {
 				throw new FCKEditorConnectorException(1, "不正なタイプが指定されました。");
 			}
 			
-			if(command.equals("FileUpload") || command.equals("QuickUpload")){
+			if(command.equals("FileUpload")){
 				fileUpload(command, type, currentFolder, getContext());
 				return;
 			}
@@ -237,11 +240,11 @@ public class FCKEditorBrowserPage extends S2ClickPage {
 	}
 	
 	private static String getResourceTypePath(String type, String command){
-		if(command.equals("QuickUpload")){
-			return QUICK_UPLOAD_PATH.get(type);
-		} else {
+//		if(command.equals("QuickUpload")){
+//			return QUICK_UPLOAD_PATH.get(type);
+//		} else {
 			return FILE_TYPES_PATH.get(type);
-		}
+//		}
 	}
 	
 	private static String removeFromStart(String sourceString, String charToRemove){
