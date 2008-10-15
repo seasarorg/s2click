@@ -2,8 +2,9 @@ package org.seasar.s2click.example.page;
 
 import java.util.Date;
 
+import javax.annotation.Resource;
+
 import org.seasar.extension.jdbc.JdbcManager;
-import org.seasar.framework.container.annotation.tiger.Binding;
 import org.seasar.s2click.example.entity.Message;
 import org.seasar.s2click.example.form.MessageForm;
 
@@ -14,7 +15,7 @@ import org.seasar.s2click.example.form.MessageForm;
  */
 public class JdbcPage extends LayoutPage {
 	
-	@Binding
+	@Resource
 	protected JdbcManager jdbcManager;
 	
 	public String title = "S2JDBC";
