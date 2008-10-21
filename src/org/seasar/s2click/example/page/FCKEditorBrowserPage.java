@@ -233,10 +233,9 @@ public class FCKEditorBrowserPage extends S2ClickPage {
 	
 	private static String getUrlFromPath(String type, String folderPath, String command, Context context){
 		HttpServletRequest request = context.getRequest();
-		String host = request.getServerName();
-		int port = request.getServerPort();
 		String contextPath = request.getContextPath();
-		return host + ":" + port + contextPath + "/" + combinePaths(getResourceTypePath(type, command), folderPath) ;
+		
+		return contextPath + "/" + combinePaths(getResourceTypePath(type, command), folderPath) ;
 	}
 	
 	private static String getResourceTypePath(String type, String command){
