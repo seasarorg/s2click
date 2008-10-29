@@ -1,16 +1,39 @@
 package org.seasar.s2click.util;
 
 
-import ognl.Ognl;
-import ognl.OgnlException;
+import java.util.Date;
+
 import net.arnx.jsonic.JSON;
 import net.sf.click.util.Format;
+import ognl.Ognl;
+import ognl.OgnlException;
 
 /**
  * 
  * @author Naoki Takezoe
  */
 public class S2ClickFormat extends Format {
+	
+	/**
+	 * 日付をyyyy/MM/dd形式でフォーマットします。
+	 * 
+	 * @param date 日付
+	 * @return フォーマットされた文字列
+	 */
+	@Override
+	public String date(Date date){
+		return date(date, "yyyy/MM/dd");
+	}
+	
+	/**
+	 * 日付をyyyy/MM/dd HH:mm:ss形式でフォーマットします。
+	 * 
+	 * @param date 日付
+	 * @return フォーマットされた文字列
+	 */
+	public String datetime(Date date){
+		return date(date, "yyyy/MM/dd HH:mm:ss");
+	}
 	
 	/**
 	 * 引数に渡された文字列をclick.xmlで指定された文字コードでURLエンコードします。
