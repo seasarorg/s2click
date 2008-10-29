@@ -279,6 +279,10 @@
   デフォルトではフィールド名と同じ名前のリクエストパラメータがバインドされますが、
   @Requestアノテーションのパラメータによって別の名前のリクエストパラメータをバインドすることもできます。
 </p>
+<p>
+  また、@Requestアノテーションにrequired=trueの指定を追加することで、パラメータの必須チェックを自動的に行うことができます
+  （必須パラメータが設定されなかった場合にはRuntimeExceptionが発生します）。
+</p>
 <pre class="code">
 public class HelloPage extends Page {
 
@@ -286,8 +290,8 @@ public class HelloPage extends Page {
   @Request
   public String id;
 
-  /** articleというリクエストパラメータをバインド */
-  @Request("article")
+  /** articleというリクエストパラメータをバインド（必須） */
+  @Request(name="article", required=true)
   public String articleId;
   
 }
@@ -431,6 +435,14 @@ public class FileDonwloadPage extends S2ClickPage {
 <tr bgcolor="#D1F3F4">
   <th>メソッド</th>
   <th>説明</th>
+</tr>
+<tr>
+  <td>String date(Date date)</td>
+  <td>引数に渡された日付を<code>yyyy/MM/dd</code>形式にフォーマットします。</td>
+</tr>
+<tr>
+  <td>String datetime(Date date)</td>
+  <td>引数に渡された日付を<code>yyyy/MM/dd HH:mm:ss</code>形式にフォーマットします。</td>
 </tr>
 <tr>
   <td>String url(String value)</td>
