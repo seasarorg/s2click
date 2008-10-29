@@ -12,7 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
+import org.seasar.s2click.control.FCKEditor;
 
+/**
+ * {@link FCKEditor}コントロールでアップロードしたファイルをダウンロードするためのサーブレットです。
+ * <p>
+ * いちおう日本語ファイル名にも対応しているはずです。
+ * 
+ * @author Naoki Takezoe
+ */
 public class FileDownloadServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
