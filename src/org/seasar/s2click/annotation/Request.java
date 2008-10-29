@@ -22,6 +22,13 @@ public @interface Request {
 	 * 
 	 * @return リクエストパラメータ名
 	 */
-	String value() default "";
+	String name() default "";
+	
+	/**
+	 * パラメータが必須かどうかを指定します。
+	 * 
+	 * @return パラメータが必須かどうか
+	 */
+	boolean required() default false;
 	
 }

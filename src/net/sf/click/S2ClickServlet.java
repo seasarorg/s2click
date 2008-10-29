@@ -19,6 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.util.SmartDeployUtil;
+import org.seasar.framework.util.tiger.ReflectionUtil;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.annotation.Request;
 
@@ -115,6 +116,17 @@ public class S2ClickServlet extends ClickServlet {
                 }
             }
         }
+        
+        // @Requestのrequired()パラメータのチェック
+		for(Field field: clickApp.getPageFieldArray(page.getClass())){
+			Request req = field.getAnnotation(Request.class);
+			if(req != null && req.required()){
+				Object value = ReflectionUtil.getValue(field, page);
+				if(value == null || (value instanceof String && StringUtils.isEmpty((String) value))){
+					throw new RuntimeException("パラメータが不正です。");
+				}
+			}
+		}
     }
 	
 	/**
@@ -128,12 +140,12 @@ public class S2ClickServlet extends ClickServlet {
 		for(Field field: clickApp.getPageFieldArray(clazz)){
 			Request req = field.getAnnotation(Request.class);
 			if(req != null){
-				if(StringUtils.isEmpty(req.value())){
+				if(StringUtils.isEmpty(req.name())){
 					if(field.getName().equals(name)){
 						return field;
 					}
 				} else {
-					if(req.value().equals(name)){
+					if(req.name().equals(name)){
 						return field;
 					}
 				}
