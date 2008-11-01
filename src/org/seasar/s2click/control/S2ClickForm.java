@@ -136,7 +136,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 			add(new HiddenField("action", ""));
 		}
 		if(isFieldAutoRegistration()){
-	    	for(java.lang.reflect.Field field: getClass().getDeclaredFields()){
+	    	for(java.lang.reflect.Field field: getClass().getFields()){
 	       		if(Field.class.isAssignableFrom(field.getType())){
 	       			try {
 	       				add((Field) field.get(this));
