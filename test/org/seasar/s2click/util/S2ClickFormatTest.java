@@ -48,5 +48,11 @@ public class S2ClickFormatTest extends S2TestCase {
 		assertEquals(S2ClickFormat.class, 
 				format.ognl("@org.seasar.s2click.util.S2ClickFormat@class"));
 	}
+	
+	public void testHtml2(){
+		S2ClickFormat format = new S2ClickFormat();
+		assertEquals("&lt;br&gt;aaaa<br>\nbbbb<br>\r\ncccc", 
+				format.br("<br>aaaa\nbbbb\r\ncccc"));
+	}
 
 }

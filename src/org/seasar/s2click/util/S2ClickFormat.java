@@ -76,4 +76,16 @@ public class S2ClickFormat extends Format {
 		return Ognl.getValue(expression, null);
 	}
 	
+	/**
+	 * HTMLをエスケープし、改行を&lt;br&gt;タグに変換します。
+	 * 
+	 * @param value 文字列
+	 * @return 変換後の文字列
+	 */
+	public String br(String value){
+		String result = html(value);
+		result = result.replaceAll("(\r\n|\r|\n)", "<br>$1");
+		return result;
+	}
+	
 }
