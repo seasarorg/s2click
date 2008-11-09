@@ -4,6 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -87,16 +90,44 @@ public class S2ClickPage extends Page {
 	 */
 	protected void renderResponse(String contentType, InputStream contents) {
 		HttpServletResponse res = getContext().getResponse();
+		
+		// ヘッダもここで書き出します。
+		@SuppressWarnings("unchecked")
+		Map<String, Object> headers = getHeaders();
+		
+        for (Iterator<Map.Entry<String, Object>> i = headers.entrySet().iterator(); i.hasNext();) {
+            Map.Entry<String, Object> entry = i.next();
+            String name = entry.getKey().toString();
+            Object value = entry.getValue();
+
+            if (value instanceof String) {
+                String strValue = (String) value;
+                if (!strValue.equalsIgnoreCase("Content-Encoding")) {
+                    res.setHeader(name, strValue);
+                }
+
+            } else if (value instanceof Date) {
+                long time = ((Date) value).getTime();
+                res.setDateHeader(name, time);
+
+            } else {
+                int intValue = ((Integer) value).intValue();
+                res.setIntHeader(name, intValue);
+            }
+        }
+        
 		OutputStream out = null;
 		
 		try {
-			res.setContentType(getContentType());
+			res.setContentLength(contents.available());
+			res.setContentType(contentType);
 			out = res.getOutputStream();
 			IOUtils.copy(contents, out);
 			res.flushBuffer();
 			
 		} catch(Exception ex){
 			throw new RuntimeException(ex);
+			
 		} finally {
 			IOUtils.closeQuietly(contents);
 			IOUtils.closeQuietly(out);

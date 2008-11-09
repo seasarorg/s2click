@@ -155,7 +155,7 @@ public class FCKEditorBrowserPage extends S2ClickPage {
 			
 			setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 			setHeader("Pragma", "no-cache");
-			renderResponse("text/xml; charset=UTF-8", sb.toString());
+			renderResponse("text/xml; charset=utf-8", sb.toString());
 			
 			if(logger.isTraceEnabled()){
 				logger.trace(sb.toString());
@@ -179,7 +179,11 @@ public class FCKEditorBrowserPage extends S2ClickPage {
 			File dir = new File(root, serverDir);
 			
 			FileItem item = getContext().getFileItem("NewFile");
-			fileName = item.getName(); // TODO IEだとフルパスで渡ってきてた気がする。
+			fileName = item.getName();
+			
+			if(fileName.contains("\\")){
+				fileName = fileName.substring(fileName.lastIndexOf("\\"));
+			}
 			
 			File file = new File(dir, fileName);
 			
