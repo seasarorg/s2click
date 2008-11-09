@@ -31,7 +31,6 @@ import org.seasar.s2click.annotation.Path;
  * クイックアップロード（アップロードタブからのアップロード）はサポートしません。
  * 
  * <ul>
- *   <li>TODO 日本語のファイル名（LinuxでもOKなのか？）</li>
  *   <li>TODO IEの場合の動作確認</li>
  * </ul>
  * 
