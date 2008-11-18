@@ -30,9 +30,21 @@ public class S2ClickPageTest extends TestCase {
 		assertEquals("{\"age\":20,\"name\":\"Tarou\"}", value);
 	}
 
-//	public void testRenderHTML() {
-//		fail("Not yet implemented");
-//	}
+	public void testRenderHTML() throws Exception {
+		MockResponse res = new MockResponse();
+		MockContext.initContext(res);
+		
+		S2ClickPage page = new S2ClickPage();
+		page.setHeaders(new HashMap<Object, Object>());
+		
+		page.renderHTML("<html>あああ</html>");
+		
+		assertEquals("text/html; charset=UTF-8", res.getContentType());
+		
+		String value = new String(
+				((ServletOutputStreamImpl) res.getOutputStream()).getContents(), "UTF-8");
+		assertEquals("<html>あああ</html>", value);
+	}
 //
 //	public void testRenderFile() {
 //		fail("Not yet implemented");

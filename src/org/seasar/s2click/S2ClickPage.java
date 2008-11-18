@@ -48,7 +48,7 @@ public class S2ClickPage extends Page {
 	 */
 	protected void renderHTML(String html){
 		try {
-			renderResponse("text/html; cahrset=UTF-8", 
+			renderResponse("text/html; charset=UTF-8", 
 					new ByteArrayInputStream(html.getBytes("UTF-8")));
 		} catch(UnsupportedEncodingException ex){
 			// あり得ない
