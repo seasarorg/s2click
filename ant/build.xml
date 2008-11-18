@@ -58,6 +58,15 @@
     	<javac srcdir="${src.dir}" destdir="${bin.dir}" source="1.5"
     		target="1.5" encoding="UTF-8" debug="true" classpathref="classpath" 
     		excludes="org/seasar/s2click/example/**"/>
+    	
+		<copy todir="${bin.dir}">
+			<fileset dir="${src.dir}" includes="**/*.js" />
+			<fileset dir="${src.dir}" includes="**/*.gif" />
+			<fileset dir="${src.dir}" includes="**/*.png" />
+			<fileset dir="${src.dir}" includes="**/*.css" />
+			<fileset dir="${src.dir}" includes="**/*.zip" />
+			<fileset dir="${src.dir}" includes="**/*.xml" />
+		</copy>
     </target>
 	
 	<!--==================================================-->
@@ -67,6 +76,10 @@
     	<mkdir dir="${test.bin.dir}"/>
     	<javac srcdir="${test.src.dir}" destdir="${test.bin.dir}" source="1.5"
     		target="1.5" encoding="UTF-8" debug="true" classpathref="classpath"/>
+    	<copy todir="${test.bin.dir}">
+    		<fileset dir="${test.src.dir}" includes="**/*.js" />
+    		<fileset dir="${src.dir}" includes="**/*.dicon" />
+    	</copy>
     	
 		<cobertura-instrument todir="${bin.dir}">
 			<fileset dir="${bin.dir}">
@@ -74,7 +87,7 @@
 			</fileset>
 		</cobertura-instrument>
     	
-    	<junit printsummary="true" haltonfailure="false">
+    	<junit printsummary="true" haltonfailure="true" haltonerror="true">
     		<classpath refid="classpath" />
     		<classpath location="lib/cobertura/cobertura.jar" />
     		
@@ -104,14 +117,6 @@
 	<!--==================================================-->
 	<target name="jar" depends="compile">
 		<mkdir dir="${release.dir}"/>
-    	<copy todir="${bin.dir}">
-    		<fileset dir="${src.dir}" includes="**/*.js" />
-    		<fileset dir="${src.dir}" includes="**/*.gif" />
-    		<fileset dir="${src.dir}" includes="**/*.png" />
-    		<fileset dir="${src.dir}" includes="**/*.css" />
-    		<fileset dir="${src.dir}" includes="**/*.zip" />
-    		<fileset dir="${src.dir}" includes="**/*.xml" />
-    	</copy>
     	<copy todir="${bin.dir}">
     		<fileset dir="${src.dir}" includes="**/*.java" 
     			excludes="org/seasar/s2click/example/**"/>
