@@ -206,12 +206,14 @@ public class FCKEditorBrowserPage extends S2ClickPage {
 		String fileUrl = getUrlFromPath(type, combinePaths(folderPath, fileName), command, context);
 		
 		StringBuilder sb = new StringBuilder();
+		sb.append("<html><head>");
 		sb.append("<script type=\"text/javascript\">");
 		sb.append("(function(){var d=document.domain;while (true){try{var A=window.parent.document.domain;break;}catch(e) {};d=d.replace(/.*?(?:\\.|$)/,'');if (d.length==0) break;try{document.domain=d;}catch (e){break;}}})();");
 		sb.append("window.parent.OnUploadCompleted(").append(code).append(",'").append(fileUrl).append("','").append(fileName).append("', '');");
 		sb.append("</script>");
+		sb.append("</head></html>");
 		
-		renderResponse("text/javascript", sb.toString());
+		renderResponse("text/html", sb.toString());
 		
 		if(logger.isTraceEnabled()){
 			logger.trace(sb.toString());
