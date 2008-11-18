@@ -5,6 +5,8 @@
 	<property name="jar.name" value="s2click-${version}.jar"/>
 	<property name="src.dir" value="../src"/>
 	<property name="bin.dir" value="./bin"/>
+	<property name="test.src.dir" value="../test"/>
+	<property name="test.bin.dir" value="./test"/>
 	<property name="lib.dir" value="../WebContent/WEB-INF/lib"/>
 	<property name="example.dir" value="s2click"/>
 	<property name="example.war.name" value="s2click-example.war"/>
@@ -15,6 +17,7 @@
 	<property name="release.dir" value="s2click-${version}"/>
 	<property name="release.zip.name" value="s2click-${version}.zip"/>
 	<property name="doc.dir" value="docs/javadoc"/>
+	<property name="cobertura.dir" value="lib/cobertura"/>
 
 	<path id="classpath">
 		<pathelement location="${lib.dir}/aopalliance-1.0.jar"/>
@@ -33,7 +36,19 @@
 		<pathelement location="${lib.dir}/geronimo-jta_1.1_spec-1.0.jar"/>
 		<pathelement location="${lib.dir}/hsqldb.jar"/>
 		<pathelement location="./lib/servlet-api-2.3.jar"/>
+		<pathelement location="./lib/junit.jar"/>
+		<pathelement location="${test.bin.dir}"/>
+		<pathelement location="${bin.dir}"/>
 	</path>
+	
+	<path id="cobertura.classpath">
+		<fileset dir="${cobertura.dir}">
+			<include name="cobertura.jar" />
+			<include name="lib/**/*.jar" />
+		</fileset>
+	</path>
+	
+	<taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
 	
 	<!--==================================================-->
 	<!-- S2Clickのコンパイル -->
@@ -43,6 +58,35 @@
     	<javac srcdir="${src.dir}" destdir="${bin.dir}" source="1.5"
     		target="1.5" encoding="UTF-8" debug="true" classpathref="classpath" 
     		excludes="org/seasar/s2click/example/**"/>
+    </target>
+	
+	<!--==================================================-->
+	<!-- テストの実行 -->
+	<!--==================================================-->
+    <target name="test" depends="compile">
+    	<mkdir dir="${test.bin.dir}"/>
+    	<javac srcdir="${test.src.dir}" destdir="${test.bin.dir}" source="1.5"
+    		target="1.5" encoding="UTF-8" debug="true" classpathref="classpath"/>
+    	
+		<cobertura-instrument todir="${bin.dir}">
+			<fileset dir="${bin.dir}">
+				<include name="**/*.class"/>
+			</fileset>
+		</cobertura-instrument>
+    	
+    	<junit printsummary="true" haltonfailure="false">
+    		<classpath refid="classpath" />
+    		<classpath location="lib/cobertura/cobertura.jar" />
+    		
+    		<batchtest fork="true">
+				<fileset dir="${test.src.dir}">
+					<include name="**/*Test.java"/>
+					<exclude name="**/AllTests.java"/>
+				</fileset>
+    		</batchtest>
+    	</junit>
+    	
+    	<cobertura-report srcdir="${src.dir}" destdir="cobertura"/>
     </target>
 	
 	<!--==================================================-->
@@ -148,7 +192,10 @@
 	<!-- ビルドプロセスが生成したリソースを削除 -->
 	<!--==================================================-->
 	<target name="clean">
+		<delete file="cobertura.ser"/>
+		<delete dir="cobertura"/>
 		<delete dir="${bin.dir}"/>
+		<delete dir="${test.bin.dir}"/>
 		<delete dir="${doc.dir}"/>
 		<delete dir="${example.dir}"/>
 		<delete dir="${release.dir}"/>
