@@ -19,6 +19,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Provides a mock Context object for unit testing.
@@ -31,15 +32,23 @@ public class MockContext extends Context {
     // ----------------------------------------------------------- Constructors
     
     private MockContext() {
-        super(new MockRequest(), null);
+        super(new MockRequest(), new MockResponse());
     }
 
-    private MockContext(Locale locale) {
-        super(new MockRequest(locale), null);
-    }
+//    private MockContext(Locale locale) {
+//        super(new MockRequest(locale), new MockResponse());
+//    }
     
     private MockContext(HttpServletRequest request) {
-        super(request, null);
+        super(request, new MockResponse());
+    }
+    
+    private MockContext(HttpServletResponse response) {
+        super(new MockRequest(), response);
+    }
+    
+    private MockContext(HttpServletRequest request, HttpServletResponse response) {
+        super(request, response);
     }
     
     // --------------------------------------------------------- Public Methods
@@ -48,9 +57,9 @@ public class MockContext extends Context {
     	Context.pushThreadLocalContext(new MockContext());
     }
     
-    public static void initContext(Locale locale) {
-    	Context.pushThreadLocalContext(new MockContext(locale));
-    }
+//    public static void initContext(Locale locale) {
+//    	Context.pushThreadLocalContext(new MockContext(locale));
+//    }
     
     public static void initContext(HttpServletRequest request) {
     	Context.pushThreadLocalContext(new MockContext(request));
