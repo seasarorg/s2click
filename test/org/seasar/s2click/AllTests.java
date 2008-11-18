@@ -16,6 +16,7 @@ public class AllTests {
 		suite.addTest(net.sf.click.AllTests.suite());
 		suite.addTest(org.seasar.s2click.control.AllTests.suite());
 		suite.addTest(org.seasar.s2click.util.AllTests.suite());
+		suite.addTestSuite(S2ClickPageTest.class);
 		//$JUnit-END$
 		return suite;
 	}
