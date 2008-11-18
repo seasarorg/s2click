@@ -65,6 +65,15 @@ public class MockContext extends Context {
     	Context.pushThreadLocalContext(new MockContext(request));
     }
     
+    public static void initContext(HttpServletResponse response) {
+    	Context.pushThreadLocalContext(new MockContext(response));
+    }
+    
+    public static void initContext(HttpServletRequest request,
+    		HttpServletResponse response) {
+    	Context.pushThreadLocalContext(new MockContext(request, response));
+    }
+    
     /**
      * @see Context#getLocale()
      */

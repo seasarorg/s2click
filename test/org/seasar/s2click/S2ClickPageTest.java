@@ -3,17 +3,16 @@ package org.seasar.s2click;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import junit.framework.TestCase;
-import net.sf.click.Context;
 import net.sf.click.MockContext;
+import net.sf.click.MockResponse;
 import net.sf.click.MockResponse.ServletOutputStreamImpl;
 
 public class S2ClickPageTest extends TestCase {
 
 	public void testRenderJSON() throws Exception {
-		MockContext.initContext();
+		MockResponse res = new MockResponse();
+		MockContext.initContext(res);
 		
 		S2ClickPage page = new S2ClickPage();
 		page.setHeaders(new HashMap<Object, Object>());
@@ -23,9 +22,6 @@ public class S2ClickPageTest extends TestCase {
 		map.put("age", 20);
 		
 		page.renderJSON(map);
-		
-		Context context = Context.getThreadLocalContext();
-		HttpServletResponse res = context.getResponse();
 		
 		assertEquals("application/x-javascript; charset=utf-8", res.getContentType());
 		
