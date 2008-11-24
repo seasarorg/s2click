@@ -13,6 +13,7 @@ public class AllTests {
 		suite.addTestSuite(PublicFieldColumnTest.class);
 		suite.addTestSuite(ToolTipTest.class);
 		suite.addTestSuite(CodePrettifyTest.class);
+		suite.addTestSuite(AjaxButtonTest.class);
 		//$JUnit-END$
 		return suite;
 	}
