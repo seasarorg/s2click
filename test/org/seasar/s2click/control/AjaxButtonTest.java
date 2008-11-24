@@ -11,11 +11,8 @@ import org.seasar.s2click.util.AjaxUtils;
 public class AjaxButtonTest extends TestCase {
 
 	public void testGetHtmlImports() {
-		MockRequest request = new MockRequest(){
-			@Override public String getContextPath(){
-				return "/sample";
-			}
-		};
+		MockRequest request = new MockRequest();
+		request.setContextPath("/sample");
 		
 		MockContext.initContext(request);
 		AjaxButton button = new AjaxButton();
@@ -42,11 +39,8 @@ public class AjaxButtonTest extends TestCase {
 	}
 
 	public void testGetOnClick1() {
-		MockRequest request = new MockRequest(){
-			@Override public String getRequestURI(){
-				return "http://localhost:8080/sample/sample.htm";
-			}
-		};
+		MockRequest request = new MockRequest();
+		request.setRequestURI("http://localhost:8080/sample/sample.htm");
 
 		MockContext.initContext(request);
 		
@@ -60,11 +54,8 @@ public class AjaxButtonTest extends TestCase {
 	}
 
 	public void testGetOnClick2() {
-		MockRequest request = new MockRequest(){
-			@Override public String getRequestURI(){
-				return "http://localhost:8080/sample/sample.htm";
-			}
-		};
+		MockRequest request = new MockRequest();
+		request.setRequestURI("http://localhost:8080/sample/sample.htm");
 
 		MockContext.initContext(request);
 		

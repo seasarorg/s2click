@@ -14,6 +14,7 @@ public class AllTests {
 		suite.addTestSuite(ToolTipTest.class);
 		suite.addTestSuite(CodePrettifyTest.class);
 		suite.addTestSuite(AjaxButtonTest.class);
+		suite.addTestSuite(AjaxLinkTest.class);
 		//$JUnit-END$
 		return suite;
 	}

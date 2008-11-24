@@ -49,6 +49,10 @@ public class MockRequest implements HttpServletRequest {
     
     protected Map parameters = new HashMap();
     
+    protected String contextPath;
+    
+    protected String requestURI;
+    
     protected String method = "POST";
         
     // ----------------------------------------------------------- Constructors
@@ -129,7 +133,11 @@ public class MockRequest implements HttpServletRequest {
     }
 
     public String getContextPath() {
-        return null;
+        return contextPath;
+    }
+    
+    public void setContextPath(String contextPath){
+    	this.contextPath = contextPath;
     }
 
     public String getQueryString() {
@@ -153,9 +161,13 @@ public class MockRequest implements HttpServletRequest {
     }
 
     public String getRequestURI() {
-        return null;
+        return requestURI;
     }
 
+    public void setRequestURI(String requestURI){
+    	this.requestURI = requestURI;
+    }
+    
     public StringBuffer getRequestURL() {
         return null;
     }
