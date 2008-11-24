@@ -41,6 +41,7 @@ public class AjaxButtonTest extends TestCase {
 		assertEquals("element-id", button.getElementId());
 	}
 
+	// TODO テストを未実装
 //	public void testGetOnClick1() {
 //		MockRequest request = new MockRequest(){
 //			@Override public String getRequestURI(){
