@@ -41,20 +41,40 @@ public class AjaxButtonTest extends TestCase {
 		assertEquals("element-id", button.getElementId());
 	}
 
-	// TODO テストを未実装
-//	public void testGetOnClick1() {
-//		MockRequest request = new MockRequest(){
-//			@Override public String getRequestURI(){
-//				return "http://localhost:8080/sample/sample.htm";
-//			}
-//		};
-//
-//		MockContext.initContext(request);
-//		
-//		AjaxButton button = new AjaxButton("ajaxButton");
-//		button.addAjaxHandler(AjaxUtils.ON_COMPLETE, "processCompleted");
-//		
-//		System.out.println(button.getOnClick());
-//	}
+	public void testGetOnClick1() {
+		MockRequest request = new MockRequest(){
+			@Override public String getRequestURI(){
+				return "http://localhost:8080/sample/sample.htm";
+			}
+		};
 
+		MockContext.initContext(request);
+		
+		AjaxButton button = new AjaxButton("ajaxButton");
+		button.addAjaxHandler(AjaxUtils.ON_COMPLETE, "processCompleted");
+		
+		// elementIdを指定しなかった場合はAjax.Requestで送信
+		assertEquals("new Ajax.Request('http://localhost:8080/sample/sample.htm?actionButton=ajaxButton', "+
+				"{method: 'post', onComplete: processCompleted})",
+				button.getOnClick());
+	}
+
+	public void testGetOnClick2() {
+		MockRequest request = new MockRequest(){
+			@Override public String getRequestURI(){
+				return "http://localhost:8080/sample/sample.htm";
+			}
+		};
+
+		MockContext.initContext(request);
+		
+		AjaxButton button = new AjaxButton("ajaxButton");
+		button.setElementId("targetElement");
+		
+		// elementIdを指定した場合はAjax.Updaterで送信
+		assertEquals("new Ajax.Updater('targetElement', " +
+				"'http://localhost:8080/sample/sample.htm?actionButton=ajaxButton', " +
+				"{method: 'post'})",
+				button.getOnClick());
+	}
 }

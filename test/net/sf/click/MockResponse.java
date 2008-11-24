@@ -50,13 +50,11 @@ public class MockResponse implements HttpServletResponse {
 	}
 
 	public String encodeURL(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
+		return arg0;
 	}
 
 	public String encodeUrl(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
+		return arg0;
 	}
 
 	public void sendError(int arg0) throws IOException {
