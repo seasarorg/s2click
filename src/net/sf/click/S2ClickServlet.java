@@ -89,7 +89,7 @@ public class S2ClickServlet extends ClickServlet {
             String name = e.nextElement().toString();
             String value = request.getParameter(name);
 
-            if (StringUtils.isNotBlank(value)) {
+            if (StringUtils.isNotEmpty(value)) {
 
                 Field field = getRequestBindField(page.getClass(), name);
 
