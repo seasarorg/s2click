@@ -88,4 +88,18 @@ public class S2ClickFormat extends Format {
 		return result;
 	}
 	
+	/**
+	 * 引数で渡した文字列と同じ長さのアスタリスク文字列を作成します。
+	 * 
+	 * @param value 文字列
+	 * @return 引数で渡した文字列と同じ長さのアスタリスク文字列
+	 */
+	public String mask(String value){
+		StringBuilder sb = new StringBuilder();
+		for(int i=0;i<value.length();i++){
+			sb.append('*');
+		}
+		return sb.toString();
+	}
+	
 }
