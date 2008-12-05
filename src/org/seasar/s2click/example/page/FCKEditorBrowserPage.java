@@ -24,17 +24,16 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.annotation.Path;
+import org.seasar.s2click.servlet.FileDownloadServlet;
 
 /**
  * FCKeditorのファイルマネージャのサーバサイド側実装を提供します。
  * <p>
  * クイックアップロード（アップロードタブからのアップロード）はサポートしません。
- * 
- * <ul>
- *   <li>TODO IEの場合の動作確認</li>
- * </ul>
+ * アップロードしたファイルは{@link FileDownloadServlet}でダウンロードすることができます。
  * 
  * @author Naoki Takezoe
+ * @since 0.4.0
  */
 @Path("/fckeditor/browser.htm")
 public class FCKEditorBrowserPage extends S2ClickPage {

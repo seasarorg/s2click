@@ -20,11 +20,25 @@ import org.seasar.s2click.control.FCKEditor;
  * いちおう日本語ファイル名にも対応しているはずです。
  * 
  * @author Naoki Takezoe
+ * @since 0.4.0
  */
 public class FileDownloadServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	/**
+	 * ファイルダウンロードに認証処理が必要な場合はこのメソッドをオーバーライドして実装します。
+	 * 
+	 * @param request リクエスト
+	 * @param response レスポンス
+	 * @param path パス
+	 * @param file 実際のファイル
+	 * @throws IOException セキュリティエラー
+	 */
+	protected void onSecurityCheck(HttpServletRequest request, HttpServletResponse response, 
+			String path, File file) throws IOException {
+	}
+	
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -37,8 +51,11 @@ public class FileDownloadServlet extends HttpServlet {
 		path = new String(path.getBytes("ISO8859_1"), "UTF-8");
 		
 		String realPath = getServletContext().getRealPath("/files" + path);
-		
 		File file = new File(realPath);
+		
+		// セキュリティチェック
+		onSecurityCheck(request, response, realPath, file);
+		
 		String fileName = file.getName();
 		
 		if(!file.exists() && !file.isFile()){
