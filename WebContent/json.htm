@@ -1,9 +1,15 @@
 $form
+
 <div id="result">
 </div>
 <hr>
 $button
 <div id="target">
+</div>
+
+<div id="ajax_indicator" style="position:absolute; bottom:0; right:0; display:none;">
+  <img src="$context/ajax-indicator.gif">
+  通信中...
 </div>
 
 <script type="text/javascript">
@@ -31,5 +37,15 @@ function displayResult(req){
   }
   html += '</html>';
   $('result').innerHTML = html;
+
+  stopProgress();
+}
+
+function startProgress(){
+	$('ajax_indicator').style.display = '';
+}
+
+function stopProgress(){
+	$('ajax_indicator').style.display = 'none';
 }
 </script>

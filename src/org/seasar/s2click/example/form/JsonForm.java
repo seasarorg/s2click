@@ -21,7 +21,9 @@ public class JsonForm extends S2ClickForm {
 		super(name);
 		setFieldAutoRegisteration(true);
 		
+		search.addAjaxHandler(AjaxUtils.ON_CREATE, "startProgress");
 		search.addAjaxHandler(AjaxUtils.ON_COMPLETE, "displayResult");
+		searchAll.addAjaxHandler(AjaxUtils.ON_CREATE, "startProgress");
 		searchAll.addAjaxHandler(AjaxUtils.ON_COMPLETE, "displayResult");
 		clear.setAttribute("onclick", "clearResult()");
 	}

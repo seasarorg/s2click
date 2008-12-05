@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.seasar.s2click.control.AjaxButton;
 import org.seasar.s2click.example.form.JsonForm;
+import org.seasar.s2click.util.AjaxUtils;
 
 /**
  * JSONを使用したAjaxのサンプルページ。
@@ -26,6 +27,8 @@ public class JsonPage extends LayoutPage {
 		addControl(form.searchAll);
 		
 		button.setElementId("target");
+		button.addAjaxHandler(AjaxUtils.ON_CREATE, "startProgress");
+		button.addAjaxHandler(AjaxUtils.ON_SUCCESS, "stopProgress");
 	}
 	
 	private List<Book> getBookList(){
