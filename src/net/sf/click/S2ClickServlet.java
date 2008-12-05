@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.click.util.ErrorPage;
 import net.sf.click.util.PropertyUtils;
 import net.sf.click.util.RequestTypeConverter;
 import ognl.Ognl;
@@ -64,6 +65,9 @@ public class S2ClickServlet extends ClickServlet {
 	@SuppressWarnings("unchecked")
 	@Override protected Page newPageInstance(String path, Class pageClass,
 			HttpServletRequest request) throws Exception {
+		if(pageClass == Page.class || pageClass == ErrorPage.class){
+			return (Page) pageClass.newInstance();
+		}
 		S2Container container = SingletonS2ContainerFactory.getContainer();
 		return (Page) container.getComponent(pageClass);
 	}
