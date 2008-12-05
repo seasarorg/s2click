@@ -1,12 +1,18 @@
 package org.seasar.s2click.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import net.sf.click.MockContext;
 import net.sf.click.control.Form;
 import net.sf.click.control.PasswordField;
 import net.sf.click.control.TextField;
+import net.sf.click.extras.control.DateField;
 import net.sf.click.extras.control.IntegerField;
 
 import org.seasar.extension.unit.S2TestCase;
 import org.seasar.s2click.S2ClickConfig;
+import org.seasar.s2click.control.DateFieldYYYYMMDD;
 
 public class S2ClickUtilsTest extends S2TestCase {
 
@@ -94,47 +100,59 @@ public class S2ClickUtilsTest extends S2TestCase {
 	/**
 	 * publicフィールドを使用したDTOの場合の<code>copyObjecyToForm()</code>のテスト。
 	 */
-	public void testCopyObjectToForm1(){
+	public void testCopyObjectToForm1() throws Exception {
+		MockContext.initContext();
+		
 		Form form = new Form("form");
 		TextField name = new TextField("name");
 		PasswordField pass = new PasswordField("pass");
 		IntegerField age = new IntegerField("age");
+		DateField date = new DateFieldYYYYMMDD("date");
 		form.add(name);
 		form.add(pass);
 		form.add(age);
+		form.add(date);
 		
 		SampleDto1 dto = new SampleDto1();
 		dto.name = "Taro";
 		dto.pass = "secret";
 		dto.age = 15;
+		dto.date = new SimpleDateFormat("yyyy/MM/dd").parse("2009/01/01");
 		S2ClickUtils.copyObjectToForm(dto, form, true);
 		
 		assertEquals("Taro", name.getValue());
 		assertEquals("secret", pass.getValue());
 		assertEquals(15, age.getInteger().intValue());
+		assertEquals("2009/01/01", date.getValue());
 	}
 	
 	/**
 	 * アクセサメソッドを使用したDTOの場合の<code>copyObjecyToForm()</code>のテスト。
 	 */
-	public void testCopyObjectToForm2(){
+	public void testCopyObjectToForm2() throws Exception {
+		MockContext.initContext();
+		
 		Form form = new Form("form");
 		TextField name = new TextField("name");
 		PasswordField pass = new PasswordField("pass");
 		IntegerField age = new IntegerField("age");
+		DateField date = new DateFieldYYYYMMDD("date");
 		form.add(name);
 		form.add(pass);
 		form.add(age);
+		form.add(date);
 		
 		SampleDto2 dto = new SampleDto2();
 		dto.setName("Taro");
 		dto.setPass("secret");
 		dto.setAge(15);
+		dto.setDate(new SimpleDateFormat("yyyy/MM/dd").parse("2009/01/01"));
 		S2ClickUtils.copyObjectToForm(dto, form, true);
 		
 		assertEquals("Taro", name.getValue());
 		assertEquals("secret", pass.getValue());
 		assertEquals(15, age.getInteger().intValue());
+		assertEquals("2009/01/01", date.getValue());
 	}
 	
 	/**
@@ -144,6 +162,7 @@ public class S2ClickUtilsTest extends S2TestCase {
 		public String name;
 		public String pass;
 		public Integer age;
+		public Date date;
 	}
 	
 	/**
@@ -153,6 +172,7 @@ public class S2ClickUtilsTest extends S2TestCase {
 		private String name;
 		private String pass;
 		private Integer age;
+		private Date date;
 		public String getName() {
 			return name;
 		}
@@ -170,6 +190,12 @@ public class S2ClickUtilsTest extends S2TestCase {
 		}
 		public void setAge(Integer age) {
 			this.age = age;
+		}
+		public Date getDate() {
+			return date;
+		}
+		public void setDate(Date date) {
+			this.date = date;
 		}
 	}
 
