@@ -3,6 +3,7 @@ package org.seasar.s2click.control;
 import java.lang.reflect.Field;
 
 import net.sf.click.control.Column;
+import net.sf.click.control.Decorator;
 
 /**
  * publicフィールドをテーブル列として扱うための<code>Column</code>拡張クラスです。
@@ -23,6 +24,11 @@ public class PublicFieldColumn extends Column {
 
 	public PublicFieldColumn(String name) {
 		super(name);
+	}
+	
+	public PublicFieldColumn(String name, String title, Decorator decorator) {
+		super(name, title);
+		setDecorator(decorator);
 	}
 
 	/**
