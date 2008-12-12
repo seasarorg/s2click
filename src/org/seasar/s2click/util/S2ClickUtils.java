@@ -10,7 +10,8 @@ import net.sf.click.control.Field;
 import net.sf.click.control.Form;
 import net.sf.click.util.ClickUtils;
 
-import org.seasar.framework.beans.util.Beans;
+import org.seasar.framework.beans.Converter;
+import org.seasar.framework.beans.util.Copy;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.s2click.S2ClickConfig;
@@ -93,7 +94,7 @@ public class S2ClickUtils {
             throw new IllegalArgumentException("Null form parameter");
         }
         Map<Object, Object> map = new HashMap<Object, Object>();
-        Beans.copy(object, map).execute();
+        new S2ClickCopy(object, map).execute();
         ClickUtils.copyObjectToForm(map, form, debug);
     }
     
@@ -119,7 +120,32 @@ public class S2ClickUtils {
         	map.put(field.getName(), "");
         }
         ClickUtils.copyFormToObject(form, map, debug);
-        Beans.copy(map, object).execute();
+        new S2ClickCopy(map, object).execute();
+    }
+    
+    /**
+     * 日付にデフォルトのコンバータを適用しない<code>Beans.copy()</code>の拡張。
+     */
+    private static class S2ClickCopy extends Copy {
+
+    	/**
+    	 * コンストラクタ。
+    	 * 
+    	 * @param src コピー元
+    	 * @param dest コピー先
+    	 * @throws NullPointerException
+    	 */
+		public S2ClickCopy(Object src, Object dest) throws NullPointerException {
+			super(src, dest);
+		}
+		
+		/**
+		 * 常にnullを返すことで日付にデフォルトのコンバータを適用しません。
+		 */
+		@Override
+		protected Converter findDefaultConverter(Class<?> clazz) {
+			return null;
+		}
     }
     
 }
