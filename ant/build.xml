@@ -28,9 +28,9 @@
 		<pathelement location="${lib.dir}/jsonic-0.9.4.jar"/>
 		<pathelement location="${lib.dir}/log4j-1.2.13.jar"/>
 		<pathelement location="${lib.dir}/ognl-2.6.9-patch-20070908.jar"/>
-		<pathelement location="${lib.dir}/s2-extension-2.4.30.jar"/>
-		<pathelement location="${lib.dir}/s2-framework-2.4.30.jar"/>
-		<pathelement location="${lib.dir}/s2-tiger-2.4.30.jar"/>
+		<pathelement location="${lib.dir}/s2-extension-2.4.33.jar"/>
+		<pathelement location="${lib.dir}/s2-framework-2.4.33.jar"/>
+		<pathelement location="${lib.dir}/s2-tiger-2.4.33.jar"/>
 		<pathelement location="${lib.dir}/geronimo-ejb_3.0_spec-1.0.jar"/>
 		<pathelement location="${lib.dir}/geronimo-jpa_3.0_spec-1.0.jar"/>
 		<pathelement location="${lib.dir}/geronimo-jta_1.1_spec-1.0.jar"/>
