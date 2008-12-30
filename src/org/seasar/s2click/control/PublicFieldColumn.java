@@ -7,7 +7,7 @@ import net.sf.click.control.Decorator;
 
 /**
  * publicフィールドをテーブル列として扱うための<code>Column</code>拡張クラスです。
- * 
+ *
  * @author Naoki Takezoe
  */
 public class PublicFieldColumn extends Column {
@@ -25,7 +25,7 @@ public class PublicFieldColumn extends Column {
 	public PublicFieldColumn(String name) {
 		super(name);
 	}
-	
+
 	public PublicFieldColumn(String name, String title, Decorator decorator) {
 		super(name, title);
 		setDecorator(decorator);
@@ -34,7 +34,8 @@ public class PublicFieldColumn extends Column {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override public Object getProperty(String name, Object row) {
+	@Override
+	public Object getProperty(String name, Object row) {
 		try {
 			String[] names = new String[]{name};
 			if(name.indexOf('.') >= 0){
