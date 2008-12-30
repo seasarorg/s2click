@@ -19,7 +19,7 @@ import org.seasar.s2click.util.S2ClickUtils;
 /**
  * publicフィールドを自動的にコントロールとして登録してくれる<code>Form</code>拡張クラスです。
  * <code>Submit</code>コントロールによってJavaScriptバリデーションを行うかどうかを制御する機能も備えています。
- * 
+ *
  * <h2>publicフィールドの自動登録</h2>
  * <p>
  *   このクラスのサブクラスで{@link #setFieldAutoRegisteration(boolean)}に<code>true</code>が設定された場合、
@@ -31,14 +31,14 @@ import org.seasar.s2click.util.S2ClickUtils;
  *   private TextField userId = new TextField("userId");
  *   private PasswordField password = new PasswordField("password");
  *   private Submit submit = new Submit("submit");
- *   
+ *
  *   public SampleForm(){
  *     setFieldAutoRegisteration(true);
  *   }
- *   
+ *
  *   ...
  * } </pre>
- * 
+ *
  * <h2>送信前に確認ダイアログを表示する</h2>
  * <p>
  *   {@link #addConfirmMessage(String, String)}を使用することで
@@ -49,14 +49,14 @@ import org.seasar.s2click.util.S2ClickUtils;
  *   ...
  *   private Submit register = new Submit("register");
  *   private Submit cancel = new Submit("cancel");
- *   
+ *
  *   public SampleForm(){
  *     addConfirmMessage("register", "登録します。よろしいですか？");
  *   }
- *   
+ *
  *   ...
  * </pre>
- * 
+ *
  * <h2>JavaScriptバリデーションを行わないSubmitコントロール</h2>
  * <p>
  *   {@link #addNoJavaScriptValidateAction(String)}を使用することで、
@@ -67,14 +67,14 @@ import org.seasar.s2click.util.S2ClickUtils;
  *   ...
  *   private Submit register = new Submit("register");
  *   private Submit cancel = new Submit("cancel");
- *   
+ *
  *   public SampleForm(){
  *     addNoJavaScriptValidateAction("register");
  *   }
- *   
+ *
  *   ...
  * } </pre>
- * 
+ *
  * <h2>copyTo()、copyFrom()のpublicフィールド対応</h2>
  * <p>
  *   Clickの<code>Form</code>クラスはJavaBeanとフォームの値を相互変換するために
@@ -83,17 +83,17 @@ import org.seasar.s2click.util.S2ClickUtils;
  *   なお、{@link S2ClickUtils}を使用することでもpublicフィールドを使用したJavaBeanと
  *   フォームの値を相互変換することができます。
  * </p>
- * 
+ *
  * @author Naoki Takezoe
  */
 public abstract class S2ClickForm extends net.sf.click.control.Form {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	protected Map<String, String> confirmMessages = new HashMap<String, String>();
 	protected List<String> noJavaScriptValidateActions = new ArrayList<String>();
 	protected boolean fieldAutoRegisteration = false;
-	
+
 	/**
 	 * Create a Form with no name defined.
 	 */
@@ -103,17 +103,17 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 
 	/**
 	 * Construct the Form with the given name.
-	 * 
+	 *
 	 * @param name the form name
 	 */
 	public S2ClickForm(String name) {
 		super(name);
 	}
-	
+
 	public void setFieldAutoRegisteration(boolean fieldAutoRegisteration){
 		this.fieldAutoRegisteration = fieldAutoRegisteration;
 	}
-	
+
 	public boolean isFieldAutoRegistration(){
 		return this.fieldAutoRegisteration;
 	}
@@ -121,11 +121,11 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 	public void addConfirmMessage(String action, String message){
 		confirmMessages.put(action, message);
 	}
-	
+
 	public void addNoJavaScriptValidateAction(String action){
 		noJavaScriptValidateActions.add(action);
 	}
-	
+
 	/**
 	 * Initializes this form.
 	 * <p>
@@ -147,16 +147,16 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 	    	}
 		}
 	}
-	
+
 	/**
 	 * JavaScriptを使用する必要があるかどうかを判定します。
-	 * 
+	 *
 	 * @return JavaScriptを使用する必要がある場合true、必要ない場合false
 	 */
 	protected boolean requiresJavaScript(){
 		return (getValidate() && getJavaScriptValidation()) || !confirmMessages.isEmpty();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see net.sf.click.control.Form#add(net.sf.click.control.Field)
@@ -170,7 +170,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 			}
 		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see net.sf.click.control.Form#startTag()
@@ -180,15 +180,15 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 		buffer.append("<table width=\"100%\">");
 		renderErrors(buffer, true);
 		buffer.append("</table>");
-		
+
 		if(getJavaScriptValidation()){
 			String script = "on_" + getId() + "_submit()";
 			setAttribute("onsubmit", "return " + script + ";");
 		}
-		
+
 		return super.startTag() + buffer.toString();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see net.sf.click.control.Form#endTag()
@@ -220,7 +220,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
             List functionNames = new ArrayList();
 
             buffer.append("<script type=\"text/javascript\"><!--\n");
-            
+
             if(getValidate() && getJavaScriptValidation()){
 	            // Render field validation functions & build list of function names
 	            for (Iterator i = formFields.iterator(); i.hasNext();) {
@@ -228,7 +228,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 	                String fieldJS = field.getValidationJavaScript();
 	                if (fieldJS != null) {
 	                    buffer.append(fieldJS);
-	
+
 	                    StringTokenizer tokenizer = new StringTokenizer(fieldJS);
 	                    tokenizer.nextToken();
 	                    functionNames.add(tokenizer.nextToken());
@@ -240,7 +240,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
             buffer.append(getId());
             buffer.append("_submit() {\n");
             buffer.append("  var actionName = document." + getName() + ".action.value;\n");
-                
+
             if (!functionNames.isEmpty()) {
                 buffer.append("  var noValidateActions = ");
                 buffer.append(JSON.encode(noJavaScriptValidateActions));
@@ -252,9 +252,9 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
                 buffer.append("      break;\n");
                 buffer.append("    }\n");
                 buffer.append("  }\n");
-                
+
                 buffer.append("  if(skipValidation == false){\n");
-                
+
                 buffer.append("    var msgs = new Array(");
                 buffer.append(functionNames.size());
                 buffer.append(");\n");
@@ -278,30 +278,31 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
                 buffer.append(")){\n");
                 buffer.append("      return false;\n");
                 buffer.append("    }\n");
-                
+
                 buffer.append("  }\n");
             }
-            
+
             if(!confirmMessages.isEmpty()){
                 buffer.append("  var confirmMessages = ");
                 buffer.append(JSON.encode(confirmMessages));
                 buffer.append(";\n");
-                
+
                 buffer.append("  var message = confirmMessages[actionName];\n");
                 buffer.append("  if(message){\n");
                 buffer.append("    if(!confirm(message)){ return false; }\n");
                 buffer.append("  }\n");
             }
-            
+
             buffer.append("  return true;\n");
             buffer.append("}\n");
             buffer.append("//--></script>\n");
         }
     }
-	
-	@Override public boolean onProcess() {
+
+	@Override
+	public void onInit() {
 		init();
-		return super.onProcess();
+		super.onInit();
 	}
 
 	@Override
@@ -323,7 +324,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 	public void copyTo(Object object) {
 		copyTo(object, false);
 	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
     protected void renderHeader(HtmlStringBuffer buffer, List formFields) {
@@ -345,7 +346,7 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
         buffer.closeTag();
         buffer.append("\n");
     }
-	
+
 	@SuppressWarnings("unchecked")
 	protected void renderHiddenFields(HtmlStringBuffer buffer, List formFields) {
       // Render hidden fields
