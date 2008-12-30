@@ -26,7 +26,7 @@ import org.seasar.s2click.annotation.Request;
 
 /**
  * Seasar2とClick Frameworkを連携させるためのサーブレット。
- * 
+ *
  * @author Naoki Takezoe
  */
 public class S2ClickServlet extends ClickServlet {
@@ -37,25 +37,27 @@ public class S2ClickServlet extends ClickServlet {
 	/**
 	 * HOT deployではない場合、このメソッドでClick Frameworkの初期化を行います。
 	 */
-	@Override public void init() throws ServletException {
+	@Override
+	public void init() throws ServletException {
 		S2Container container = SingletonS2ContainerFactory.getContainer();
 		if(!SmartDeployUtil.isHotdeployMode(container)){
 			super.init();
 			initialized = true;
 		}
 	}
-	
+
 	/**
 	 * HOT deployの場合、リクエスト毎にClick Frameworkの初期化を行います。
 	 * <p>
 	 * TODO ページ数が多くなると遅くなるか…？
 	 */
-	@Override public void service(ServletRequest req, ServletResponse res)
+	@Override
+	public void service(ServletRequest req, ServletResponse res)
 			throws ServletException, IOException {
 		if(initialized == false){
 			super.init();
 		}
-		
+
 		super.service(new S2ClickRequestWrapper((HttpServletRequest) req), res);
 	}
 
@@ -63,7 +65,8 @@ public class S2ClickServlet extends ClickServlet {
 	 * S2Containerからページクラスのインスタンスを取得します。
 	 */
 	@SuppressWarnings("unchecked")
-	@Override protected Page newPageInstance(String path, Class pageClass,
+	@Override
+	protected Page newPageInstance(String path, Class pageClass,
 			HttpServletRequest request) throws Exception {
 		if(pageClass == Page.class || pageClass == ErrorPage.class){
 			return (Page) pageClass.newInstance();
@@ -71,12 +74,13 @@ public class S2ClickServlet extends ClickServlet {
 		S2Container container = SingletonS2ContainerFactory.getContainer();
 		return (Page) container.getComponent(pageClass);
 	}
-	
+
 	/**
 	 * {@link Request}アノテーションが付与されているフィールドにリクエストパラメータをバインドします。
 	 */
 	@SuppressWarnings("unchecked")
-	@Override protected void processPageRequestParams(Page page) throws OgnlException {
+	@Override
+	protected void processPageRequestParams(Page page) throws OgnlException {
 
         if (clickApp.getPageFields(page.getClass()).isEmpty()) {
             return;
@@ -120,7 +124,7 @@ public class S2ClickServlet extends ClickServlet {
                 }
             }
         }
-        
+
         // @Requestのrequired()パラメータのチェック
 		for(Field field: clickApp.getPageFieldArray(page.getClass())){
 			Request req = field.getAnnotation(Request.class);
@@ -132,10 +136,10 @@ public class S2ClickServlet extends ClickServlet {
 			}
 		}
     }
-	
+
 	/**
 	 * リクエストパラメータをバインドするページクラスのフィールドを取得します。
-	 * 
+	 *
 	 * @param clazz ページクラスの<code>Class</code>オブジェクト
 	 * @param name リクエストパラメータ名
 	 * @return フィールド（該当のフィールドが存在しな場合は<code>null</code>）
@@ -158,12 +162,13 @@ public class S2ClickServlet extends ClickServlet {
 		return null;
 	}
 
-	@Override protected void renderTemplate(Page page) throws Exception {
+	@Override
+	protected void renderTemplate(Page page) throws Exception {
 		String skipRendering = (String) page.getContext().getRequestAttribute(
 				S2ClickPage.SKIP_RENDERING);
 		if(!"true".equals(skipRendering)){
 			super.renderTemplate(page);
 		}
 	}
-	
+
 }

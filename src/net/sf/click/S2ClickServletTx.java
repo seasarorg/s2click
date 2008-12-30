@@ -6,15 +6,16 @@ import org.seasar.framework.container.SingletonS2Container;
 
 /**
  * リクエスト毎にトランザクションを制御する{@link S2ClickServlet}拡張サーブレットです。
- * 
+ *
  * @author Naoki Takezoe
  */
 public class S2ClickServletTx extends S2ClickServlet {
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	@Override protected void processPage(final Page page) throws Exception {
-		TransactionManagerAdapter manager 
+
+	@Override
+	protected void processPage(final Page page) throws Exception {
+		TransactionManagerAdapter manager
 			= SingletonS2Container.getComponent(TransactionManagerAdapter.class);
 		try {
 			manager.requiresNew(new TransactionCallback(){
@@ -35,6 +36,6 @@ public class S2ClickServletTx extends S2ClickServlet {
 				// TODO Exceptionでいいのかなぁ。
 				throw new Exception(ex);
 			}
-		}		
+		}
 	}
 }
