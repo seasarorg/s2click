@@ -6,11 +6,16 @@ import java.util.List;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.control.GreyboxResultLink;
 
-public class GreyboxSearchPage extends S2ClickPage {
+/**
+ *
+ * @author Naoki Takezoe
+ * @since 0.4.0
+ */
+public class GreyboxSelectLinkPage extends S2ClickPage {
 
 	public GreyboxResultLink link = new GreyboxResultLink("link", "form_userId");
 
-	public GreyboxSearchPage(){
+	public GreyboxSelectLinkPage(){
 		List<UserInfo> userList = new ArrayList<UserInfo>();
 		userList.add(new UserInfo("00001", "山田 一郎"));
 		userList.add(new UserInfo("00002", "山田 次郎"));

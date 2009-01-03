@@ -4,6 +4,13 @@ import net.sf.click.control.AbstractLink;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+/**
+ * {@link GreyboxButton}コントロールを使用して表示したモーダルダイアログから
+ * 親画面に値を表示する際に使用可能なリンクです。
+ *
+ * @author Naoki Takezoe
+ * @since 0.4.0
+ */
 public class GreyboxResultLink extends AbstractLink {
 
 	private static final long serialVersionUID = 1L;

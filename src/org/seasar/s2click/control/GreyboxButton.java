@@ -10,6 +10,12 @@ import net.sf.click.Page;
 import net.sf.click.control.Button;
 import net.sf.click.util.ClickUtils;
 
+/**
+ * <a href="http://orangoo.com/labs/GreyBox/">GreyBox</a>を使用して指定したページをモーダルダイアログとして表示します。
+ *
+ * @author Naoki Takezoe
+ * @since 0.4.0
+ */
 public class GreyboxButton extends Button {
 
 	private static final long serialVersionUID = 1L;

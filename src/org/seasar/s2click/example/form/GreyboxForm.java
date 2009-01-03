@@ -4,11 +4,13 @@ import net.sf.click.control.TextField;
 
 import org.seasar.s2click.control.GreyboxButton;
 import org.seasar.s2click.control.S2ClickForm;
-import org.seasar.s2click.example.page.GreyboxSearchPage;
+import org.seasar.s2click.example.page.GreyboxSelectButtonPage;
+import org.seasar.s2click.example.page.GreyboxSelectLinkPage;
 
 /**
  *
  * @author Naoki Takezoe
+ * @since 0.4.0
  */
 public class GreyboxForm extends S2ClickForm {
 
@@ -16,7 +18,9 @@ public class GreyboxForm extends S2ClickForm {
 
 	public TextField userId = new TextField("userId", "ユーザID");
 
-	public GreyboxButton button = new GreyboxButton("button", "参照...", "ユーザを選択", GreyboxSearchPage.class);
+	public GreyboxButton button1 = new GreyboxButton("button1", "リンクで選択", "ユーザを選択", GreyboxSelectLinkPage.class);
+
+	public GreyboxButton button2 = new GreyboxButton("button2", "ダイアログで手入力", "ユーザIDを入力", GreyboxSelectButtonPage.class);
 
 	public GreyboxForm(String name){
 		super(name);
