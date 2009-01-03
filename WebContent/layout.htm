@@ -4,18 +4,19 @@
   <title>S2Click</title>
   <!-- チャートコントロールはこれがないと表示されない -->
   <script type="text/javascript" src="$context/click/control.js"></script>
-  
+  <!-- GreyBox用の設定 -->
+  <script type="text/javascript">var GB_ROOT_DIR = "$context/click/greybox/";</script>
   $imports
   <style type="text/css">
   body {
     margin: 0px;
   }
-  
+
   table.contents {
     width: 100%;
     height: 100%;
   }
-  
+
   td.app-title {
     font-size: 200%;
     font-weight: bold;
@@ -25,7 +26,7 @@
     height: 1px;
     padding: 4px;
   }
-  
+
   td.page-title {
     font-weight: bold;
     background-color: navy;
@@ -35,7 +36,7 @@
     padding: 4px;
     text-align: right;
   }
-  
+
   td.menu {
     padding-top: 20px;
     border-right: navy 1px dotted;
@@ -46,7 +47,7 @@
   p {
     text-indent: 10px;
   }
-  
+
   div.menu {
     text-align: right;
   }
@@ -66,6 +67,7 @@
       <li><a href="json.htm">JSON</a></li>
       <li><a href="file-upload.htm">ファイルアップロード</a></li>
       <li><a href="jdbc.htm">S2JDBC</a></li>
+      <li><a href="greybox.htm">GreyBox</a></li>
     </ul>
   </td>
   <td valign="top" class="main">
@@ -77,7 +79,7 @@
       #end
       [<a href="source-viewer.htm?filename=$sourcePath">Java</a>]
     </div>
-    
+
     #if($template)
       #parse($template)
     #else

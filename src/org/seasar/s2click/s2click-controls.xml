@@ -5,6 +5,7 @@
     <control classname="org.seasar.s2click.control.ToolTip"/>
     <control classname="org.seasar.s2click.control.CodePrettify"/>
     <control classname="org.seasar.s2click.control.FCKEditor"/>
+    <control classname="org.seasar.s2click.control.GreyboxButton"/>
   </controls>
 
 </click-app>

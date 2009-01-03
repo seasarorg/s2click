@@ -163,7 +163,7 @@
   <td>mode</td>
   <td>Clickの動作モード。production、profile、development、debug、traceのいずれかを指定します。デフォルトはdevelopmentです。<br>
     モードによってClickの動作（HTMLテンプレートのリロードを行うかどうか等）やログに出力される内容が変化します。
-    詳細については<a href="http://click.sourceforge.net/docs/configuration.html#application-configuration">Clickのドキュメント</a>を参照してください。  
+    詳細については<a href="http://click.sourceforge.net/docs/configuration.html#application-configuration">Clickのドキュメント</a>を参照してください。
   </td>
   <td><pre class="table">
 &lt;property name="mode"&gt;
@@ -226,7 +226,7 @@
 </p>
 <pre class="code">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+&lt;!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
   "http://www.seasar.org/dtd/components24.dtd"&gt;
 &lt;components&gt;
   &lt;component class="org.seasar.framework.convention.impl.NamingConventionImpl"&gt;
@@ -293,7 +293,7 @@ public class HelloPage extends Page {
   /** articleというリクエストパラメータをバインド（必須） */
   @Request(name="article", required=true)
   public String articleId;
-  
+
 }
 </pre>
 <h2>ページクラスの基底クラス</h2>
@@ -332,13 +332,13 @@ public class HelloPage extends Page {
 </p>
 <pre class="code">
 public class AjaxPage extends S2ClickPage {
-  
+
   public AjaxPage(){
     AjaxButton button = new AjaxButton("button", "書籍情報を取得", this, "getAllBooks");
     button.addAjaxHandler(AjaxRequestButton.ON_COMPLETE, "displayResult");
     addControl(button);
   }
-  
+
   public boolean getAllBooks(){
     List&lt;Book&gt; books = bookService.getAllBooks();
     renderJSON(books);
@@ -358,12 +358,12 @@ public class AjaxPage extends S2ClickPage {
 </p>
 <pre class="code">
 public class FileDonwloadPage extends S2ClickPage {
-  
+
   public FileDonwloadPage(){
     ActionLink link = new ActionLink("link", "ダウンロード", this, "onClick");
     addControl(link);
   }
-  
+
   public boolean onClick(){
     String fileName = "sample.txt";
     InputStream in = getClass().getResourceAsStream("sample.txt");
@@ -421,6 +421,24 @@ public class FileDonwloadPage extends S2ClickPage {
   <td>
     <a href="http://www.fckeditor.net/">FCKeditor</a>を使用してHTMLを編集するためのコントロールです。
     S2ClickのexamplesにはFCKeditorのファイルブラウザを動作させるためのページクラスの実装も含まれています。
+  </td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.GreyboxButton</td>
+  <td>
+    <a href="http://orangoo.com/labs/GreyBox/">GreyBox</a>を使用してモーダルダイアログを表示するためのコントロールです。
+  </td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.GreyboxResultLink</td>
+  <td>
+    <code>GreyboxButton</code>で表示したGreyBoxのモーダルダイアログから親画面に値を反映するために使用可能なリンクコントロールです。
+  </td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.GreyboxResultButton</td>
+  <td>
+    <code>GreyboxButton</code>で表示したGreyBoxのモーダルダイアログから親画面に値を反映するために使用可能なボタンコントロールです。
   </td>
 </tr>
 </table>

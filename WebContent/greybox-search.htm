@@ -1,0 +1,22 @@
+<html>
+<head>
+  <title>ユーザの選択</title>
+  $imports
+</head>
+<body>
+<table border="1">
+<tr>
+  <th>ID</th>
+  <th>ユーザ名</th>
+</tr>
+#foreach($user in $userList)
+  #set($link.value = $user.userId)
+  <tr>
+    <td>$link</td>
+    <td>$format.html($user.userName)</td>
+  </tr>
+#end
+
+</table>
+</body>
+</html>
