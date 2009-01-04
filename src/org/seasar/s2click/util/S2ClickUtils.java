@@ -8,6 +8,7 @@ import java.util.Map;
 
 import net.sf.click.control.Field;
 import net.sf.click.control.Form;
+import net.sf.click.control.HiddenField;
 import net.sf.click.util.ClickUtils;
 
 import org.seasar.framework.beans.Converter;
@@ -15,6 +16,7 @@ import org.seasar.framework.beans.util.Copy;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.s2click.S2ClickConfig;
+import org.seasar.s2click.control.HiddenList;
 
 /**
  * S2Click内で使用するユーティリティメソッドを提供します。
@@ -22,6 +24,43 @@ import org.seasar.s2click.S2ClickConfig;
  * @author Naoki Takezoe
  */
 public class S2ClickUtils {
+	
+	/**
+	 * フォームのコントロールを<code>HiddenField</code>に変換します。
+	 * 
+	 * @param form 変換するフォーム
+	 */
+	public static void convertToHidden(Form form){
+		for(Object obj: form.getFieldList().toArray()){
+			Field field = (Field) obj;
+			
+			// もともとHiddenFieldの場合はなにもしない
+			if(field instanceof HiddenField){
+				continue;
+			}
+			
+			Object value = field.getValueObject();
+			if(value == null){
+				value = "";
+			}
+			
+			form.remove(field);
+			
+			if(value instanceof List){
+				// 値がListの場合はHiddenListを使用
+				HiddenList hidden = new HiddenList(field.getName());
+				for(Object valueItem: List.class.cast(value)){
+					hidden.addValue(valueItem.toString());
+				}
+				form.add(hidden);
+				
+			} else {
+				// List以外の場合はHiddenFieldに文字列として格納
+				HiddenField hidden = new HiddenField(field.getName(), value.toString());
+				form.add(hidden);
+			}
+		}
+	}
 	
 	/**
 	 * 引数に渡された文字列を<tt>s2click.dicon</tt>で指定された文字コードでURLエンコードします。
