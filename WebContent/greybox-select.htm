@@ -1,0 +1,34 @@
+<html>
+<head>
+  <title>ユーザの選択</title>
+  $imports
+  <script type="text/javascript">
+  // 親画面への参照
+  var S2CLICK_GB_PARENT = parent.parent;
+  
+  /**
+   * ユーザIDを親画面のテキストフィールドに反映します。
+   */
+  function performApply(userId){
+	  S2CLICK_GB_PARENT.S2Click_GB_SetResult(userId, 'form_userId');
+	  S2CLICK_GB_PARENT.GB_hide();
+  }
+  </script>
+</head>
+<body>
+<table border="1">
+<tr>
+  <th>ID</th>
+  <th>ユーザ名</th>
+</tr>
+#foreach($user in $userList)
+  #set($link.value = $user.userId)
+  <tr>
+    <td><a href="javascript:performApply('$format.javascript($user.userId)')">$format.html($user.userId)</a></td>
+    <td>$format.html($user.userName)</td>
+  </tr>
+#end
+
+</table>
+</body>
+</html>
