@@ -1,12 +1,14 @@
 package org.seasar.s2click.example.form;
 
 import net.sf.click.control.Option;
+import net.sf.click.control.Submit;
 import net.sf.click.extras.control.CheckList;
 import net.sf.click.extras.control.PickList;
 
-import org.seasar.s2click.control.FCKEditor;
-import org.seasar.s2click.control.S2ClickForm;
 import org.seasar.s2click.control.DateFieldYYYYMMDD;
+import org.seasar.s2click.control.FCKEditor;
+import org.seasar.s2click.control.HiddenList;
+import org.seasar.s2click.control.S2ClickForm;
 
 public class ControlsForm extends S2ClickForm {
 	
@@ -25,12 +27,17 @@ public class ControlsForm extends S2ClickForm {
 		pickList.add(new Option("Ruby"));
 		pickList.add(new Option("Perl"));
 		pickList.add(new Option("Python"));
+		
+		hiddenList.addValue("Eclipse");
+		hiddenList.addValue("NetBeans");
 	}
 	
 	public DateFieldYYYYMMDD dateField = new DateFieldYYYYMMDD("date", "日付");
 	public CheckList checkList = new CheckList("checkList", "チェックリスト");
 	public PickList pickList = new PickList("pickList", "ピックリスト");
 	public FCKEditor fckEditor = new FCKEditor("fckEditor", "FCKEditor");
+	public HiddenList hiddenList = new HiddenList("hiddenList");
+	public Submit submit = new Submit("submit", "送信");
 	
 //	public AutoCompleteTextField completion 
 //		= new AutoCompleteTextField("completion", "入力補完"){

@@ -34,8 +34,8 @@ public class S2ClickUtils {
 		for(Object obj: form.getFieldList().toArray()){
 			Field field = (Field) obj;
 			
-			// もともとHiddenFieldの場合はなにもしない
-			if(field instanceof HiddenField){
+			// もともとhiddenの場合はなにもしない
+			if(field.isHidden()){
 				continue;
 			}
 			

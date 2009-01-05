@@ -1,18 +1,24 @@
 package org.seasar.s2click.util;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import net.sf.click.MockContext;
+import net.sf.click.control.Checkbox;
 import net.sf.click.control.Form;
+import net.sf.click.control.HiddenField;
 import net.sf.click.control.PasswordField;
 import net.sf.click.control.TextField;
+import net.sf.click.extras.control.CheckList;
 import net.sf.click.extras.control.DateField;
 import net.sf.click.extras.control.IntegerField;
 
 import org.seasar.extension.unit.S2TestCase;
 import org.seasar.s2click.S2ClickConfig;
 import org.seasar.s2click.control.DateFieldYYYYMMDD;
+import org.seasar.s2click.control.HiddenList;
 
 public class S2ClickUtilsTest extends S2TestCase {
 
@@ -197,6 +203,43 @@ public class S2ClickUtilsTest extends S2TestCase {
 		public void setDate(Date date) {
 			this.date = date;
 		}
+	}
+	
+	public void testConvertToHidden(){
+		Form form = new Form("form");
+		
+		TextField text = new TextField("text");
+		text.setValue("テキストフィールド");
+		form.add(text);
+		
+		Checkbox checkbox = new Checkbox("checkbox");
+		checkbox.setChecked(true);
+		form.add(checkbox);
+		
+		CheckList checkList = new CheckList("checkList");
+		checkList.add("A");
+		checkList.add("B");
+		checkList.add("C");
+		
+		List<String> values = new ArrayList<String>();
+		values.add("B");
+		values.add("C");
+		checkList.setValues(values);
+		
+		form.add(checkList);
+		
+		S2ClickUtils.convertToHidden(form);
+		
+		HiddenField hiddenText = (HiddenField) form.getField("text");
+		assertEquals("テキストフィールド", hiddenText.getValue());
+		
+		HiddenField hiddenCheckbox = (HiddenField) form.getField("checkbox");
+		assertEquals("true", hiddenCheckbox.getValue());
+		
+		HiddenList hiddenCheckList = (HiddenList) form.getField("checkList");
+		assertEquals(2, hiddenCheckList.getValues().size());
+		assertEquals("B", hiddenCheckList.getValues().get(0));
+		assertEquals("C", hiddenCheckList.getValues().get(1));
 	}
 
 }

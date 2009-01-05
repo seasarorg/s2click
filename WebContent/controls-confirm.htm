@@ -1,0 +1,32 @@
+<table border="1">
+<tr>
+  <th>日付</th>
+  <td>$format.html($form.fields.date.value)</td>
+</tr>
+<tr>
+  <th>チェックリスト</th>
+  <td>
+    #foreach($value in $form.fields.checkList.values)
+      $format.html($value)<br>
+    #end
+  </td>
+</tr>
+<tr>
+  <th>ピックリスト</th>
+  <td>$format.html($form.fields.pickList.value)</td>
+</tr>
+<tr>
+  <th>FCKEditor</th>
+  <td>$format.html($form.fields.fckEditor.value)</td>
+</tr>
+<tr>
+  <th>HiddenList</th>
+  <td>
+    #foreach($value in $form.fields.hiddenList.values)
+      $format.html($value)<br>
+    #end
+  </td>
+</tr>
+</table>
+
+$form

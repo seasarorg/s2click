@@ -93,6 +93,11 @@ public class HiddenList extends Field {
 	}
 	
 	@Override
+	public boolean isHidden(){
+		return true;
+	}
+	
+	@Override
 	public String toString(){
 		HtmlStringBuffer buffer = new HtmlStringBuffer();
 		List<String> values = getValues();

@@ -18,8 +18,19 @@ public abstract class LayoutPage extends S2ClickPage {
 	/**
 	 * 共通テンプレート <tt>/layout.htm</tt> を返します。
 	 */
-	@Override public String getTemplate() {
+	@Override
+	public String getTemplate() {
         return "/layout.htm";
     }
+	
+//	/**
+//	 * ページクラス名から自動マッピングされるテンプレート以外のテンプレートを使用する場合、
+//	 * このメソッドでテンプレートのパスを指定します。
+//	 * 
+//	 * @param template テンプレートのパス
+//	 */
+//	protected void setTemplate(String template){
+//		addModel("template", template);
+//	}
 	
 }
