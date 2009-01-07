@@ -23,6 +23,7 @@ import org.seasar.framework.container.util.SmartDeployUtil;
 import org.seasar.framework.util.tiger.ReflectionUtil;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.annotation.Request;
+import org.seasar.s2click.filter.UrlPatternFilter;
 
 /**
  * Seasar2とClick Frameworkを連携させるためのサーブレット。
@@ -54,8 +55,16 @@ public class S2ClickServlet extends ClickServlet {
 	@Override
 	public void service(ServletRequest req, ServletResponse res)
 			throws ServletException, IOException {
-		if(initialized == false){
+		
+		String hotDeployInitStatus = (String) req.getAttribute(UrlPatternFilter.HOTDEPLOY_INIT_KEY);
+		
+		if(initialized == false && !"initialized".equals(hotDeployInitStatus)){
 			super.init();
+			req.setAttribute(UrlPatternFilter.HOTDEPLOY_INIT_KEY, "initialized");
+			
+			if("initialize".equals(hotDeployInitStatus)){
+				return;
+			}
 		}
 
 		super.service(new S2ClickRequestWrapper((HttpServletRequest) req), res);

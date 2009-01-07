@@ -40,6 +40,8 @@ import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.convention.impl.NamingConventionImpl;
 import org.seasar.s2click.S2ClickConfig;
 import org.seasar.s2click.annotation.Path;
+import org.seasar.s2click.annotation.UrlPattern;
+import org.seasar.s2click.filter.UrlPatternManager;
 import org.seasar.s2click.util.S2ClickUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -847,6 +849,9 @@ class ClickApp implements EntityResolver {
 
     private void loadPages(S2ClickConfig config) throws ClassNotFoundException {
     	
+    	// URLパターンの情報をクリア
+    	UrlPatternManager.getAll().clear();
+    	
     	NamingConvention naming = (NamingConvention) 
     		SingletonS2ContainerFactory.getContainer().getComponent(NamingConventionImpl.class);
         pagesPackage = naming.getRootPackageNames()[0] + "." + naming.getPageSuffix().toLowerCase();
@@ -901,6 +906,23 @@ class ClickApp implements EntityResolver {
                     }
                 }
             }
+        }
+        
+        // @UrlPatternアノテーションを処理
+        for(Map.Entry entry: (Set<Map.Entry>) pageByPathMap.entrySet()){
+        	ClickApp.PageElm pageElm = (ClickApp.PageElm) entry.getValue();
+        	Class<?> clazz = loadClass(pageElm.pageClassName);
+        	UrlPattern urlPattern = clazz.getAnnotation(UrlPattern.class);
+        	if(urlPattern != null){
+        		String pattern = urlPattern.value();
+        		if(StringUtils.isNotEmpty(pattern)){
+        			UrlPatternManager.add(pattern, (String) entry.getKey());
+                    if (logger.isDebugEnabled()) {
+                        String msg = pattern + " -> " + entry.getKey();
+                        logger.debug(msg);
+                    }
+        		}
+        	}
         }
         
         // Build pages by class map
