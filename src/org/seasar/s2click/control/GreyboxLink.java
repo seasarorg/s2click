@@ -7,18 +7,18 @@ import javax.servlet.ServletContext;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import net.sf.click.Page;
-import net.sf.click.control.Button;
+import net.sf.click.control.AbstractLink;
 import net.sf.click.util.ClickUtils;
 
 /**
  * <a href="http://orangoo.com/labs/GreyBox/">GreyBox</a>を使用して指定したページを
- * モーダルダイアログとして表示するボタンです。
+ * モーダルダイアログとして表示するリンクです。
  *
  * @author Naoki Takezoe
  * @since 0.4.0
  */
-public class GreyboxButton extends Button {
-
+public class GreyboxLink extends AbstractLink {
+	
 	private static final long serialVersionUID = 1L;
 
 	public static final String HTML_IMPORTS =
@@ -48,25 +48,27 @@ public class GreyboxButton extends Button {
         "/org/seasar/s2click/control/greybox/prev.gif",
         "/org/seasar/s2click/control/greybox/w_close.gif",
     };
-
-	public GreyboxButton() {
+    
+	public GreyboxLink() {
 		super();
 	}
 
-	public GreyboxButton(String name) {
+	public GreyboxLink(String name) {
 		super(name);
 	}
 
-	public GreyboxButton(String name, String label) {
-		super(name, label);
+	public GreyboxLink(String name, String label) {
+		super(name);
+		setLabel(label);
 	}
 
-	public GreyboxButton(String name, String label, String title, Class<? extends Page> pageClass) {
-		super(name, label);
+	public GreyboxLink(String name, String label, String title, Class<? extends Page> pageClass) {
+		super(name);
+		setLabel(label);
 		setPageClass(pageClass);
 		setTitle(title);
 	}
-
+    
 	/**
 	 * {@inheritDoc}
 	 */
@@ -161,7 +163,20 @@ public class GreyboxButton extends Button {
 	public int getDialogHeight(){
 		return this.height;
 	}
+    
+	public String getHref() {
+		// TODO voidにする
+		return "#";
+	}
 
+	public boolean onProcess() {
+		return true;
+	}
+
+	public void setListener(Object listener, String method) {
+		throw new UnsupportedOperationException();
+	}
+	
 	@Override
 	public String toString(){
 		// ページクラスのパスを取得
@@ -184,7 +199,7 @@ public class GreyboxButton extends Button {
 
 		sb.append(")");
 
-		setOnClick(sb.toString());
+		setAttribute("onclick", sb.toString());
 
 		return super.toString();
 	}
