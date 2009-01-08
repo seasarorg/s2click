@@ -1,0 +1,10 @@
+ページクラスに<code>@UrlPattern</code>アノテーションを付与することで任意のURLでページにアクセスできるようになります。
+<p>
+また、<code>@UrlPattern("/user/select/{userId}")</code>などと{パラメータ名}という記述することで、
+URLのパスをリクエストパラメータにマッピングすることができます。
+<p>
+<strong>URLから取得したパラメータ：</strong> $format.html($userId)
+<form name="form">
+  <input type="text" name="userId">
+  <input type="button" value="送信" onclick="location.href='$context/user/select/' + document.form.userId.value;">
+</form>
