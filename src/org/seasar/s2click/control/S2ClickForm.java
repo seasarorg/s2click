@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import net.arnx.jsonic.JSON;
-import net.sf.click.Control;
 import net.sf.click.control.Field;
 import net.sf.click.control.HiddenField;
 import net.sf.click.control.Submit;
@@ -146,10 +145,6 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 	       			}
 	    		}
 	    	}
-		}
-
-		for(Object button: getButtonList()){
-			getPage().addControl(Control.class.cast(button));
 		}
 	}
 

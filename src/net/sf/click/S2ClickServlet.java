@@ -17,6 +17,7 @@ import ognl.Ognl;
 import ognl.OgnlException;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.velocity.VelocityContext;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.util.SmartDeployUtil;
@@ -24,6 +25,7 @@ import org.seasar.framework.util.tiger.ReflectionUtil;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.annotation.Request;
 import org.seasar.s2click.filter.UrlPatternFilter;
+import org.seasar.s2click.util.S2ClickPageImports;
 
 /**
  * Seasar2とClick Frameworkを連携させるためのサーブレット。
@@ -179,5 +181,28 @@ public class S2ClickServlet extends ClickServlet {
 			super.renderTemplate(page);
 		}
 	}
+
+	@Override
+	protected VelocityContext createVelocityContext(Page page) {
+		VelocityContext context = super.createVelocityContext(page);
+		S2ClickPageImports pageImports = new S2ClickPageImports(page);
+		
+		context.put("imports", pageImports.getAllIncludes());
+		context.put("cssImports", pageImports.getCssImports());
+		context.put("jsImports", pageImports.getJsImports());
+		
+		return context;
+	}
+	
+    protected void setRequestAttributes(Page page) {
+    	super.setRequestAttributes(page);
+    	
+        HttpServletRequest request = page.getContext().getRequest();
+		S2ClickPageImports pageImports = new S2ClickPageImports(page);
+        
+		request.setAttribute("imports", pageImports.getAllIncludes());
+        request.setAttribute("cssImports", pageImports.getCssImports());
+        request.setAttribute("jsImports", pageImports.getJsImports());
+    }
 
 }
