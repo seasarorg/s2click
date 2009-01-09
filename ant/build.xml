@@ -40,25 +40,25 @@
 		<pathelement location="${test.bin.dir}"/>
 		<pathelement location="${bin.dir}"/>
 	</path>
-	
+
 	<path id="cobertura.classpath">
 		<fileset dir="${cobertura.dir}">
 			<include name="cobertura.jar" />
 			<include name="lib/**/*.jar" />
 		</fileset>
 	</path>
-	
+
 	<taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
-	
+
 	<!--==================================================-->
 	<!-- S2Clickのコンパイル -->
 	<!--==================================================-->
     <target name="compile">
     	<mkdir dir="${bin.dir}"/>
     	<javac srcdir="${src.dir}" destdir="${bin.dir}" source="1.5"
-    		target="1.5" encoding="UTF-8" debug="true" classpathref="classpath" 
+    		target="1.5" encoding="UTF-8" debug="true" classpathref="classpath"
     		excludes="org/seasar/s2click/example/**"/>
-    	
+
 		<copy todir="${bin.dir}">
 			<fileset dir="${src.dir}" includes="**/*.js" />
 			<fileset dir="${src.dir}" includes="**/*.gif" />
@@ -66,9 +66,10 @@
 			<fileset dir="${src.dir}" includes="**/*.css" />
 			<fileset dir="${src.dir}" includes="**/*.zip" />
 			<fileset dir="${src.dir}" includes="**/*.xml" />
+			<fileset dir="${src.dir}" includes="**/*.html" excludes="**/package.html" />
 		</copy>
     </target>
-	
+
 	<!--==================================================-->
 	<!-- テストの実行 -->
 	<!--==================================================-->
@@ -80,17 +81,17 @@
     		<fileset dir="${test.src.dir}" includes="**/*.js" />
     		<fileset dir="${src.dir}" includes="**/*.dicon" />
     	</copy>
-    	
+
 		<cobertura-instrument todir="${bin.dir}">
 			<fileset dir="${bin.dir}">
 				<include name="**/*.class"/>
 			</fileset>
 		</cobertura-instrument>
-    	
+
     	<junit printsummary="true" haltonfailure="true" haltonerror="true">
     		<classpath refid="classpath" />
     		<classpath location="lib/cobertura/cobertura.jar" />
-    		
+
     		<batchtest fork="true">
 				<fileset dir="${test.src.dir}">
 					<include name="**/*Test.java"/>
@@ -98,47 +99,47 @@
 				</fileset>
     		</batchtest>
     	</junit>
-    	
+
     	<cobertura-report srcdir="${src.dir}" destdir="cobertura"/>
     </target>
-	
+
 	<!--==================================================-->
 	<!-- S2ClickのJavadocを作成 -->
 	<!--==================================================-->
     <target name="javadoc">
     	<mkdir dir="${doc.dir}"/>
     	<javadoc sourcepath="${src.dir}" destdir="${doc.dir}" source="1.5"
-    		encoding="UTF-8" classpathref="classpath" 
+    		encoding="UTF-8" classpathref="classpath"
     		excludepackagenames="org.seasar.s2click.example/**"/>
     </target>
-	
+
 	<!--==================================================-->
 	<!-- S2ClickのJARを作成 -->
 	<!--==================================================-->
 	<target name="jar" depends="compile">
 		<mkdir dir="${release.dir}"/>
     	<copy todir="${bin.dir}">
-    		<fileset dir="${src.dir}" includes="**/*.java" 
+    		<fileset dir="${src.dir}" includes="**/*.java"
     			excludes="org/seasar/s2click/example/**"/>
     	</copy>
 		<jar destfile="${release.dir}/${jar.name}" basedir="${bin.dir}" />
 	</target>
-	
+
 	<!--==================================================-->
 	<!-- サンプルのwarファイルを作成 -->
 	<!--==================================================-->
 	<target name="build-example" depends="jar">
 		<mkdir dir="${example.dir}"/>
     	<copy todir="${example.dir}">
-    		<fileset dir="../WebContent" includes="*/**" 
+    		<fileset dir="../WebContent" includes="*/**"
     			excludes="**/src,**/src/*.jar"/>
     	</copy>
     	<copy todir="${example.dir}/WEB-INF/lib">
     		<fileset dir="${release.dir}" includes="${jar.name}" />
     	</copy>
 		<mkdir dir="${example.dir}/WEB-INF/classes"/>
-    	<javac srcdir="${src.dir}" destdir="${example.dir}/WEB-INF/classes" 
-    		source="1.5" target="1.5" encoding="UTF-8" debug="true" classpathref="classpath" 
+    	<javac srcdir="${src.dir}" destdir="${example.dir}/WEB-INF/classes"
+    		source="1.5" target="1.5" encoding="UTF-8" debug="true" classpathref="classpath"
     		includes="org/seasar/s2click/example/**"/>
     	<copy todir="${example.dir}/WEB-INF/classes">
     		<fileset dir="${src.dir}" includes="org/seasar/s2click/example/**"/>
@@ -146,10 +147,10 @@
     		<fileset dir="${src.dir}" includes="*.dicon"/>
     		<fileset dir="${src.dir}" includes="env.txt"/>
     	</copy>
-		<war destfile="${release.dir}/${example.war.name}" 
+		<war destfile="${release.dir}/${example.war.name}"
 			basedir="${example.dir}" />
 	</target>
-	
+
 	<!--==================================================-->
 	<!-- S2Clickのブランクプロジェクトを作成 -->
 	<!--==================================================-->
@@ -159,7 +160,7 @@
     			excludes="geronimo-*.jar, s2-tiger-*.jar"/>
     		<fileset dir="${release.dir}" includes="${jar.name}"/>
     	</copy>
-		<zip destfile="${release.dir}/${blank.zip.name}" 
+		<zip destfile="${release.dir}/${blank.zip.name}"
 			basedir="${blank.dir}" includes="s2click/**"/>
 	</target>
 
@@ -171,10 +172,10 @@
     		<fileset dir="../WebContent/WEB-INF/lib" includes="*.jar"/>
     		<fileset dir="${release.dir}" includes="${jar.name}"/>
     	</copy>
-		<zip destfile="${release.dir}/${blank-s2jdbc.zip.name}" 
+		<zip destfile="${release.dir}/${blank-s2jdbc.zip.name}"
 			basedir="${blank-s2jdbc.dir}" includes="s2click/**"/>
 	</target>
-			
+
 	<!--==================================================-->
 	<!-- リリースアーカイブを作成 -->
 	<!--==================================================-->
@@ -183,16 +184,16 @@
     	<copy todir="${release.dir}/lib">
     		<fileset dir="../WebContent/WEB-INF/lib" includes="*.jar" />
     	</copy>
-		
+
 		<mkdir dir="${release.dir}/doc"/>
     	<copy todir="${release.dir}/doc">
     		<fileset dir="../docs" includes="**"/>
     	</copy>
-		
-		<zip destfile="${release.zip.name}" basedir="." 
+
+		<zip destfile="${release.zip.name}" basedir="."
 			includes="${release.dir}/**"/>
 	</target>
-	
+
 	<!--==================================================-->
 	<!-- ビルドプロセスが生成したリソースを削除 -->
 	<!--==================================================-->
@@ -206,9 +207,9 @@
 		<delete dir="${release.dir}"/>
 		<delete file="${release.zip.name}"/>
 		<delete>
-			<fileset dir="${blank.dir}/s2click/WebContent/WEB-INF/lib" 
+			<fileset dir="${blank.dir}/s2click/WebContent/WEB-INF/lib"
 				includes="*.jar" />
-			<fileset dir="${blank-s2jdbc.dir}/s2click/WebContent/WEB-INF/lib" 
+			<fileset dir="${blank-s2jdbc.dir}/s2click/WebContent/WEB-INF/lib"
 				includes="*.jar" />
 		</delete>
 	</target>
