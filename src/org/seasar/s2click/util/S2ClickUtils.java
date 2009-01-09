@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.click.control.Field;
+import net.sf.click.control.FileField;
 import net.sf.click.control.Form;
 import net.sf.click.control.HiddenField;
 import net.sf.click.util.ClickUtils;
@@ -26,17 +27,23 @@ import org.seasar.s2click.control.HiddenList;
 public class S2ClickUtils {
 	
 	/**
-	 * フォームのコントロールを<code>HiddenField</code>に変換します。
+	 * フォームのコントロールを<code>HiddenField</code>（もしくは<code>HiddenList</code>）に変換します。
 	 * 
 	 * @param form 変換するフォーム
+	 * @throws IllegalArgumentException hiddenに変換できないコントロールがフォームに含まれていた場合
 	 */
-	public static void convertToHidden(Form form){
+	public static void convertToHidden(Form form) throws IllegalArgumentException {
 		for(Object obj: form.getFieldList().toArray()){
 			Field field = (Field) obj;
 			
 			// もともとhiddenの場合はなにもしない
 			if(field.isHidden()){
 				continue;
+			}
+			
+			// FileFieldの場合は変換できない
+			if(field instanceof FileField){
+				throw new IllegalArgumentException("FileFieldはHiddenFieldに変換できません。");
 			}
 			
 			Object value = field.getValueObject();
