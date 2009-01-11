@@ -13,7 +13,11 @@
 </tr>
 <tr>
   <th>ピックリスト</th>
-  <td>$format.html($form.fields.pickList.value)</td>
+  <td>
+    #foreach($value in $form.fields.pickList.values)
+      $format.html($value)<br>
+    #end
+  </td>
 </tr>
 <tr>
   <th>FCKEditor</th>

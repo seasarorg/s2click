@@ -10,6 +10,7 @@ import net.sf.click.control.Field;
 import net.sf.click.control.FileField;
 import net.sf.click.control.Form;
 import net.sf.click.control.HiddenField;
+import net.sf.click.extras.control.PickList;
 import net.sf.click.util.ClickUtils;
 
 import org.seasar.framework.beans.Converter;
@@ -44,6 +45,20 @@ public class S2ClickUtils {
 			// FileFieldの場合は変換できない
 			if(field instanceof FileField){
 				throw new IllegalArgumentException("FileFieldはHiddenFieldに変換できません。");
+			}
+			
+			// PickListの場合
+			if(field instanceof PickList){
+				Object values = ((PickList) field).getSelectedValues();
+				HiddenList hidden = new HiddenList(field.getName());
+				for(Object valueItem: List.class.cast(values)){
+					hidden.addValue(valueItem.toString());
+				}
+				
+				form.remove(field);
+				form.add(hidden);
+				
+				continue;
 			}
 			
 			Object value = field.getValueObject();
