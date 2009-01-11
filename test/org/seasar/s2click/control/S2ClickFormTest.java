@@ -72,9 +72,6 @@ public class S2ClickFormTest extends S2ClickTestCase {
 		List<?> buttons = form.getButtonList();
 		assertEquals(1, buttons.size());
 		assertEquals("submit", ((Submit) buttons.get(0)).getName());
-
-		List<?> controls = form.getPage().getControls();
-		assertEquals("submit", ((Submit) controls.get(0)).getName());
 	}
 
 	/**
@@ -124,9 +121,6 @@ public class S2ClickFormTest extends S2ClickTestCase {
 		List<?> buttons = form.getButtonList();
 		assertEquals(1, buttons.size());
 		assertEquals("submit", ((Submit) buttons.get(0)).getName());
-
-		List<?> controls = form.getPage().getControls();
-		assertEquals("submit", ((Submit) controls.get(0)).getName());
 	}
 
 	public void testAddField1() {
