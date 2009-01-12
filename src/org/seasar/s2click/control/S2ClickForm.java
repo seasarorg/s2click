@@ -324,6 +324,13 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 	public void copyTo(Object object) {
 		copyTo(object, false);
 	}
+	
+	/**
+	 * このフォームのフィールドをすべてhiddenフィールドに変換します。
+	 */
+	public void toHidden(){
+		S2ClickUtils.convertToHidden(this);
+	}
 
 	@Override
 	@SuppressWarnings("unchecked")
