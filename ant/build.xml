@@ -190,6 +190,11 @@
     		<fileset dir="../docs" includes="**"/>
     	</copy>
 
+		<mkdir dir="${release.dir}/doc/javadoc"/>
+    	<copy todir="${release.dir}/doc/javadoc">
+    		<fileset dir="${doc.dir}" includes="**"/>
+    	</copy>
+		
 		<zip destfile="${release.zip.name}" basedir="."
 			includes="${release.dir}/**"/>
 	</target>
@@ -202,7 +207,7 @@
 		<delete dir="cobertura"/>
 		<delete dir="${bin.dir}"/>
 		<delete dir="${test.bin.dir}"/>
-		<delete dir="${doc.dir}"/>
+		<delete dir="docs"/>
 		<delete dir="${example.dir}"/>
 		<delete dir="${release.dir}"/>
 		<delete file="${release.zip.name}"/>
