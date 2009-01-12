@@ -248,7 +248,8 @@ public class FCKEditor extends Field {
 		sb.append("oFCKeditor.BasePath = sBasePath;\n");
 		sb.append("oFCKeditor.Width = ").append(getWidth()).append(";\n");
 		sb.append("oFCKeditor.Height = ").append(getHeight()).append(";\n");
-		sb.append("oFCKeditor.Value = '").append(StringEscapeUtils.escapeJavaScript(getValue())).append("';\n");
+		sb.append("oFCKeditor.Value = '").append(
+				StringEscapeUtils.escapeJavaScript(getValue()).replaceAll("(</)(script>)", "$1' + '$2")).append("';\n");
 		sb.append("oFCKeditor.Create();\n");
 		sb.append("</script>\n");
 		
