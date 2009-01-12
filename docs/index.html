@@ -173,12 +173,12 @@
 <tr>
   <td>headers</td>
   <td>共通ヘッダ</td>
-  <td></td>
+  <td>&nbsp;</td>
 </tr>
 <tr>
   <td>locale</td>
   <td>ロケール</td>
-  <td></td>
+  <td>&nbsp;</td>
 </tr>
 <!--
 <tr>
@@ -193,17 +193,17 @@
 <tr>
   <td>controlSets</td>
   <td>コントロールセットを定義した設定ファイル群のパスを指定します。</td>
-  <td></td>
+  <td>&nbsp;</td>
 </tr>
 <tr>
   <td>controls</td>
   <td>デプロイ（ファイルの展開）が必要なコントロールクラス群を指定します。</td>
-  <td></td>
+  <td>&nbsp;</td>
 </tr>
 <tr>
   <td>fileItemFactory</td>
   <td>Clickの<code>FileField</code>コントロールが使用するCommons FileUploadの<code>FileItemFactory</code>のインスタンス</td>
-  <td></td>
+  <td>&nbsp;</td>
 </tr>
 <!--
 <tr>
@@ -222,7 +222,7 @@
 
 <p>
   S2Clickではページの自動マッピングは常に有効です。
-    また、ページクラスを配置するパッケージはSeasar2の規約に従って<strong>convension.dicon</strong>の設定を使用します。
+  また、ページクラスを配置するパッケージはSeasar2の規約に従って<strong>convension.dicon</strong>の設定を使用します。
 </p>
 <pre class="code">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -244,7 +244,7 @@
 <h2>publicフィールドの活用</h2>
 <p>
   Seasar2ではJavaBeanに無用なアクセサを設けず、publicフィールドを活用することが推奨されています（もちろんカプセル化の観点からアクセサメソッドを用意したほうがよいケースもあります）。
-   しかし、ClickはJavaBean規約に従いアクセサメソッドを持ったJavaBeanの利用が想定されています。
+  しかし、ClickはJavaBean規約に従いアクセサメソッドを持ったJavaBeanの利用が想定されています。
   そこで、S2ClickではClickでもpublicフィールドを活用するための機能を提供します。
 </p>
 <dl>
@@ -325,6 +325,30 @@ public class HelloPage extends Page {
   <td>コンテンツタイプを指定して入力ストリームの内容をレスポンスにレンダリングします。</td>
 </tr>
 </table>
+
+<h3>アノテーションによるパスの指定</h3>
+<p>
+  <code>@Path</code>アノテーションで任意のパスにページクラスをマッピングすることができます。
+  対応するVelocityテンプレートが存在しないページクラスのパスを指定する場合に使用します。
+</p>
+<pre class="code">
+@Path("/controls.htm")
+public class ControlsPage extends LayoutPage {
+  ...
+} </pre>
+<p>
+  <code>@UrlPattern</code>アノテーションをページクラスに付与すると、ページに任意のエイリアスを指定することができます。
+  これはApacheのmod_rewriteのように動作します。URLパターンで指定したパスの一部をリクエストパラメータにマッピングすることもできます。
+</p>
+<pre class="code">
+@UrlPattern("/user/select/{userId}")
+public class UrlPatternPage extends LayoutPage {
+  
+  // リクエストパスの{userId}に一致した部分がセットされます
+  @Request
+  public String userId;
+
+} </pre>
 
 <h3>Ajaxの実装例</h3>
 <p>
@@ -432,7 +456,13 @@ public class FileDonwloadPage extends S2ClickPage {
 <tr>
   <td>org.seasar.s2click.control.GreyboxButton</td>
   <td>
-    <a href="http://orangoo.com/labs/GreyBox/">GreyBox</a>を使用してモーダルダイアログを表示するためのコントロールです。
+    <a href="http://orangoo.com/labs/GreyBox/">GreyBox</a>を使用してモーダルダイアログを表示するためのボタンです。
+  </td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.GreyboxLink</td>
+  <td>
+    <a href="http://orangoo.com/labs/GreyBox/">GreyBox</a>を使用してモーダルダイアログを表示するためのリンクです。
   </td>
 </tr>
 </table>
