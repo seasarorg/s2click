@@ -53,6 +53,7 @@
   <li>Java 5のアノテーションを活用した機能を提供します</li>
   <li>Ajax、ファイルダウンロードをサポートする機能を提供します</li>
   <li>Click標準では提供されていない便利なコントロールやユーティリティを提供します</li>
+  <li>ClickIDEのS2Click向け拡張プラグインを提供します</li>
 </ul>
 <p>
   なお、S2Clickの動作にはJava 5以降が必須です。
@@ -67,6 +68,14 @@
   各バージョンごとの更新履歴は<a href="history.html">こちら</a>を参照してください。
   また、S2Clickに同梱されているライブラリについては<a href="libraries.html">こちら</a>を参照してください。
 </p>
+<p>
+  S2ClickではClickプロジェクトにて開発されているClick Framework向けのEclipseプラグイン「ClickIDE」に
+  以下のプラグインを追加インストールすることで、S2ClickのプロジェクトでもClickIDEの機能を利用できるようになります。
+  ClickIDEをインストール後、以下のリンクからダウンロードしたJARファイルをEclipseのpluginsフォルダにコピーしてください。
+</p>
+<ul>
+  <li><a href="releases/org.seasar.s2click.clickide.extension_1.0.0.jar">org.seasar.s2click.clickide.extension_1.0.0.jar</a>（要ClickIDE 2.1.0）</li>
+</ul>
 
 <h2>サンプルを動かしてみる</h2>
 <p>
@@ -343,7 +352,7 @@ public class ControlsPage extends LayoutPage {
 <pre class="code">
 @UrlPattern("/user/select/{userId}")
 public class UrlPatternPage extends LayoutPage {
-  
+
   // リクエストパスの{userId}に一致した部分がセットされます
   @Request
   public String userId;
