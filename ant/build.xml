@@ -16,7 +16,8 @@
 	<property name="blank-s2jdbc.zip.name" value="s2click-s2jdbc-blank.zip"/>
 	<property name="release.dir" value="s2click-${version}"/>
 	<property name="release.zip.name" value="s2click-${version}.zip"/>
-	<property name="doc.dir" value="docs/javadoc"/>
+	<property name="doc.dir" value="docs"/>
+	<property name="javadoc.dir" value="${doc.dir}/javadoc"/>
 	<property name="cobertura.dir" value="lib/cobertura"/>
 
 	<path id="classpath">
@@ -107,8 +108,8 @@
 	<!-- S2ClickのJavadocを作成 -->
 	<!--==================================================-->
     <target name="javadoc">
-    	<mkdir dir="${doc.dir}"/>
-    	<javadoc sourcepath="${src.dir}" destdir="${doc.dir}" source="1.5"
+    	<mkdir dir="${javadoc.dir}"/>
+    	<javadoc sourcepath="${src.dir}" destdir="${javadoc.dir}" source="1.5"
     		encoding="UTF-8" classpathref="classpath"
     		excludepackagenames="org.seasar.s2click.example/**"/>
     </target>
@@ -192,7 +193,7 @@
 
 		<mkdir dir="${release.dir}/doc/javadoc"/>
     	<copy todir="${release.dir}/doc/javadoc">
-    		<fileset dir="${doc.dir}" includes="**"/>
+    		<fileset dir="${javadoc.dir}" includes="**"/>
     	</copy>
 		
 		<zip destfile="${release.zip.name}" basedir="."
@@ -207,7 +208,7 @@
 		<delete dir="cobertura"/>
 		<delete dir="${bin.dir}"/>
 		<delete dir="${test.bin.dir}"/>
-		<delete dir="docs"/>
+		<delete dir="${doc.dir}"/>
 		<delete dir="${example.dir}"/>
 		<delete dir="${release.dir}"/>
 		<delete file="${release.zip.name}"/>
