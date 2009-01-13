@@ -830,9 +830,19 @@ class ClickApp implements EntityResolver {
         if (mode == ClickApp.PRODUCTION || mode == ClickApp.PROFILE) {
 
             // Load page templates, which will be cached in ResourceManager
-            for (Iterator i = pageByPathMap.keySet().iterator(); i.hasNext();) {
-                String path = i.next().toString();
-
+            for (Iterator i = pageByPathMap.entrySet().iterator(); i.hasNext();) {
+            	Map.Entry entry = Map.Entry.class.cast(i.next());
+            	
+            	// @Pathアノテーションで指定されたパスの場合はロードしない
+            	PageElm pageElm = PageElm.class.cast(entry.getValue());
+            	Class<?> pageClass = pageElm.getPageClass();
+                Path ann = pageClass.getAnnotation(Path.class);
+                if(ann != null){
+                	continue;
+                }
+                
+                String path = pageElm.getPath();
+                
                 if (!path.endsWith(".jsp")) {
                     try {
                         getTemplate(path);
