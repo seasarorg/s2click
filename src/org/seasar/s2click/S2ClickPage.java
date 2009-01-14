@@ -43,13 +43,20 @@ public class S2ClickPage extends Page {
 	@Override
 	public void onInit() {
 		super.onInit();
-		validatePageFields();
+		
+		String errors = validatePageFields();
+		if(errors != null){
+			throw new RuntimeException(errors);
+		}
 	}
 	
 	/**
 	 * {@link Request}アノテーションでリクエストパラメータをバインドしたフィールドのバリデーションを行います。
+	 * 
+	 * @return エラーがある場合はエラーメッセージ。エラーがない場合はnullを返します。
 	 */
-	protected void validatePageFields(){
+	protected String validatePageFields(){
+		StringBuilder sb = new StringBuilder();
 		ClickApp clickApp = S2ClickUtils.getClickApp();
 		
 		for(Field field: clickApp.getPageFieldArray(getClass())){
@@ -58,10 +65,16 @@ public class S2ClickPage extends Page {
 				if(ann.required() == true){
 					Object value = ReflectionUtil.getValue(field, this);
 					if(value == null || (value instanceof String && StringUtils.isEmpty((String) value))){
-						throw new RuntimeException("パラメータが不正です。");
+						sb.append("必須パラメータ " + field.getName() + " が指定されていません。\n");
 					}
 				}
 			}
+		}
+		
+		if(sb.length() == 0){
+			return null;
+		} else {
+			return sb.toString();
 		}
 	}
 
