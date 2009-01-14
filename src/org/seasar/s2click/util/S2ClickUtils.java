@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.click.ClickApp;
+import net.sf.click.Context;
 import net.sf.click.control.Field;
 import net.sf.click.control.FileField;
 import net.sf.click.control.Form;
@@ -26,6 +28,16 @@ import org.seasar.s2click.control.HiddenList;
  * @author Naoki Takezoe
  */
 public class S2ClickUtils {
+	
+	/**
+	 * <code>ClickApp</code>を取得します。
+	 * 
+	 * @return <code>ClickApp</code>のインスタンス。
+	 */
+	public static ClickApp getClickApp(){
+		return (ClickApp) Context.getThreadLocalContext()
+			.getRequestAttribute(ClickApp.class.getName());
+	}
 	
 	/**
 	 * フォームのコントロールを<code>HiddenField</code>（もしくは<code>HiddenList</code>）に変換します。

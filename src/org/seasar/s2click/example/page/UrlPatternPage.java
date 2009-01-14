@@ -13,7 +13,7 @@ public class UrlPatternPage extends LayoutPage {
 	
 	public String title = "URLパターン";
 	
-	@Request
+	@Request(required=true)
 	public String userId;
 	
 }

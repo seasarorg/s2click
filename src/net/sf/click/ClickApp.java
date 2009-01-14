@@ -60,7 +60,7 @@ import org.xml.sax.SAXException;
  * @author Naoki Takezoe
  */
 @SuppressWarnings("unchecked")
-class ClickApp implements EntityResolver {
+public class ClickApp implements EntityResolver {
 
     /**
      * The Click configuration filename: &nbsp;
@@ -304,14 +304,14 @@ class ClickApp implements EntityResolver {
         }
     }
 
-    // -------------------------------------------------------- Package Methods
+    // -------------------------------------------------------- Public Methods
 
     /**
      * Return the application character encoding.
      *
      * @return the application character encoding
      */
-    String getCharset() {
+    public String getCharset() {
         return charset;
     }
 
@@ -320,7 +320,7 @@ class ClickApp implements EntityResolver {
      *
      * @return the application FileItemFactory
      */
-    FileItemFactory getFileItemFactory() {
+    public FileItemFactory getFileItemFactory() {
         return fileItemFactory;
     }
 
@@ -329,7 +329,7 @@ class ClickApp implements EntityResolver {
      *
      * @return a new format object
      */
-    Format getFormat() {
+    public Format getFormat() {
     	try {
     		return (Format) formatClass.newInstance();
         } catch (Exception e) {
@@ -342,7 +342,7 @@ class ClickApp implements EntityResolver {
      *
      * @return the application locale
      */
-    Locale getLocale() {
+    public Locale getLocale() {
         return locale;
     }
 
@@ -351,7 +351,7 @@ class ClickApp implements EntityResolver {
      *
      * @return the application logger.
      */
-    ClickLogger getLogger() {
+    public ClickLogger getLogger() {
         return logger;
     }
 
@@ -363,7 +363,7 @@ class ClickApp implements EntityResolver {
      * @return true if request parameters should be automatically bound to public
      * page fields
      */
-    boolean isPagesAutoBinding() {
+    public boolean isPagesAutoBinding() {
         return autobinding;
     }
 
@@ -372,7 +372,7 @@ class ClickApp implements EntityResolver {
      *
      * @return true if the application is in PRODUCTION mode
      */
-    boolean isProductionMode() {
+    public boolean isProductionMode() {
         return (mode == PRODUCTION);
     }
 
@@ -382,7 +382,7 @@ class ClickApp implements EntityResolver {
      *
      * @return the application mode String value
      */
-    String getModeValue() {
+    public String getModeValue() {
         return MODE_VALUES[mode];
     }
 
@@ -392,7 +392,7 @@ class ClickApp implements EntityResolver {
      * @param path the Page ".htm" path
      * @return true if JSP exists for the given ".htm" path
      */
-    boolean isJspPage(String path) {
+    public boolean isJspPage(String path) {
         String jspPath = StringUtils.replace(path, ".htm", ".jsp");
         return pageByPathMap.containsKey(jspPath);
     }
@@ -403,7 +403,7 @@ class ClickApp implements EntityResolver {
      * @param path the page path
      * @return the page class
      */
-    Class getPageClass(String path) {
+    public Class getPageClass(String path) {
 
         // If in production or profile mode.
         if (mode <= PROFILE) {
@@ -463,7 +463,7 @@ class ClickApp implements EntityResolver {
      * @param pageClass the page class
      * @return path the page path
      */
-    String getPagePath(Class pageClass) {
+    public String getPagePath(Class pageClass) {
         Object object = pageByClassMap.get(pageClass.getName());
 
         if (object instanceof ClickApp.PageElm) {
@@ -486,7 +486,7 @@ class ClickApp implements EntityResolver {
      * @param path the path of the page
      * @return a Map of headers for the given page path
      */
-    Map getPageHeaders(String path) {
+    public Map getPageHeaders(String path) {
         PageElm page = (PageElm) pageByPathMap.get(path);
         if (page == null) {
             String jspPath = StringUtils.replace(path, ".htm", ".jsp");
@@ -505,7 +505,7 @@ class ClickApp implements EntityResolver {
      *
      * @return the page not found <tt>Page</tt> <tt>Class</tt>
      */
-    Class getNotFoundPageClass() {
+    public Class getNotFoundPageClass() {
         PageElm page = (PageElm) pageByPathMap.get(NOT_FOUND_PATH);
 
         if (page != null) {
@@ -521,7 +521,7 @@ class ClickApp implements EntityResolver {
      *
      * @return the error handling page <tt>Page</tt> <tt>Class</tt>
      */
-    Class getErrorPageClass() {
+    public Class getErrorPageClass() {
         PageElm page = (PageElm) pageByPathMap.get(ERROR_PATH);
 
         if (page != null) {
@@ -539,7 +539,7 @@ class ClickApp implements EntityResolver {
      * @return the Velocity Template for the give page path
      * @throws Exception if Velocity error occurs
      */
-    Template getTemplate(String path) throws Exception {
+    public Template getTemplate(String path) throws Exception {
         return velocityEngine.getTemplate(path);
     }
 
@@ -551,7 +551,7 @@ class ClickApp implements EntityResolver {
      * @return the Velocity Template for the give page path
      * @throws Exception if Velocity error occurs
      */
-    Template getTemplate(String path, String charset) throws Exception {
+    public Template getTemplate(String path, String charset) throws Exception {
         return velocityEngine.getTemplate(path, charset);
     }
 
@@ -563,7 +563,7 @@ class ClickApp implements EntityResolver {
      * @param fieldName the name of the field
      * @return the public field of the pageClass with the given name or null
      */
-    Field getPageField(Class pageClass, String fieldName) {
+    public Field getPageField(Class pageClass, String fieldName) {
         return (Field) getPageFields(pageClass).get(fieldName);
     }
 
@@ -573,7 +573,7 @@ class ClickApp implements EntityResolver {
      * @param pageClass the page class
      * @return an array public fields for the given page class
      */
-    Field[] getPageFieldArray(Class pageClass) {
+    public Field[] getPageFieldArray(Class pageClass) {
     	Object object = pageByClassMap.get(getRawClassname(pageClass));
 
         if (object instanceof ClickApp.PageElm) {
@@ -596,7 +596,7 @@ class ClickApp implements EntityResolver {
      * @param pageClass the page class
      * @return a Map of public fields for the given page class
      */
-    Map getPageFields(Class pageClass) {
+    public Map getPageFields(Class pageClass) {
         Object object = pageByClassMap.get(getRawClassname(pageClass));
 
         if (object instanceof ClickApp.PageElm) {

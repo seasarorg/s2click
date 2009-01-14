@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -11,10 +12,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import net.arnx.jsonic.JSON;
+import net.sf.click.ClickApp;
 import net.sf.click.Page;
+import net.sf.click.S2ClickServlet;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.seasar.framework.util.tiger.ReflectionUtil;
+import org.seasar.s2click.annotation.Request;
 import org.seasar.s2click.control.AjaxLink;
+import org.seasar.s2click.util.S2ClickUtils;
 
 /**
  * 
@@ -23,8 +30,41 @@ import org.seasar.s2click.control.AjaxLink;
  */
 public class S2ClickPage extends Page {
 	
+	/**
+	 * テンプレートのレンダリングをスキップする際にリクエストの属性にセットするフラグのキーです。
+	 * <p>
+	 * <code>renderResponse()</code>メソッドによってページクラス内でレスポンスを書き出すと、
+	 * このキーでリクエストの属性にフラグがセットされます。
+	 * {@link S2ClickServlet}はリクエストの属性にこのキーでフラグがセットされている場合、
+	 * テンプレートのレンダリングをスキップします。
+	 */
 	public static final String SKIP_RENDERING = S2ClickPage.class.getName() + "_skipRendering";
 	
+	@Override
+	public void onInit() {
+		super.onInit();
+		validatePageFields();
+	}
+	
+	/**
+	 * {@link Request}アノテーションでリクエストパラメータをバインドしたフィールドのバリデーションを行います。
+	 */
+	protected void validatePageFields(){
+		ClickApp clickApp = S2ClickUtils.getClickApp();
+		
+		for(Field field: clickApp.getPageFieldArray(getClass())){
+			Request ann = field.getAnnotation(Request.class);
+			if(ann != null){
+				if(ann.required() == true){
+					Object value = ReflectionUtil.getValue(field, this);
+					if(value == null || (value instanceof String && StringUtils.isEmpty((String) value))){
+						throw new RuntimeException("パラメータが不正です。");
+					}
+				}
+			}
+		}
+	}
+
 	/**
 	 * レスポンスにJSONをレンダリングします。{@link AjaxLink}などと組み合わせて使用します。
 	 * 

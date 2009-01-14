@@ -21,7 +21,6 @@ import org.apache.velocity.VelocityContext;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.util.SmartDeployUtil;
-import org.seasar.framework.util.tiger.ReflectionUtil;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.annotation.Request;
 import org.seasar.s2click.filter.UrlPatternFilter;
@@ -68,6 +67,8 @@ public class S2ClickServlet extends ClickServlet {
 				return;
 			}
 		}
+		
+		req.setAttribute(ClickApp.class.getName(), clickApp);
 
 		super.service(new S2ClickRequestWrapper((HttpServletRequest) req), res);
 	}
@@ -135,17 +136,6 @@ public class S2ClickServlet extends ClickServlet {
                 }
             }
         }
-
-        // @Requestのrequired()パラメータのチェック
-		for(Field field: clickApp.getPageFieldArray(page.getClass())){
-			Request req = field.getAnnotation(Request.class);
-			if(req != null && req.required()){
-				Object value = ReflectionUtil.getValue(field, page);
-				if(value == null || (value instanceof String && StringUtils.isEmpty((String) value))){
-					throw new RuntimeException("パラメータが不正です。");
-				}
-			}
-		}
     }
 
 	/**
