@@ -15,6 +15,7 @@
  */
 package net.sf.click;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -29,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("unchecked")
 public class MockContext extends Context {
     
+	protected Map<Class, String> pagePathMap = new HashMap<Class, String>();
+	
     // ----------------------------------------------------------- Constructors
     
     private MockContext() {
@@ -77,6 +80,7 @@ public class MockContext extends Context {
     /**
      * @see Context#getLocale()
      */
+    @Override
     public Locale getLocale() {
         return request.getLocale();
     }
@@ -84,6 +88,7 @@ public class MockContext extends Context {
     /**
      * @see Context#getApplicationMode()
      */
+    @Override
     public String getApplicationMode() {
         return "debug";
     }
@@ -91,6 +96,7 @@ public class MockContext extends Context {
     /**
      * @see Context#getRequestParameter(String)
      */
+    @Override
     public String getRequestParameter(String name) {
         return request.getParameter(name);
     }    
@@ -98,6 +104,7 @@ public class MockContext extends Context {
     /**
      * @see Context#getRequestParameterMap()
      */
+    @Override
     public Map getRequestParameterMap() {
         return request.getParameterMap();
     }
@@ -105,7 +112,17 @@ public class MockContext extends Context {
     /**
      * @see Context#getRequestParameterValues(String)
      */
+    @Override
     public String[] getRequestParameterValues(String name) {
         return request.getParameterValues(name);
-    }    
+    }
+    
+    public void setPagePath(Class pageClass, String pagePath){
+    	pagePathMap.put(pageClass, pagePath);
+    }
+    
+    @Override
+    public String getPagePath(Class pageClass){
+    	return pagePathMap.get(pageClass);
+    }
 }

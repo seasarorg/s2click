@@ -15,6 +15,9 @@ public class AllTests {
 		suite.addTestSuite(CodePrettifyTest.class);
 		suite.addTestSuite(AjaxButtonTest.class);
 		suite.addTestSuite(AjaxLinkTest.class);
+		suite.addTestSuite(AjaxSubmitTest.class);
+		suite.addTestSuite(GreyboxButtonTest.class);
+		suite.addTestSuite(GreyboxLinkTest.class);
 		//$JUnit-END$
 		return suite;
 	}

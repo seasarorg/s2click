@@ -61,10 +61,10 @@ public class GreyboxButton extends Button {
 		super(name, label);
 	}
 
-	public GreyboxButton(String name, String label, String title, Class<? extends Page> pageClass) {
+	public GreyboxButton(String name, String label, String dialogTitle, Class<? extends Page> pageClass) {
 		super(name, label);
 		setPageClass(pageClass);
-		setTitle(title);
+		setDialogTitle(dialogTitle);
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class GreyboxButton extends Button {
 		// onClick属性を設定
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("GB_showCenter('").append(StringEscapeUtils.escapeJavaScript(getTitle()));
+		sb.append("GB_showCenter('").append(StringEscapeUtils.escapeJavaScript(getDialogTitle()));
 		sb.append("'").append(", '../..").append(pagePath).append("'");
 
 		if(getDialogHeight() > 0){

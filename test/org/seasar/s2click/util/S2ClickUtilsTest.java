@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.sf.click.ClickApp;
+import net.sf.click.Context;
 import net.sf.click.MockContext;
 import net.sf.click.control.Checkbox;
 import net.sf.click.control.Form;
@@ -25,6 +27,16 @@ public class S2ClickUtilsTest extends S2TestCase {
 	@Override
 	protected String getRootDicon() throws Throwable {
 		return "s2click.dicon";
+	}
+	
+	public void testClickApp(){
+		ClickApp clickApp = new ClickApp();
+		
+		MockContext.initContext();
+		Context context = Context.getThreadLocalContext();
+		context.setRequestAttribute(ClickApp.class.getName(), clickApp);
+		
+		assertSame(clickApp, S2ClickUtils.getClickApp());
 	}
 
 	public void testUrlEncode() {
