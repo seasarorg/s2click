@@ -240,6 +240,10 @@ public class MockRequest implements HttpServletRequest {
             return null;
         }
     }
+    
+    public void setParameter(String key, String value){
+    	parameters.put(key, value);
+    }
 
     public Enumeration getParameterNames() {
     	Hashtable map = new Hashtable(parameters);
