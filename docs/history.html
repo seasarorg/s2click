@@ -46,7 +46,7 @@
 <ul>
   <li><code>@Path</code>アノテーションを使ったページクラスがあるとproductionモード、profileモードで動作しないバグを修正しました。</li>
   <li><code>ClickApp</code>をpublicクラスに変更し、<code>S2ClickUtils#getClickApp()</code>で<code>ClickApp</code>を取得できるようにしました。</li>
-  <li><code>@Request</code>の<code>required</code>属性がtrueだった場合のチェックを<code>S2ClickServlet</code>ではなく<code>S2ClickPage#onInit()</code>で行うようにしました。</li>
+  <li><code>@Request</code>によるリクエストパラメータのバインド処理を<code>S2ClickServlet</code>ではなく<code>S2ClickPage#onInit()</code>で行うようにしました。</li>
 </ul>
 
 <h2>Version 0.4.1 - 2009/01/12</h2>
