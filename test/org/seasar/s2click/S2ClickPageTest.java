@@ -6,11 +6,13 @@ import java.util.Map;
 
 import org.seasar.framework.util.tiger.ReflectionUtil;
 import org.seasar.s2click.annotation.Request;
+import org.seasar.s2click.exception.RequestRequiredException;
 
 import junit.framework.TestCase;
 import net.sf.click.ClickApp;
 import net.sf.click.Context;
 import net.sf.click.MockContext;
+import net.sf.click.MockRequest;
 import net.sf.click.MockResponse;
 import net.sf.click.MockResponse.ServletOutputStreamImpl;
 
@@ -52,41 +54,33 @@ public class S2ClickPageTest extends TestCase {
 		assertEquals("<html>あああ</html>", value);
 	}
 	
-	public void testValidatePageFields_単一エラー(){
+	public void testValidatePageFields_エラー(){
 		MockContext.initContext();
 		Context.getThreadLocalContext().setRequestAttribute(
 				ClickApp.class.getName(), new TestClickApp());
+		MockRequest request = (MockRequest) Context.getThreadLocalContext().getRequest();
+		request.setParameter("password", "password");
 		
 		TestPage page = new TestPage();
-		page.password = "password";
-		String result = page.validatePageFields();
 		
-		assertEquals("必須パラメータ userName が指定されていません。\n", result);
-	}
-	
-	public void testValidatePageFields_複数エラー(){
-		MockContext.initContext();
-		Context.getThreadLocalContext().setRequestAttribute(
-				ClickApp.class.getName(), new TestClickApp());
-		
-		TestPage page = new TestPage();
-		String result = page.validatePageFields();
-		
-		assertEquals("必須パラメータ userName が指定されていません。\n" + 
-				"必須パラメータ password が指定されていません。\n", result);
+		try {
+			page.bindPageFields();
+			fail();
+		} catch(RequestRequiredException ex){
+			assertEquals("必須パラメータ userName が指定されていません。", ex.getMessage());
+		}
 	}
 	
 	public void testValidatePageFields_エラーなし(){
 		MockContext.initContext();
-		Context.getThreadLocalContext().setRequestAttribute(
-				ClickApp.class.getName(), new TestClickApp());
+		MockRequest request = (MockRequest) Context.getThreadLocalContext().getRequest();
+		request.setParameter("userName", "たけぞう");
+		request.setParameter("password", "password");
+		request.setAttribute(ClickApp.class.getName(), new TestClickApp());
 		
 		TestPage page = new TestPage();
-		page.userName = "たけぞう";
-		page.password = "password";
-		String result = page.validatePageFields();
 		
-		assertNull(result);
+		page.bindPageFields();
 	}
 	
 	public static class TestClickApp extends ClickApp {
@@ -98,6 +92,16 @@ public class S2ClickPageTest extends TestCase {
 				ReflectionUtil.getField(TestPage.class, "userName"),
 				ReflectionUtil.getField(TestPage.class, "password")
 			};
+		}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public Map getPageFields(Class pageClass) {
+			Map<String, Field> fields = new HashMap<String, Field>();
+			for(Field field: getPageFieldArray(pageClass)){
+				fields.put(field.getName(), field);
+			}
+			return fields;
 		}
 	}
 	
