@@ -10,6 +10,7 @@ public class AllTests {
 		//$JUnit-BEGIN$
 		suite.addTestSuite(AjaxUtilsTest.class);
 		suite.addTestSuite(S2ClickFormatTest.class);
+		suite.addTestSuite(S2ClickPageImportsTest.class);
 		suite.addTestSuite(S2ClickUtilsTest.class);
 		//$JUnit-END$
 		return suite;
