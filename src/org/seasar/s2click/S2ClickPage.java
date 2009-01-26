@@ -194,11 +194,24 @@ public class S2ClickPage extends Page {
 	
 	/**
 	 * レスポンスにファイルをレンダリングします。ファイルダウンロード時に使用します。
+	 * コンテンツタイプには<code>application/octet-stream</code>が用いられます。
 	 * 
 	 * @param fileName ファイル名
 	 * @param file ファイルの内容
 	 */
 	protected void renderFile(String fileName, InputStream file){
+		renderFile(null, fileName, file);
+	}
+	
+	
+	/**
+	 * レスポンスにファイルをレンダリングします。ファイルダウンロード時に使用します。
+	 * 
+	 * @param contentType コンテンツタイプ（nullの場合は<code>application/octet-stream</code>が用いられます）
+	 * @param fileName ファイル名
+	 * @param file ファイルの内容
+	 */
+	protected void renderFile(String contentType, String fileName, InputStream file){
 		try {
 			String contentDisposition = "attachment";
 			String userAgent = getContext().getRequest().getHeader("USER-AGENT");
@@ -212,7 +225,11 @@ public class S2ClickPage extends Page {
 			
 			getContext().getResponse().setHeader("Content-Disposition", contentDisposition);
 			
-			renderResponse("application/octet-stream", file);
+			if(contentType == null){
+				renderResponse("application/octet-stream", file);
+			} else {
+				renderResponse(contentType, file);
+			}
 			
 		} catch(UnsupportedEncodingException ex){
 			// あり得ない
