@@ -11,6 +11,16 @@
   </servlet>
   
   <servlet>
+  	<servlet-name>ResourceServlet</servlet-name>
+  	<servlet-class>org.seasar.s2click.servlet.ResourceServlet</servlet-class>
+    <init-param>
+      <param-name>rootPackage</param-name>
+      <param-value>org.seasar.s2click.example.resource</param-value>
+    </init-param>
+  	<load-on-startup>3</load-on-startup>
+  </servlet>
+  
+  <servlet>
     <servlet-name>s2servlet</servlet-name>
     <servlet-class>org.seasar.framework.container.servlet.S2ContainerServlet</servlet-class>
     <!--
@@ -35,6 +45,11 @@
   <servlet-mapping>
   	<servlet-name>ClickServlet</servlet-name>
   	<url-pattern>*.htm</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ResourceServlet</servlet-name>
+  	<url-pattern>/resources/*</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
