@@ -5,9 +5,9 @@ URLのパスをリクエストパラメータにマッピングすることが�
 </p>
 <ul>
   <li><strong>URLから取得したパラメータ：</strong> $format.html($userId)</li>
-  <li><strong>リクエストURI（変換前）：</strong> $format.html($request.getAttribute('org.seasar.s2click.filter.UrlPatternFilter.requestUri'))</li>
+  <li><strong>リクエストURI（変換前）：</strong> $format.html($request.getAttribute('javax.servlet.forward.request_uri'))</li>
   <li><strong>リクエストURI（変換後）：</strong> $format.html($request.getRequestURI())</li>
-  <li><strong>クエリ文字列（変換前）：</strong> $format.html($request.getAttribute('org.seasar.s2click.filter.UrlPatternFilter.queryString'))</li>
+  <li><strong>クエリ文字列（変換前）：</strong> $format.html($request.getAttribute('javax.servlet.forward.query_string'))</li>
   <li><strong>クエリ文字列（変換後）：</strong> $format.html($request.getQueryString())</li>
 </ul>
 

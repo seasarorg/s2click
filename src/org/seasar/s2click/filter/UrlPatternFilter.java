@@ -36,16 +36,6 @@ public class UrlPatternFilter implements Filter {
 	 */
 	public static final String HOTDEPLOY_INIT_KEY = UrlPatternFilter.class.getName();
 	
-	/**
-	 * URLパターンでURLリライティングを行った場合に元のrequestUriをリクエスト属性に格納するキー。
-	 */
-	public static final String RAW_REQUEST_URI = UrlPatternFilter.class.getName() + ".requestUri";
-	
-	/**
-	 * URLパターンでURLリライティングを行った場合に元のqueryStringをリクエスト属性に格納するキー。
-	 */
-	public static final String RAW_QUERY_STRING = UrlPatternFilter.class.getName() + ".queryString";
-	
 	private static final String INIT_PARAM_EXCLUDES = "excludes";
 	
 	/**
@@ -121,10 +111,6 @@ public class UrlPatternFilter implements Filter {
 				if(logger.isDebugEnabled()){
 					logger.debug(realPath.toString() + "にフォワードします。");
 				}
-				
-				// 元のリクエストURIとクエリ文字列を保存しておく
-				request.setAttribute(RAW_REQUEST_URI, requestUri);
-				request.setAttribute(RAW_QUERY_STRING, queryString);
 				
 				RequestDispatcher dispatcher = request.getRequestDispatcher(realPath.toString());
 				dispatcher.forward(request, response);
