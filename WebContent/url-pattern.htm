@@ -2,9 +2,27 @@
 <p>
 また、<code>@UrlPattern("/user/select/{userId}")</code>などと{パラメータ名}という記述することで、
 URLのパスをリクエストパラメータにマッピングすることができます。
-<p>
-<strong>URLから取得したパラメータ：</strong> $format.html($userId)
+</p>
+<ul>
+  <li><strong>URLから取得したパラメータ：</strong> $format.html($userId)</li>
+  <li><strong>リクエストURI（変換前）：</strong> $format.html($request.getAttribute('org.seasar.s2click.filter.UrlPatternFilter.requestUri'))</li>
+  <li><strong>リクエストURI（変換後）：</strong> $format.html($request.getRequestURI())</li>
+  <li><strong>クエリ文字列（変換前）：</strong> $format.html($request.getAttribute('org.seasar.s2click.filter.UrlPatternFilter.queryString'))</li>
+  <li><strong>クエリ文字列（変換後）：</strong> $format.html($request.getQueryString())</li>
+</ul>
+
 <form name="form">
   <input type="text" name="userId">
-  <input type="button" value="送信" onclick="location.href='$context/user/select/' + document.form.userId.value;">
+  <input type="button" value="送信" onclick="send()">
 </form>
+
+<script type="text/javascript">
+function send(){
+	var value = document.form.userId.value;
+	if(value == ''){
+		alert('テキストフィールドに値を入力してください。');
+	} else {
+		location.href='$context/user/select/' + value;
+	}
+}
+</script>

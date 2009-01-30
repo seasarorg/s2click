@@ -24,7 +24,7 @@ public class JsonPage extends LayoutPage {
 	public JsonPage(){
 		form.search.setListener(this, "onSearch");
 		form.searchAll.setListener(this, "onSearchAll");
-		//addControl(form.searchAll);
+		addControl(form.searchAll);
 
 		button.setElementId("target");
 		button.addAjaxHandler(AjaxUtils.ON_CREATE, "startProgress");

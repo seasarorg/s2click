@@ -28,8 +28,8 @@ public class ToolTip extends AbstractControl {
     
 	/** HTMLのhead要素内に出力するインポートステートメント */
     public static final String HTML_IMPORTS =
-        "<script type=\"text/javascript\" src=\"{0}/click/overlib/overlib.js\"></script>\n"
-        + "<script type=\"text/javascript\" src=\"{0}/click/overlib/overlib_hideform.js\"></script>\n";
+        "<script type=\"text/javascript\" src=\"{0}/resources/overlib/overlib.js\"></script>\n"
+        + "<script type=\"text/javascript\" src=\"{0}/resources/overlib/overlib_hideform.js\"></script>\n";
     
 	private String contents;
 	private int width = 300;
@@ -78,9 +78,9 @@ public class ToolTip extends AbstractControl {
 	 * @see net.sf.click.Control#onDeploy(javax.servlet.ServletContext)
 	 */
     public void onDeploy(ServletContext servletContext) {
-        ClickUtils.deployFiles(servletContext,
-                               OVERLIB_RESOURCES,
-                               "click/overlib");
+//        ClickUtils.deployFiles(servletContext,
+//                               OVERLIB_RESOURCES,
+//                               "click/overlib");
     }
 	
     /*

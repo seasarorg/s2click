@@ -2,6 +2,7 @@ package org.seasar.s2click.filter;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -38,12 +39,19 @@ public class UrlPatternFilter implements Filter {
 	/**
 	 * URLパターンでURLリライティングを行った場合に元のrequestUriをリクエスト属性に格納するキー。
 	 */
-	public static final String ROW_REQUEST_URI = UrlPatternFilter.class.getName() + ".requestUri";
+	public static final String RAW_REQUEST_URI = UrlPatternFilter.class.getName() + ".requestUri";
 	
 	/**
 	 * URLパターンでURLリライティングを行った場合に元のqueryStringをリクエスト属性に格納するキー。
 	 */
-	public static final String ROW_QUERY_STRING = UrlPatternFilter.class.getName() + ".queryString";
+	public static final String RAW_QUERY_STRING = UrlPatternFilter.class.getName() + ".queryString";
+	
+	private static final String INIT_PARAM_EXCLUDES = "excludes";
+	
+	/**
+	 * 処理対象外のリクエストパスにマッチする正規表現パターン。
+	 */
+	private Pattern excludePattern = null;
 	
 	private static Logger logger = Logger.getLogger(UrlPatternFilter.class);
 	
@@ -53,9 +61,33 @@ public class UrlPatternFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		
+		HttpServletRequest req = HttpServletRequest.class.cast(request);
+		
+		String requestUri = req.getRequestURI();
+		String context = req.getContextPath();
+		String queryString = req.getQueryString();
+		
+		String requestPath = requestUri.substring(context.length());
+		if(StringUtils.isNotEmpty(queryString)){
+			requestPath = requestPath + "?" + queryString;
+		}
 		if(logger.isDebugEnabled()){
 			logger.debug("UrlRewriteFilterを開始します。");
+			logger.debug("リクエストパス：" + requestPath);
 		}
+		
+		// 除外パターンに一致した場合は処理しない
+		if(excludePattern != null){
+			Matcher matcher = excludePattern.matcher(requestPath);
+			if(matcher.matches()){
+				if(logger.isDebugEnabled()){
+					logger.debug("除外パスに一致したためUrlRewriteFilterの処理をスキップします。");
+				}
+				chain.doFilter(request, response);
+				return;
+			}
+		}
+		
 		
 		// HOT deployの場合はここでClickAppを初期化する
 		S2Container container = SingletonS2ContainerFactory.getContainer();
@@ -68,17 +100,6 @@ public class UrlPatternFilter implements Filter {
 			request.setAttribute(HOTDEPLOY_INIT_KEY, "initialize");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/init.htm");
 			dispatcher.include(request, response);
-		}
-		
-		HttpServletRequest req = HttpServletRequest.class.cast(request);
-		
-		String requestUri = req.getRequestURI();
-		String context = req.getContextPath();
-		String queryString = req.getQueryString();
-		
-		String requestPath = requestUri.substring(context.length());
-		if(StringUtils.isNotEmpty(queryString)){
-			requestPath = requestPath + "?" + queryString;
 		}
 		
 		for(UrlRewriteInfo info: UrlPatternManager.getAll()){
@@ -102,8 +123,8 @@ public class UrlPatternFilter implements Filter {
 				}
 				
 				// 元のリクエストURIとクエリ文字列を保存しておく
-				request.setAttribute(ROW_REQUEST_URI, requestUri);
-				request.setAttribute(ROW_QUERY_STRING, queryString);
+				request.setAttribute(RAW_REQUEST_URI, requestUri);
+				request.setAttribute(RAW_QUERY_STRING, queryString);
 				
 				RequestDispatcher dispatcher = request.getRequestDispatcher(realPath.toString());
 				dispatcher.forward(request, response);
@@ -115,6 +136,10 @@ public class UrlPatternFilter implements Filter {
 	}
 
 	public void init(FilterConfig config) throws ServletException {
+		String exclude = config.getInitParameter(INIT_PARAM_EXCLUDES);
+		if(StringUtils.isNotEmpty(exclude)){
+			excludePattern = Pattern.compile(exclude);
+		}
 	}
 
 }

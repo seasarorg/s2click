@@ -4,11 +4,10 @@ import java.text.MessageFormat;
 
 import javax.servlet.ServletContext;
 
-import org.apache.commons.lang.StringEscapeUtils;
-
 import net.sf.click.Page;
 import net.sf.click.control.Button;
-import net.sf.click.util.ClickUtils;
+
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * <a href="http://orangoo.com/labs/GreyBox/">GreyBox</a>を使用して指定したページを
@@ -23,10 +22,10 @@ public class GreyboxButton extends Button {
 
 	public static final String HTML_IMPORTS =
 //		"<script type=\"text/javascript\">var GB_ROOT_DIR = \"{0}/js/greybox/\";</script>\n" +
-		"<script type=\"text/javascript\" src=\"{0}/click/greybox/AJS.js\"></script>\n" +
-		"<script type=\"text/javascript\" src=\"{0}/click/greybox/AJS_fx.js\"></script>\n" +
-		"<script type=\"text/javascript\" src=\"{0}/click/greybox/gb_scripts.js\"></script>\n" +
-		"<link href=\"{0}/click/greybox/gb_styles.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />\n" +
+		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/AJS.js\"></script>\n" +
+		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/AJS_fx.js\"></script>\n" +
+		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/gb_scripts.js\"></script>\n" +
+		"<link href=\"{0}/resources/greybox/gb_styles.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />\n" +
 		"<script type=\"text/javascript\">function S2Click_GB_SetResult(data, id)'{ AJS.$(id).value = data; }'</script>\n";
 
 	protected String dialogTitle = "";
@@ -72,9 +71,9 @@ public class GreyboxButton extends Button {
 	 */
 	@Override
     public void onDeploy(ServletContext servletContext) {
-        ClickUtils.deployFiles(servletContext,
-                               GREYBOX_RESOURCES,
-                               "click/greybox");
+//        ClickUtils.deployFiles(servletContext,
+//                               GREYBOX_RESOURCES,
+//                               "click/greybox");
     }
 
 	/**

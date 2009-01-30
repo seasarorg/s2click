@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import net.arnx.jsonic.JSON;
 import net.sf.click.control.Field;
 import net.sf.click.control.HiddenField;
@@ -124,28 +127,6 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 
 	public void addNoJavaScriptValidateAction(String action){
 		noJavaScriptValidateActions.add(action);
-	}
-
-	/**
-	 * Initializes this form.
-	 * <p>
-	 * This method is called from {@link #onProcess()}.
-	 */
-	protected void init(){
-		if(requiresJavaScript()){
-			add(new HiddenField("action", ""));
-		}
-		if(isFieldAutoRegistration()){
-	    	for(java.lang.reflect.Field field: getClass().getFields()){
-	       		if(Field.class.isAssignableFrom(field.getType())){
-	       			try {
-	       				add((Field) field.get(this));
-	       			} catch(IllegalAccessException ex){
-	       				ex.printStackTrace();
-	       			}
-	    		}
-	    	}
-		}
 	}
 
 	/**
@@ -301,7 +282,22 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 
 	@Override
 	public void onInit() {
-		init();
+		if(requiresJavaScript()){
+			add(new HiddenField("action", ""));
+		}
+		
+		if(isFieldAutoRegistration()){
+	    	for(java.lang.reflect.Field field: getClass().getFields()){
+	       		if(Field.class.isAssignableFrom(field.getType())){
+	       			try {
+	       				add((Field) field.get(this));
+	       			} catch(IllegalAccessException ex){
+	       				ex.printStackTrace();
+	       			}
+	    		}
+	    	}
+		}
+		
 		super.onInit();
 	}
 
@@ -364,6 +360,21 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
               buffer.append("\n");
           }
       }
-	}
+    }
+    
+    @Override
+    public String getActionURL() {
+        HttpServletRequest request = getContext().getRequest();
+        HttpServletResponse response = getContext().getResponse();
+        
+        String requestURI = request.getRequestURI();
+        
+        // JSPの場合
+        if(requestURI.endsWith(".jsp")){
+        	requestURI = requestURI.replaceFirst("\\.jsp$", ".htm");
+        }
+        
+        return response.encodeURL(requestURI);
+    }
 
 }

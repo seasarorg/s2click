@@ -1,0 +1,44 @@
+body {
+  margin: 0px;
+}
+
+table.contents {
+  width: 100%;
+  height: 100%;
+}
+
+td.app-title {
+  font-size: 200%;
+  font-weight: bold;
+  background-color: navy;
+  color: white;
+  margin: 0px;
+  height: 1px;
+  padding: 4px;
+}
+
+td.page-title {
+  font-weight: bold;
+  background-color: navy;
+  color: white;
+  margin: 0px;
+  height: 1px;
+  padding: 4px;
+  text-align: right;
+}
+
+td.menu {
+  width: 200px;
+  padding-top: 20px;
+  font-size: 80%;
+  background-image:url(images/sidemenu.png);
+  background-repeat: repeat-y;
+}
+
+p {
+  text-indent: 10px;
+}
+
+div.menu {
+  text-align: right;
+}

@@ -15,7 +15,7 @@
   	<servlet-class>org.seasar.s2click.servlet.ResourceServlet</servlet-class>
     <init-param>
       <param-name>rootPackage</param-name>
-      <param-value>org.seasar.s2click.example.resource</param-value>
+      <param-value>org.seasar.s2click.resource</param-value>
     </init-param>
   	<load-on-startup>3</load-on-startup>
   </servlet>
@@ -83,6 +83,10 @@
   <filter>
     <filter-name>UrlPatternFilter</filter-name>
     <filter-class>org.seasar.s2click.filter.UrlPatternFilter</filter-class>
+    <init-param>
+      <param-name>excludes</param-name>
+      <param-value>.*\.(css|js|gif|jpg|png|html)$</param-value>
+    </init-param>
   </filter>
   
   <filter-mapping>

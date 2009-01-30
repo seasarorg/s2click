@@ -61,7 +61,7 @@ public class S2ClickFormTest extends S2ClickTestCase {
 			public Submit submit = new Submit("submit");
 		};
 
-		form.init();
+		form.onInit();
 
 		List<?> fields = form.getFieldList();
 		assertEquals(3, fields.size());
@@ -89,7 +89,7 @@ public class S2ClickFormTest extends S2ClickTestCase {
 			public TextField text2 = new TextField("text2");
 			public Submit submit = new Submit("submit");
 		};
-		form.init();
+		form.onInit();
 		List<?> fields = form.getFieldList();
 		assertEquals(1, fields.size());
 		assertEquals(S2ClickForm.FORM_NAME, ((HiddenField) fields.get(0)).getName());
@@ -110,7 +110,7 @@ public class S2ClickFormTest extends S2ClickTestCase {
 			public TextField text2 = new TextField("text2");
 			public Submit submit = new Submit("submit");
 		};
-		form.init();
+		form.onInit();
 		List<?> fields = form.getFieldList();
 		assertEquals(4, fields.size());
 		assertEquals(S2ClickForm.FORM_NAME, ((HiddenField) fields.get(0)).getName());
@@ -133,7 +133,7 @@ public class S2ClickFormTest extends S2ClickTestCase {
 			}
 			public Submit submit = new Submit("submit");
 		};
-		form.init();
+		form.onInit();
 
 		List<?> buttons = form.getButtonList();
 		assertEquals(1, buttons.size());
@@ -152,7 +152,7 @@ public class S2ClickFormTest extends S2ClickTestCase {
 			}
 			public Submit submit = new Submit("submit");
 		};
-		form.init();
+		form.onInit();
 
 		List<?> buttons = form.getButtonList();
 		assertEquals(1, buttons.size());
@@ -173,7 +173,7 @@ public class S2ClickFormTest extends S2ClickTestCase {
 //				setJavaScriptValidation(false);
 //			}
 //		};
-//		form.init();
+//		form.onInit();
 //
 //		System.out.println(form.startTag());
 //
@@ -190,7 +190,7 @@ public class S2ClickFormTest extends S2ClickTestCase {
 			public TextField name = new TextField("name");
 		};
 
-		form.init();
+		form.onInit();
 		TextField name = (TextField) form.getField("name");
 		name.setValue("Naoki Takezoe");
 
@@ -210,7 +210,7 @@ public class S2ClickFormTest extends S2ClickTestCase {
 			public TextField name = new TextField("name");
 		};
 
-		form.init();
+		form.onInit();
 
 		SampleBean bean = new SampleBean();
 		bean.name = "Naoki Takezoe";

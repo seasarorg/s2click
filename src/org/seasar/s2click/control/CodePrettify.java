@@ -28,8 +28,8 @@ public class CodePrettify extends AbstractControl {
     };
 	
 	public static final String HTML_IMPORTS = 
-		"<script type=\"text/javascript\" src=\"{0}/click/prettify/prettify.js\"></script>\n" +
-	    "<link href=\"{0}/click/prettify/prettify.css\" rel=\"stylesheet\" type=\"text/css\"/>\n";
+		"<script type=\"text/javascript\" src=\"{0}/resources/prettify/prettify.js\"></script>\n" +
+	    "<link href=\"{0}/resources/prettify/prettify.css\" rel=\"stylesheet\" type=\"text/css\"/>\n";
 	
 	public static final String LANG_C = "c";
 	public static final String LANG_CC = "cc";
@@ -96,8 +96,8 @@ public class CodePrettify extends AbstractControl {
 	}
 
 	public void onDeploy(ServletContext servletContext) {
-        ClickUtils.deployFiles(servletContext,
-        		PRETTIFY_RESOURCES, "click/prettify");
+//        ClickUtils.deployFiles(servletContext,
+//        		PRETTIFY_RESOURCES, "click/prettify");
 	}
 
 	public void onDestroy() {
