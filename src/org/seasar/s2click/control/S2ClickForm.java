@@ -17,6 +17,7 @@ import net.sf.click.control.Submit;
 import net.sf.click.util.ClickUtils;
 import net.sf.click.util.HtmlStringBuffer;
 
+import org.apache.commons.lang.StringUtils;
 import org.seasar.s2click.util.S2ClickUtils;
 
 /**
@@ -371,7 +372,15 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
         
         // JSPの場合
         if(requestURI.endsWith(".jsp")){
-        	requestURI = requestURI.replaceFirst("\\.jsp$", ".htm");
+        	// TODO c:importしている場合はこれだけじゃダメかも…
+        	String forwardURI = (String) request.getAttribute("javax.servlet.forward.request_uri");
+        	
+        	if(StringUtils.isNotEmpty(forwardURI)){
+        		requestURI = forwardURI;
+        		
+        	} else {
+        		requestURI = requestURI.replaceFirst("\\.jsp$", ".htm");
+        	}
         }
         
         return response.encodeURL(requestURI);

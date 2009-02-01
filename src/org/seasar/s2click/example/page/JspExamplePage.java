@@ -1,6 +1,5 @@
 package org.seasar.s2click.example.page;
 
-import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.example.form.AddForm;
 
 /**
@@ -8,7 +7,9 @@ import org.seasar.s2click.example.form.AddForm;
  * 
  * @author Naoki Takezoe
  */
-public class JspExamplePage extends S2ClickPage {
+public class JspExamplePage extends JspLayoutPage {
+	
+	public String title = "JSPのサンプル";
 	
 	public AddForm form = new AddForm("form");
 	

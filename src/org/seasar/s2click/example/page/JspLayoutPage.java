@@ -3,24 +3,25 @@ package org.seasar.s2click.example.page;
 import org.seasar.s2click.S2ClickPage;
 
 /**
- * 共通レイアウトを実現するページクラスの抽象基底クラスです。
+ * JSP用の共通レイアウトページです。
  * 
  * @author Naoki Takezoe
  */
-public abstract class LayoutPage extends S2ClickPage {
+public class JspLayoutPage extends S2ClickPage {
 	
-	public LayoutPage(){
+	public JspLayoutPage(){
 		String className = getClass().getName();
 		String sourcePath = className.replaceAll("\\.", "/") + ".java";
 		addModel("sourcePath", "/WEB-INF/classes/" + sourcePath);
 	}
 	
 	/**
-	 * 共通テンプレート <tt>/layout.htm</tt> を返します。
+	 * 共通テンプレート <tt>/layout.jsp</tt> を返します。
 	 */
 	@Override
 	public String getTemplate() {
-        return "/layout.htm";
+        return "/layout.jsp";
     }
+
 	
 }
