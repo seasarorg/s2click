@@ -42,8 +42,6 @@ public class S2ClickServlet extends ClickServlet {
 
 	/**
 	 * HOT deployの場合、リクエスト毎にClick Frameworkの初期化を行います。
-	 * <p>
-	 * TODO ページ数が多くなると遅くなるか…？
 	 */
 	@Override
 	public void service(ServletRequest req, ServletResponse res)
