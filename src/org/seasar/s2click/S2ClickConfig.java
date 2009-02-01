@@ -79,7 +79,7 @@ public class S2ClickConfig {
 	public FileItemFactory fileItemFactory = new DiskFileItemFactory();
 
 	public S2ClickConfig(){
-		controlSets.add("org/seasar/s2click/s2click-controls.xml");
+//		controlSets.add("org/seasar/s2click/s2click-controls.xml");
 //		controls.add(ToolTip.class);
 //		controls.add(CodePrettify.class);
 	}
