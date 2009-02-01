@@ -14,8 +14,6 @@ import org.apache.commons.lang.StringEscapeUtils;
  */
 public class FCKEditor extends Field {
 
-//	private Logger logger = Logger.getLogger(FCKEditor.class);
-	
 	private static final long serialVersionUID = 1L;
 	
 	protected int width = 800;
@@ -25,7 +23,7 @@ public class FCKEditor extends Field {
 	protected boolean required;
 	
 	public static final String HTML_IMPORTS = 
-		"<script type=\"text/javascript\" src=\"{0}/resources/fckeditor/fckeditor.js\"></script>\n";
+		"<script type=\"text/javascript\" src=\"{0}/r/fckeditor/fckeditor.js\"></script>\n";
 	
 	public FCKEditor() {
 		super();
@@ -61,28 +59,6 @@ public class FCKEditor extends Field {
 		super(name);
 	}
     
-//    public void onDeploy(ServletContext servletContext) {
-//    	try {
-//			File dir = new File(servletContext.getRealPath("click"));
-//			if(new File(dir, "fckeditor").exists()){
-//				return;
-//			}
-//			
-//			InputStream in = ClickUtils.getResourceAsStream(
-//					"org/seasar/s2click/control/FCKeditor_2.6.3.zip", 
-//					FCKEditor.class);
-//			
-//			if(!dir.exists()){
-//				dir.mkdir();
-//			}
-//			
-//			ZipUtil.unzip(dir, in);
-//			
-//    	} catch(IOException ex){
-//    		logger.warn("FCKEditorのデプロイ時に例外が発生しました。", ex);
-//    	}
-//	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
