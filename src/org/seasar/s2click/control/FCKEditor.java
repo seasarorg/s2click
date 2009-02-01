@@ -1,18 +1,11 @@
 package org.seasar.s2click.control;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.MessageFormat;
-
-import javax.servlet.ServletContext;
 
 import net.sf.click.control.Field;
 import net.sf.click.util.ClickUtils;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.log4j.Logger;
-import org.seasar.s2click.util.ZipUtil;
 
 /**
  * <a href="http://www.fckeditor.net/">FCKeditor</a>を使用してHTMLをWYSIWYG編集するためのコントロールです。
@@ -21,7 +14,7 @@ import org.seasar.s2click.util.ZipUtil;
  */
 public class FCKEditor extends Field {
 
-	private Logger logger = Logger.getLogger(FCKEditor.class);
+//	private Logger logger = Logger.getLogger(FCKEditor.class);
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -32,7 +25,7 @@ public class FCKEditor extends Field {
 	protected boolean required;
 	
 	public static final String HTML_IMPORTS = 
-		"<script type=\"text/javascript\" src=\"{0}/click/fckeditor/fckeditor.js\"></script>\n";
+		"<script type=\"text/javascript\" src=\"{0}/resources/fckeditor/fckeditor.js\"></script>\n";
 	
 	public FCKEditor() {
 		super();
@@ -68,27 +61,27 @@ public class FCKEditor extends Field {
 		super(name);
 	}
     
-    public void onDeploy(ServletContext servletContext) {
-    	try {
-			File dir = new File(servletContext.getRealPath("click"));
-			if(new File(dir, "fckeditor").exists()){
-				return;
-			}
-			
-			InputStream in = ClickUtils.getResourceAsStream(
-					"org/seasar/s2click/control/FCKeditor_2.6.3.zip", 
-					FCKEditor.class);
-			
-			if(!dir.exists()){
-				dir.mkdir();
-			}
-			
-			ZipUtil.unzip(dir, in);
-			
-    	} catch(IOException ex){
-    		logger.warn("FCKEditorのデプロイ時に例外が発生しました。", ex);
-    	}
-	}
+//    public void onDeploy(ServletContext servletContext) {
+//    	try {
+//			File dir = new File(servletContext.getRealPath("click"));
+//			if(new File(dir, "fckeditor").exists()){
+//				return;
+//			}
+//			
+//			InputStream in = ClickUtils.getResourceAsStream(
+//					"org/seasar/s2click/control/FCKeditor_2.6.3.zip", 
+//					FCKEditor.class);
+//			
+//			if(!dir.exists()){
+//				dir.mkdir();
+//			}
+//			
+//			ZipUtil.unzip(dir, in);
+//			
+//    	} catch(IOException ex){
+//    		logger.warn("FCKEditorのデプロイ時に例外が発生しました。", ex);
+//    	}
+//	}
 	
 	/**
 	 * {@inheritDoc}
