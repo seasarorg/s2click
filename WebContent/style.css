@@ -8,13 +8,22 @@ table.contents {
 }
 
 td.app-title {
-  font-size: 200%;
-  font-weight: bold;
-  background-color: navy;
-  color: white;
   margin: 0px;
   height: 1px;
   padding: 4px;
+  background-image: url('images/title-back.png');
+  background-position: right;
+  background-repeat: repeat-y;
+}
+
+span.title {
+  color: #000080;
+  font-weight: bold;
+  font-size: 20pt;
+  letter-spacing: 0.2em;
+  position: absolute;
+  top: 8px;
+  left: 60px;
 }
 
 td.page-title {
