@@ -17,7 +17,7 @@ public class AjaxButtonTest extends TestCase {
 		MockContext.initContext(request);
 		AjaxButton button = new AjaxButton();
 		
-		assertEquals("<script type=\"text/javascript\" src=\"/sample/js/prototype.js\"></script>\n",
+		assertEquals("<script type=\"text/javascript\" src=\"/sample/resources/prototype.js\"></script>\n",
 				button.getHtmlImports());
 	}
 

@@ -16,10 +16,10 @@ public class GreyboxButtonTest extends TestCase {
 		MockContext.initContext(request);
 		GreyboxButton button = new GreyboxButton();
 		
-		assertEquals("<script type=\"text/javascript\" src=\"/sample/click/greybox/AJS.js\"></script>\n" + 
-				"<script type=\"text/javascript\" src=\"/sample/click/greybox/AJS_fx.js\"></script>\n" + 
-				"<script type=\"text/javascript\" src=\"/sample/click/greybox/gb_scripts.js\"></script>\n" + 
-				"<link href=\"/sample/click/greybox/gb_styles.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />\n" + 
+		assertEquals("<script type=\"text/javascript\" src=\"/sample/resources/greybox/AJS.js\"></script>\n" + 
+				"<script type=\"text/javascript\" src=\"/sample/resources/greybox/AJS_fx.js\"></script>\n" + 
+				"<script type=\"text/javascript\" src=\"/sample/resources/greybox/gb_scripts.js\"></script>\n" + 
+				"<link href=\"/sample/resources/greybox/gb_styles.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />\n" + 
 				"<script type=\"text/javascript\">function S2Click_GB_SetResult(data, id){ AJS.$(id).value = data; }</script>\n",
 				button.getHtmlImports());
 	}

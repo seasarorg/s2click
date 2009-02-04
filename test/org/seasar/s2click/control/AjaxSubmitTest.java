@@ -17,7 +17,7 @@ public class AjaxSubmitTest extends TestCase {
 		MockContext.initContext(request);
 		
 		AjaxSubmit submit = new AjaxSubmit();
-		assertEquals("<script type=\"text/javascript\" src=\"/sample/js/prototype.js\"></script>\n", 
+		assertEquals("<script type=\"text/javascript\" src=\"/sample/resources/prototype.js\"></script>\n", 
 				submit.getHtmlImports());
 	}
 

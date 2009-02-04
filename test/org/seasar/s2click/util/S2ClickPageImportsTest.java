@@ -25,7 +25,7 @@ public class S2ClickPageImportsTest extends TestCase {
 		
 		// ボタンのgetHtmlImports()の内容が出力されていること
 		assertTrue(imports.sb.toString().endsWith(
-				"<script type=\"text/javascript\" src=\"/sample/js/prototype.js\"></script>\n"));
+				"<script type=\"text/javascript\" src=\"/sample/resources/prototype.js\"></script>\n"));
 	}
 	
 	private class TestS2ClickPageImports extends S2ClickPageImports {
