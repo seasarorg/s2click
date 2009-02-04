@@ -315,22 +315,18 @@ public class MockRequest implements HttpServletRequest {
     }
 
 	public String getLocalAddr() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public String getLocalName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public int getLocalPort() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int getRemotePort() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
