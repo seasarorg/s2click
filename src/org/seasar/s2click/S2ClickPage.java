@@ -59,7 +59,7 @@ public class S2ClickPage extends Page {
 	
 	/**
 	 * OGNLの型コンバータを取得します
-	 * @return
+	 * @return OGNLの型コンバータ
 	 */
 	protected static TypeConverter getTypeConverter() {
         return typeConverter;
