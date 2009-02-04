@@ -14,7 +14,7 @@ import org.seasar.s2click.util.AjaxUtils;
  * 送信するための<code>Submit</code>コントロール。
  * 
  * @author Naoki Takezoe
- * @sibce 0.4.0
+ * @since 0.4.0
  */
 public class AjaxSubmit extends Submit {
 

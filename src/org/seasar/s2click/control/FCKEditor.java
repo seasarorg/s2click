@@ -95,7 +95,7 @@ public class FCKEditor extends Field {
 	/**
 	 * FCKEditorの幅（ピクセル）を設定します。
 	 * 
-	 * @param value FCKEditorの幅（ピクセル）
+	 * @param width FCKEditorの幅（ピクセル）
 	 */
 	public void setWidth(int width) {
 		this.width = width;
