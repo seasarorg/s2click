@@ -5,13 +5,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.click.util.ClickUtils;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -57,8 +58,6 @@ public class ResourceServlet extends HttpServlet {
 
 	private String[] rootPathArray = null;
 
-	private Properties mimeTypes = null;
-
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -85,8 +84,7 @@ public class ResourceServlet extends HttpServlet {
 			int index = resourcePath.lastIndexOf(".");
 			String contentType = "application/octet-stream";
 			if(index != -1){
-				String extension = resourcePath.substring(index + 1);
-				String mimeType = this.mimeTypes.getProperty(extension);
+				String mimeType = ClickUtils.getMimeType(resourcePath);
 				if(StringUtils.isNotEmpty(mimeType)){
 					contentType = mimeType;
 				}
@@ -127,13 +125,6 @@ public class ResourceServlet extends HttpServlet {
 		}
 		
 		this.rootPathArray = rootPathList.toArray(new String[rootPathList.size()]);
-
-		try {
-			this.mimeTypes = new Properties();
-			this.mimeTypes.load(ResourceServlet.class.getResourceAsStream("mime.properties"));
-		} catch(IOException ex){
-			throw new ServletException("mime.propertiesの読み込みに失敗しました。");
-		}
 	}
 
 }
