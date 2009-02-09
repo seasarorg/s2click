@@ -29,6 +29,7 @@
       <li><a href="${context}/user/select/001">URLパターン</a></li>
       <li><a href="${context}/jsp-example.htm">JSP</a></li>
       <li><a href="${context}/mobile-sample.htm">モバイル</a></li>
+      <li><a href="${context}/error-sample.htm">カスタムエラーページ</a></li>
     </ul>
   </td>
   <td valign="top" class="main">
