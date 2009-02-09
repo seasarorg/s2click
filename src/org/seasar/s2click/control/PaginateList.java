@@ -24,6 +24,13 @@ import org.seasar.s2click.util.S2ClickUtils;
  *   <li>$pager - ページリンク部分のHTML。</li>
  *   <li>$format - ClickのFormatオブジェクト。通常のHTMLテンプレートの場合と同じです。</li>
  *   <li>$context - アプリケーションのコンテキストパスを表す文字列。通常のHTMLテンプレートの場合と同じです。</li>
+ *   <li>$totalRows - 全件数</li>
+ *   <li>$totalPages - 全ページ数</li>
+ *   <li>$pageNumber - 現在のページ番号</li>
+ *   <li>$startIndex - 表示範囲の開始インデックス</li>
+ *   <li>$endIndex - 表示範囲の終了インデックス</li>
+ *   <li>$startRow - 表示範囲の開始行（startIndex + 1）</li>
+ *   <li>$endRow - 表示範囲の終了行（endIndex + 1）</li>
  * </ul>
  * @author Naoki Takezoe
  * @since 0.5.0
@@ -184,32 +191,33 @@ public class PaginateList extends AbstractControl {
 	 */
 	public String getPager(){
 		List<?> rowList = getRowList();
+		
 		StringBuilder sb = new StringBuilder();
 		
-		if(rowList.isEmpty()){
-			sb.append("&lt;前へ");
-			sb.append("&nbsp;");
-			sb.append("次へ&gt;");
-			
+		String prevLabel = getMessage("prev-label");
+		String nextLabel = getMessage("next-label");
+
+		// 前へリンク
+		controlLink.setLabel(prevLabel);
+		if(getPageNumber() > 0){
+			controlLink.setDisabled(false);
+			controlLink.setParameter(PAGE, String.valueOf(getPageNumber() - 1));
 		} else {
-			if(getPageNumber() > 0){
-				controlLink.setLabel("<前へ");
-				controlLink.setParameter(PAGE, String.valueOf(getPageNumber() - 1));
-				sb.append(controlLink.toString());
-			} else {
-				sb.append("&lt;前へ");
-			}
-			
-			sb.append("&nbsp;");
-			
-			if((getPageNumber() + 1) * getPageSize() < rowList.size()){
-				controlLink.setLabel("次へ>");
-				controlLink.setParameter(PAGE, String.valueOf(getPageNumber() + 1));
-				sb.append(controlLink.toString());
-			} else {
-				sb.append("次へ&gt;");
-			}
+			controlLink.setDisabled(true);
 		}
+		sb.append(controlLink.toString());
+		
+		sb.append("&nbsp;");
+		
+		// 次へリンク
+		controlLink.setLabel(nextLabel);
+		if((getPageNumber() + 1) * getPageSize() < rowList.size()){
+			controlLink.setDisabled(false);
+			controlLink.setParameter(PAGE, String.valueOf(getPageNumber() + 1));
+		} else {
+			controlLink.setDisabled(true);
+		}
+		sb.append(controlLink.toString());
 		
 		return sb.toString();
 	}
@@ -242,9 +250,31 @@ public class PaginateList extends AbstractControl {
 		
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("pager", getPager());
+		param.put("pageNumber", getPageNumber());
+		param.put("totalRows", getRowList().size());
+		
+		if(getRowList().isEmpty()){
+			param.put("totalPages", 0);
+		} else {
+			param.put("totalPages", getRowList().size() / getPageSize());
+		}
+		
+		int beginIndex = getPageNumber() * getPageSize();
+		param.put("beginIndex", beginIndex);
+		param.put("beginRow", beginIndex + 1);
+		
+		int endIndex = (getPageNumber() + 1) * getPageSize() - 1;
+		if(getRowList().size() <= endIndex){
+			endIndex = getRowList().size() - 1;
+		}
+		param.put("endIndex", endIndex);
+		param.put("endRow", endIndex + 1);
+		
 		param.put("list", getDisplayList());
 		param.put("format", S2ClickUtils.getClickApp().getFormat());
 		param.put("context", getContext().getRequest().getContextPath());
+		param.put("request", getContext().getRequest());
+		param.put("response", getContext().getResponse());
 		
 		return getContext().renderTemplate(getTemplatePath(), param);
 	}
