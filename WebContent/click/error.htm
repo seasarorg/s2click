@@ -1,0 +1,20 @@
+<style  type='text/css'>
+.errorReport {
+  display: none;
+}
+</style>
+<script type='text/javascript'>
+function displayError() {
+  errorReport.style.display = 'block';
+}
+</script>
+
+#if ($errorReport) 
+ <h2>アプリケーションでエラーが発生しました。</h2>
+ #if ($mode != "production")
+   <p>
+     エラーの詳細を確認するには<a href="#" onclick="displayError();">ここ</a>をクリックしてください。
+   </p>
+   $errorReport
+ #end
+#end
