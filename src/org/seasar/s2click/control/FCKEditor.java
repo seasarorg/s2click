@@ -23,7 +23,7 @@ public class FCKEditor extends Field {
 	protected boolean required;
 	
 	public static final String HTML_IMPORTS = 
-		"<script type=\"text/javascript\" src=\"{0}/r/fckeditor/fckeditor.js\"></script>\n";
+		"<script type=\"text/javascript\" src=\"{0}/resources/fckeditor/fckeditor.js\"></script>\n";
 	
 	public FCKEditor() {
 		super();
