@@ -10,11 +10,13 @@ function displayError() {
 </script>
 
 #if ($errorReport) 
- <h2>アプリケーションでエラーが発生しました。</h2>
- #if ($mode != "production")
-   <p>
-     エラーの詳細を確認するには<a href="#" onclick="displayError();">ここ</a>をクリックしてください。
-   </p>
-   $errorReport
- #end
+  <h2>アプリケーションでエラーが発生しました。</h2>
+  エラーメッセージ：<strong>$format.html($errorMessage)</strong>
+  
+  #if ($mode != "production")
+    <p>
+      エラーの詳細を確認するには<a href="#" onclick="displayError();">ここ</a>をクリックしてください。
+    </p>
+    $errorReport
+  #end
 #end
