@@ -16,7 +16,7 @@ public class ErrorSamplePage extends S2ClickPage {
 	 */
 	@Override
 	public void onInit(){
-		throw new RuntimeException();
+		throw new RuntimeException("カスタムエラーページのテストです。");
 	}
 	
 }

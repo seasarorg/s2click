@@ -20,6 +20,15 @@ public class CustomErrorPage extends ErrorPage {
 		addModel("sourcePath", "/WEB-INF/classes/" + sourcePath);
 	}
 	
+	public void onInit(){
+		super.onInit();
+		if(getError().getMessage() != null){
+			addModel("errorMessage", getError().getMessage());
+		} else {
+			addModel("errorMessage", getError().toString());
+		}
+	}
+	
 	/**
 	 * 共通テンプレート <tt>/layout.htm</tt> を返します。
 	 */
