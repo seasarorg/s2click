@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sf.click.control.AbstractControl;
 import net.sf.click.util.ClickUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * <a href="http://code.google.com/p/google-code-prettify/">google-code-prettify</a>
@@ -21,12 +21,6 @@ public class CodePrettify extends AbstractControl {
 	
 	private static final long serialVersionUID = 1L;
 
-	/** google-code-prettifyのリソース（click/prettifyにデプロイされます） */
-    public static final String[] PRETTIFY_RESOURCES = {
-        "/org/seasar/s2click/control/prettify/prettify.js",
-        "/org/seasar/s2click/control/prettify/prettify.css",
-    };
-	
 	public static final String HTML_IMPORTS = 
 		"<script type=\"text/javascript\" src=\"{0}/resources/prettify/prettify.js\"></script>\n" +
 	    "<link href=\"{0}/resources/prettify/prettify.css\" rel=\"stylesheet\" type=\"text/css\"/>\n";
@@ -96,8 +90,6 @@ public class CodePrettify extends AbstractControl {
 	}
 
 	public void onDeploy(ServletContext servletContext) {
-//        ClickUtils.deployFiles(servletContext,
-//        		PRETTIFY_RESOURCES, "click/prettify");
 	}
 
 	public void onDestroy() {

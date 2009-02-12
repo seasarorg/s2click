@@ -2,8 +2,6 @@ package org.seasar.s2click.control;
 
 import java.text.MessageFormat;
 
-import javax.servlet.ServletContext;
-
 import net.sf.click.Page;
 import net.sf.click.control.Button;
 
@@ -33,21 +31,6 @@ public class GreyboxButton extends Button {
 	protected int height = 300;
 	protected Class<? extends Page> pageClass;
 
-	/** greyboxのリソース（click/greyboxにデプロイされます） */
-    public static final String[] GREYBOX_RESOURCES = {
-        "/org/seasar/s2click/control/greybox/AJS_fx.js",
-        "/org/seasar/s2click/control/greybox/AJS.js",
-        "/org/seasar/s2click/control/greybox/g_close.gif",
-        "/org/seasar/s2click/control/greybox/gb_scripts.js",
-        "/org/seasar/s2click/control/greybox/gb_styles.css",
-        "/org/seasar/s2click/control/greybox/header_bg.gif",
-        "/org/seasar/s2click/control/greybox/indicator.gif",
-        "/org/seasar/s2click/control/greybox/loader_frame.html",
-        "/org/seasar/s2click/control/greybox/next.gif",
-        "/org/seasar/s2click/control/greybox/prev.gif",
-        "/org/seasar/s2click/control/greybox/w_close.gif",
-    };
-
 	public GreyboxButton() {
 		super();
 	}
@@ -65,16 +48,6 @@ public class GreyboxButton extends Button {
 		setPageClass(pageClass);
 		setDialogTitle(dialogTitle);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-    public void onDeploy(ServletContext servletContext) {
-//        ClickUtils.deployFiles(servletContext,
-//                               GREYBOX_RESOURCES,
-//                               "click/greybox");
-    }
 
 	/**
 	 * {@inheritDoc}
