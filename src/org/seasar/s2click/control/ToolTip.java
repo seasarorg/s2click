@@ -129,7 +129,7 @@ public class ToolTip extends AbstractControl {
 		if(StringUtils.isNotEmpty(getLabel())){
 			sb.append(ClickUtils.escapeHtml(getLabel()));
 		} else {
-			sb.append("<img src=\"").append(path).append("/click/overlib/help.png\" border=\"0\">");
+			sb.append("<img src=\"").append(path).append("/resources/overlib/help.png\" border=\"0\">");
 		}
 		
 		sb.append("</a>");

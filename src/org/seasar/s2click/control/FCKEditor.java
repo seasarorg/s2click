@@ -212,7 +212,7 @@ public class FCKEditor extends Field {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("<script type=\"text/javascript\">\n");
-		sb.append("var sBasePath = '").append(contextPath).append("/click/fckeditor/';\n");
+		sb.append("var sBasePath = '").append(contextPath).append("/resources/fckeditor/';\n");
 		sb.append("var oFCKeditor = new FCKeditor('").append(getName()).append("');\n");
 		sb.append("oFCKeditor.BasePath = sBasePath;\n");
 		sb.append("oFCKeditor.Width = ").append(getWidth()).append(";\n");
