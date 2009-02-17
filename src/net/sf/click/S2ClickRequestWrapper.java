@@ -22,35 +22,39 @@ public class S2ClickRequestWrapper extends HttpServletRequestWrapper {
 	
 	public S2ClickRequestWrapper(HttpServletRequest request) {
 		super(request);
-		config = S2ClickUtils.getComponent(S2ClickConfig.class);
+		this.config = S2ClickUtils.getComponent(S2ClickConfig.class);
 	}
 
 	@Override
 	public String getParameter(String name) {
-		String value = super.getParameter(name);
-		if(value != null && getMethod().toUpperCase().equals("GET")){
-			try {
-				value = new String(value.getBytes("iso-8859-1"), config.charset);
-			} catch(UnsupportedEncodingException ex){
-				// TODO ログ出す
+		try {
+			name = new String(name.getBytes(config.charset), "iso-8859-1");
+			
+			String value = super.getParameter(name);
+			if(value != null){ // && getMethod().toUpperCase().equals("GET")){
+					value = new String(value.getBytes("iso-8859-1"), config.charset);
 			}
+			return value;
+		} catch(UnsupportedEncodingException ex){
+			throw new RuntimeException(ex);
 		}
-		return value;
 	}
 
 	@Override
 	public String[] getParameterValues(String name) {
-		String[] values = super.getParameterValues(name);
-		if(values != null && getMethod().toUpperCase().equals("GET")){
-			for(int i=0;i<values.length;i++){
-				try {
-					values[i] = new String(values[i].getBytes("iso-8859-1"), config.charset);
-				} catch(UnsupportedEncodingException ex){
-					// TODO ログ出す
+		try {
+			name = new String(name.getBytes(config.charset), "iso-8859-1");
+			
+			String[] values = super.getParameterValues(name);
+			if(values != null){ // && getMethod().toUpperCase().equals("GET")){
+				for(int i=0;i<values.length;i++){
+						values[i] = new String(values[i].getBytes("iso-8859-1"), config.charset);
 				}
 			}
+			return values;
+		} catch(UnsupportedEncodingException ex){
+			throw new RuntimeException(ex);
 		}
-		return values;
 	}
 	
 }
