@@ -73,8 +73,7 @@ public class ResourceServlet extends HttpServlet {
 		for(String rootPath: this.rootPathArray){
 			String resourcePath = rootPath + path;
 	
-			InputStream in = Thread.currentThread()
-				.getContextClassLoader().getResourceAsStream(resourcePath);
+			InputStream in = ResourceServlet.class.getResourceAsStream(resourcePath);
 	
 			if(in == null){
 				continue;
