@@ -137,8 +137,7 @@ public class GreyboxLink extends AbstractLink {
 	}
     
 	public String getHref() {
-		// TODO voidにする
-		return "#";
+		return "javascript:void(0);";
 	}
 
 	public boolean onProcess() {
