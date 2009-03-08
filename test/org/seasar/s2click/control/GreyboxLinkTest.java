@@ -71,7 +71,7 @@ public class GreyboxLinkTest extends TestCase {
 
 	public void testGetHref() {
 		GreyboxLink link = new GreyboxLink("link", "リンク");
-		assertEquals("#", link.getHref());
+		assertEquals("javascript:void(0);", link.getHref());
 	}
 
 	public void testOnProcess() {
@@ -95,7 +95,7 @@ public class GreyboxLinkTest extends TestCase {
 		
 		GreyboxLink link = new GreyboxLink("link", "リンク", "title", S2ClickPage.class);
 		
-		assertEquals("<a href=\"#\" title=\"title\" " +
+		assertEquals("<a href=\"javascript:void(0);\" title=\"title\" " +
 				"onclick=\"GB_showCenter('title', '../../test.htm', 300, 400)\">リンク</a>", 
 				link.toString());
 	}
