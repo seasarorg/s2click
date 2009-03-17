@@ -19,13 +19,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.click.ClickServlet;
-import org.apache.click.MockContext;
-import org.apache.click.service.ConfigService;
-import org.apache.click.servlet.MockRequest;
-import org.apache.click.servlet.MockResponse;
-import org.apache.click.servlet.MockServletConfig;
-import org.apache.click.servlet.MockServletContext;
 import org.seasar.framework.util.tiger.ReflectionUtil;
 import org.seasar.s2click.annotation.Request;
 import org.seasar.s2click.exception.RequestRequiredException;
@@ -34,10 +27,6 @@ import org.seasar.s2click.servlet.S2ClickConfigService;
 public class S2ClickPageTest extends S2ClickTestCase {
 
 	public void testRenderJSON() throws Exception {
-		MockResponse res = new MockResponse();
-		MockContext.initContext(new MockServletConfig("click-servlet", new MockServletContext()), 
-				new MockRequest(), res, new ClickServlet());
-		
 		S2ClickPage page = new S2ClickPage();
 		page.setHeaders(new HashMap<Object, Object>());
 		
@@ -47,9 +36,9 @@ public class S2ClickPageTest extends S2ClickTestCase {
 		
 		page.renderJSON(map);
 		
-		assertEquals("application/x-javascript; charset=utf-8", res.getContentType());
+		assertEquals("application/x-javascript; charset=utf-8", response.getContentType());
 		
-		String value = new String(res.getBinaryContent(), "UTF-8");
+		String value = new String(response.getBinaryContent(), "UTF-8");
 		assertEquals("{\"age\":20,\"name\":\"Tarou\"}", value);
 	}
 
@@ -66,7 +55,7 @@ public class S2ClickPageTest extends S2ClickTestCase {
 	}
 	
 	public void testValidatePageFields_エラー(){
-		context.setAttribute(ConfigService.CONTEXT_NAME, new TestClickApp());
+		setConfigService(new TestConfigService());
 		request.setParameter("password", "password");
 		
 		TestPage page = new TestPage();
@@ -82,14 +71,14 @@ public class S2ClickPageTest extends S2ClickTestCase {
 	public void testValidatePageFields_エラーなし(){
 		request.setParameter("userName", "たけぞう");
 		request.setParameter("password", "password");
-		context.setAttribute(ConfigService.CONTEXT_NAME, new TestClickApp());
+		setConfigService(new TestConfigService());
 		
 		TestPage page = new TestPage();
 		
 		page.bindPageFields();
 	}
 	
-	public static class TestClickApp extends S2ClickConfigService {
+	public static class TestConfigService extends S2ClickConfigService {
 		@Override
 		@SuppressWarnings("unchecked")
 		public Field[] getPageFieldArray(Class pageClass) {
