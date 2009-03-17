@@ -18,9 +18,10 @@ package org.seasar.s2click.util;
 import java.util.Date;
 
 import net.arnx.jsonic.JSON;
-import net.sf.click.util.Format;
 import ognl.Ognl;
 import ognl.OgnlException;
+
+import org.apache.click.util.Format;
 
 /**
  * 
@@ -28,6 +29,8 @@ import ognl.OgnlException;
  */
 public class S2ClickFormat extends Format {
 	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 日付をyyyy/MM/dd形式でフォーマットします。
 	 * 

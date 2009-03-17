@@ -18,8 +18,8 @@ package org.seasar.s2click.control;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.click.control.Field;
-import net.sf.click.util.HtmlStringBuffer;
+import org.apache.click.control.Field;
+import org.apache.click.util.HtmlStringBuffer;
 
 /**
  * 複数の値を格納可能なhiddenフィールドです。

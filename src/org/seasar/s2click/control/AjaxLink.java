@@ -19,9 +19,8 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.click.control.ActionLink;
-import net.sf.click.util.ClickUtils;
-
+import org.apache.click.control.ActionLink;
+import org.apache.click.util.ClickUtils;
 import org.apache.commons.lang.StringUtils;
 import org.seasar.s2click.util.AjaxUtils;
 

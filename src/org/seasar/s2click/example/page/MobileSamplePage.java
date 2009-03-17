@@ -18,8 +18,7 @@ package org.seasar.s2click.example.page;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.click.control.PageLink;
-
+import org.apache.click.control.PageLink;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.control.PaginateList;
 import org.seasar.s2click.example.form.MobileSampleForm;

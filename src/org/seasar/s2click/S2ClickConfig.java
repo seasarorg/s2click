@@ -15,18 +15,10 @@
  */
 package org.seasar.s2click;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import net.sf.click.Control;
-import net.sf.click.util.Format;
-
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.seasar.framework.container.annotation.tiger.Binding;
-import org.seasar.framework.container.annotation.tiger.BindingType;
+import org.apache.click.util.Format;
 
 /**
  * diconファイルでClickの設定を行うためのクラス。
@@ -76,22 +68,22 @@ public class S2ClickConfig {
 //	 */
 //	public boolean autoBinding = true;
 
-	/**
-	 * コントロールセットを定義した設定ファイル群のパス。
-	 */
-	public List<String> controlSets = new ArrayList<String>();
+//	/**
+//	 * コントロールセットを定義した設定ファイル群のパス。
+//	 */
+//	public List<String> controlSets = new ArrayList<String>();
+//
+//	/**
+//	 * デプロイ（ファイルの展開）が必要なコントロールクラス群。
+//	 */
+//	public List<Class<? extends Control>> controls = new ArrayList<Class<? extends Control>>();
 
-	/**
-	 * デプロイ（ファイルの展開）が必要なコントロールクラス群。
-	 */
-	public List<Class<? extends Control>> controls = new ArrayList<Class<? extends Control>>();
-
-	/**
-	 * Clickの<code>FileField</code>コントロールが使用するCommons FileUploadの<code>FileItemFactory</code>のインスタンス。
-	 * デフォルトは<code>org.apache.commons.fileupload.disk.DiskFileItemFactory</code>です。
-	 */
-	@Binding(bindingType = BindingType.NONE)
-	public FileItemFactory fileItemFactory = new DiskFileItemFactory();
+//	/**
+//	 * Clickの<code>FileField</code>コントロールが使用するCommons FileUploadの<code>FileItemFactory</code>のインスタンス。
+//	 * デフォルトは<code>org.apache.commons.fileupload.disk.DiskFileItemFactory</code>です。
+//	 */
+//	@Binding(bindingType = BindingType.NONE)
+//	public FileItemFactory fileItemFactory = new DiskFileItemFactory();
 
 	public S2ClickConfig(){
 //		controlSets.add("org/seasar/s2click/s2click-controls.xml");

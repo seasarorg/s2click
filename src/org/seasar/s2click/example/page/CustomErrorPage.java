@@ -15,8 +15,7 @@
  */
 package org.seasar.s2click.example.page;
 
-import net.sf.click.util.ErrorPage;
-
+import org.apache.click.util.ErrorPage;
 import org.seasar.s2click.annotation.Path;
 
 /**

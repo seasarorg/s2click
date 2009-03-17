@@ -29,15 +29,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.arnx.jsonic.JSON;
-import net.sf.click.ClickApp;
-import net.sf.click.Page;
-import net.sf.click.S2ClickServlet;
-import net.sf.click.util.PropertyUtils;
-import net.sf.click.util.RequestTypeConverter;
 import ognl.Ognl;
 import ognl.OgnlException;
 import ognl.TypeConverter;
 
+import org.apache.click.Page;
+import org.apache.click.service.ConfigService;
+import org.apache.click.util.PropertyUtils;
+import org.apache.click.util.RequestTypeConverter;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.seasar.framework.util.tiger.ReflectionUtil;
@@ -45,6 +44,7 @@ import org.seasar.s2click.annotation.Request;
 import org.seasar.s2click.control.AjaxLink;
 import org.seasar.s2click.exception.RequestConversionException;
 import org.seasar.s2click.exception.RequestRequiredException;
+import org.seasar.s2click.servlet.S2ClickServlet;
 import org.seasar.s2click.util.S2ClickUtils;
 
 /**
@@ -88,8 +88,8 @@ public class S2ClickPage extends Page {
 	 * @param name リクエストパラメータ名
 	 * @return フィールド（該当のフィールドが存在しな場合は<code>null</code>）
 	 */
-	private Field getRequestBindField(ClickApp clickApp, String name){
-		for(Field field: clickApp.getPageFieldArray(getClass())){
+	private Field getRequestBindField(ConfigService configService, String name){
+		for(Field field: configService.getPageFieldArray(getClass())){
 			Request req = field.getAnnotation(Request.class);
 			if(req != null){
 				if(StringUtils.isEmpty(req.name())){
@@ -114,9 +114,9 @@ public class S2ClickPage extends Page {
 	 */
 	@SuppressWarnings("unchecked")
 	protected void bindPageFields() throws RequestConversionException, RequestRequiredException {
-		ClickApp clickApp = S2ClickUtils.getClickApp();
+		ConfigService configService = S2ClickUtils.getConfigService();
 		
-        if (clickApp.getPageFields(getClass()).isEmpty()) {
+        if (configService.getPageFields(getClass()).isEmpty()) {
             return;
         }
 
@@ -133,7 +133,7 @@ public class S2ClickPage extends Page {
 
             if (StringUtils.isNotEmpty(value)) {
 
-                Field field = getRequestBindField(clickApp, name);
+                Field field = getRequestBindField(configService, name);
 
                 if (field != null) {
                     Class type = field.getType();
@@ -164,7 +164,7 @@ public class S2ClickPage extends Page {
         }
 		
 		// 必須パラメータのチェック
-		for(Field field: clickApp.getPageFieldArray(getClass())){
+		for(Field field: configService.getPageFieldArray(getClass())){
 			Request ann = field.getAnnotation(Request.class);
 			if(ann != null){
 				if(ann.required() == true){

@@ -17,9 +17,8 @@ package org.seasar.s2click.control;
 
 import java.text.MessageFormat;
 
-import net.sf.click.Page;
-import net.sf.click.control.AbstractLink;
-
+import org.apache.click.Page;
+import org.apache.click.control.AbstractLink;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /**

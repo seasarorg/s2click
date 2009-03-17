@@ -15,8 +15,7 @@
  */
 package org.seasar.s2click.example.form;
 
-import net.sf.click.control.TextField;
-
+import org.apache.click.control.TextField;
 import org.seasar.s2click.control.GreyboxButton;
 import org.seasar.s2click.control.S2ClickForm;
 import org.seasar.s2click.example.page.GreyboxSelectPage;

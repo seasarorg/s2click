@@ -15,9 +15,8 @@
  */
 package org.seasar.s2click.example.form;
 
-import net.sf.click.control.Button;
-import net.sf.click.control.TextField;
-
+import org.apache.click.control.Button;
+import org.apache.click.control.TextField;
 import org.seasar.s2click.control.AjaxButton;
 import org.seasar.s2click.control.AjaxSubmit;
 import org.seasar.s2click.control.S2ClickForm;

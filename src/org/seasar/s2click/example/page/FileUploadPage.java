@@ -21,9 +21,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sf.click.Context;
-import net.sf.click.control.ActionLink;
-
+import org.apache.click.Context;
+import org.apache.click.control.ActionLink;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;

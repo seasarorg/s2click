@@ -21,9 +21,8 @@ import java.io.InputStream;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sf.click.Page;
-import net.sf.click.util.ClickUtils;
-
+import org.apache.click.Page;
+import org.apache.click.util.ClickUtils;
 import org.apache.commons.io.IOUtils;
 import org.seasar.s2click.control.CodePrettify;
 

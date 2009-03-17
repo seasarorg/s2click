@@ -21,15 +21,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.click.ClickApp;
-import net.sf.click.Context;
-import net.sf.click.control.Field;
-import net.sf.click.control.FileField;
-import net.sf.click.control.Form;
-import net.sf.click.control.HiddenField;
-import net.sf.click.extras.control.PickList;
-import net.sf.click.util.ClickUtils;
-
+import org.apache.click.Context;
+import org.apache.click.control.Field;
+import org.apache.click.control.FileField;
+import org.apache.click.control.Form;
+import org.apache.click.control.HiddenField;
+import org.apache.click.extras.control.PickList;
+import org.apache.click.service.ConfigService;
+import org.apache.click.util.ClickUtils;
 import org.seasar.framework.beans.Converter;
 import org.seasar.framework.beans.util.Copy;
 import org.seasar.framework.container.S2Container;
@@ -49,9 +48,9 @@ public class S2ClickUtils {
 	 * 
 	 * @return <code>ClickApp</code>のインスタンス。
 	 */
-	public static ClickApp getClickApp(){
-		return (ClickApp) Context.getThreadLocalContext()
-			.getRequestAttribute(ClickApp.class.getName());
+	public static ConfigService getConfigService(){
+		return (ConfigService) Context.getThreadLocalContext()
+			.getRequestAttribute(ConfigService.CONTEXT_NAME);
 	}
 	
 	/**

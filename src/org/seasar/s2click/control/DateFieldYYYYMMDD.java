@@ -15,7 +15,7 @@
  */
 package org.seasar.s2click.control;
 
-import net.sf.click.extras.control.DateField;
+import org.apache.click.extras.control.DateField;
 
 /**
  * YYYY/MM/DD形式で日付を表示する<code>DateField</code>拡張コントロール。

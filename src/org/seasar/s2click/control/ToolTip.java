@@ -19,9 +19,8 @@ import java.text.MessageFormat;
 
 import javax.servlet.ServletContext;
 
-import net.sf.click.control.AbstractControl;
-import net.sf.click.util.ClickUtils;
-
+import org.apache.click.control.AbstractControl;
+import org.apache.click.util.ClickUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 

@@ -17,12 +17,12 @@ package org.seasar.s2click.control;
 
 import java.util.List;
 
-import net.sf.click.control.Button;
-import net.sf.click.control.Field;
-import net.sf.click.control.FieldSet;
-import net.sf.click.control.Label;
-import net.sf.click.util.ClickUtils;
-import net.sf.click.util.HtmlStringBuffer;
+import org.apache.click.control.Button;
+import org.apache.click.control.Field;
+import org.apache.click.control.FieldSet;
+import org.apache.click.control.Label;
+import org.apache.click.util.ClickUtils;
+import org.apache.click.util.HtmlStringBuffer;
 
 /**
  * モバイル向けの<code>S2ClickForm</code>拡張です。
@@ -44,11 +44,11 @@ public class MobileForm extends S2ClickForm {
 		super(name);
 	}
 	
-	@Override
-	public void onInit() {
-		super.onInit();
-		setLabelRequiredSuffix("<font color=\"red\">*</font>");
-	}
+//	@Override
+//	public void onInit() {
+//		super.onInit();
+//		setLabelRequiredSuffix("<font color=\"red\">*</font>");
+//	}
 
 	/**
 	 * <code>MobileForm</code>ではこのメソッドはサポートされていません。
@@ -341,11 +341,11 @@ public class MobileForm extends S2ClickForm {
 //                        buffer.append(">");
 //                    }
 
-                    if (field.isRequired()) {
-                        buffer.append(getLabelRequiredPrefix());
-                    } else {
-                        buffer.append(getLabelNotRequiredPrefix());
-                    }
+//                    if (field.isRequired()) {
+//                        buffer.append(getLabelRequiredPrefix());
+//                    } else {
+//                        buffer.append(getLabelNotRequiredPrefix());
+//                    }
                     buffer.append("<label");
                     buffer.appendAttribute("for", field.getId());
                     if (field.isDisabled()) {
@@ -357,11 +357,11 @@ public class MobileForm extends S2ClickForm {
                     buffer.append(">");
                     buffer.append(field.getLabel());
                     buffer.append("</label>");
-                    if (field.isRequired()) {
-                        buffer.append(getLabelRequiredSuffix());
-                    } else {
-                        buffer.append(getLabelNotRequiredSuffix());
-                    }
+//                    if (field.isRequired()) {
+//                        buffer.append(getLabelRequiredSuffix());
+//                    } else {
+//                        buffer.append(getLabelNotRequiredSuffix());
+//                    }
                     buffer.append("<br>");
 
 //                    if (POSITION_LEFT.equals(getLabelsPosition())) {

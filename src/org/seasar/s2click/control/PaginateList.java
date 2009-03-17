@@ -22,9 +22,8 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
-import net.sf.click.control.AbstractControl;
-import net.sf.click.control.ActionLink;
-
+import org.apache.click.control.AbstractControl;
+import org.apache.click.control.ActionLink;
 import org.apache.commons.lang.math.NumberUtils;
 import org.seasar.s2click.util.S2ClickUtils;
 
@@ -286,7 +285,7 @@ public class PaginateList extends AbstractControl {
 		param.put("endRow", endIndex + 1);
 		
 		param.put("list", getDisplayList());
-		param.put("format", S2ClickUtils.getClickApp().getFormat());
+		param.put("format", S2ClickUtils.getConfigService().createFormat());
 		param.put("context", getContext().getRequest().getContextPath());
 		param.put("request", getContext().getRequest());
 		param.put("response", getContext().getResponse());

@@ -26,12 +26,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.arnx.jsonic.JSON;
-import net.sf.click.control.Field;
-import net.sf.click.control.HiddenField;
-import net.sf.click.control.Submit;
-import net.sf.click.util.ClickUtils;
-import net.sf.click.util.HtmlStringBuffer;
 
+import org.apache.click.control.Field;
+import org.apache.click.control.Form;
+import org.apache.click.control.HiddenField;
+import org.apache.click.control.Submit;
+import org.apache.click.util.ClickUtils;
+import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringUtils;
 import org.seasar.s2click.util.S2ClickUtils;
 
@@ -105,7 +106,7 @@ import org.seasar.s2click.util.S2ClickUtils;
  *
  * @author Naoki Takezoe
  */
-public abstract class S2ClickForm extends net.sf.click.control.Form {
+public abstract class S2ClickForm extends Form {
 
 	private static final long serialVersionUID = 1L;
 
@@ -158,14 +159,16 @@ public abstract class S2ClickForm extends net.sf.click.control.Form {
 	 * (non-Javadoc)
 	 * @see net.sf.click.control.Form#add(net.sf.click.control.Field)
 	 */
-	@Override public void add(Field field) {
-		super.add(field);
+	@Override
+	public Field add(Field field) {
+		Field result = super.add(field);
 		if(field instanceof Submit){
 			if(requiresJavaScript()){
 				field.setAttribute("onclick",
 						getName() + ".action.value='" + field.getName() + "'");
 			}
 		}
+		return result;
 	}
 
 	/*

@@ -15,10 +15,9 @@
  */
 package org.seasar.s2click.example.form;
 
-import net.sf.click.control.PasswordField;
-import net.sf.click.control.Submit;
-import net.sf.click.control.TextField;
-
+import org.apache.click.control.PasswordField;
+import org.apache.click.control.Submit;
+import org.apache.click.control.TextField;
 import org.seasar.s2click.control.MobileForm;
 
 public class MobileSampleForm extends MobileForm {

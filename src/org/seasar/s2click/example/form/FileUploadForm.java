@@ -15,9 +15,8 @@
  */
 package org.seasar.s2click.example.form;
 
-import net.sf.click.control.FileField;
-import net.sf.click.control.Submit;
-
+import org.apache.click.control.FileField;
+import org.apache.click.control.Submit;
 import org.seasar.s2click.control.S2ClickForm;
 import org.seasar.s2click.example.page.FileUploadPage;
 

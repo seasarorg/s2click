@@ -17,8 +17,8 @@ package org.seasar.s2click.control;
 
 import java.lang.reflect.Field;
 
-import net.sf.click.control.Column;
-import net.sf.click.control.Decorator;
+import org.apache.click.control.Column;
+import org.apache.click.control.Decorator;
 
 /**
  * publicフィールドをテーブル列として扱うための<code>Column</code>拡張クラスです。

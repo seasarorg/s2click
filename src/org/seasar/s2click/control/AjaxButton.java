@@ -21,9 +21,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sf.click.control.ActionButton;
-import net.sf.click.util.ClickUtils;
-
+import org.apache.click.control.ActionButton;
+import org.apache.click.util.ClickUtils;
 import org.apache.commons.lang.StringUtils;
 import org.seasar.s2click.util.AjaxUtils;
 
@@ -90,7 +89,7 @@ public class AjaxButton extends ActionButton {
 	/**
 	 * ボタンをクリックした際に呼び出すURLを取得します。
 	 * 
-	 * @return　ボタンをクリックした際に呼び出すURL
+	 * @return ボタンをクリックした際に呼び出すURL
 	 */
 	protected String getUrl(){
 		// URLを切り出す
