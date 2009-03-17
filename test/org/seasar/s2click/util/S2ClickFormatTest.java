@@ -20,9 +20,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.click.MockContext;
 import ognl.OgnlException;
 
+import org.apache.click.MockContext;
 import org.seasar.extension.unit.S2TestCase;
 
 public class S2ClickFormatTest extends S2TestCase {

@@ -15,20 +15,11 @@
  */
 package org.seasar.s2click.control;
 
-import junit.framework.TestCase;
-import net.sf.click.Context;
-import net.sf.click.MockContext;
-import net.sf.click.MockRequest;
-
 import org.seasar.s2click.S2ClickPage;
 
-public class GreyboxButtonTest extends TestCase {
+public class GreyboxButtonTest extends S2ClickControlTestCase {
 
 	public void testGetHtmlImports() {
-		MockRequest request = new MockRequest();
-		request.setContextPath("/sample");
-		
-		MockContext.initContext(request);
 		GreyboxButton button = new GreyboxButton();
 		
 		assertEquals("<script type=\"text/javascript\" src=\"/sample/resources/greybox/AJS.js\"></script>\n" + 
@@ -70,10 +61,6 @@ public class GreyboxButtonTest extends TestCase {
 	}
 
 	public void testToString() {
-		MockContext.initContext();
-		MockContext context = (MockContext) Context.getThreadLocalContext();
-		context.setPagePath(S2ClickPage.class, "/test.htm");
-		
 		GreyboxButton button = new GreyboxButton("button", "ボタン", "title", S2ClickPage.class);
 		
 		assertEquals("<input type=\"button\" name=\"button\" id=\"button\" " + 

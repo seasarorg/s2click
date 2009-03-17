@@ -19,18 +19,9 @@ import java.util.Map;
 
 import org.seasar.s2click.util.AjaxUtils;
 
-import net.sf.click.MockContext;
-import net.sf.click.MockRequest;
-import junit.framework.TestCase;
-
-public class AjaxSubmitTest extends TestCase {
+public class AjaxSubmitTest extends S2ClickControlTestCase {
 
 	public void testGetHtmlImports() {
-		MockRequest request = new MockRequest();
-		request.setContextPath("/sample");
-		
-		MockContext.initContext(request);
-		
 		AjaxSubmit submit = new AjaxSubmit();
 		assertEquals("<script type=\"text/javascript\" src=\"/sample/resources/prototype.js\"></script>\n", 
 				submit.getHtmlImports());
@@ -48,11 +39,6 @@ public class AjaxSubmitTest extends TestCase {
 	}
 
 	public void testToString() {
-		MockRequest request = new MockRequest();
-		request.setRequestURI("http://localhost:8080/sample/sample.htm");
-
-		MockContext.initContext(request);
-		
 		@SuppressWarnings("serial")
 		S2ClickForm form = new S2ClickForm("form"){};
 		

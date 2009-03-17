@@ -15,9 +15,8 @@
  */
 package org.seasar.s2click.control;
 
-import junit.framework.TestCase;
 
-public class ToolTipTest extends TestCase {
+public class ToolTipTest extends S2ClickControlTestCase {
 
 	public void testToolTip1() {
 		ToolTip tooltip = new ToolTip();

@@ -15,20 +15,11 @@
  */
 package org.seasar.s2click.control;
 
-import junit.framework.TestCase;
-import net.sf.click.Context;
-import net.sf.click.MockContext;
-import net.sf.click.MockRequest;
-
 import org.seasar.s2click.S2ClickPage;
 
-public class GreyboxLinkTest extends TestCase {
+public class GreyboxLinkTest extends S2ClickControlTestCase {
 
 	public void testGetHtmlImports() {
-		MockRequest request = new MockRequest();
-		request.setContextPath("/sample");
-		
-		MockContext.initContext(request);
 		GreyboxLink link = new GreyboxLink();
 		
 		assertEquals("<script type=\"text/javascript\" src=\"/sample/resources/greybox/AJS.js\"></script>\n" + 
@@ -89,10 +80,6 @@ public class GreyboxLinkTest extends TestCase {
 	}
 
 	public void testToString() {
-		MockContext.initContext();
-		MockContext context = (MockContext) Context.getThreadLocalContext();
-		context.setPagePath(S2ClickPage.class, "/test.htm");
-		
 		GreyboxLink link = new GreyboxLink("link", "リンク", "title", S2ClickPage.class);
 		
 		assertEquals("<a href=\"javascript:void(0);\" title=\"title\" " +

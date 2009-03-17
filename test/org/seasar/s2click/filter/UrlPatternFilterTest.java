@@ -23,9 +23,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import net.sf.click.MockRequest;
-import net.sf.click.MockResponse;
-
+import org.apache.click.servlet.MockRequest;
+import org.apache.click.servlet.MockResponse;
 import org.seasar.extension.unit.S2TestCase;
 
 public class UrlPatternFilterTest extends S2TestCase {
@@ -50,7 +49,7 @@ public class UrlPatternFilterTest extends S2TestCase {
 			}
 		};
 		request.setContextPath("/test");
-		request.setRequestURI("/test/diary/20090101");
+		request.setServletPath("/diary/20090101");
 				
 		MockResponse response = new MockResponse();
 		
@@ -67,7 +66,7 @@ public class UrlPatternFilterTest extends S2TestCase {
 	public void testDoFilter_リダイレクトしない場合() throws Exception {
 		MockRequest request = new MockRequest();
 		request.setContextPath("/test");
-		request.setRequestURI("/test/diary.htm");
+		request.setServletPath("/diary.htm");
 		
 		MockResponse response = new MockResponse();
 		

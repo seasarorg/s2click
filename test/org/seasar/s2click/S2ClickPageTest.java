@@ -19,23 +19,27 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import junit.framework.TestCase;
+
+import org.apache.click.ClickServlet;
+import org.apache.click.Context;
+import org.apache.click.MockContext;
+import org.apache.click.service.ConfigService;
+import org.apache.click.servlet.MockRequest;
+import org.apache.click.servlet.MockResponse;
+import org.apache.click.servlet.MockServletConfig;
+import org.apache.click.servlet.MockServletContext;
 import org.seasar.framework.util.tiger.ReflectionUtil;
 import org.seasar.s2click.annotation.Request;
 import org.seasar.s2click.exception.RequestRequiredException;
-
-import junit.framework.TestCase;
-import net.sf.click.ClickApp;
-import net.sf.click.Context;
-import net.sf.click.MockContext;
-import net.sf.click.MockRequest;
-import net.sf.click.MockResponse;
-import net.sf.click.MockResponse.ServletOutputStreamImpl;
+import org.seasar.s2click.servlet.S2ClickConfigService;
 
 public class S2ClickPageTest extends TestCase {
 
 	public void testRenderJSON() throws Exception {
 		MockResponse res = new MockResponse();
-		MockContext.initContext(res);
+		MockContext.initContext(new MockServletConfig("click-servlet", new MockServletContext()), 
+				new MockRequest(), res, new ClickServlet());
 		
 		S2ClickPage page = new S2ClickPage();
 		page.setHeaders(new HashMap<Object, Object>());
@@ -48,14 +52,14 @@ public class S2ClickPageTest extends TestCase {
 		
 		assertEquals("application/x-javascript; charset=utf-8", res.getContentType());
 		
-		String value = new String(
-				((ServletOutputStreamImpl) res.getOutputStream()).getContents(), "UTF-8");
+		String value = new String(res.getBinaryContent(), "UTF-8");
 		assertEquals("{\"age\":20,\"name\":\"Tarou\"}", value);
 	}
 
 	public void testRenderHTML() throws Exception {
 		MockResponse res = new MockResponse();
-		MockContext.initContext(res);
+		MockContext.initContext(new MockServletConfig("click-servlet", new MockServletContext()), 
+				new MockRequest(), res, new ClickServlet());
 		
 		S2ClickPage page = new S2ClickPage();
 		page.setHeaders(new HashMap<Object, Object>());
@@ -64,15 +68,14 @@ public class S2ClickPageTest extends TestCase {
 		
 		assertEquals("text/html; charset=UTF-8", res.getContentType());
 		
-		String value = new String(
-				((ServletOutputStreamImpl) res.getOutputStream()).getContents(), "UTF-8");
+		String value = new String(res.getBinaryContent(), "UTF-8");
 		assertEquals("<html>あああ</html>", value);
 	}
 	
 	public void testValidatePageFields_エラー(){
 		MockContext.initContext();
 		Context.getThreadLocalContext().setRequestAttribute(
-				ClickApp.class.getName(), new TestClickApp());
+				ConfigService.CONTEXT_NAME, new TestClickApp());
 		MockRequest request = (MockRequest) Context.getThreadLocalContext().getRequest();
 		request.setParameter("password", "password");
 		
@@ -91,14 +94,14 @@ public class S2ClickPageTest extends TestCase {
 		MockRequest request = (MockRequest) Context.getThreadLocalContext().getRequest();
 		request.setParameter("userName", "たけぞう");
 		request.setParameter("password", "password");
-		request.setAttribute(ClickApp.class.getName(), new TestClickApp());
+		request.setAttribute(ConfigService.CONTEXT_NAME, new TestClickApp());
 		
 		TestPage page = new TestPage();
 		
 		page.bindPageFields();
 	}
 	
-	public static class TestClickApp extends ClickApp {
+	public static class TestClickApp extends S2ClickConfigService {
 		@Override
 		@SuppressWarnings("unchecked")
 		public Field[] getPageFieldArray(Class pageClass) {

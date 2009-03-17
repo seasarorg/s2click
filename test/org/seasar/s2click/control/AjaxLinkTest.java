@@ -17,20 +17,11 @@ package org.seasar.s2click.control;
 
 import java.util.Map;
 
-import junit.framework.TestCase;
-import net.sf.click.MockContext;
-import net.sf.click.MockRequest;
-
 import org.seasar.s2click.util.AjaxUtils;
 
-public class AjaxLinkTest extends TestCase {
+public class AjaxLinkTest extends S2ClickControlTestCase {
 
 	public void testGetHtmlImports() {
-		MockRequest request = new MockRequest();
-		request.setContextPath("/sample");
-		
-		MockContext.initContext(request);
-		
 		AjaxLink link = new AjaxLink();
 		assertEquals("<script type=\"text/javascript\" src=\"/sample/resources/prototype.js\"></script>\n", 
 				link.getHtmlImports());
@@ -60,33 +51,23 @@ public class AjaxLinkTest extends TestCase {
 	}
 
 	public void testToString1() {
-		MockRequest request = new MockRequest();
-		request.setRequestURI("http://localhost:8080/sample/sample.htm");
-
-		MockContext.initContext(request);
-		
 		AjaxLink link = new AjaxLink("ajaxLink", "Ajax.Requestのテスト");
 		link.addAjaxHandler(AjaxUtils.ON_COMPLETE, "processCompleted");
 		
 		// elementIdを指定しなかった場合はAjax.Requestで送信
 		assertEquals("<a href=\"javascript:void(0)\" " + 
-				"onclick=\"new Ajax.Request('http://localhost:8080/sample/sample.htm?actionLink=ajaxLink', " + 
+				"onclick=\"new Ajax.Request('/sample/sample.htm?actionLink=ajaxLink', " + 
 				"{method: 'post', onComplete: processCompleted})\">Ajax.Requestのテスト</a>", 
 				link.toString());
 	}
 
 	public void testToString2() {
-		MockRequest request = new MockRequest();
-		request.setRequestURI("http://localhost:8080/sample/sample.htm");
-
-		MockContext.initContext(request);
-		
 		AjaxLink link = new AjaxLink("ajaxLink", "Ajax.Requestのテスト");
 		link.setElementId("targetElement");
 		
 		// elementIdを指定した場合はAjax.Updaterで送信
 		assertEquals("<a href=\"javascript:void(0)\" " + 
-				"onclick=\"new Ajax.Updater('targetElement', 'http://localhost:8080/sample/sample.htm?actionLink=ajaxLink', " + 
+				"onclick=\"new Ajax.Updater('targetElement', '/sample/sample.htm?actionLink=ajaxLink', " + 
 				"{method: 'post'})\">Ajax.Requestのテスト</a>", 
 				link.toString());
 	}
