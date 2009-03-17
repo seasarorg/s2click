@@ -18,10 +18,15 @@
   
   <display-name>s2click</display-name>
   
+  <context-param>
+    <param-name>config-service-class</param-name>
+    <param-value>org.seasar.s2click.servlet.S2ClickConfigService</param-value>
+  </context-param>
+  
   <servlet>
   	<servlet-name>ClickServlet</servlet-name>
-  	<!-- <servlet-class>net.sf.click.S2ClickServlet</servlet-class> -->
-  	<servlet-class>net.sf.click.S2ClickServletTx</servlet-class>
+  	<!-- <servlet-class>org.seasar.s2click.servlet.S2ClickServlet</servlet-class> -->
+  	<servlet-class>org.seasar.s2click.servlet.S2ClickServletTx</servlet-class>
   	<load-on-startup>2</load-on-startup>
   </servlet>
   
