@@ -31,7 +31,6 @@ import org.apache.click.control.Field;
 import org.apache.click.control.Form;
 import org.apache.click.control.HiddenField;
 import org.apache.click.control.Submit;
-import org.apache.click.util.ClickUtils;
 import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringUtils;
 import org.seasar.s2click.util.S2ClickUtils;
@@ -175,7 +174,8 @@ public abstract class S2ClickForm extends Form {
 	 * (non-Javadoc)
 	 * @see net.sf.click.control.Form#startTag()
 	 */
-	@Override public String startTag(){
+	@Override
+	public String startTag(){
 		HtmlStringBuffer buffer = new HtmlStringBuffer();
 		buffer.append("<table width=\"100%\">");
 		renderErrors(buffer, true);
@@ -189,29 +189,18 @@ public abstract class S2ClickForm extends Form {
 		return super.startTag() + buffer.toString();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see net.sf.click.control.Form#endTag()
-	 */
-	@Override public String endTag() {
-        HtmlStringBuffer buffer = new HtmlStringBuffer();
-
-        List<?> formFields = ClickUtils.getFormFields(this);
-        renderHiddenFields(buffer, formFields);
-
-        buffer.append("</form>\n");
-
-        renderFocusJavaScript(buffer, formFields);
-
-        renderValidationJavaScript(buffer, formFields);
-
-        return buffer.toString();
-    }
-
+	@Override
+	@SuppressWarnings("unchecked")
+	protected void renderTagEnd(List formFields, HtmlStringBuffer buffer) {
+		renderHiddenFields(buffer, formFields);
+		super.renderTagEnd(formFields, buffer);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see net.sf.click.control.Form#renderValidationJavaScript(net.sf.click.util.HtmlStringBuffer, java.util.List)
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
     protected void renderValidationJavaScript(HtmlStringBuffer buffer, List formFields) {
 

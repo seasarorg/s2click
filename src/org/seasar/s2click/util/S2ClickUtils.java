@@ -50,7 +50,7 @@ public class S2ClickUtils {
 	 */
 	public static ConfigService getConfigService(){
 		return (ConfigService) Context.getThreadLocalContext()
-			.getRequestAttribute(ConfigService.CONTEXT_NAME);
+			.getServletContext().getAttribute(ConfigService.CONTEXT_NAME);
 	}
 	
 	/**
