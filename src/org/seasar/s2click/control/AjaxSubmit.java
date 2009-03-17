@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.apache.click.control.Submit;
 import org.apache.click.util.ClickUtils;
+import org.apache.click.util.HtmlStringBuffer;
 import org.seasar.s2click.util.AjaxUtils;
 
 /**
@@ -78,28 +79,17 @@ public class AjaxSubmit extends Submit {
 		return this.handlers;
 	}
 	
-	@Override public String toString() {
-		String formId = getForm().getId();
-//		StringBuilder sb = new StringBuilder();
-//		sb.append(formId).append(".request(");
-//		sb.append("{");
-//		sb.append("method: 'post', ");
-//		sb.append(AjaxUtils.getOptions(handlers));
-//		sb.append("}); return false;");
-//		
-//		setAttribute("onclick", sb.toString());
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("<script type=\"text/javascript\">\n");
-		sb.append("$('").append(formId).append("').onsubmit = ");
-		sb.append("function(){\n");
-		sb.append("  this.request({ method: 'post', ");
-		sb.append(AjaxUtils.getOptions(handlers));
-		sb.append("}); return false;");
-		sb.append("}\n");
-		sb.append("</script>\n");
-		
-		return super.toString() + sb.toString();
+	@Override
+	public void render(HtmlStringBuffer buffer) {
+		super.render(buffer);
+		buffer.append("<script type=\"text/javascript\">\n");
+		buffer.append("$('").append(getForm().getId()).append("').onsubmit = ");
+		buffer.append("function(){\n");
+		buffer.append("  this.request({ method: 'post', ");
+		buffer.append(AjaxUtils.getOptions(handlers));
+		buffer.append("}); return false;");
+		buffer.append("}\n");
+		buffer.append("</script>\n");
 	}
 	
 }

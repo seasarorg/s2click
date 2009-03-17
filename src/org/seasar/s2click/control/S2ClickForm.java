@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.arnx.jsonic.JSON;
 
+import org.apache.click.control.ActionButton;
 import org.apache.click.control.Field;
 import org.apache.click.control.Form;
 import org.apache.click.control.HiddenField;
@@ -166,6 +167,9 @@ public abstract class S2ClickForm extends Form {
 				field.setAttribute("onclick",
 						getName() + ".action.value='" + field.getName() + "'");
 			}
+		}
+		if(field instanceof ActionButton){
+			getPage().addControl(field);
 		}
 		return result;
 	}

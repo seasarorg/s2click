@@ -120,7 +120,8 @@ public class AjaxLink extends ActionLink {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Override public String toString(){
+	@Override
+	public String toString(){
 		if(StringUtils.isEmpty(getElementId())){
 			setAttribute("onclick", AjaxUtils.createAjaxRequest(
 					getHref(getValue()), handlers, getParameters()));

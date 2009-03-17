@@ -36,10 +36,9 @@ public class JsonPage extends LayoutPage {
 	public AjaxButton button = new AjaxButton(
 			"button", "Ajax.Updaterのテスト", this, "onAjaxUpdater");
 
-	public JsonPage(){
+	public void onInit(){
 		form.search.setListener(this, "onSearch");
 		form.searchAll.setListener(this, "onSearchAll");
-		addControl(form.searchAll);
 
 		button.setElementId("target");
 		button.addAjaxHandler(AjaxUtils.ON_CREATE, "startProgress");
