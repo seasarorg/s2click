@@ -19,10 +19,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
 import org.apache.click.ClickServlet;
-import org.apache.click.Context;
 import org.apache.click.MockContext;
 import org.apache.click.service.ConfigService;
 import org.apache.click.servlet.MockRequest;
@@ -34,7 +31,7 @@ import org.seasar.s2click.annotation.Request;
 import org.seasar.s2click.exception.RequestRequiredException;
 import org.seasar.s2click.servlet.S2ClickConfigService;
 
-public class S2ClickPageTest extends TestCase {
+public class S2ClickPageTest extends S2ClickTestCase {
 
 	public void testRenderJSON() throws Exception {
 		MockResponse res = new MockResponse();
@@ -57,26 +54,19 @@ public class S2ClickPageTest extends TestCase {
 	}
 
 	public void testRenderHTML() throws Exception {
-		MockResponse res = new MockResponse();
-		MockContext.initContext(new MockServletConfig("click-servlet", new MockServletContext()), 
-				new MockRequest(), res, new ClickServlet());
-		
 		S2ClickPage page = new S2ClickPage();
 		page.setHeaders(new HashMap<Object, Object>());
 		
 		page.renderHTML("<html>あああ</html>");
 		
-		assertEquals("text/html; charset=UTF-8", res.getContentType());
+		assertEquals("text/html; charset=UTF-8", response.getContentType());
 		
-		String value = new String(res.getBinaryContent(), "UTF-8");
+		String value = new String(response.getBinaryContent(), "UTF-8");
 		assertEquals("<html>あああ</html>", value);
 	}
 	
 	public void testValidatePageFields_エラー(){
-		MockContext.initContext();
-		Context.getThreadLocalContext().setRequestAttribute(
-				ConfigService.CONTEXT_NAME, new TestClickApp());
-		MockRequest request = (MockRequest) Context.getThreadLocalContext().getRequest();
+		context.setAttribute(ConfigService.CONTEXT_NAME, new TestClickApp());
 		request.setParameter("password", "password");
 		
 		TestPage page = new TestPage();
@@ -90,11 +80,9 @@ public class S2ClickPageTest extends TestCase {
 	}
 	
 	public void testValidatePageFields_エラーなし(){
-		MockContext.initContext();
-		MockRequest request = (MockRequest) Context.getThreadLocalContext().getRequest();
 		request.setParameter("userName", "たけぞう");
 		request.setParameter("password", "password");
-		request.setAttribute(ConfigService.CONTEXT_NAME, new TestClickApp());
+		context.setAttribute(ConfigService.CONTEXT_NAME, new TestClickApp());
 		
 		TestPage page = new TestPage();
 		

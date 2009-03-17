@@ -19,6 +19,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 
+import org.apache.click.ClickServlet;
+import org.apache.click.MockContext;
+import org.apache.click.service.ConfigService;
+import org.apache.click.servlet.MockRequest;
+import org.apache.click.servlet.MockResponse;
+import org.apache.click.servlet.MockServletConfig;
+import org.apache.click.servlet.MockServletContext;
 import org.apache.commons.io.IOUtils;
 import org.seasar.extension.unit.S2TestCase;
 
@@ -27,6 +34,38 @@ import org.seasar.extension.unit.S2TestCase;
  * @author Naoki Takezoe
  */
 public abstract class S2ClickTestCase extends S2TestCase {
+	
+	protected MockServletConfig config;
+	
+	protected MockServletContext context;
+	
+	protected MockRequest request;
+	
+	protected MockResponse response;
+	
+	protected ClickServlet servlet;
+	
+	protected MockConfigService configService;
+	
+	public void setUp() throws Exception {
+		super.setUp();
+		
+		context = new MockServletContext();
+		config = new MockServletConfig(context);
+		request = new MockRequest();
+		response = new MockResponse();
+		servlet = new ClickServlet();
+		
+		MockContext.initContext(config, request, response, servlet);
+		
+		configService = new MockConfigService();
+		setConfigService(configService);
+	}
+	
+	protected void setConfigService(ConfigService configService){
+		MockContext.getThreadLocalContext().getServletContext().setAttribute(
+				ConfigService.CONTEXT_NAME, configService);
+	}
 	
 	protected Object getField(Object obj, String fieldName){
 		try {

@@ -31,14 +31,14 @@ import org.apache.click.extras.control.CheckList;
 import org.apache.click.extras.control.DateField;
 import org.apache.click.extras.control.IntegerField;
 import org.apache.click.service.ConfigService;
-import org.seasar.extension.unit.S2TestCase;
 import org.seasar.s2click.S2ClickConfig;
+import org.seasar.s2click.S2ClickTestCase;
 import org.seasar.s2click.control.DateFieldYYYYMMDD;
 import org.seasar.s2click.control.HiddenList;
 import org.seasar.s2click.servlet.S2ClickConfigService;
 
-public class S2ClickUtilsTest extends S2TestCase {
-
+public class S2ClickUtilsTest extends S2ClickTestCase {
+	
 	@Override
 	protected String getRootDicon() throws Throwable {
 		return "s2click.dicon";
@@ -49,7 +49,7 @@ public class S2ClickUtilsTest extends S2TestCase {
 		
 		MockContext.initContext();
 		Context context = Context.getThreadLocalContext();
-		context.setRequestAttribute(ConfigService.CONTEXT_NAME, configService);
+		context.getServletContext().setAttribute(ConfigService.CONTEXT_NAME, configService);
 		
 		assertSame(configService, S2ClickUtils.getConfigService());
 	}
@@ -251,7 +251,7 @@ public class S2ClickUtilsTest extends S2TestCase {
 		List<String> values = new ArrayList<String>();
 		values.add("B");
 		values.add("C");
-		checkList.setValues(values);
+		checkList.setSelectedValues(values);
 		
 		form.add(checkList);
 		
