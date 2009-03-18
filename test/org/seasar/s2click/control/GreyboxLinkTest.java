@@ -80,6 +80,8 @@ public class GreyboxLinkTest extends S2ClickControlTestCase {
 	}
 
 	public void testToString() {
+		configService.setPagePath(S2ClickPage.class, "/test.htm");
+		
 		GreyboxLink link = new GreyboxLink("link", "リンク", "title", S2ClickPage.class);
 		
 		assertEquals("<a href=\"javascript:void(0);\" title=\"title\" " +

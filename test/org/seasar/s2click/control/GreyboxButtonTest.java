@@ -61,6 +61,8 @@ public class GreyboxButtonTest extends S2ClickControlTestCase {
 	}
 
 	public void testToString() {
+		configService.setPagePath(S2ClickPage.class, "/test.htm");
+		
 		GreyboxButton button = new GreyboxButton("button", "ボタン", "title", S2ClickPage.class);
 		
 		assertEquals("<input type=\"button\" name=\"button\" id=\"button\" " + 

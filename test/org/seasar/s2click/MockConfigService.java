@@ -1,6 +1,7 @@
 package org.seasar.s2click;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -15,7 +16,13 @@ import org.apache.click.util.Format;
 
 @SuppressWarnings("unchecked")
 public class MockConfigService implements ConfigService {
-
+	
+	private Map<Class, String> pagePathMap = new HashMap<Class, String>();
+	
+	public void setPagePath(Class pageClass, String pagePath){
+		this.pagePathMap.put(pageClass, pagePath);
+	}
+	
 	public Format createFormat() {
 		// TODO Auto-generated method stub
 		return null;
@@ -81,8 +88,7 @@ public class MockConfigService implements ConfigService {
 	}
 
 	public String getPagePath(Class pageClass) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.pagePathMap.get(pageClass);
 	}
 
 	public ServletContext getServletContext() {
