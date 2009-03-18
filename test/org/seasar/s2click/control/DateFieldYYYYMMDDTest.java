@@ -18,8 +18,9 @@ package org.seasar.s2click.control;
 import java.text.SimpleDateFormat;
 
 import org.apache.click.MockContext;
+import org.seasar.s2click.S2ClickTestCase;
 
-public class DateFieldYYYYMMDDTest extends S2ClickControlTestCase {
+public class DateFieldYYYYMMDDTest extends S2ClickTestCase {
 
 	/**
 	 * <code>getValue()</code>メソッドででyyyy/MM/dd形式でフォーマットされた日付が取得できること。

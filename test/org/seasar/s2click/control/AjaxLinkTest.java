@@ -17,9 +17,10 @@ package org.seasar.s2click.control;
 
 import java.util.Map;
 
+import org.seasar.s2click.S2ClickTestCase;
 import org.seasar.s2click.util.AjaxUtils;
 
-public class AjaxLinkTest extends S2ClickControlTestCase {
+public class AjaxLinkTest extends S2ClickTestCase {
 
 	public void testGetHtmlImports() {
 		AjaxLink link = new AjaxLink();

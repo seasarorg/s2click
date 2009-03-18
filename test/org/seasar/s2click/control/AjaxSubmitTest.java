@@ -17,9 +17,10 @@ package org.seasar.s2click.control;
 
 import java.util.Map;
 
+import org.seasar.s2click.S2ClickTestCase;
 import org.seasar.s2click.util.AjaxUtils;
 
-public class AjaxSubmitTest extends S2ClickControlTestCase {
+public class AjaxSubmitTest extends S2ClickTestCase {
 
 	public void testGetHtmlImports() {
 		AjaxSubmit submit = new AjaxSubmit();

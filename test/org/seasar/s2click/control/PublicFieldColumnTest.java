@@ -15,8 +15,10 @@
  */
 package org.seasar.s2click.control;
 
+import org.seasar.s2click.S2ClickTestCase;
 
-public class PublicFieldColumnTest extends S2ClickControlTestCase {
+
+public class PublicFieldColumnTest extends S2ClickTestCase {
 
 	/**
 	 * {@link PublicFieldColumn#getProperty(String, Object)}でpublicフィールドの値を取得できること。

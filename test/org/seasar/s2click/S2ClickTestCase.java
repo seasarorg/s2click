@@ -30,6 +30,7 @@ import org.apache.commons.io.IOUtils;
 import org.seasar.extension.unit.S2TestCase;
 
 /**
+ * S2Clickのテストケースの抽象基底クラスです。
  * 
  * @author Naoki Takezoe
  */
@@ -47,26 +48,51 @@ public abstract class S2ClickTestCase extends S2TestCase {
 	
 	protected MockConfigService configService;
 	
+	/**
+	 * テストケースの初期化を行います。
+	 * <p>
+	 * <code>MockContext</code>を初期化します。
+	 */
 	public void setUp() throws Exception {
 		super.setUp();
 		
 		context = new MockServletContext();
 		config = new MockServletConfig(context);
+		
 		request = new MockRequest();
+		request.setContextPath("/sample");
+		request.setServletPath("/sample.htm");
+		
 		response = new MockResponse();
-		servlet = new ClickServlet();
+		configService = new MockConfigService();
+		servlet = new TestClickServlet();
 		
 		MockContext.initContext(config, request, response, servlet);
-		
-		configService = new MockConfigService();
-		setConfigService(configService);
+		setConfigService(new MockConfigService());
 	}
 	
+	/**
+	 * テストケースで個別の<code>ConfigService</code>を使用する場合は、
+	 * <code>setUp()</code>メソッド内でこのメソッドを使用して設定してください。
+	 * <p>
+	 * なお、このメソッドで設定する<code>ConfigService</code>オブジェクトは
+	 * {@link MockConfigService}を継承している必要があります。
+	 * 
+	 * @param configService <code>ConfigService</code>実装オブジェクト
+	 */
 	protected void setConfigService(ConfigService configService){
+		this.configService = (MockConfigService) configService;
 		MockContext.getThreadLocalContext().getServletContext().setAttribute(
 				ConfigService.CONTEXT_NAME, configService);
 	}
 	
+	/**
+	 * オブジェクトからフィールド名を指定してフィールドの値を取得するためのユーティリティメソッドです。
+	 * 
+	 * @param obj 対象オブジェクト
+	 * @param fieldName フィールド名
+	 * @return フィールドの値
+	 */
 	protected Object getField(Object obj, String fieldName){
 		try {
 			Class<?> clazz = obj.getClass();
@@ -104,6 +130,18 @@ public abstract class S2ClickTestCase extends S2TestCase {
 			return text;
 		} catch(IOException ex){
 			throw new RuntimeException(ex);
+		}
+	}
+	
+	/**
+	 * ユニットテスト用の<code>ClickServlet</code>拡張クラスです。
+	 */
+	@SuppressWarnings("serial")
+	private class TestClickServlet extends ClickServlet {
+		
+		@Override
+		protected ConfigService getConfigService() {
+			return S2ClickTestCase.this.configService;
 		}
 	}
 	

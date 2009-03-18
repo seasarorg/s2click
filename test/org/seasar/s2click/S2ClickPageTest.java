@@ -22,7 +22,6 @@ import java.util.Map;
 import org.seasar.framework.util.tiger.ReflectionUtil;
 import org.seasar.s2click.annotation.Request;
 import org.seasar.s2click.exception.RequestRequiredException;
-import org.seasar.s2click.servlet.S2ClickConfigService;
 
 public class S2ClickPageTest extends S2ClickTestCase {
 
@@ -78,7 +77,7 @@ public class S2ClickPageTest extends S2ClickTestCase {
 		page.bindPageFields();
 	}
 	
-	public static class TestConfigService extends S2ClickConfigService {
+	public static class TestConfigService extends MockConfigService {
 		@Override
 		@SuppressWarnings("unchecked")
 		public Field[] getPageFieldArray(Class pageClass) {

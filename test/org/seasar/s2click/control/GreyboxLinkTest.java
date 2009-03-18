@@ -16,8 +16,9 @@
 package org.seasar.s2click.control;
 
 import org.seasar.s2click.S2ClickPage;
+import org.seasar.s2click.S2ClickTestCase;
 
-public class GreyboxLinkTest extends S2ClickControlTestCase {
+public class GreyboxLinkTest extends S2ClickTestCase {
 
 	public void testGetHtmlImports() {
 		GreyboxLink link = new GreyboxLink();
