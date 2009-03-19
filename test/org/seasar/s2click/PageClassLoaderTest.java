@@ -13,11 +13,11 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.s2click.servlet;
+package org.seasar.s2click;
 
 import java.util.List;
 
-import org.seasar.s2click.S2ClickTestCase;
+import org.seasar.s2click.PageClassLoader;
 
 public class PageClassLoaderTest extends S2ClickTestCase {
 

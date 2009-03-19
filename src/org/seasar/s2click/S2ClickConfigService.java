@@ -1,4 +1,4 @@
-package org.seasar.s2click.servlet;
+package org.seasar.s2click;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -31,7 +31,6 @@ import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.util.SmartDeployUtil;
 import org.seasar.framework.convention.NamingConvention;
 import org.seasar.framework.convention.impl.NamingConventionImpl;
-import org.seasar.s2click.S2ClickConfig;
 import org.seasar.s2click.annotation.Path;
 import org.seasar.s2click.annotation.UrlPattern;
 import org.seasar.s2click.filter.UrlPatternManager;
