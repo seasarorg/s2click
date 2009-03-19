@@ -36,7 +36,6 @@
       <li><a href="${context}/add.htm">足し算</a></li>
       <li><a href="${context}/controls.htm">コントロール</a></li>
       <li><a href="${context}/tooltip.htm">ツールチップ</a></li>
-      <li><a href="${context}/graph.htm">グラフ</a></li>
       <li><a href="${context}/json.htm">JSON</a></li>
       <li><a href="${context}/file-upload.htm">ファイルアップロード</a></li>
       <li><a href="${context}/jdbc.htm">S2JDBC</a></li>

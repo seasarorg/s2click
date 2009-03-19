@@ -20,7 +20,7 @@
   
   <context-param>
     <param-name>config-service-class</param-name>
-    <param-value>org.seasar.s2click.servlet.S2ClickConfigService</param-value>
+    <param-value>org.seasar.s2click.S2ClickConfigService</param-value>
   </context-param>
   
   <servlet>

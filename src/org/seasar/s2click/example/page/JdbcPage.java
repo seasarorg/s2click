@@ -19,9 +19,9 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.s2click.example.entity.Message;
 import org.seasar.s2click.example.form.MessageForm;
+import org.seasar.s2click.example.service.MessageService;
 
 /**
  * S2Click + S2JDBCのテストページ。
@@ -31,7 +31,7 @@ import org.seasar.s2click.example.form.MessageForm;
 public class JdbcPage extends LayoutPage {
 	
 	@Resource
-	protected JdbcManager jdbcManager;
+	protected MessageService messageService;
 	
 	public String title = "S2JDBC";
 	public MessageForm form = new MessageForm("form");
@@ -40,9 +40,9 @@ public class JdbcPage extends LayoutPage {
 		form.submit.setListener(this, "doAdd");
 	}
 	
-	@Override public void onRender() {
-		addModel("messageList", jdbcManager.from(
-				Message.class).orderBy("messageId desc").getResultList());
+	@Override
+	public void onRender() {
+		addModel("messageList", messageService.getMessages());
 	}
 	
 	public boolean doAdd(){
@@ -51,7 +51,7 @@ public class JdbcPage extends LayoutPage {
 			message.name = form.name.getValue();
 			message.message = form.message.getValue();
 			message.date = new Date();
-			jdbcManager.insert(message).execute();
+			messageService.insert(message);
 			
 			setRedirect(JdbcPage.class);
 			return false;
