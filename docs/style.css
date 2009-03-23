@@ -31,14 +31,24 @@ pre.table {
 
 dt {
 	font-weight: bold;
+	border-bottom: 1px dotted silver;
 }
 
 dd {
-	margin-bottom: 4px;
+	margin-top: 2px;
+	margin-bottom: 10px;
 }
 
 ul {
 	list-style: url("images/item_little.gif") disc outside;
+}
+
+th {
+	white-space: nowrap;
+}
+
+.nowrap {
+	white-space: nowrap;
 }
 
 a:link {

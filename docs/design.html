@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <title>S2Click - Click Framework with Seasar2</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<h1>S2Clickアプリケーションの設計方針</h1>
+
+<div class="content">
+<p>
+  S2Clickではアプリケーションを以下のコンポーネントの組み合わせで作成します。
+  なお、ここではデータベースアクセスにS2JDBCを使用するものと仮定しています。
+  S2JDBC以外のデータベースアクセスフレームワークを使用する場合はサービスの部分を読み替えてください。
+</p>
+
+<table class="indent" border="1" cellspacing="0">
+<tr bgcolor="#D1F3F4">
+  <th>コンポーネント</th>
+  <th>命名規則</th>
+  <th>説明</th>
+</tr>
+<tr>
+  <td>ページ</td>
+  <td class="nowrap">ルートパッケージ.page.XxxPage</td>
+  <td>画面に対応するクラス。初期表示データの取得、ボタンクリックなどのイベント発生時の処理などを行う。
+    <code>S2ClickPage</code>クラスを継承して実装する。</td>
+</tr>
+<tr>
+  <td>フォーム</td>
+  <td class="nowrap">ルートパッケージ.form.XxxForm</td>
+  <td>入力値を格納するクラス。フォームの再利用を行わない場合はページクラス内のインナークラスとして作成してもよい。
+    <code>S2ClickForm</code>を継承して実装する。</td>
+</tr>
+<tr>
+  <td>サービス</td>
+  <td class="nowrap">ルートパッケージ.service.XxxService</td>
+  <td>S2JDBCの<code>JdbcManager</code>を使用してデータベースアクセスを行うクラス。
+    小規模なアプリケーションではページクラス内で直接<code>JdbcManager</code>を使ってもよい。</td>
+</tr>
+</table>
+
+<p>
+  サンプルを通して各コンポーネントの実装方法を紹介します。
+  このサンプルは入力フォームから投稿したメッセージをデータベースに登録し、
+  新着順に一覧表示するという簡単なメッセージボードアプリケーションをイメージしています。
+</p>
+<p>
+  まずはフォームクラスです。
+</p>
+<pre class="code">package org.seasar.s2click.example.form;
+
+import org.apache.click.control.Submit;
+import org.apache.click.control.TextField;
+import org.seasar.s2click.control.S2ClickForm;
+
+public class MessageForm extends S2ClickForm {
+
+  private static final long serialVersionUID = 1L;
+  
+  public TextField name = new TextField("name", true);
+  public TextField message = new TextField("message", true);
+  public Submit submit = new Submit("add");
+  
+  public MessageForm(String name){
+    super(name);
+    setFieldAutoRegisteration(true);
+    setJavaScriptValidation(true);
+  }
+
+} </pre>
+<p>
+  続いてページクラスです。フォームクラスはnewして使用します。
+  また、データベースにアクセスするためのサービスクラスをDIしています。
+</p>
+<pre class="code">package org.seasar.s2click.example.page;
+
+import java.util.Date;
+
+import javax.annotation.Resource;
+
+import org.seasar.s2click.example.entity.Message;
+import org.seasar.s2click.example.form.MessageForm;
+import org.seasar.s2click.example.service.MessageService;
+
+public class MessagePage extends S2ClickPage {
+    
+    @Resource
+    protected MessageService messageService;
+    
+    public MessageForm form = new MessageForm("form");
+
+    public JdbcPage(){
+        form.submit.setListener(this, "doAdd");
+    }
+    
+    @Override
+    public void onRender() {
+        addModel("messageList", messageService.getMessages());
+    }
+    
+    public boolean doAdd(){
+        if(form.isValid()){
+            Message message = new Message();
+            message.name = form.name.getValue();
+            message.message = form.message.getValue();
+            message.date = new Date();
+            messageService.insert(message);
+            
+            setRedirect(MessagePage.class);
+            return false;
+        }
+        return true;
+    }
+    
+} </pre>
+<p>
+  最後にサービスクラスです。
+  ここでは実装を単純にするためS2JDBCが提供する<code>S2AbstractService</code>を継承していますが、
+  特にその必要はありません。
+</p>
+<pre class="code">package org.seasar.s2click.example.service;
+
+import java.util.List;
+
+import org.seasar.extension.jdbc.service.S2AbstractService;
+import org.seasar.s2click.example.entity.Message;
+
+public class MessageService extends S2AbstractService&lt;Message&gt; {
+    
+    public List&lt;Message&gt; getMessages(){
+        return jdbcManager.from(Message.class).orderBy("messageId desc").getResultList();
+    }
+    
+} </pre>
+
+</div>
+
+</body>
+</html>

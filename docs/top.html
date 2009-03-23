@@ -75,6 +75,42 @@
   これはS2Clickのサンプルアプリケーションです。
   Tomcatなどにデプロイし、Webブラウザから<tt>http://localhost:8080/s2click-example</tt>にアクセスすると動作を確認することができます。
 </p>
+
+<h2>スタートアップ</h2>
+
+<p>
+  リリースアーカイブには以下のzipファイルが含まれています。これらはS2Clickによる開発をはじめるためのブランクプロジェクトです。
+  そのままEclipseにインポートしてご利用ください。
+</p>
+<ul>
+  <li><strong>s2click-blank.zip</strong> （S2Clickのみ）</li>
+  <li><strong>s2click-s2jdbc-blank.zip</strong> （S2Click + S2JDBC）</li>
+</ul>
+<p>
+  なお、ブランクプロジェクトは以下の環境が前提となっています。
+</p>
+<ul>
+  <li>Eclipse 3.3以上</li>
+  <li>WTP 2.0以上</li>
+  <li>Java 5.0以上</li>
+  <li>Apache Tomcat 6.0がServersビューに登録されていること</li>
+</ul>
+<p>
+  プロジェクトをインポートしたらWebContent/index.htmを右クリックし、
+  コンテキストメニューから[Run As] &gt; [Run on Server]を選択してください。
+  Tomcatが起動し、足し算アプリが表示されるはずです。
+</p>
+<p>
+  なお、S2ClickのHOT deploy機能を利用する場合、Tomcat側でコンテキストのリロードが実行されないようにしておくと便利です。
+  WTPでは以下の手順でコンテキストのリロードを無効にすることができます。
+</p>
+<ol>
+  <li>Serversビューで登録されているTomcatをダブルクリックする</li>
+  <li>Tomcatの設定を行うためのエディタが表示されるので、[Modules]タブを選択する</li>
+  <li>S2Clickのプロジェクトを選択して[Edit]ボタンをクリック</li>
+  <li>[Auto reloading enabled]のチェックボックスのチェックを外す</li>
+</ol>
+<img src="tomcat.png" alt="Tomcatの設定変更" style="border: 1px solid gray;"/>
 </div>
 
 </body>
