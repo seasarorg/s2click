@@ -10,6 +10,10 @@ h1 {
 	margin: 0px;
 }
 
+div.content {
+	margin-left: 10px;
+}
+
 p {
 	text-indent: 10px;
 }
@@ -30,4 +34,8 @@ dt {
 
 dd {
 	margin-bottom: 4px;
+}
+
+ul {
+	list-style: url("images/item_little.gif") disc outside;
 }

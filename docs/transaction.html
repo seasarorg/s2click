@@ -25,6 +25,8 @@
 </head>
 <body>
 <h1>トランザクションの制御</h1>
+
+<div class="content">
 <p>
   Clickは1リクエストでページクラスのメソッドを複数回呼び出します。
   そのため、ページクラスのメソッドに対してトランザクション制御のためのインターセプタを適用しようとするとメソッドごとにトランザクションが完結してしまいます。
@@ -39,6 +41,7 @@
   &lt;servlet-class&gt;net.sf.click.S2ClickServletTx&lt;/servlet-class&gt;
   &lt;load-on-startup&gt;2&lt;/load-on-startup&gt;
 &lt;/servlet&gt; </pre>
+</div>
 
 </body>
 </html>
