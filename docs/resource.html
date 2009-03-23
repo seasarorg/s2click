@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <title>S2Click - Click Framework with Seasar2</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<h1>リソースをクラスパス内に格納する</h1>
+<p>
+  S2Clickにはクラスパス内に格納したイメージやJavaScriptなどをHTMLから参照するための<code>ResourceServlet</code>が付属しています。
+  <code>ResourceServlet</code>を使用するにはweb.xmlに以下のような設定を追加します。
+</p>
+<pre class="code">
+&lt;servlet&gt;
+  &lt;servlet-name&gt;ResourceServlet&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;org.seasar.s2click.servlet.ResourceServlet&lt;/servlet-class&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;rootPackage&lt;/param-name&gt;
+    &lt;param-value&gt;org.seasar.s2click.example.resource&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;load-on-startup&gt;3&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+...
+&lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;ResourceServlet&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/resources/*&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt; </pre>
+<p>
+  <code>ResourceServlet</code>には初期化パラメータとして<code>rootPackage</code>を指定する必要があります。
+  このパラメータにはリソースを格納するパッケージ名を指定してください。
+  パッケージ名はカンマで区切って複数指定することもできます。
+</p>
+<p>
+  上記の設定の場合、<code>org.seasar.s2click.example.resource</code>パッケージ配下に配置したリソースに対し、
+  <code>http://localhost:8080/s2click/resources/sample.gif</code>というURLでアクセスすることができます（ホスト名、ポートやコンテキストは環境にあわせて読み替えてください）。
+</p>
+<p>
+  また、<code>/resources/subpackage/sample.gif</code>のようにパスをネストさせることでサブパッケージのリソースを参照することも可能です。
+</p>
+
+</body>
+</html>

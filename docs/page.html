@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <title>S2Click - Click Framework with Seasar2</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<h1>ページクラスについて</h1>
+
+<h2>リクエストパラメータのバインド</h2>
+<p>
+  Click Frameworkは標準でページクラスのpublicフィールドに同じ名前のリクエストパラメータをバインドする機能を備えています。
+  しかし、S2ClickのページにはDI用のpublicフィールドも存在するため、リクエストパラメータによるDI用フィールドの上書きを防ぐため、
+  リクエストパラメータの自動バインド機能は利用できません。
+</p>
+<p>
+  代替手段として、<strong>@Requestアノテーション</strong>を付与したpublicフィールドにリクエストパラメータをバインドすることができます。
+  デフォルトではフィールド名と同じ名前のリクエストパラメータがバインドされますが、
+  @Requestアノテーションのパラメータによって別の名前のリクエストパラメータをバインドすることもできます。
+</p>
+<p>
+  また、@Requestアノテーションにrequired=trueの指定を追加することで、パラメータの必須チェックを自動的に行うことができます
+  （必須パラメータが設定されなかった場合にはRuntimeExceptionが発生します）。
+</p>
+<pre class="code">
+public class HelloPage extends Page {
+
+  /** idというリクエストパラメータをバインド */
+  @Request
+  public String id;
+
+  /** articleというリクエストパラメータをバインド（必須） */
+  @Request(name="article", required=true)
+  public String articleId;
+
+}
+</pre>
+<h2>ページクラスの基底クラス</h2>
+<h3>S2ClickPage</h3>
+<p>
+  S2ClickはAjaxやファイルダウンロードでの利用を想定し、ページクラスの抽象基底クラスを提供しています。
+  Ajaxやファイルダウンロード機能を使用するページクラスは<strong>org.seasar.s2click.S2ClickPage</strong>を継承して実装します。
+  <code>S2ClickPage</code>には以下のようなメソッドが用意されており、サブクラスではこれらのメソッドを呼び出すことでJSONやHTML、ファイルなどを返却することができます。
+</p>
+<table class="indent" border="1" cellspacing="0">
+<tr bgcolor="#D1F3F4">
+  <th>メソッド名</th>
+  <th>説明</th>
+</tr>
+<tr>
+  <td>renderJSON(Object obj)</td>
+  <td>引数で渡したオブジェクトをJSONとしてレスポンスにレンダリングします。</td>
+</tr>
+<tr>
+  <td>renderHTML(String html)</td>
+  <td>引数で渡した文字列をHTMLとしてレスポンスにレンダリングします。</td>
+</tr>
+<tr>
+  <td>renderFile(String fileName, InputStream in)</td>
+  <td>引数で渡したファイル名と入力ストリームの内容をレスポンスにレンダリングします。</td>
+</tr>
+<tr>
+  <td>renderResponse(String contentType, InputStream in)</td>
+  <td>コンテンツタイプを指定して入力ストリームの内容をレスポンスにレンダリングします。</td>
+</tr>
+</table>
+
+<h3>アノテーションによるパスの指定</h3>
+<p>
+  <code>@Path</code>アノテーションで任意のパスにページクラスをマッピングすることができます。
+  対応するVelocityテンプレートが存在しないページクラスのパスを指定する場合に使用します。
+</p>
+<pre class="code">
+@Path("/controls.htm")
+public class ControlsPage extends LayoutPage {
+  ...
+} </pre>
+<p>
+  <code>@UrlPattern</code>アノテーションをページクラスに付与すると、ページに任意のエイリアスを指定することができます。
+  これはApacheのmod_rewriteのように動作します。URLパターンで指定したパスの一部をリクエストパラメータにマッピングすることもできます。
+</p>
+<pre class="code">
+@UrlPattern("/user/select/{userId}")
+public class UrlPatternPage extends LayoutPage {
+
+  // リクエストパスの{userId}に一致した部分がセットされます
+  @Request
+  public String userId;
+
+} </pre>
+
+<h3>Ajaxの実装例</h3>
+<p>
+  JSONによるAjaxを実現するページクラスの実装例を以下に示します。
+</p>
+<pre class="code">
+public class AjaxPage extends S2ClickPage {
+
+  public AjaxPage(){
+    AjaxButton button = new AjaxButton("button", "書籍情報を取得", this, "getAllBooks");
+    button.addAjaxHandler(AjaxRequestButton.ON_COMPLETE, "displayResult");
+    addControl(button);
+  }
+
+  public boolean getAllBooks(){
+    List&lt;Book&gt; books = bookService.getAllBooks();
+    renderJSON(books);
+    return false;
+  }
+}
+</pre>
+<p>
+  上記の例ではボタンをクリックするとprototype.jsの<code>Ajax.Request</code>によってページクラスの
+  <code>getAllBooks()</code>メソッドが呼び出され、JSONが返却されます。
+  JSONが返却されるとHTML側ではJavaScriptの<code>displayResult()</code>関数が呼び出されます。
+</p>
+
+<h3>ファイルダウンロードの実装例</h3>
+<p>
+  ファイルダウンロードを実現するページクラスの実装例を以下に示します。
+</p>
+<pre class="code">
+public class FileDonwloadPage extends S2ClickPage {
+
+  public FileDonwloadPage(){
+    ActionLink link = new ActionLink("link", "ダウンロード", this, "onClick");
+    addControl(link);
+  }
+
+  public boolean onClick(){
+    String fileName = "sample.txt";
+    InputStream in = getClass().getResourceAsStream("sample.txt");
+    renderFile(fileName, in);
+    return false;
+  }
+}
+</pre>
+<p>
+  上記の例ではリンクをクリックするとページクラスの<code>onClick()</code>メソッドが呼び出され、
+  ファイルのダウンロードが行われます。
+</p>
+
+</body>
+</html>

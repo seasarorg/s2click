@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <title>S2Click - Click Framework with Seasar2</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<h1>ユーティリティ</h1>
+
+<h3>org.seasar.s2click.util.S2ClickFormat</h3>
+<p>
+  Click標準の<code>net.sf.click.util.Format</code>を拡張し、便利なメソッドを追加しています。
+  HTMLテンプレートでは<code>$format</code>で参照することができます。
+</p>
+<table class="indent" border="1" cellspacing="0">
+<tr bgcolor="#D1F3F4">
+  <th>メソッド</th>
+  <th>説明</th>
+</tr>
+<tr>
+  <td>String date(Date date)</td>
+  <td>引数に渡された日付を<code>yyyy/MM/dd</code>形式にフォーマットします。</td>
+</tr>
+<tr>
+  <td>String datetime(Date date)</td>
+  <td>引数に渡された日付を<code>yyyy/MM/dd HH:mm:ss</code>形式にフォーマットします。</td>
+</tr>
+<tr>
+  <td>String url(String value)</td>
+  <td>引数に渡された文字列を<tt>s2click.dicon</tt>で指定された文字コードでURLエンコードします。</td>
+</tr>
+<!--
+<tr>
+  <td>String escapeJavaString(String value)</td>
+  <td>JavaScriptの文字列をエスケープします。</td>
+</tr>
+-->
+<tr>
+  <td>String json(Object obj)</td>
+  <td>JavaオブジェクトをJSONに変換します。</td>
+</tr>
+<tr>
+  <td>String nbsp(String value)</td>
+  <td>連続する半角スペースの2つめ以降を&amp;nbsp;に変換します。</td>
+</tr>
+<tr>
+  <td>Object ognl(String expression)</td>
+  <td>引数のOGNL式として評価し、結果を返却します。</td>
+</tr>
+<tr>
+  <td>String mask(String value)</td>
+  <td>引数の文字列と同じ長さのアスタリスクからなる文字列を返却します。</td>
+</tr>
+</table>
+
+<!--
+<h3>org.seasar.s2click.util.ZipUtil</h3>
+<p>
+  ZIPファイルの解凍を行うためのユーティリティクラスです。
+</p>
+-->
+
+</body>
+</html>

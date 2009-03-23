@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <title>S2Click - Click Framework with Seasar2</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<h1>コントロール</h1>
+<p>
+  S2Clickでは以下のような拡張コントロールを提供しています。
+  各コントロールの詳細についてはダウンロードしたアーカイブに含まれるJavadocやサンプルを参照してください。
+</p>
+<table class="indent" border="1" cellspacing="0">
+<tr bgcolor="#D1F3F4">
+  <th>クラス名</th>
+  <th>説明</th>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.S2ClickForm</td>
+  <td>入力フォームを作成する際に便利な機能を備えた抽象基底クラスです。</td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.DateFieldYYYYMMDD</td>
+  <td>日付をYYYY/MM/DD形式で表示する<code>DateField</code>コントロールです。</td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.ToolTip</td>
+  <td><a href="http://www.bosrup.com/web/overlib/">overLIB</a>を使用してツールチップを表示するコントロールです。</td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.CodePrettify</td>
+  <td>プログラムのソースコードを強調表示するためのコントロールです。</td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.AjaxLink</td>
+  <td>Ajaxでページクラスのイベントハンドラメソッドを呼び出す<code>ActionLink</code>コントロールです。</td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.AjaxButton</td>
+  <td>Ajaxでページクラスのイベントハンドラメソッドを呼び出す<code>ActionButton</code>コントロールです。</td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.AjaxSubmit</td>
+  <td>フォームの内容をAjaxで送信するための<code>Submit</code>コントロールです。</td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.FCKEditor</td>
+  <td>
+    <a href="http://www.fckeditor.net/">FCKeditor</a>を使用してHTMLを編集するためのコントロールです。
+    S2ClickのexamplesにはFCKeditorのファイルブラウザを動作させるためのページクラスの実装も含まれています。
+  </td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.HiddenList</td>
+  <td>
+    同じパラメータ名で複数のhiddenフィールドを出力するためのコントロールです。
+  </td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.GreyboxButton</td>
+  <td>
+    <a href="http://orangoo.com/labs/GreyBox/">GreyBox</a>を使用してモーダルダイアログを表示するためのボタンです。
+  </td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.GreyboxLink</td>
+  <td>
+    <a href="http://orangoo.com/labs/GreyBox/">GreyBox</a>を使用してモーダルダイアログを表示するためのリンクです。
+  </td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.MobileForm</td>
+  <td>
+    携帯向けの入力フォームを作成するための<code>S2ClickForm</code>の拡張です。
+    JavaScriptやテーブルによるレイアウト、CSSのための記述などを一切行わず、シンプルかつ軽量なレンダリングを行います。
+  </td>
+</tr>
+<tr>
+  <td>org.seasar.s2click.control.PaginateList</td>
+  <td>
+    リスト内のオブジェクトをVelocityテンプレートを指定してレンダリングします。
+    ページング機能を備えています。
+  </td>
+</tr>
+</table>
+
+
+</body>
+</html>
