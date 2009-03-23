@@ -23,6 +23,7 @@ import org.apache.click.service.LogService;
 import org.apache.click.service.TemplateService;
 import org.apache.click.service.VelocityTemplateService;
 import org.apache.click.util.Format;
+import org.seasar.s2click.util.S2ClickFormat;
 
 /**
  * diconファイルでClickの設定を行うためのクラス。
@@ -40,7 +41,7 @@ public class S2ClickConfig {
 	 * ページテンプレートで利用可能なフォーマットクラス。
 	 * デフォルトは<code>net.sf.click.util.Format</code>です。
 	 */
-	public Class<? extends Format> formatClass = Format.class;
+	public Class<? extends Format> formatClass = S2ClickFormat.class;
 
 	/**
 	 * Clickの動作モード。以下の値が指定可能です。デフォルトはdevelopmentです。
