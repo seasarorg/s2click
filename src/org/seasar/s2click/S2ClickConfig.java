@@ -18,6 +18,10 @@ package org.seasar.s2click;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.click.service.ConsoleLogService;
+import org.apache.click.service.LogService;
+import org.apache.click.service.TemplateService;
+import org.apache.click.service.VelocityTemplateService;
 import org.apache.click.util.Format;
 
 /**
@@ -61,34 +65,47 @@ public class S2ClickConfig {
 	 * ロケール。
 	 */
 	public String locale;
-
-//	/**
-//	 * ページクラスにリクエストパラメータを自動バインドするかどうか。
-//	 * デフォルトは<code>true</code>です。
-//	 */
-//	public boolean autoBinding = true;
-
-//	/**
-//	 * コントロールセットを定義した設定ファイル群のパス。
-//	 */
-//	public List<String> controlSets = new ArrayList<String>();
-//
-//	/**
-//	 * デプロイ（ファイルの展開）が必要なコントロールクラス群。
-//	 */
-//	public List<Class<? extends Control>> controls = new ArrayList<Class<? extends Control>>();
-
-//	/**
-//	 * Clickの<code>FileField</code>コントロールが使用するCommons FileUploadの<code>FileItemFactory</code>のインスタンス。
-//	 * デフォルトは<code>org.apache.commons.fileupload.disk.DiskFileItemFactory</code>です。
-//	 */
-//	@Binding(bindingType = BindingType.NONE)
-//	public FileItemFactory fileItemFactory = new DiskFileItemFactory();
-
-	public S2ClickConfig(){
-//		controlSets.add("org/seasar/s2click/s2click-controls.xml");
-//		controls.add(ToolTip.class);
-//		controls.add(CodePrettify.class);
+	
+	/**
+	 * ログサービス。
+	 * デフォルトは<code>ConsoleLogService</code>です。
+	 */
+	public Class<? extends LogService> logService = ConsoleLogService.class;
+	
+	/**
+	 * ログサービスのプロパティ。
+	 */
+	public Map<String, String> logServicePropertyMap = new HashMap<String, String>();
+	
+	/**
+	 * テンプレートサービス。
+	 * デフォルトは<codeVelocityTemplateService></code>です。
+	 */
+	public Class<? extends TemplateService> templateService = VelocityTemplateService.class;
+	
+	/**
+	 * テンプレートサービスのプロパティ。
+	 */
+	public Map<String, String> templateServicePropertyMap = new HashMap<String, String>();
+	
+	/**
+	 * ログサービスのプロパティを追加します。
+	 * 
+	 * @param name プロパティ名
+	 * @param value プロパティ値
+	 */
+	public void addLogServiceProperty(String name, String value){
+		this.logServicePropertyMap.put(name, value);
+	}
+	
+	/**
+	 * テンプレートサービスのプロパティを追加します。
+	 * 
+	 * @param name プロパティ名
+	 * @param value プロパティ値
+	 */
+	public void addTemplateServiceProperty(String name, String value){
+		this.templateServicePropertyMap.put(name, value);
 	}
 
 }

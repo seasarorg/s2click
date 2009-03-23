@@ -16,6 +16,8 @@ import java.util.StringTokenizer;
 
 import javax.servlet.ServletContext;
 
+import ognl.Ognl;
+
 import org.apache.click.Page;
 import org.apache.click.service.CommonsFileUploadService;
 import org.apache.click.service.ConfigService;
@@ -23,7 +25,6 @@ import org.apache.click.service.ConsoleLogService;
 import org.apache.click.service.FileUploadService;
 import org.apache.click.service.LogService;
 import org.apache.click.service.TemplateService;
-import org.apache.click.service.VelocityTemplateService;
 import org.apache.click.util.ErrorPage;
 import org.apache.click.util.Format;
 import org.apache.commons.lang.StringUtils;
@@ -352,12 +353,32 @@ public class S2ClickConfigService implements ConfigService {
 	}
 	
 	protected void loadLogService(S2ClickConfig config) throws Exception {
-		logService = new ConsoleLogService();
+		logService = config.logService.newInstance();
+		
+		Map<String, String> propertyMap = config.logServicePropertyMap;
+        
+		for (Iterator<String> i = propertyMap.keySet().iterator(); i.hasNext();) {
+            String name = i.next();
+            String value = propertyMap.get(name);
+
+            Ognl.setValue(name, logService, value);
+        }
+		
 		logService.onInit(servletContext);
 	}
 	
 	protected void loadTemplateService(S2ClickConfig config) throws Exception {
-		templateService = new VelocityTemplateService();
+		templateService = config.templateService.newInstance();
+		
+		Map<String, String> propertyMap = config.templateServicePropertyMap;
+        
+		for (Iterator<String> i = propertyMap.keySet().iterator(); i.hasNext();) {
+            String name = i.next();
+            String value = propertyMap.get(name);
+
+            Ognl.setValue(name, templateService, value);
+        }
+		
 		templateService.onInit(servletContext);
 	}
 	
