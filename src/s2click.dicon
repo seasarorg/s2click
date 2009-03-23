@@ -19,6 +19,5 @@
 <components>
 	<component class="org.seasar.s2click.S2ClickConfig">
 	  <property name="mode">"debug"</property>
-	  <property name="formatClass">@org.seasar.s2click.util.S2ClickFormat@class</property>
 	</component>
 </components>
