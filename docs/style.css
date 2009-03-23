@@ -1,0 +1,33 @@
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+h1 {
+	background-color: gray;
+	color: white;
+	padding-left: 4px;
+	margin: 0px;
+}
+
+p {
+	text-indent: 10px;
+}
+
+pre.code {
+	border: 1px solid gray;
+	background-color: #EEEEEE;
+	padding: 4px;
+}
+
+pre.table {
+	margin: 0px;
+}
+
+dt {
+	font-weight: bold;
+}
+
+dd {
+	margin-bottom: 4px;
+}
