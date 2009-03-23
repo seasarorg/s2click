@@ -26,6 +26,7 @@ pre.code {
 
 pre.table {
 	margin: 0px;
+	font-size: 80%;
 }
 
 dt {
@@ -39,3 +40,24 @@ dd {
 ul {
 	list-style: url("images/item_little.gif") disc outside;
 }
+
+a:link {
+	text-decoration: none;
+	color: #006699;
+}
+
+a:visited {
+	text-decoration: none;
+	color: #006699;
+}
+
+a:active {
+	text-decoration: none;
+	color: #006699;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #FF3300;
+}
+

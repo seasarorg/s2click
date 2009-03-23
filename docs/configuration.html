@@ -49,91 +49,67 @@
   <code>S2ClickConfig</code>には以下のプロパティを設定可能です。
 </p>
 
-<table class="indent" border="1" cellspacing="0">
-<tr bgcolor="#D1F3F4">
-  <th>プロパティ</th>
-  <th>説明</th>
-  <th>設定例</th>
-</tr>
-<tr>
-  <td>charset</td>
-  <td>文字コードを指定します。デフォルトはUTF-8です。</td>
-  <td><pre class="table">
+<dl>
+  <dt>charset</dt>
+  <dd>文字コードを指定します。デフォルトはUTF-8です。
+  <pre class="code">
 &lt;property name="charset"&gt;
   "Windows-31J"
 &lt;/property&gt;</pre>
-  </td>
-</tr>
-<tr>
-  <td>formatClass</td>
-  <td>Velocityテンプレートで使用可能なFormatオブジェクトを指定します。
-    デフォルトは<a href="http://click.sourceforge.net/docs/click-api/net/sf/click/util/Format.html">net.sf.click.util.Format</a>です。</td>
-  <td><pre class="table">
+  </dd>
+
+  <dt>formatClass</dt>
+  <dd>Velocityテンプレートで使用可能なFormatオブジェクトを指定します。省略した場合は<code>org.seasar.s2click.util.S2ClickFormat</code>が用いられます。
+  <pre class="code">
 &lt;property name="formatClass"&gt;
   @example.util.S2ClickFormat@class
 &lt;/property&gt;</pre>
-  </td>
-</tr>
-<tr>
-  <td>mode</td>
-  <td>Clickの動作モード。production、profile、development、debug、traceのいずれかを指定します。デフォルトはdevelopmentです。<br>
+  </dd>
+  
+  <dt>mode</dt>
+  <dd>Clickの動作モード。production、profile、development、debug、traceのいずれかを指定します。デフォルトはdevelopmentです。
     モードによってClickの動作（HTMLテンプレートのリロードを行うかどうか等）やログに出力される内容が変化します。
     詳細については<a href="http://click.sourceforge.net/docs/configuration.html#application-configuration">Clickのドキュメント</a>を参照してください。
-  </td>
-  <td><pre class="table">
+  <pre class="code">
 &lt;property name="mode"&gt;
   "development"
-&lt;/property&gt;</pre></td>
-</tr>
-<tr>
-  <td>headers</td>
-  <td>共通ヘッダ</td>
-  <td>&nbsp;</td>
-</tr>
-<tr>
-  <td>locale</td>
-  <td>ロケール</td>
-  <td>&nbsp;</td>
-</tr>
-<!--
-<tr>
-  <td>autoBinding</td>
-  <td>自動バインディングを有効にするかどうかを指定します。デフォルトはtrueです。</td>
-  <td><pre class="table">
-&lt;property name="autoBinding"&gt;
-  false
-&lt;/property&gt;</pre></td>
-</tr>
--->
-<tr>
-  <td>controlSets</td>
-  <td>コントロールセットを定義した設定ファイル群のパスを指定します。</td>
-  <td>&nbsp;</td>
-</tr>
-<tr>
-  <td>controls</td>
-  <td>デプロイ（ファイルの展開）が必要なコントロールクラス群を指定します。</td>
-  <td>&nbsp;</td>
-</tr>
-<tr>
-  <td>fileItemFactory</td>
-  <td>Clickの<code>FileField</code>コントロールが使用するCommons FileUploadの<code>FileItemFactory</code>のインスタンス</td>
-  <td>&nbsp;</td>
-</tr>
-<!--
-<tr>
-  <td>pages</td>
-  <td>ページのパスとページクラスを明示的にマッピングする場合はこのマップにパスとページクラス名を指定します。<br>
-    ClickではHTMLテンプレートが存在しない場合はページクラスの自動マッピングが行われないため、
-    HTMLテンプレートが存在しないページクラス（ページクラス内でレスポンスを行う場合など）を使用する場合にこの設定を利用するとよいでしょう。</td>
-  <td><pre class="table">
-&lt;property name="pages"&gt;
-  #{"/test.htm": "example.page.TestPage",
-    "/hoge.htm": "example.page.HogePage"}
-&lt;/property&gt; </pre></td>
-</tr>
--->
-</table>
+&lt;/property&gt;</pre>
+  </dd>
+
+  <dt>headers</dt>
+  <dd>共通ヘッダ。</dd>
+
+  <dt>locale</dt>
+  <dd>ロケール。</dd>
+
+  <dt>logService</dt>
+  <dd>ログ出力を行うサービスクラスを指定します。省略した場合は<code>org.apache.click.service.ConsoleLogService</code>が用いられます。
+  <pre class="code">
+&lt;property name="logService"&gt;
+  @sample.service.SampleLogService@class
+&lt;/property&gt;
+&lt;!-- プロパティを指定する場合 --&gt;
+&lt;initMethod name="addLogServiceProperty"&gt;
+  &lt;arg&gt;"プロパティ名"&lt;/arg&gt;
+  &lt;arg&gt;"プロパティ値"&lt;/arg&gt;
+&lt;/initMethod&gt;
+</pre>
+  </dd>
+  
+  <dt>templateService</dt>
+  <dd>テンプレート処理を行うサービスクラスを指定します。省略した場合は<code>org.apache.click.service.VelocityTemplateService</code>が用いられます。
+  <pre class="code">
+&lt;property name="templateService"&gt;
+  @sample.service.SampleTemplateService@class
+&lt;/property&gt;
+&lt;!-- プロパティを指定する場合 --&gt;
+&lt;initMethod name="addTemplateServiceProperty"&gt;
+  &lt;arg&gt;"プロパティ名"&lt;/arg&gt;
+  &lt;arg&gt;"プロパティ値"&lt;/arg&gt;
+&lt;/initMethod&gt;
+</pre>
+  </dd>
+</dl>
 
 <p>
   S2Clickではページの自動マッピングは常に有効です。

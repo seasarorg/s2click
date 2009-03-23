@@ -87,7 +87,7 @@ public class HelloPage extends Page {
 
 <h3>アノテーションによるパスの指定</h3>
 <p>
-  <code>@Path</code>アノテーションで任意のパスにページクラスをマッピングすることができます。
+  <strong>@Pathアノテーション</strong>で任意のパスにページクラスをマッピングすることができます。
   対応するVelocityテンプレートが存在しないページクラスのパスを指定する場合に使用します。
 </p>
 <pre class="code">
@@ -96,7 +96,7 @@ public class ControlsPage extends LayoutPage {
   ...
 } </pre>
 <p>
-  <code>@UrlPattern</code>アノテーションをページクラスに付与すると、ページに任意のエイリアスを指定することができます。
+  <strong>@UrlPatternアノテーション</strong>をページクラスに付与すると、ページに任意のエイリアスを指定することができます。
   これはApacheのmod_rewriteのように動作します。URLパターンで指定したパスの一部をリクエストパラメータにマッピングすることもできます。
 </p>
 <pre class="code">
