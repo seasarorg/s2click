@@ -63,9 +63,21 @@
   サンプルを通して各コンポーネントの実装方法を紹介します。
   このサンプルは入力フォームから投稿したメッセージをデータベースに登録し、
   新着順に一覧表示するという簡単なメッセージボードアプリケーションをイメージしています。
+  また、Clickに関する基本的な知識はすでに持っている前提で説明を行います。
 </p>
+
+<h2>フォームクラス</h2>
 <p>
   まずはフォームクラスです。
+  Clickのサンプルではページクラス内でフォームを組み立てる手法が用いられていますが、
+  そうするとページクラスがフォームを組み立てるためのコードで埋め尽くされてしまうこと、
+  また登録画面と編集画面など、類似のフォームの共通化が難しくなってしまうことなどから
+  S2Clickではフォームを単独のクラスとして作成することを推奨しています。
+</p>
+<p>
+  フォームクラスは<code>S2ClickForm</code>を継承して実装します。
+  <code>setFieldAutoRegisteration()</code>メソッドに<code>true</code>を設定しておくと、
+  フィールドとして定義されたコントロールが自動的に自分自身に追加されます。
 </p>
 <pre class="code">package org.seasar.s2click.example.form;
 
@@ -88,9 +100,17 @@ public class MessageForm extends S2ClickForm {
   }
 
 } </pre>
+
+<h2>ページクラス</h2>
 <p>
-  続いてページクラスです。フォームクラスはnewして使用します。
-  また、データベースにアクセスするためのサービスクラスをDIしています。
+  続いてページクラスです。
+  フォームを組み立てるためのコードがフォームクラスに分離された以外は通常のClickのページクラスとそれほど変わりはありません。
+  フォームクラスはnewして使用し、データベースにアクセスするためのサービスクラスをDIしています。
+</p>
+<p>
+  ページクラスは<code>S2ClickPage</code>を継承して実装します。
+  <code>S2ClickPage</code>を継承することで、この例では使用していませんがバイナリやJSONをレスポンスに書き出すためのメソッドや、
+  <code>@Request</code>アノテーションによるリクエストパラメータのフィールドへのバインド機能などを利用することができます。
 </p>
 <pre class="code">package org.seasar.s2click.example.page;
 
@@ -133,10 +153,12 @@ public class MessagePage extends S2ClickPage {
     }
     
 } </pre>
+
+<h2>サービスクラス</h2>
 <p>
   最後にサービスクラスです。
-  ここでは実装を単純にするためS2JDBCが提供する<code>S2AbstractService</code>を継承していますが、
-  特にその必要はありません。
+  ここでは実装を単純にするためS2JDBCが提供する<code>S2AbstractService</code>を継承していますが、特にその必要はありません。
+  小さなアプリケーションではサービスレイヤを設けず、ページクラスに直接<code>JdbcManager</code>をDIしてデータベースアクセスコードをページクラス内に記述するという選択も考えられます。
 </p>
 <pre class="code">package org.seasar.s2click.example.service;
 
