@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <title>S2Click - Click Framework with Seasar2</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<h1>S2Click - Click Framework with Seasar2</h1>
+<p>
+  S2Clickとは、Seasar2とClick Frameworkを組み合わせて利用するためのアダプタです。
+  以下のような機能を提供します。
+</p>
+<ul>
+  <li>ClickのページクラスをS2Containerで管理することができます</li>
+  <li>ClickのページクラスのHOT deployに対応します</li>
+  <li>Seasar2が推奨するpublicフィールドをClickで扱いやすくするための機能を提供します</li>
+  <li>Clickの設定をSeasar2のdiconファイルに集約します</li>
+  <li>Java 5のアノテーションを活用した機能を提供します</li>
+  <li>Ajax、ファイルダウンロードをサポートする機能を提供します</li>
+  <li>Click標準では提供されていない便利なコントロールやユーティリティを提供します</li>
+  <li>携帯向けのWebアプリケーションを開発するために便利な機能を提供します</li>
+  <li>ClickIDEのS2Click向け拡張プラグインを提供します</li>
+</ul>
+<p>
+  なお、S2Clickの動作にはJava 5以降が必須です。
+</p>
+
+<h2>ダウンロード</h2>
+<ul>
+  <li><a href="releases/s2click-0.5.0.zip">S2Click 0.5.0</a></li>
+  <li><a href="releases/s2click-0.4.0.zip">S2Click 0.4.0</a></li>
+  <li><a href="releases/s2click-0.3.0.zip">S2Click 0.3.0</a></li>
+</ul>
+<p>
+  各バージョンごとの更新履歴は<a href="history.html">こちら</a>を参照してください。
+  また、S2Clickに同梱されているライブラリについては<a href="libraries.html">こちら</a>を参照してください。
+</p>
+<p>
+  S2ClickではClickプロジェクトにて開発されているClick Framework向けのEclipseプラグイン「ClickIDE」に
+  以下のプラグインを追加インストールすることで、S2ClickのプロジェクトでもClickIDEの機能を利用できるようになります。
+  ClickIDEをインストール後、以下のリンクからダウンロードしたJARファイルをEclipseのpluginsフォルダにコピーしてください。
+</p>
+<ul>
+  <li>
+    <a href="releases/org.seasar.s2click.clickide.extension_1.0.0.jar">org.seasar.s2click.clickide.extension_1.0.0.jar</a>
+    （要<a href="http://sourceforge.net/project/showfiles.php?group_id=82095&package_id=181305&release_id=639119">ClickIDE 2.1.0</a>）
+  </li>
+</ul>
+
+<h2>サンプルを動かしてみる</h2>
+<p>
+  リリースアーカイブを展開すると<strong>s2click-example.war</strong>というwarファイルがあります。
+  これはS2Clickのサンプルアプリケーションです。
+  Tomcatなどにデプロイし、Webブラウザから<tt>http://localhost:8080/s2click-example</tt>にアクセスすると動作を確認することができます。
+</p>
+
+</body>
+</html>
