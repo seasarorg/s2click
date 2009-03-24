@@ -31,6 +31,7 @@
   Clickは1リクエストでページクラスのメソッドを複数回呼び出します。
   そのため、ページクラスのメソッドに対してトランザクション制御のためのインターセプタを適用しようとするとメソッドごとにトランザクションが完結してしまいます。
   S2Clickでは1リクエスト=1トランザクションでトランザクション制御を行うための<strong>S2ClickServletTx</strong>が付属しています。
+  <code>S2ClickServletTx</code>を使用することで、いわゆる<strong>Open Session in Viewパターン</strong>と同じ効果を得ることができます。
 </p>
 <p>
   <code>S2ClickServletTx</code>を使用するにはweb.xmlで<code>S2ClickServlet</code>の代わりに<code>S2ClickServletTx</code>を使うよう設定してください。
@@ -41,6 +42,16 @@
   &lt;servlet-class&gt;org.seasar.s2click.servlet.S2ClickServletTx&lt;/servlet-class&gt;
   &lt;load-on-startup&gt;2&lt;/load-on-startup&gt;
 &lt;/servlet&gt; </pre>
+<p>
+  サービスのレイヤをトランザクションの境界とする場合は<code>S2ClickServletTx</code>を使う必要はありません。
+  <tt>costomizer.dicon</tt>にてサービスクラスに対して<code>TxAttributeCustomizer</code>によってトランザクション管理用のインターセプターを適用するよう設定してください。
+</p>
+<pre class="code">
+&lt;component name="serviceCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain"&gt;
+    &lt;initMethod name="addCustomizer"&gt;
+        &lt;arg&gt;txAttributeCustomizer&lt;/arg&gt;
+    &lt;/initMethod&gt;
+&lt;/component&gt; </pre>
 </div>
 
 </body>
