@@ -48,6 +48,13 @@ public abstract class S2ClickTestCase extends S2TestCase {
 	
 	protected MockConfigService configService;
 	
+	
+	
+	@Override
+	protected String getRootDicon() throws Throwable {
+		return "app.dicon";
+	}
+
 	/**
 	 * テストケースの初期化を行います。
 	 * <p>

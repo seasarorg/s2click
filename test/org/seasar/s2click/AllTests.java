@@ -31,6 +31,8 @@ public class AllTests {
 		suite.addTest(org.seasar.s2click.control.AllTests.suite());
 		suite.addTest(org.seasar.s2click.filter.AllTests.suite());
 		suite.addTest(org.seasar.s2click.util.AllTests.suite());
+		suite.addTest(org.seasar.s2click.example.page.AllTests.suite());
+		suite.addTest(org.seasar.s2click.example.service.AllTests.suite());
 		suite.addTestSuite(S2ClickPageTest.class);
 		suite.addTestSuite(PageClassLoaderTest.class);
 		//$JUnit-END$
