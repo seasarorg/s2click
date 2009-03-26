@@ -18,6 +18,8 @@ package org.seasar.s2click.example.page;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.click.ActionListener;
+import org.apache.click.Control;
 import org.seasar.s2click.control.AjaxButton;
 import org.seasar.s2click.example.form.JsonForm;
 import org.seasar.s2click.util.AjaxUtils;
@@ -37,8 +39,16 @@ public class JsonPage extends LayoutPage {
 			"button", "Ajax.Updaterのテスト", this, "onAjaxUpdater");
 
 	public void onInit(){
-		form.search.setListener(this, "onSearch");
-		form.searchAll.setListener(this, "onSearchAll");
+		form.search.setActionListener(new ActionListener(){
+			public boolean onAction(Control source) {
+				return onSearch();
+			}
+		});
+		form.searchAll.setActionListener(new ActionListener(){
+			public boolean onAction(Control source) {
+				return onSearchAll();
+			}
+		});
 
 		button.setElementId("target");
 		button.addAjaxHandler(AjaxUtils.ON_CREATE, "startProgress");
@@ -54,7 +64,7 @@ public class JsonPage extends LayoutPage {
 		return books;
 	}
 
-	public boolean onSearch(){
+	protected boolean onSearch(){
 		String keyword = form.keyword.getValue();
 
 		if(keyword.length() != 0){
@@ -71,7 +81,7 @@ public class JsonPage extends LayoutPage {
 		return false;
 	}
 
-	public boolean onSearchAll(){
+	protected boolean onSearchAll(){
 		renderJSON(getBookList());
 		return false;
 	}

@@ -19,6 +19,8 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.apache.click.ActionListener;
+import org.apache.click.Control;
 import org.seasar.s2click.example.entity.Message;
 import org.seasar.s2click.example.form.MessageForm;
 import org.seasar.s2click.example.service.MessageService;
@@ -37,7 +39,11 @@ public class JdbcPage extends LayoutPage {
 	public MessageForm form = new MessageForm("form");
 
 	public JdbcPage(){
-		form.submit.setListener(this, "doAdd");
+		form.submit.setActionListener(new ActionListener(){
+			public boolean onAction(Control source) {
+				return doAdd();
+			}
+		});
 	}
 	
 	@Override
@@ -45,7 +51,7 @@ public class JdbcPage extends LayoutPage {
 		addModel("messageList", messageService.getMessages());
 	}
 	
-	public boolean doAdd(){
+	protected boolean doAdd(){
 		if(form.isValid()){
 			Message message = new Message();
 			message.name = form.name.getValue();

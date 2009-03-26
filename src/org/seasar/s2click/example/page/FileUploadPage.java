@@ -21,7 +21,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.click.ActionListener;
 import org.apache.click.Context;
+import org.apache.click.Control;
 import org.apache.click.control.ActionLink;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.IOUtils;
@@ -39,13 +41,23 @@ public class FileUploadPage extends LayoutPage {
 
 	public String title = "ファイルアップロード＆ダウンロード";
 	public FileUploadForm form = new FileUploadForm("form");
-	public ActionLink link = new ActionLink("link", this, "doDownload");
+	public ActionLink link = new ActionLink("link");
 	
 	/** ファイルのダウンロード時にファイル名を受け取るためのフィールド */
 	@Request public String name;
 	
 	public FileUploadPage(){
-		form.submit.setListener(this, "doUpload");
+		form.submit.setActionListener(new ActionListener(){
+			public boolean onAction(Control source) {
+				return doUpload();
+			}
+		});
+		
+		link.setActionListener(new ActionListener(){
+			public boolean onAction(Control source) {
+				return doDownload();
+			}
+		});
 	}
 	
 	private static synchronized File getFolder(Context context){
@@ -59,7 +71,8 @@ public class FileUploadPage extends LayoutPage {
 		return folder;
 	}
 	
-	@Override public void onRender() {
+	@Override
+	public void onRender() {
 		File folder = getFolder(getContext());
 		addModel("files", folder.listFiles());
 	}
@@ -67,7 +80,7 @@ public class FileUploadPage extends LayoutPage {
 	/**
 	 * ファイルをアップロードします。
 	 */
-	public boolean doUpload(){
+	protected boolean doUpload(){
 		if(form.isValid()){
 			FileItem item = form.file.getFileItem();
 			File folder = getFolder(getContext());
@@ -96,7 +109,7 @@ public class FileUploadPage extends LayoutPage {
 		return true;
 	}
 	
-	public boolean doDownload() throws Exception {
+	protected boolean doDownload(){
 		if(StringUtils.isEmpty(name)){
 			throw new RuntimeException("ファイル名が指定されていません。");
 		}

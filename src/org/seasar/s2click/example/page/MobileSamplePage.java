@@ -18,6 +18,8 @@ package org.seasar.s2click.example.page;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.click.ActionListener;
+import org.apache.click.Control;
 import org.apache.click.control.PageLink;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.control.PaginateList;
@@ -37,7 +39,11 @@ public class MobileSamplePage extends S2ClickPage {
 	public PaginateList paginateList = new PaginateList("paginateList");
 	
 	public MobileSamplePage(){
-		form.setListener(this, "doLogin");
+		form.setActionListener(new ActionListener(){
+			public boolean onAction(Control source) {
+				return doLogin();
+			}
+		});
 		
 		list.add("Java");
 		list.add("C#");
@@ -50,7 +56,7 @@ public class MobileSamplePage extends S2ClickPage {
 		paginateList.setTemplatePath("/paginateList.htm");
 	}
 	
-	public boolean doLogin(){
+	protected boolean doLogin(){
 		if(form.isValid()){
 			if(form.userId.getValue().equals("test") 
 					&& form.password.getValue().equals("test")){
