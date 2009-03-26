@@ -80,28 +80,32 @@
     		target="1.5" encoding="UTF-8" debug="true" classpathref="classpath"/>
     	<copy todir="${test.bin.dir}">
     		<fileset dir="${test.src.dir}" includes="**/*.js" />
+    		<fileset dir="${test.src.dir}" includes="**/*.txt" />
     		<fileset dir="${src.dir}" includes="**/*.dicon" />
+    		<fileset dir="${src.dir}" includes="**/*.properties" />
+			<fileset dir="${src.dir}" includes="**/*.script" />
     	</copy>
-
+<!--
 		<cobertura-instrument todir="${bin.dir}">
 			<fileset dir="${bin.dir}">
 				<include name="**/*.class"/>
 			</fileset>
 		</cobertura-instrument>
-
+-->
     	<junit printsummary="true" haltonfailure="true" haltonerror="true">
     		<classpath refid="classpath" />
     		<classpath location="lib/cobertura/cobertura.jar" />
 
-    		<batchtest fork="true">
+    		<batchtest fork="false">
 				<fileset dir="${test.src.dir}">
 					<include name="**/*Test.java"/>
 					<exclude name="**/AllTests.java"/>
 				</fileset>
     		</batchtest>
     	</junit>
-
+<!--
     	<cobertura-report srcdir="${src.dir}" destdir="cobertura"/>
+-->
     </target>
 
 	<!--==================================================-->
