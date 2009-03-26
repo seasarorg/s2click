@@ -32,6 +32,10 @@
   なお、ここではデータベースアクセスにS2JDBCを使用するものと仮定しています。
   S2JDBC以外のデータベースアクセスフレームワークを使用する場合はサービスの部分を読み替えてください。
 </p>
+<p>
+  また、本ドキュメントはClickの基本的な知識を有しているものという前提に基づいています。
+  Clickに関する基礎知識については<a href="http://amateras.sourceforge.jp/cgi-bin/fswiki/wiki.cgi/click" target="_blank">Click Wiki</a>などを参照してください。
+</p>
 
 <table class="indent" border="1" cellspacing="0">
 <tr bgcolor="#D1F3F4">
@@ -75,7 +79,7 @@
   S2Clickではフォームを単独のクラスとして作成することを推奨しています。
 </p>
 <p>
-  フォームクラスは<code>S2ClickForm</code>を継承して実装します。
+  フォームクラスは<strong>org.seasar.s2click.control.S2ClickForm</strong>を継承して実装します。
   <code>setFieldAutoRegisteration()</code>メソッドに<code>true</code>を設定しておくと、
   フィールドとして定義されたコントロールが自動的に自分自身に追加されます。
 </p>
@@ -108,8 +112,8 @@ public class MessageForm extends S2ClickForm {
   フォームクラスはnewして使用し、データベースにアクセスするためのサービスクラスをDIしています。
 </p>
 <p>
-  ページクラスは<code>S2ClickPage</code>を継承して実装します。
-  <code>S2ClickPage</code>を継承することで、この例では使用していませんがバイナリやJSONをレスポンスに書き出すためのメソッドや、
+  ページクラスは<strong>org.seasar.s2click.control.S2ClickForm</strong>を継承して実装します。
+  この例では使用していませんが、<code>S2ClickPage</code>を継承することでバイナリやJSONをレスポンスに書き出すためのメソッドや、
   <code>@Request</code>アノテーションによるリクエストパラメータのフィールドへのバインド機能などを利用することができます。
 </p>
 <pre class="code">package org.seasar.s2click.example.page;
@@ -157,8 +161,12 @@ public class MessagePage extends S2ClickPage {
 <h2>サービスクラス</h2>
 <p>
   最後にサービスクラスです。
-  ここでは実装を単純にするためS2JDBCが提供する<code>S2AbstractService</code>を継承していますが、特にその必要はありません。
-  小さなアプリケーションではサービスレイヤを設けず、ページクラスに直接<code>JdbcManager</code>をDIしてデータベースアクセスコードをページクラス内に記述するという選択も考えられます。
+  ここでは実装を単純にするためS2JDBCが提供する<strong>org.seasar.extension.jdbc.service.S2AbstractService</strong>を継承していますが、特にその必要はありません。
+  実際のところ、エンティティとサービスを一対一で作成するケース以外では<code>S2AbstractService</code>は使いづらいでしょう。
+</p>
+<p>
+  小さなアプリケーションではサービスレイヤを設けず、ページクラスに直接<code>JdbcManager</code>をDIしてデータベースアクセスコードをページクラス内に記述するという選択も考えられますが、
+  ページクラスにデータベースアクセスコードを含めてしまうとユニットテストが難しくなるというトレードオフがあります。
 </p>
 <pre class="code">package org.seasar.s2click.example.service;
 
