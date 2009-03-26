@@ -3,7 +3,6 @@ package org.seasar.s2click.example.page;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.click.util.ActionListenerAdaptor;
 import org.seasar.s2click.S2ClickPageTestCase;
 import org.seasar.s2click.example.entity.Message;
 import org.seasar.s2click.example.service.MessageService;
@@ -51,11 +50,11 @@ public class JdbcPageTest extends S2ClickPageTestCase<JdbcPage> {
 		assertEquals(3, messages.get(2).messageId.intValue());
 	}
 
-	public void testJdbcPage() {
-		ActionListenerAdaptor adaptor = (ActionListenerAdaptor) page.form.submit.getActionListener();
-		assertSame(page, getField(adaptor, "listener"));
-		assertEquals("doAdd", getField(adaptor, "method"));
-	}
+//	public void testJdbcPage() {
+//		ActionListenerAdaptor adaptor = (ActionListenerAdaptor) page.form.submit.getActionListener();
+//		assertSame(page, getField(adaptor, "listener"));
+//		assertEquals("doAdd", getField(adaptor, "method"));
+//	}
 
 	public void testDoAdd() {
 		final Message result = new Message();

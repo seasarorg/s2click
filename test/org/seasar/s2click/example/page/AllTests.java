@@ -11,6 +11,7 @@ public class AllTests {
 		//$JUnit-BEGIN$
 		suite.addTestSuite(AddPageTest.class);
 		suite.addTestSuite(JdbcPageTest.class);
+		suite.addTestSuite(JsonPageTest.class);
 		//$JUnit-END$
 		return suite;
 	}

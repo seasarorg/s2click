@@ -17,7 +17,6 @@ package org.seasar.s2click;
 
 import java.util.List;
 
-import org.seasar.s2click.PageClassLoader;
 
 public class PageClassLoaderTest extends S2ClickTestCase {
 

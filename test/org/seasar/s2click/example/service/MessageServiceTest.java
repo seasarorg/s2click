@@ -74,7 +74,7 @@ public class MessageServiceTest extends S2ClickTestCase {
 	/**
 	 * メッセージが存在しない場合。
 	 */
-	public void testGetMessages3Tx() {
+	public void testGetMessages3Tx() throws Exception {
 		List<Message> messages = messageService.getMessages();
 		assertTrue(messages.isEmpty());
 	}
