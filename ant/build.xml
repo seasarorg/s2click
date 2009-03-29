@@ -39,6 +39,8 @@
 		<pathelement location="./lib/servlet-api-2.3.jar"/>
 		<pathelement location="./lib/junit.jar"/>
 		<pathelement location="./lib/click-mock-2.0.1-incubating.jar"/>
+		<pathelement location="./lib/poi-3.0-rc4-20070503.jar"/>
+		<pathelement location="./lib/"/>
 		<pathelement location="${test.bin.dir}"/>
 		<pathelement location="${bin.dir}"/>
 	</path>
@@ -81,6 +83,7 @@
     	<copy todir="${test.bin.dir}">
     		<fileset dir="${test.src.dir}" includes="**/*.js" />
     		<fileset dir="${test.src.dir}" includes="**/*.txt" />
+    		<fileset dir="${test.src.dir}" includes="**/*.xls" />
     		<fileset dir="${src.dir}" includes="**/*.dicon" />
     		<fileset dir="${src.dir}" includes="**/*.properties" />
 			<fileset dir="${src.dir}" includes="**/*.script" />

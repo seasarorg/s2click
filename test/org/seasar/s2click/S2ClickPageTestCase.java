@@ -8,10 +8,14 @@ import org.seasar.framework.util.tiger.GenericUtil;
  * ページクラスのテストケースの抽象基底クラスです。
  * 
  * @author Naoki Takezoe
- * @param <T> ページクラス
+ * 
+ * @param <T> テスト対象のページクラス
  */
 public abstract class S2ClickPageTestCase<T> extends S2ClickTestCase {
 	
+	/**
+	 * テスト対象のページクラスのインスタンス。
+	 */
 	protected T page;
 	
 	/**

@@ -1,81 +1,60 @@
 package org.seasar.s2click.example.service;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.seasar.s2click.S2ClickTestCase;
+import org.seasar.s2click.S2ClickServiceTestCase;
 import org.seasar.s2click.example.entity.Message;
 
 /**
  * サービスクラスのテストのサンプルです。
- * <p>
- * TODO サービスクラスのテスト方法についてはもう少し検討の余地がありそう…。
  * 
  * @author Naoki Takezoe
  */
-public class MessageServiceTest extends S2ClickTestCase {
+public class MessageServiceTest extends S2ClickServiceTestCase<MessageService> {
 	
-	private MessageService messageService;
-	
+    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    
 	/**
 	 * メッセージ1件のみ存在する場合。
+	 * <p>
+	 * Javaコードを使ったテストケースのサンプルです。
 	 */
-	public void testGetMessages1Tx() {
+	public void testGetMessages1Tx() throws Exception {
 		Message message = new Message();
-		message.message = "テスト";
 		message.name = "たけぞう";
-		message.date = new Date();
+		message.message = "テスト";
+		message.date = formatter.parse("2009/01/01 12:34:56");
+		service.insert(message);
 		
-		messageService.insert(message);
+		List<Message> messages = service.getMessages();
 		
-		List<Message> messages = messageService.getMessages();
 		assertEquals(1, messages.size());
+		
 		assertEquals("たけぞう", messages.get(0).name);
 		assertEquals("テスト", messages.get(0).message);
+		assertEquals("2009/01/01 12:34:56", formatter.format(messages.get(0).date));
 	}
 
 	/**
 	 * メッセージが複数件存在する場合。
+	 * <p>
+	 * Excelを使ったユニットテストのサンプルです。
 	 */
 	public void testGetMessages2Tx() {
-		{
-			Message message = new Message();
-			message.message = "テスト1";
-			message.name = "たけぞう";
-			message.date = new Date();
-			messageService.insert(message);
-		}
-		{
-			Message message = new Message();
-			message.message = "テスト2";
-			message.name = "たけぞう";
-			message.date = new Date();
-			messageService.insert(message);
-		}
-		{
-			Message message = new Message();
-			message.message = "テスト3";
-			message.name = "たけぞう";
-			message.date = new Date();
-			messageService.insert(message);
-		}
+		readXlsAllReplaceDb("MessageServiceTest_testGetMessages2Tx_data.xls");
 		
+		List<Message> messages = service.getMessages();
 		
-		List<Message> messages = messageService.getMessages();
-		assertEquals(3, messages.size());
-		assertEquals("たけぞう", messages.get(0).name);
-		assertEquals("テスト3", messages.get(0).message);
-		assertEquals("たけぞう", messages.get(1).name);
-		assertEquals("テスト2", messages.get(1).message);
-		assertEquals("たけぞう", messages.get(2).name);
-		assertEquals("テスト1", messages.get(2).message);
+		assertBeanListEquals("データベース内のデータが期待値と一致しません。", 
+				readXls("MessageServiceTest_testGetMessages2Tx_expect.xls"), messages);
 	}
 	
 	/**
 	 * メッセージが存在しない場合。
 	 */
 	public void testGetMessages3Tx() throws Exception {
-		List<Message> messages = messageService.getMessages();
+		List<Message> messages = service.getMessages();
 		assertTrue(messages.isEmpty());
 	}
 	
