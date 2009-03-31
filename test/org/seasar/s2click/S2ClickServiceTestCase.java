@@ -58,14 +58,14 @@ public abstract class S2ClickServiceTestCase<T> extends S2ClickTestCase {
             }
         }
         try {
-            // TODO ここでキャプチャ
+            // TODO ここでキャプチャ？
         	
             super.doRunTest();
             
-            // TODO ここでキャプチャ
-            Method method = getTargetMethod();
-            Assert ann = method.getAnnotation(Assert.class);
-            String[] tables = ann.tables();
+//            // TODO ここでキャプチャ？
+//            Method method = getTargetMethod();
+//            Assert ann = method.getAnnotation(Assert.class);
+//            String[] tables = ann.tables();
             
         } finally {
             if (tm != null) {
