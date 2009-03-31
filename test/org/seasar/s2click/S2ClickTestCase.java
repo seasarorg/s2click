@@ -50,7 +50,7 @@ public abstract class S2ClickTestCase extends S2TestCase {
 	
 	@Override
 	protected String getRootDicon() throws Throwable {
-		return "app.dicon";
+		return "app_ut.dicon";
 	}
 
 	/**

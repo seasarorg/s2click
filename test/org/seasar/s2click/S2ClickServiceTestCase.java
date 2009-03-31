@@ -44,6 +44,8 @@ public abstract class S2ClickServiceTestCase<T> extends S2ClickTestCase {
 	
 	protected JdbcManager jdbcManager;
 	
+	protected S2ClickTestConfig config;
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	protected void setUpAfterContainerInit() throws Throwable {
@@ -99,7 +101,7 @@ public abstract class S2ClickServiceTestCase<T> extends S2ClickTestCase {
     private void createExcelFile(Table[] tables) throws Exception {
     	String packageName = ClassUtil.getPackageName(getClass());
     	
-    	String srcDir = "test";
+    	String srcDir = config.sourceDir;
     	File dir = new File(srcDir + "/" + packageName.replace('.', '/'));
     	
     	File file = new File(dir, getClass().getSimpleName() + "_" + getTargetMethod().getName() + "_expect.xls");
