@@ -3,6 +3,8 @@ package org.seasar.s2click.example.service;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.seasar.s2click.Assert;
+import org.seasar.s2click.Assert.Table;
 import org.seasar.s2click.S2ClickServiceTestCase;
 import org.seasar.s2click.example.entity.Message;
 
@@ -14,6 +16,15 @@ import org.seasar.s2click.example.entity.Message;
 public class MessageServiceTest extends S2ClickServiceTestCase<MessageService> {
 	
     private SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    
+    @Assert(tables = @Table(name="MESSAGE", excludeColumns={"MESSAGE_ID", "DATE"}))
+    public void testInsertTx() throws Exception {
+		Message message = new Message();
+		message.name = "たけぞう";
+		message.message = "テスト";
+		message.date = formatter.parse("2009/01/01 12:34:56");
+		service.insert(message);
+    }
     
 	/**
 	 * メッセージ1件のみ存在する場合。
