@@ -53,7 +53,7 @@ public class MessageServiceTest extends S2ClickServiceTestCase<MessageService> {
 	 * Excelを使ったユニットテストのサンプルです。
 	 */
 	public void testGetMessages2Tx() {
-		readXlsAllReplaceDb("MessageServiceTest_testGetMessages2Tx_data.xls");
+//		readXlsAllReplaceDb("MessageServiceTest_testGetMessages2Tx_data.xls");
 		
 		List<Message> messages = service.getMessages();
 		
