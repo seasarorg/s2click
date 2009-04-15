@@ -48,11 +48,13 @@ public abstract class S2ClickTestCase extends S2TestCase {
 	
 	protected MockConfigService configService;
 	
+	protected MockTemplateService templateService;
+	
 	@Override
 	protected String getRootDicon() throws Throwable {
 		return "app_ut.dicon";
 	}
-
+	
 	/**
 	 * テストケースの初期化を行います。
 	 * <p>
@@ -69,11 +71,13 @@ public abstract class S2ClickTestCase extends S2TestCase {
 		request.setServletPath("/sample.htm");
 		
 		response = new MockResponse();
+		templateService = new MockTemplateService();
 		configService = new MockConfigService();
+		configService.setTemplateService(templateService);
 		servlet = new TestClickServlet();
 		
 		MockContext.initContext(config, request, response, servlet);
-		setConfigService(new MockConfigService());
+		setConfigService(configService);
 	}
 	
 	/**

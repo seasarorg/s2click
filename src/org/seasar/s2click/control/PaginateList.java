@@ -20,8 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
-
 import org.apache.click.control.AbstractControl;
 import org.apache.click.control.ActionLink;
 import org.apache.commons.lang.math.NumberUtils;
@@ -164,18 +162,18 @@ public class PaginateList extends AbstractControl {
 		this.templatePath = templatePath;
 	}
 
-	public String getHtmlImports() {
-		return null;
-	}
-
-	public void onDeploy(ServletContext servletContext) {
-	}
-
-	public void onDestroy() {
-	}
-
-	public void onInit() {
-	}
+//	public String getHtmlImports() {
+//		return null;
+//	}
+//
+//	public void onDeploy(ServletContext servletContext) {
+//	}
+//
+//	public void onDestroy() {
+//	}
+//
+//	public void onInit() {
+//	}
 
 	public boolean onProcess() {
         controlLink.onProcess();
@@ -192,11 +190,11 @@ public class PaginateList extends AbstractControl {
         return true;
 	}
 
-	public void onRender() {
-	}
-
-	public void setListener(Object listener, String method) {
-	}
+//	public void onRender() {
+//	}
+//
+//	public void setListener(Object listener, String method) {
+//	}
 	
 	/**
 	 * ページング処理を行うリンク部分のHTMLを取得します。

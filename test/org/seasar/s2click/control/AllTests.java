@@ -33,6 +33,7 @@ public class AllTests {
 		suite.addTestSuite(AjaxSubmitTest.class);
 		suite.addTestSuite(GreyboxButtonTest.class);
 		suite.addTestSuite(GreyboxLinkTest.class);
+		suite.addTestSuite(PaginateListTest.class);
 		//$JUnit-END$
 		return suite;
 	}

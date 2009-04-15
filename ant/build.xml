@@ -70,6 +70,7 @@
 			<fileset dir="${src.dir}" includes="**/*.zip" />
 			<fileset dir="${src.dir}" includes="**/*.xml" />
 			<fileset dir="${src.dir}" includes="**/*.html" excludes="**/package.html" />
+			<fileset dir="${src.dir}" includes="**/*.properties" />
 		</copy>
     </target>
 
@@ -78,19 +79,22 @@
 	<!--==================================================-->
     <target name="test" depends="compile">
     	<mkdir dir="${test.bin.dir}"/>
+    	
     	<javac srcdir="${test.src.dir}" destdir="${test.bin.dir}" source="1.5"
     		target="1.5" encoding="UTF-8" debug="true" classpathref="classpath"/>
+    	
     	<copy todir="${test.bin.dir}">
-    		<fileset dir="${test.src.dir}" includes="**/*.js" />
-    		<fileset dir="${test.src.dir}" includes="**/*.txt" />
-    		<fileset dir="${test.src.dir}" includes="**/*.xls" />
     		<fileset dir="${src.dir}" includes="**/*.dicon" />
     		<fileset dir="${src.dir}" includes="**/*.properties" />
 			<fileset dir="${src.dir}" includes="**/*.script" />
+    		<fileset dir="${test.src.dir}" includes="**/*.js" />
+    		<fileset dir="${test.src.dir}" includes="**/*.txt" />
+    		<fileset dir="${test.src.dir}" includes="**/*.xls" />
+    		<fileset dir="${test.src.dir}" includes="**/*.dicon" />
     	</copy>
 <!--
-		<cobertura-instrument todir="${bin.dir}">
-			<fileset dir="${bin.dir}">
+		<cobertura-instrument todir="${test.bin.dir}">
+			<fileset dir="${test.bin.dir}">
 				<include name="**/*.class"/>
 			</fileset>
 		</cobertura-instrument>
@@ -98,8 +102,9 @@
     	<junit printsummary="true" haltonfailure="true" haltonerror="true">
     		<classpath refid="classpath" />
     		<classpath location="lib/cobertura/cobertura.jar" />
-
+    		
     		<batchtest fork="false">
+    			<formatter type="plain"/>
 				<fileset dir="${test.src.dir}">
 					<include name="**/*Test.java"/>
 					<exclude name="**/AllTests.java"/>
@@ -225,6 +230,8 @@
 				includes="*.jar" />
 			<fileset dir="${blank-s2jdbc.dir}/s2click/WebContent/WEB-INF/lib"
 				includes="*.jar" />
+			<fileset dir="."
+				includes="TEST-*.txt" />
 		</delete>
 	</target>
 </project>

@@ -17,6 +17,7 @@ import org.apache.click.util.Format;
 @SuppressWarnings("unchecked")
 public class MockConfigService implements ConfigService {
 	
+	private TemplateService templateService;
 	private Map<Class, String> pagePathMap = new HashMap<Class, String>();
 	
 	public void setPagePath(Class pageClass, String pagePath){
@@ -96,9 +97,12 @@ public class MockConfigService implements ConfigService {
 		return null;
 	}
 
+	public void setTemplateService(TemplateService templateService){
+		this.templateService = templateService;
+	}
+	
 	public TemplateService getTemplateService() {
-		// TODO Auto-generated method stub
-		return null;
+		return templateService;
 	}
 
 	public boolean isJspPage(String path) {
