@@ -21,6 +21,7 @@ import javax.servlet.ServletContext;
 
 import org.apache.click.control.AbstractControl;
 import org.apache.click.util.ClickUtils;
+import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -123,7 +124,15 @@ public class ToolTip extends AbstractControl {
 	public void setListener(Object listener, String method) {
 	}
 	
-	@Override public String toString(){
+	@Override
+	public String toString() {
+		HtmlStringBuffer buffer = new HtmlStringBuffer(2250);
+		render(buffer);
+		return buffer.toString();
+	}
+	
+	@Override
+	public void render(HtmlStringBuffer buffer){
 		String path = getContext().getRequest().getContextPath();
 		
 		StringBuilder sb = new StringBuilder();
@@ -148,7 +157,7 @@ public class ToolTip extends AbstractControl {
 		
 		sb.append("</a>");
 		
-		return sb.toString();
+		buffer.append(sb.toString());
 	}
 
 	/**

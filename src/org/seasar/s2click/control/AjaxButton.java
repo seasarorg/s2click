@@ -118,7 +118,8 @@ public class AjaxButton extends ActionButton {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Override public String getOnClick() {
+	@Override
+	public String getOnClick() {
 		if(StringUtils.isEmpty(getElementId())){
 			return AjaxUtils.createAjaxRequest(getUrl(), handlers, getParameters());
 		} else {

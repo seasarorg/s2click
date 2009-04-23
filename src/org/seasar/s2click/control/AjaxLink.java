@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.apache.click.control.ActionLink;
 import org.apache.click.util.ClickUtils;
+import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringUtils;
 import org.seasar.s2click.util.AjaxUtils;
 
@@ -121,7 +122,7 @@ public class AjaxLink extends ActionLink {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public String toString(){
+	public void render(HtmlStringBuffer buffer){
 		if(StringUtils.isEmpty(getElementId())){
 			setAttribute("onclick", AjaxUtils.createAjaxRequest(
 					getHref(getValue()), handlers, getParameters()));
@@ -129,7 +130,7 @@ public class AjaxLink extends ActionLink {
 			setAttribute("onclick", AjaxUtils.createAjaxUpdater(
 					getElementId(), getHref(getValue()), handlers, getParameters()));
 		}
-		return super.toString();
+		super.render(buffer);
 	}
 	
 }

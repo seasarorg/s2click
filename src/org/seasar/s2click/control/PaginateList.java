@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.apache.click.control.AbstractControl;
 import org.apache.click.control.ActionLink;
+import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.math.NumberUtils;
 import org.seasar.s2click.util.S2ClickUtils;
 
@@ -251,11 +252,15 @@ public class PaginateList extends AbstractControl {
 		return result;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public String toString(){
+	public String toString() {
+		HtmlStringBuffer buffer = new HtmlStringBuffer(2250);
+		render(buffer);
+		return buffer.toString();
+	}
+	
+	@Override
+	public void render(HtmlStringBuffer buffer){
 		if(getTemplatePath() == null){
 			throw new RuntimeException("テンプレートが指定されていません。");
 		}
@@ -288,7 +293,7 @@ public class PaginateList extends AbstractControl {
 		param.put("request", getContext().getRequest());
 		param.put("response", getContext().getResponse());
 		
-		return getContext().renderTemplate(getTemplatePath(), param);
+		buffer.append(getContext().renderTemplate(getTemplatePath(), param));
 	}
 	
 }

@@ -1,5 +1,7 @@
 package org.seasar.s2click;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.net.URL;
@@ -18,6 +20,7 @@ import javax.servlet.ServletContext;
 
 import ognl.Ognl;
 
+import org.apache.click.Control;
 import org.apache.click.Page;
 import org.apache.click.service.CommonsFileUploadService;
 import org.apache.click.service.ConfigService;
@@ -25,6 +28,7 @@ import org.apache.click.service.ConsoleLogService;
 import org.apache.click.service.FileUploadService;
 import org.apache.click.service.LogService;
 import org.apache.click.service.TemplateService;
+import org.apache.click.util.ClickUtils;
 import org.apache.click.util.ErrorPage;
 import org.apache.click.util.Format;
 import org.apache.commons.lang.StringUtils;
@@ -36,6 +40,8 @@ import org.seasar.s2click.annotation.Path;
 import org.seasar.s2click.annotation.UrlPattern;
 import org.seasar.s2click.filter.UrlPatternManager;
 import org.seasar.s2click.util.S2ClickUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 @SuppressWarnings("unchecked")
 public class S2ClickConfigService implements ConfigService {
@@ -293,10 +299,13 @@ public class S2ClickConfigService implements ConfigService {
         this.hotDeploy = !SmartDeployUtil.isHotdeployMode(SingletonS2ContainerFactory.getContainer());
 		S2ClickConfig config = S2ClickUtils.getComponent(S2ClickConfig.class);
 		
-		loadCharset(config);
-		loadModel(config);
-		loadLocale(config);
 		loadLogService(config);
+		loadModel(config);
+		
+		deployFiles();
+		
+		loadCharset(config);
+		loadLocale(config);
 		loadTemplateService(config);
 		loadFileUploadService(config);
 		loadFormat(config);
@@ -304,6 +313,90 @@ public class S2ClickConfigService implements ConfigService {
 		loadPages(config);
 	}
 	
+    private void deployFiles() throws Exception {
+
+        // Deploy application files if they are not already present.
+        // Only deploy if servletContext.getRealPath() returns a valid path.
+        boolean resourcesDeployable = (servletContext.getRealPath("/") != null);
+
+        if (resourcesDeployable) {
+            String[] resources = {
+                "/org/apache/click/control/control.css",
+                "/org/apache/click/control/control.js",
+                "/org/apache/click/util/error.htm",
+                "/org/apache/click/not-found.htm",
+                "/org/apache/click/control/VM_global_library.vm"
+            };
+
+            ClickUtils.deployFiles(servletContext, resources, "click");
+
+            deployControls(getResourceRootElement("/click-controls.xml"));
+            deployControls(getResourceRootElement("/extras-controls.xml"));
+//            deployControls(rootElm);
+//            deployControlSets(rootElm);
+
+//            deployFilesInJars();
+        } else {
+            String msg = "Could not auto deploy files to 'click' web folder."
+                + " You may need to manually include click resources in your"
+                + " web application.";
+            getLogService().warn(msg);
+        }
+    }
+    
+    private Element getResourceRootElement(String path) throws IOException {
+        Document document = null;
+        InputStream inputStream = null;
+        try {
+            inputStream = ClickUtils.getResourceAsStream(path, getClass());
+
+            if (inputStream != null) {
+                document = ClickUtils.buildDocument(inputStream);
+            }
+
+        } finally {
+            ClickUtils.close(inputStream);
+        }
+
+        if (document != null) {
+            return document.getDocumentElement();
+
+        } else {
+            return null;
+        }
+    }
+	
+    private void deployControls(Element rootElm) throws Exception {
+
+        if (rootElm == null) {
+            return;
+        }
+
+        Element controlsElm = ClickUtils.getChild(rootElm, "controls");
+
+        if (controlsElm == null) {
+            return;
+        }
+
+        List deployableList = ClickUtils.getChildren(controlsElm, "control");
+
+        for (int i = 0; i < deployableList.size(); i++) {
+            Element deployableElm = (Element) deployableList.get(i);
+
+            String classname = deployableElm.getAttribute("classname");
+            if (StringUtils.isBlank(classname)) {
+                String msg =
+                    "'control' element missing 'classname' attribute.";
+                throw new RuntimeException(msg);
+            }
+
+            Class deployClass = ClickUtils.classForName(classname);
+            Control control = (Control) deployClass.newInstance();
+
+            control.onDeploy(servletContext);
+        }
+    }
+    
 	protected void loadCharset(S2ClickConfig config){
 		charset = config.charset;
 	}

@@ -19,6 +19,7 @@ import java.text.MessageFormat;
 
 import org.apache.click.Page;
 import org.apache.click.control.AbstractLink;
+import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /**
@@ -163,7 +164,7 @@ public class GreyboxLink extends AbstractLink {
 	}
 	
 	@Override
-	public String toString(){
+	public void render(HtmlStringBuffer buffer){
 		// ページクラスのパスを取得
 		Class<? extends Page> pageClass = getPageClass();
 		String pagePath = getContext().getPagePath(pageClass);
@@ -186,7 +187,7 @@ public class GreyboxLink extends AbstractLink {
 
 		setAttribute("onclick", sb.toString());
 
-		return super.toString();
+		super.render(buffer);
 	}
 
 }

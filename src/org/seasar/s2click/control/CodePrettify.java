@@ -22,6 +22,7 @@ import javax.servlet.ServletContext;
 
 import org.apache.click.control.AbstractControl;
 import org.apache.click.util.ClickUtils;
+import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -122,7 +123,15 @@ public class CodePrettify extends AbstractControl {
 	public void setListener(Object listener, String method) {
 	}
 
-	@Override public String toString() {
+	@Override
+	public String toString() {
+		HtmlStringBuffer buffer = new HtmlStringBuffer(2250);
+		render(buffer);
+		return buffer.toString();
+	}
+	
+	@Override
+	public void render(HtmlStringBuffer buffer) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<pre class=\"prettyprint");
 		if(StringUtils.isNotEmpty(this.lang)){
@@ -152,7 +161,7 @@ public class CodePrettify extends AbstractControl {
 			sb.append("</script>\n");
 		}
 		
-		return sb.toString();
+		buffer.append(sb.toString());
 	}
 	
 }

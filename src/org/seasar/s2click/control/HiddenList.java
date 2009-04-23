@@ -113,8 +113,7 @@ public class HiddenList extends Field {
 	}
 	
 	@Override
-	public String toString(){
-		HtmlStringBuffer buffer = new HtmlStringBuffer();
+	public void render(HtmlStringBuffer buffer){
 		List<String> values = getValues();
 		
         for(int i=0; i < values.size(); i++){
@@ -125,7 +124,5 @@ public class HiddenList extends Field {
             buffer.appendAttribute("value", values.get(i));
             buffer.elementEnd();
         }
-        
-        return buffer.toString();
 	}
 }

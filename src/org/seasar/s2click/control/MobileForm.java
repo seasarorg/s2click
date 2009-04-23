@@ -171,6 +171,7 @@ public class MobileForm extends S2ClickForm {
 		throw new UnsupportedOperationException();
 	}
 
+	// TODO Click 2.0.1対応（render()メソッドを実装する）
 	@Override
 	@SuppressWarnings("unchecked")
     public String toString() {

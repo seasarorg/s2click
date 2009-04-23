@@ -19,6 +19,7 @@ import java.text.MessageFormat;
 
 import org.apache.click.Page;
 import org.apache.click.control.Button;
+import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /**
@@ -149,7 +150,7 @@ public class GreyboxButton extends Button {
 	}
 
 	@Override
-	public String toString(){
+	public void render(HtmlStringBuffer buffer){
 		// ページクラスのパスを取得
 		Class<? extends Page> pageClass = getPageClass();
 		String pagePath = getContext().getPagePath(pageClass);
@@ -172,7 +173,7 @@ public class GreyboxButton extends Button {
 
 		setOnClick(sb.toString());
 
-		return super.toString();
+		super.render(buffer);
 	}
 
 }
