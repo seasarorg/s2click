@@ -1,4 +1,4 @@
-#Thu Mar 26 23:36:45 JST 2009
+#Sat Apr 25 01:34:30 JST 2009
 eclipse.preferences.version=1
 encoding//WebContent/click/error.htm=UTF-8
 encoding//WebContent/controls-confirm.htm=UTF-8
@@ -6,8 +6,8 @@ encoding//WebContent/greybox-select.htm=UTF-8
 encoding//WebContent/greybox.htm=UTF-8
 encoding//WebContent/index.htm=UTF-8
 encoding//WebContent/json.htm=UTF-8
-encoding//WebContent/mobile-sample.htm=UTF-8
-encoding//WebContent/paginateList.htm=UTF-8
+encoding//WebContent/paginate-list.htm=UTF-8
+encoding//WebContent/paginate.htm=UTF-8
 encoding//WebContent/tooltip.htm=UTF-8
 encoding//WebContent/url-pattern.htm=UTF-8
 encoding//docs/configuration.html=UTF-8

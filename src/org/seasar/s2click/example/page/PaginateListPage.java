@@ -18,33 +18,21 @@ package org.seasar.s2click.example.page;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.click.ActionListener;
-import org.apache.click.Control;
-import org.apache.click.control.PageLink;
-import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.control.PaginateList;
-import org.seasar.s2click.example.form.MobileSampleForm;
 
 /**
- * モバイル向け機能のサンプルページです。
+ * PaginateListのサンプルページです。
  * 
  * @author Naoki Takezoe
  */
-public class MobileSamplePage extends S2ClickPage {
+public class PaginateListPage extends LayoutPage {
 	
-	public MobileSampleForm form = new MobileSampleForm("form");
-	public PageLink backLink = new PageLink("backLink", "戻る", IndexPage.class);
+	public String title = "PaginateList";
 	
 	public List<String> list = new ArrayList<String>();
 	public PaginateList paginateList = new PaginateList("paginateList");
 	
-	public MobileSamplePage(){
-		form.setActionListener(new ActionListener(){
-			public boolean onAction(Control source) {
-				return doLogin();
-			}
-		});
-		
+	public PaginateListPage(){
 		list.add("Java");
 		list.add("C#");
 		list.add("Perl");
@@ -53,20 +41,7 @@ public class MobileSamplePage extends S2ClickPage {
 		
 		paginateList.setRowList(list);
 		paginateList.setPageSize(3);
-		paginateList.setTemplatePath("/paginateList.htm");
-	}
-	
-	protected boolean doLogin(){
-		if(form.isValid()){
-			if(form.userId.getValue().equals("test") 
-					&& form.password.getValue().equals("test")){
-				addModel("result", "ログイン成功");
-				
-			} else {
-				addModel("result", "ログイン失敗");
-			}
-		}
-		return true;
+		paginateList.setTemplatePath("/paginate.htm");
 	}
 	
 }

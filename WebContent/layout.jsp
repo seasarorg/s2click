@@ -42,7 +42,7 @@
       <li><a href="${context}/greybox.htm">GreyBox</a></li>
       <li><a href="${context}/user/select/001">URLパターン</a></li>
       <li><a href="${context}/jsp-example.htm">JSP</a></li>
-      <li><a href="${context}/mobile-sample.htm">モバイル</a></li>
+      <li><a href="${context}/paginate-list.htm">PaginateList</a></li>
       <li><a href="${context}/error-sample.htm">カスタムエラーページ</a></li>
     </ul>
   </td>
