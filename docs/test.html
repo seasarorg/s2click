@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <title>S2Click - Click Framework with Seasar2</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<h1>ユニットテストのサポート</h1>
+
+<div class="content">
+<p>
+  S2Clickでは、フレームワークとしての機能ではありませんが、
+  S2Clickを使用して開発されたアプリケーションに対するJUnitテストケースの記述を効率化するための抽象基底クラスを提供しています。
+</p>
+<p>
+  なお、これらのユニットテストサポートは実験的な試みのため、今後APIの大きな変更が行われる可能性があります。
+</p>
+
+<h2>ページクラスのユニットテスト</h2>
+
+<p>
+  ページクラスのテストケースは<strong>org.seasar.s2click.S2ClickPageTestCase</strong>を継承して作成します。
+  型パラメータでテスト対象のページクラスを指定します。
+  テスト対象のページクラスのインスタンスは<code>page</code>フィールドで参照できます。
+  また、ページクラスに対する共通の初期化処理などを行う場合は<code>initPage()</code>メソッドをオーバーライドします。
+</p>
+
+<p>
+  ページクラスのテストケースの実装例を以下に示します。
+</p>
+
+<pre class="code">
+package org.seasar.s2click.example.page;
+
+import org.apache.click.ActionListener;
+import org.seasar.s2click.S2ClickPageTestCase;
+
+public class AddPageTest extends S2ClickPageTestCase&lt;AddPage&gt; {
+    
+    @Override
+    protected void initPage(AddPage page){
+        super.initPage(page);
+        
+        page.form.num1.setValueObject(1);
+        page.form.num2.setValueObject(2);
+    }
+    
+    public void testAddPage(){
+        ActionListener listener = page.form.submit.getActionListener();
+        listener.onAction(page.form.submit);
+        
+        assertEquals(3, page.form.result.getInteger().intValue());
+    }
+
+} </pre>
+
+<h2>サービスクラスのユニットテスト</h2>
+
+<p>
+  サービスクラスのテストケースは<strong>org.seasar.s2click.S2ClickServiceTestCase</strong>を継承して作成します。
+  型パラメータでテスト対象のサービスクラスを指定します。
+  テスト対象のサービスクラスのインスタンスは<code>service</code>フィールドで参照できます。
+</p>
+<p>
+  <code>S2TestCase</code>の機能に加え、さらにユニットテストを省力化するために以下のような機能を提供します。
+</p>
+
+<dl>
+  <dt>初期データの自動投入</dt>
+  <dd>
+    <strong>テストクラス名_テストメソッド名_data.xls</strong> という名前のExcelファイルが
+    テストクラスと同じパッケージに存在する場合、そのデータを自動的にデータベースに投入します。
+  </dd>
+  
+  <dt>DBの内容とExcelをアノテーションで比較</dt>
+  <dd>
+    テストメソッドに<strong>@Assertアノテーション</strong>を付与しておくことで、
+    指定したテーブルのデータを<strong>テストクラス名_テストメソッド名_expect.xls</strong>
+    という名前のExcelファイルと比較することができます。
+    さらに、まだExcelファイルが存在しない場合はデータベースから生成されます。
+  </dd>
+</dl>
+
+<p>
+  なお、Excelファイルの自動生成機能を使用するには<strong>S2ClickTestConfig</strong>をdiconファイルに登録し、
+  <code>sourceDir</code>プロパティにテストケースのソースフォルダを指定しておく必要があります。
+  テスト時のみ読み込むdiconファイルを用意し、以下のように記述を追加してください。
+</p>
+
+<pre class="code">
+&lt;component class="org.seasar.s2click.S2ClickTestConfig" instance="singleton"&gt;
+  &lt;property name="sourceDir"&gt;"test"&lt;/property&gt;
+&lt;/component&gt; </pre>
+
+<p>
+  サービスクラスのテストケースの実装例を以下に示します。
+</p>
+
+<pre class="code">
+package org.seasar.s2click.example.service;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import org.seasar.s2click.Assert;
+import org.seasar.s2click.Assert.Table;
+import org.seasar.s2click.S2ClickServiceTestCase;
+import org.seasar.s2click.example.entity.Message;
+
+public class MessageServiceTest extends S2ClickServiceTestCase&lt;MessageService&gt; {
+    
+    @Assert(tables = @Table(name="MESSAGE", excludeColumns={"MESSAGE_ID", "DATE"}))
+    public void testInsertTx() throws Exception {
+        Message message = new Message();
+        message.name = "たけぞう";
+        message.message = "テスト";
+        message.date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2009/01/01 12:34:56");
+        
+        service.insert(message);
+    }
+    
+} </pre>
+
+</div>
+
+</body>
+</html>
