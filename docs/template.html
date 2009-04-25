@@ -24,14 +24,21 @@
   <link href="style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<h1>ユーティリティ</h1>
+<h1>ページテンプレート</h1>
 
 <div class="content">
-<h2>org.seasar.s2click.util.S2ClickFormat</h2>
+
+<h2>フォーマットオブジェクト</h2>
+
 <p>
-  Click標準の<code>org.apache.click.util.Format</code>を拡張し、便利なメソッドを追加しています。
-  HTMLテンプレートでは<code>$format</code>で参照することができます。
+  Clickではページテンプレートにおいて<code>$format</code>という変数でフォーマットオブジェクトを参照することができます。
+  フォーマットオブジェクトはHTMLのエスケープやURLエンコードなどを行うユーティリティを提供します。
 </p>
+<p>
+  S2Clickではフォーマットオブジェクトとして<strong>org.seasar.s2click.util.S2ClickFormat</strong>がデフォルトで使用されます。
+  <code>S2ClickFormat</code>はClick標準の<code>org.apache.click.util.Format</code>を拡張し、以下のような便利なメソッドを追加しています。
+</p>
+
 <table class="indent" border="1" cellspacing="0">
 <tr bgcolor="#D1F3F4">
   <th>メソッド</th>
@@ -72,10 +79,6 @@
   <td>引数の文字列と同じ長さのアスタリスクからなる文字列を返却します。</td>
 </tr>
 </table>
-
-<h2>org.seasar.s2click.util.S2ClickUtils</h2>
-
-<h2>org.seasar.s2click.util.AjaxUtils</h2>
 
 </div>
 
