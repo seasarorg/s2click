@@ -38,7 +38,7 @@
 <h2>ページクラスのユニットテスト</h2>
 
 <p>
-  ページクラスのテストケースは<strong>org.seasar.s2click.S2ClickPageTestCase</strong>を継承して作成します。
+  ページクラスのテストケースは<strong>org.seasar.s2click.test.S2ClickPageTestCase</strong>を継承して作成します。
   型パラメータでテスト対象のページクラスを指定します。
   テスト対象のページクラスのインスタンスは<code>page</code>フィールドで参照できます。
   また、ページクラスに対する共通の初期化処理などを行う場合は<code>initPage()</code>メソッドをオーバーライドします。
@@ -52,7 +52,7 @@
 package org.seasar.s2click.example.page;
 
 import org.apache.click.ActionListener;
-import org.seasar.s2click.S2ClickPageTestCase;
+import org.seasar.s2click.test.S2ClickPageTestCase;
 
 public class AddPageTest extends S2ClickPageTestCase&lt;AddPage&gt; {
     
@@ -76,7 +76,7 @@ public class AddPageTest extends S2ClickPageTestCase&lt;AddPage&gt; {
 <h2>サービスクラスのユニットテスト</h2>
 
 <p>
-  サービスクラスのテストケースは<strong>org.seasar.s2click.S2ClickServiceTestCase</strong>を継承して作成します。
+  サービスクラスのテストケースは<strong>org.seasar.s2click.test.S2ClickServiceTestCase</strong>を継承して作成します。
   型パラメータでテスト対象のサービスクラスを指定します。
   テスト対象のサービスクラスのインスタンスは<code>service</code>フィールドで参照できます。
 </p>
@@ -107,7 +107,7 @@ public class AddPageTest extends S2ClickPageTestCase&lt;AddPage&gt; {
 </p>
 
 <pre class="code">
-&lt;component class="org.seasar.s2click.S2ClickTestConfig" instance="singleton"&gt;
+&lt;component class="org.seasar.s2click.test.S2ClickTestConfig" instance="singleton"&gt;
   &lt;property name="sourceDir"&gt;"test"&lt;/property&gt;
 &lt;/component&gt; </pre>
 
@@ -121,9 +121,9 @@ package org.seasar.s2click.example.service;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.seasar.s2click.Assert;
-import org.seasar.s2click.Assert.Table;
-import org.seasar.s2click.S2ClickServiceTestCase;
+import org.seasar.s2click.test.Assert;
+import org.seasar.s2click.test.Assert.Table;
+import org.seasar.s2click.test.S2ClickServiceTestCase;
 import org.seasar.s2click.example.entity.Message;
 
 public class MessageServiceTest extends S2ClickServiceTestCase&lt;MessageService&gt; {
