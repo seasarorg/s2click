@@ -1,7 +1,7 @@
 package org.seasar.s2click.example.page;
 
 import org.apache.click.ActionListener;
-import org.seasar.s2click.S2ClickPageTestCase;
+import org.seasar.s2click.test.S2ClickPageTestCase;
 
 public class AddPageTest extends S2ClickPageTestCase<AddPage> {
 

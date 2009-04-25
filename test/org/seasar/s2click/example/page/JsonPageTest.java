@@ -6,7 +6,7 @@ import java.util.Map;
 
 import net.arnx.jsonic.JSON;
 
-import org.seasar.s2click.S2ClickPageTestCase;
+import org.seasar.s2click.test.S2ClickPageTestCase;
 import org.seasar.s2click.util.AjaxUtils;
 
 public class JsonPageTest extends S2ClickPageTestCase<JsonPage> {

@@ -17,14 +17,13 @@ package org.seasar.s2click.control;
 
 import java.util.List;
 
-
 import org.apache.click.MockContext;
 import org.apache.click.Page;
 import org.apache.click.control.HiddenField;
 import org.apache.click.control.Submit;
 import org.apache.click.control.TextField;
 import org.apache.click.util.HtmlStringBuffer;
-import org.seasar.s2click.S2ClickTestCase;
+import org.seasar.s2click.test.S2ClickTestCase;
 
 public class S2ClickFormTest extends S2ClickTestCase {
 

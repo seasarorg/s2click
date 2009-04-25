@@ -18,7 +18,7 @@ package org.seasar.s2click.control;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.seasar.s2click.S2ClickTestCase;
+import org.seasar.s2click.test.S2ClickTestCase;
 
 public class PaginateListTest extends S2ClickTestCase {
 

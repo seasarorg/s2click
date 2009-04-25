@@ -1,4 +1,4 @@
-package org.seasar.s2click;
+package org.seasar.s2click.test;
 
 import java.lang.reflect.Type;
 

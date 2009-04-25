@@ -3,10 +3,10 @@ package org.seasar.s2click.example.service;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.seasar.s2click.Assert;
-import org.seasar.s2click.Assert.Table;
-import org.seasar.s2click.S2ClickServiceTestCase;
 import org.seasar.s2click.example.entity.Message;
+import org.seasar.s2click.test.Assert;
+import org.seasar.s2click.test.S2ClickServiceTestCase;
+import org.seasar.s2click.test.Assert.Table;
 
 /**
  * サービスクラスのテストのサンプルです。

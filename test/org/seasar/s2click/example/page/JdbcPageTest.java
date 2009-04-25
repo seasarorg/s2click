@@ -3,9 +3,9 @@ package org.seasar.s2click.example.page;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.seasar.s2click.S2ClickPageTestCase;
 import org.seasar.s2click.example.entity.Message;
 import org.seasar.s2click.example.service.MessageService;
+import org.seasar.s2click.test.S2ClickPageTestCase;
 
 public class JdbcPageTest extends S2ClickPageTestCase<JdbcPage> {
 

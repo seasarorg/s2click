@@ -16,7 +16,7 @@
 package org.seasar.s2click.control;
 
 import org.apache.click.Page;
-import org.seasar.s2click.S2ClickTestCase;
+import org.seasar.s2click.test.S2ClickTestCase;
 
 public class CodePrettifyTest extends S2ClickTestCase {
 

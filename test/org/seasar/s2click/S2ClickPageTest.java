@@ -22,6 +22,8 @@ import java.util.Map;
 import org.seasar.framework.util.tiger.ReflectionUtil;
 import org.seasar.s2click.annotation.Request;
 import org.seasar.s2click.exception.RequestRequiredException;
+import org.seasar.s2click.test.MockConfigService;
+import org.seasar.s2click.test.S2ClickTestCase;
 
 public class S2ClickPageTest extends S2ClickTestCase {
 

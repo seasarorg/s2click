@@ -18,7 +18,7 @@ package org.seasar.s2click.control;
 import java.text.SimpleDateFormat;
 
 import org.apache.click.MockContext;
-import org.seasar.s2click.S2ClickTestCase;
+import org.seasar.s2click.test.S2ClickTestCase;
 
 public class DateFieldYYYYMMDDTest extends S2ClickTestCase {
 

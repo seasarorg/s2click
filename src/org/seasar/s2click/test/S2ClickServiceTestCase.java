@@ -1,4 +1,4 @@
-package org.seasar.s2click;
+package org.seasar.s2click.test;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,7 +27,7 @@ import org.seasar.framework.container.SingletonS2Container;
 import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.tiger.GenericUtil;
-import org.seasar.s2click.Assert.Table;
+import org.seasar.s2click.test.Assert.Table;
 
 /**
  * サービスクラスのテストケースの抽象基底クラスです。

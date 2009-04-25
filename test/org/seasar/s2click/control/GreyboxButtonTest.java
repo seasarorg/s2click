@@ -16,7 +16,7 @@
 package org.seasar.s2click.control;
 
 import org.seasar.s2click.S2ClickPage;
-import org.seasar.s2click.S2ClickTestCase;
+import org.seasar.s2click.test.S2ClickTestCase;
 
 public class GreyboxButtonTest extends S2ClickTestCase {
 
