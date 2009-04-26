@@ -34,13 +34,13 @@
   リクエストパラメータの自動バインド機能は利用できません。
 </p>
 <p>
-  代替手段として、<strong>@Requestアノテーション</strong>を付与したpublicフィールドにリクエストパラメータをバインドすることができます。
+  代替手段として、<a href="javadoc/org/seasar/s2click/annotation/Request.html">@Requestアノテーション</a>を付与したpublicフィールドにリクエストパラメータをバインドすることができます。
   デフォルトではフィールド名と同じ名前のリクエストパラメータがバインドされますが、
   @Requestアノテーションのパラメータによって別の名前のリクエストパラメータをバインドすることもできます。
 </p>
 <p>
-  また、@Requestアノテーションにrequired=trueの指定を追加することで、パラメータの必須チェックを自動的に行うことができます
-  （必須パラメータが設定されなかった場合にはRuntimeExceptionが発生します）。
+  また、@Requestアノテーションに<code>required=true</code>の指定を追加することで、パラメータの必須チェックを自動的に行うことができます
+  （必須パラメータが設定されなかった場合には<code>RuntimeException</code>が発生します）。
 </p>
 <pre class="code">
 public class HelloPage extends Page {
@@ -59,7 +59,7 @@ public class HelloPage extends Page {
 <h3>S2ClickPage</h3>
 <p>
   S2ClickはAjaxやファイルダウンロードでの利用を想定し、ページクラスの抽象基底クラスを提供しています。
-  Ajaxやファイルダウンロード機能を使用するページクラスは<strong>org.seasar.s2click.S2ClickPage</strong>を継承して実装します。
+  Ajaxやファイルダウンロード機能を使用するページクラスは<a href="javadoc/org/seasar/s2click/S2ClickPage.html">org.seasar.s2click.S2ClickPage</a>を継承して実装します。
   <code>S2ClickPage</code>には以下のようなメソッドが用意されており、サブクラスではこれらのメソッドを呼び出すことでJSONやHTML、ファイルなどを返却することができます。
 </p>
 <table class="indent" border="1" cellspacing="0">
@@ -87,7 +87,7 @@ public class HelloPage extends Page {
 
 <h3>アノテーションによるパスの指定</h3>
 <p>
-  <strong>@Pathアノテーション</strong>で任意のパスにページクラスをマッピングすることができます。
+  <a href="javadoc/org/seasar/s2click/annotation/Path.html">@Pathアノテーション</a>で任意のパスにページクラスをマッピングすることができます。
   対応するVelocityテンプレートが存在しないページクラスのパスを指定する場合に使用します。
 </p>
 <pre class="code">
@@ -96,7 +96,7 @@ public class ControlsPage extends LayoutPage {
   ...
 } </pre>
 <p>
-  <strong>@UrlPatternアノテーション</strong>をページクラスに付与すると、ページに任意のエイリアスを指定することができます。
+  <a href="javadoc/org/seasar/s2click/annotation/UrlPattern.html">@UrlPatternアノテーション</a>をページクラスに付与すると、ページに任意のエイリアスを指定することができます。
   これはApacheのmod_rewriteのように動作します。URLパターンで指定したパスの一部をリクエストパラメータにマッピングすることもできます。
 </p>
 <pre class="code">

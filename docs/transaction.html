@@ -30,7 +30,7 @@
 <p>
   Clickは1リクエストでページクラスのメソッドを複数回呼び出します。
   そのため、ページクラスのメソッドに対してトランザクション制御のためのインターセプタを適用しようとするとメソッドごとにトランザクションが完結してしまいます。
-  S2Clickでは1リクエスト=1トランザクションでトランザクション制御を行うための<strong>S2ClickServletTx</strong>が付属しています。
+  S2Clickでは1リクエスト=1トランザクションでトランザクション制御を行うための<a href="javadoc/org/seasar/s2click/servlet/S2ClickServletTx.html">S2ClickServletTx</a>が付属しています。
   <code>S2ClickServletTx</code>を使用することで、いわゆる<strong>Open Session in Viewパターン</strong>と同じ効果を得ることができます。
 </p>
 <p>

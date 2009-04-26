@@ -79,7 +79,7 @@
   S2Clickではフォームを単独のクラスとして作成することを推奨しています。
 </p>
 <p>
-  フォームクラスは<strong>org.seasar.s2click.control.S2ClickForm</strong>を継承して実装します。
+  フォームクラスは<a href="javadoc/org/seasar/s2click/control/S2ClickForm.html">org.seasar.s2click.control.S2ClickForm</a>を継承して実装します。
   <code>setFieldAutoRegisteration()</code>メソッドに<code>true</code>を設定しておくと、
   フィールドとして定義されたコントロールが自動的に自分自身に追加されます。
 </p>
@@ -112,7 +112,7 @@ public class MessageForm extends S2ClickForm {
   フォームクラスはnewして使用し、データベースにアクセスするためのサービスクラスをDIしています。
 </p>
 <p>
-  ページクラスは<strong>org.seasar.s2click.control.S2ClickForm</strong>を継承して実装します。
+  ページクラスは<a href="javadoc/org/seasar/s2click/S2ClickPage.html">org.seasar.s2click.S2ClickPage</a>を継承して実装します。
   この例では使用していませんが、<code>S2ClickPage</code>を継承することでバイナリやJSONをレスポンスに書き出すためのメソッドや、
   <code>@Request</code>アノテーションによるリクエストパラメータのフィールドへのバインド機能などを利用することができます。
 </p>
