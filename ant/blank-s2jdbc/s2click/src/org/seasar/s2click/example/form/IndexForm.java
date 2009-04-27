@@ -1,7 +1,7 @@
 package org.seasar.s2click.example.form;
 
-import net.sf.click.control.Submit;
-import net.sf.click.extras.control.IntegerField;
+import org.apache.click.control.Submit;
+import org.apache.click.extras.control.IntegerField;
 
 import org.seasar.s2click.control.S2ClickForm;
 

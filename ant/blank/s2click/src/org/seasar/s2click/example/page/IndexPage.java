@@ -1,6 +1,8 @@
 package org.seasar.s2click.example.page;
 
-import net.sf.click.Page;
+import org.apache.click.ActionListener;
+import org.apache.click.Control;
+import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.example.form.IndexForm;
 
 /**
@@ -9,20 +11,20 @@ import org.seasar.s2click.example.form.IndexForm;
  * @see IndexForm
  * @author Naoki Takezoe
  */
-public class IndexPage extends Page {
-	
+public class IndexPage extends S2ClickPage {
+
 	public IndexForm form = new IndexForm("form");
-	
+
 	public IndexPage(){
-		form.submit.setListener(this, "doAdd");
+		form.submit.setActionListener(new ActionListener(){
+			public boolean onAction(Control source) {
+				if(form.isValid()){
+					form.result.setValue(String.valueOf(
+							form.num1.getInteger() + form.num2.getInteger()));
+				}
+				return true;
+			}
+		});
 	}
 
-	public boolean doAdd(){
-		if(form.isValid()){
-			form.result.setValue(String.valueOf(
-					form.num1.getInteger() + form.num2.getInteger()));
-		}
-		return true;
-	}
-	
 }
