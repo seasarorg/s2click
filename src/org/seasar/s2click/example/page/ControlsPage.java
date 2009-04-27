@@ -17,6 +17,7 @@ package org.seasar.s2click.example.page;
 
 import org.apache.click.ActionListener;
 import org.apache.click.Control;
+import org.apache.click.control.Button;
 import org.seasar.s2click.annotation.Path;
 import org.seasar.s2click.example.form.ControlsForm;
 
@@ -40,22 +41,14 @@ public class ControlsPage extends LayoutPage {
 			form.toHidden();
 			
 			// 送信ボタンを削除して戻るボタンを追加
-			form.submit.setLabel("戻る");
-			
-			// TODO これじゃダメぽ
-			form.submit.setActionListener(new ActionListener(){
-				public boolean onAction(Control source) {
-					return doBack();
-				}
-			});
+			form.remove(form.submit);
+			Button button = new Button("button", "戻る");
+			button.setOnClick("history.back();");
+			form.add(button);
 			
 			template = "/controls-confirm.htm";
 			return false;
 		}
-		return true;
-	}
-	
-	protected boolean doBack(){
 		return true;
 	}
 	
