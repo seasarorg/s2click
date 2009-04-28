@@ -1,0 +1,187 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!--
+ Copyright 2006-2009 the Seasar Foundation and the Others.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ either express or implied. See the License for the specific language
+ governing permissions and limitations under the License.
+-->
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xml="http://www.w3.org/XML/1998/namespace"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+  version="2.1">
+
+    <description>S2Click Format Functions</description>
+    <display-name>S2Click Format Functions</display-name>
+	<tlib-version>2.1</tlib-version>
+	<short-name>format</short-name>
+	<uri>http://s2click.sandbox.seasar.org/format</uri>
+	
+	<function>
+		<name>datetime</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String datetime(java.util.Date)</function-signature>
+	</function>
+	<function>
+		<name>json</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String json(java.lang.Object)</function-signature>
+	</function>
+	<function>
+		<name>nbsp</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String nbsp(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>ognl</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.Object ognl(java.lang.String) throws ognl.OgnlException</function-signature>
+	</function>
+	<function>
+		<name>br</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String br(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>mask</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String mask(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>url</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String url(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>date</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String date(java.util.Date)</function-signature>
+	</function>
+	<!--
+	<function>
+		<name>getEmptyString</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String getEmptyString()</function-signature>
+	</function>
+	-->
+	<function>
+		<name>currentDate2</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String currentDate2(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>currentDate</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String currentDate()</function-signature>
+	</function>
+	<function>
+		<name>decimal2</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String decimal2(java.lang.Number, java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>decimal</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String decimal(java.lang.Number)</function-signature>
+	</function>
+	<function>
+		<name>email2</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String email2(java.lang.String, java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>email</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String email(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>javascript</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String javascript(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>limitLength</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String limitLength(java.lang.String, int)</function-signature>
+	</function>
+	<function>
+		<name>limitLength2</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String limitLength2(java.lang.String, int, java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>link</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String link(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>link2</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String link2(java.lang.String, java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>percentage</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String percentage(java.lang.Number)</function-signature>
+	</function>
+	<!--
+	<function>
+		<name>getLocale</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.util.Locale getLocale()</function-signature>
+	</function>
+	-->
+	<function>
+		<name>message</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String message(java.lang.String, java.lang.Object)</function-signature>
+	</function>
+	<!--
+	<function>
+		<name>message</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String message(java.lang.String, java.util.List)</function-signature>
+	</function>
+	<function>
+		<name>message</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String message(java.lang.String, java.lang.Object[])</function-signature>
+	</function>
+	-->
+	<function>
+		<name>time</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String time(java.util.Date)</function-signature>
+	</function>
+	<function>
+		<name>string</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String string(java.lang.Object)</function-signature>
+	</function>
+	<function>
+		<name>currency</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String currency(java.lang.Number)</function-signature>
+	</function>
+	<function>
+		<name>date2</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String date2(java.util.Date, java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>html</name>
+		<function-class>org.seasar.s2click.util.S2ClickFunctions</function-class>
+		<function-signature>java.lang.String html(java.lang.Object)</function-signature>
+	</function>
+
+</taglib>
+
