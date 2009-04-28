@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%--
  Copyright 2006-2009 the Seasar Foundation and the Others.
 
@@ -13,4 +14,9 @@
  either express or implied. See the License for the specific language
  governing permissions and limitations under the License.
 --%>
+<%@ taglib uri="http://s2click.sandbox.seasar.org/format" prefix="format" %>
+
 ${form}
+
+<hr>
+現在日時：${format:currentDate2("yyyy/MM/dd HH:mm:ss")}
