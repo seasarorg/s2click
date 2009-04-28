@@ -1,4 +1,4 @@
-#Sun Apr 26 13:15:00 JST 2009
+#Tue Apr 28 23:25:29 JST 2009
 eclipse.preferences.version=1
 encoding//WebContent/click/error.htm=UTF-8
 encoding//WebContent/controls-confirm.htm=UTF-8
@@ -6,6 +6,7 @@ encoding//WebContent/greybox-select.htm=UTF-8
 encoding//WebContent/greybox.htm=UTF-8
 encoding//WebContent/index.htm=UTF-8
 encoding//WebContent/json.htm=UTF-8
+encoding//WebContent/jsp-example.jsp=UTF-8
 encoding//WebContent/paginate-list.htm=UTF-8
 encoding//WebContent/paginate.htm=UTF-8
 encoding//WebContent/tooltip.htm=UTF-8
