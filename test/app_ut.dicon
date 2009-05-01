@@ -24,7 +24,7 @@
 	<include path="s2jdbc.dicon"/>
 	<include path="s2click.dicon"/>
 	
-	<component class="org.seasar.s2click.S2ClickTestConfig" instance="singleton">
+	<component class="org.seasar.s2click.test.S2ClickTestConfig" instance="singleton">
 		<property name="sourceDir">"test"</property>
 	</component>
 </components>
