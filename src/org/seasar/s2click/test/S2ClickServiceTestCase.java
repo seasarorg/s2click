@@ -27,7 +27,6 @@ import org.seasar.framework.container.SingletonS2Container;
 import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
 import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.tiger.GenericUtil;
-import org.seasar.s2click.test.Assert.Table;
 
 /**
  * サービスクラスのテストケースの抽象基底クラスです。
@@ -40,19 +39,33 @@ import org.seasar.s2click.test.Assert.Table;
  *     テストクラスと同じパッケージに存在する場合、そのデータを自動的にデータベースに投入します。
  *   </dd>
  *   
+ *   <dt>Excelファイルの自動生成</dt>
+ *   <dd>
+ *     テストメソッドに{@link GenerateExcel}アノテーションを付与しておくことで、
+ *     期待値として比較するためのExcelファイルを生成することができます。
+ *     生成されるExcelファイルは<strong>テストクラス名_テストメソッド名_expect.xls</strong>というファイル名になります。
+ *     生成されるのは初期データの自動投入直後になります。
+ *     すでにExcelファイルが存在する場合はなにも行いません。<br>
+ *     <code>GenerateExcel</code>アノテーションは主にデータベースの検索処理の結果を検証する際に使用するExcelファイルの生成に利用できます。
+ *     アノテーションの記述によってExcel生成時の検索条件やソート順、対象カラムを指定できるので、検証したいデータに応じたExcelを生成することができます。
+ *   </dd>
+ *   
  *   <dt>DBの内容とExcelをアノテーションで比較</dt>
  *   <dd>
  *     テストメソッドに{@link Assert}アノテーションを付与しておくことで、
  *     指定したテーブルのデータを<strong>テストクラス名_テストメソッド名_expect.xls</strong>
  *     という名前のExcelファイルと比較することができます。
  *     さらに、まだExcelファイルが存在しない場合はデータベースから生成されます。
+ *     このときの生成のタイミングは<code>GenerateExcel</code>アノテーションで生成する場合と異なり、
+ *     テストメソッドの実行直後になります。<br>
+ *     <code>Assert</code>アノテーションは主にデータベースの更新処理を行った結果が正しいかどうかの検証に使用します。
  *   </dd>
  * </dl>
  * なお、Excelファイルの自動生成機能を使用するには{@link S2ClickTestConfig}をdiconファイルに登録し、
  * <code>sourceDir</code>プロパティにテストケースのソースフォルダを指定しておく必要があります。
  * テスト時のみ読み込むdiconファイルを用意し、以下のように記述を追加してください。
  * <pre>
- * &lt;component class="org.seasar.s2click.S2ClickTestConfig" instance="singleton"&gt;
+ * &lt;component class="org.seasar.s2click.test.S2ClickTestConfig" instance="singleton"&gt;
  *   &lt;property name="sourceDir"&gt;"test"&lt;/property&gt;
  * &lt;/component&gt; </pre>
  * 
@@ -101,14 +114,22 @@ public abstract class S2ClickServiceTestCase<T> extends S2ClickTestCase {
         		// ファイルがない場合は無視する
         	}
         	
+        	// 事前に結果Excelを作成する
+            Method method = getTargetMethod();
+        	GenerateExcel annGenExcel = method.getAnnotation(GenerateExcel.class);
+        	if(annGenExcel != null){
+	            Table[] tables = annGenExcel.tables();
+	            // Excelファイルがない場合は作成
+	            createExcelFile(tables);
+        	}
+        	
         	// テストを実行する
         	runTest();
             
         	// Assertアノテーションの処理
-            Method method = getTargetMethod();
-            Assert ann = method.getAnnotation(Assert.class);
-            if(ann != null){
-	            Table[] tables = ann.tables();
+            Assert annAssert = method.getAnnotation(Assert.class);
+            if(annAssert != null){
+	            Table[] tables = annAssert.tables();
 	            // Excelファイルがない場合は作成
 	            createExcelFile(tables);
 	            // 結果を比較
@@ -170,7 +191,15 @@ public abstract class S2ClickServiceTestCase<T> extends S2ClickTestCase {
 	    	PreparedStatement stmt = null;
 	    	ResultSet rs = null;
 	    	try {
-		    	stmt = context.getPreparedStatement("SELECT * FROM " + tables[i].name());
+	    		String sql = "SELECT * FROM " + tables[i].name();
+	    		if(StringUtils.isNotEmpty(tables[i].where())){
+	    			sql = sql + " WHERE " + tables[i].where();
+	    		}
+	    		if(StringUtils.isNotEmpty(tables[i].orderBy())){
+	    			sql = sql + " ORDER BY " + tables[i].orderBy();
+	    		}
+	    		
+		    	stmt = context.getPreparedStatement(sql);
 		    	rs = stmt.executeQuery();
 		    	
 		    	ResultSetMetaData md = rs.getMetaData();
@@ -182,15 +211,15 @@ public abstract class S2ClickServiceTestCase<T> extends S2ClickTestCase {
 		    		String columnName = md.getColumnName(j);
 		    		
 		    		if(tables[i].includeColumns().length > 0 &&
-		    				Arrays.binarySearch(tables[i].includeColumns(), columnName) == -1){
+		    				Arrays.binarySearch(tables[i].includeColumns(), columnName) < 0){
 		    			continue;
 		    		}
 		    		if(tables[i].excludeColumns().length > 0 &&
-		    				Arrays.binarySearch(tables[i].excludeColumns(), columnName) != -1){
+		    				Arrays.binarySearch(tables[i].excludeColumns(), columnName) >= 0){
 		    			continue;
 		    		}
 		    		
-		    		HSSFCell cell = row.createCell((short) (j -1));
+		    		HSSFCell cell = row.createCell((short) columnNames.size());
 		    		cell.setCellValue(new HSSFRichTextString(columnName));
 		    		columnNames.add(columnName);
 		    	}
