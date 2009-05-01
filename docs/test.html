@@ -90,14 +90,29 @@ public class AddPageTest extends S2ClickPageTestCase&lt;AddPage&gt; {
     <strong>テストクラス名_テストメソッド名_data.xls</strong> という名前のExcelファイルが
     テストクラスと同じパッケージに存在する場合、そのデータを自動的にデータベースに投入します。
   </dd>
+
+  <dt>Excelファイルの自動生成</dt>
+  <dd>
+    テストメソッドに<a href="javadoc/org/seasar/s2click/test/GenerateExcel.html">GenerateExcel</a>アノテーションを付与しておくことで、
+    期待値として比較するためのExcelファイルを生成することができます。
+    生成されるExcelファイルは<strong>テストクラス名_テストメソッド名_expect.xls</strong>というファイル名になります。
+    生成されるのは初期データの自動投入直後になります。
+    すでにExcelファイルが存在する場合はなにも行いません。<br>
+    <code>GenerateExcel</code>アノテーションは主にデータベースの検索処理の結果を検証する際に使用するExcelファイルの生成に利用できます。
+    アノテーションの記述によってExcel生成時の検索条件やソート順、対象カラムを指定できるので、検証したいデータに応じたExcelを生成することができます。
+  </dd>
   
   <dt>DBの内容とExcelをアノテーションで比較</dt>
   <dd>
-    テストメソッドに<strong>@Assertアノテーション</strong>を付与しておくことで、
+    テストメソッドに<a href="javadoc/org/seasar/s2click/test/Assert.html">Assert</a>アノテーションを付与しておくことで、
     指定したテーブルのデータを<strong>テストクラス名_テストメソッド名_expect.xls</strong>
     という名前のExcelファイルと比較することができます。
     さらに、まだExcelファイルが存在しない場合はデータベースから生成されます。
+    このときの生成のタイミングは<code>GenerateExcel</code>アノテーションで生成する場合と異なり、
+    テストメソッドの実行直後になります。<br>
+    <code>Assert</code>アノテーションは主にデータベースの更新処理を行った結果が正しいかどうかの検証に使用します。
   </dd>
+  
 </dl>
 
 <p>
