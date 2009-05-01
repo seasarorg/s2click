@@ -5,8 +5,9 @@ import java.util.List;
 
 import org.seasar.s2click.example.entity.Message;
 import org.seasar.s2click.test.Assert;
+import org.seasar.s2click.test.GenerateExcel;
 import org.seasar.s2click.test.S2ClickServiceTestCase;
-import org.seasar.s2click.test.Assert.Table;
+import org.seasar.s2click.test.Table;
 
 /**
  * サービスクラスのテストのサンプルです。
@@ -52,13 +53,12 @@ public class MessageServiceTest extends S2ClickServiceTestCase<MessageService> {
 	 * <p>
 	 * Excelを使ったユニットテストのサンプルです。
 	 */
+    @GenerateExcel(tables = @Table(name="MESSAGE", orderBy="MESSAGE_ID DESC",  excludeColumns={"DATE"}))
 	public void testGetMessages2Tx() {
-//		readXlsAllReplaceDb("MessageServiceTest_testGetMessages2Tx_data.xls");
-		
 		List<Message> messages = service.getMessages();
 		
 		assertBeanListEquals("データベース内のデータが期待値と一致しません。", 
-				readXls("MessageServiceTest_testGetMessages2Tx_expect.xls"), messages);
+				getExpectDataSet(), messages);
 	}
 	
 	/**
