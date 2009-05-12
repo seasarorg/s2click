@@ -130,7 +130,7 @@ public class ResourceServlet extends HttpServlet {
 		for(String packageName: rootPackage.split(",")){
 			packageName = packageName.trim();
 			if(StringUtils.isNotEmpty(packageName)){
-				rootPathList.add("/" + rootPackage.replace(".", "/"));
+				rootPathList.add("/" + packageName.replace(".", "/"));
 			}
 		}
 		if(rootPathList.isEmpty()){
