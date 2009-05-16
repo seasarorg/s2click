@@ -29,9 +29,9 @@
 		<pathelement location="${lib.dir}/jsonic-0.9.4.jar"/>
 		<pathelement location="${lib.dir}/log4j-1.2.13.jar"/>
 		<pathelement location="${lib.dir}/ognl-2.6.9-patch-20070908.jar"/>
-		<pathelement location="${lib.dir}/s2-extension-2.4.35.jar"/>
-		<pathelement location="${lib.dir}/s2-framework-2.4.35.jar"/>
-		<pathelement location="${lib.dir}/s2-tiger-2.4.35.jar"/>
+		<pathelement location="${lib.dir}/s2-extension-2.4.36.jar"/>
+		<pathelement location="${lib.dir}/s2-framework-2.4.36.jar"/>
+		<pathelement location="${lib.dir}/s2-tiger-2.4.36.jar"/>
 		<pathelement location="${lib.dir}/geronimo-ejb_3.0_spec-1.0.jar"/>
 		<pathelement location="${lib.dir}/geronimo-jpa_3.0_spec-1.0.jar"/>
 		<pathelement location="${lib.dir}/geronimo-jta_1.1_spec-1.0.jar"/>
@@ -39,7 +39,7 @@
 		<pathelement location="./lib/servlet-api-2.3.jar"/>
 		<pathelement location="./lib/junit.jar"/>
 		<pathelement location="./lib/click-mock-2.0.1-incubating.jar"/>
-		<pathelement location="./lib/poi-3.0-rc4-20070503.jar"/>
+		<pathelement location="./lib/poi-3.0-FINAL.jar"/>
 		<pathelement location="./lib/"/>
 		<pathelement location="${test.bin.dir}"/>
 		<pathelement location="${bin.dir}"/>
