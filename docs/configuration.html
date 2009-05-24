@@ -162,6 +162,47 @@
     &lt;/initMethod&gt;
 &lt;/component&gt; </pre>
 
+<h2>リソースをクラスパス内に格納する</h2>
+
+<p>
+  S2Clickにはクラスパス内に格納したイメージやJavaScriptなどをHTMLから参照するための<a href="javadoc/org/seasar/s2click/servlet/ResourceServlet.html">org.seasar.s2click.servlet.ResourceServlet</a>が付属しています。
+</p>
+<p>
+  <code>ResourceServlet</code>を使用することで、コントロールやアプリケーションが使用するCSSやイメージ、JavaScriptなどをクラスパスに含めることができます。
+  S2Clickが提供する拡張コントロールは<code>ResourceServlet</code>を使用してこれらのリソースを参照しているため、
+  Clickが本来提供しているリソースのデプロイ機構（アプリケーションの起動時に/clickにリソースをコピーする）を使用していません。
+</p>
+<p>
+  <code>ResourceServlet</code>を使用するにはweb.xmlに以下のような設定を追加します。
+</p>
+<pre class="code">
+&lt;servlet&gt;
+  &lt;servlet-name&gt;ResourceServlet&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;org.seasar.s2click.servlet.ResourceServlet&lt;/servlet-class&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;rootPackage&lt;/param-name&gt;
+    &lt;param-value&gt;org.seasar.s2click.example.resource&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;load-on-startup&gt;3&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+...
+&lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;ResourceServlet&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/resources/*&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt; </pre>
+<p>
+  <code>ResourceServlet</code>には初期化パラメータとして<code>rootPackage</code>を指定する必要があります。
+  このパラメータにはリソースを格納するパッケージ名を指定してください。
+  パッケージ名はカンマで区切って複数指定することもできます。
+</p>
+<p>
+  上記の設定の場合、<code>org.seasar.s2click.example.resource</code>パッケージ配下に配置したリソースに対し、
+  <code>http://localhost:8080/s2click/resources/sample.gif</code>というURLでアクセスすることができます（ホスト名、ポートやコンテキストは環境にあわせて読み替えてください）。
+</p>
+<p>
+  また、<code>/resources/subpackage/sample.gif</code>のようにパスをネストさせることでサブパッケージのリソースを参照することも可能です。
+</p>
+
 </div>
 
 </body>
