@@ -5,11 +5,28 @@ body {
 	font-family   : Verdana,Arial,Helvetica,sans-serif;
 }
 
+div.header {
+	height: 40px;
+	background-color: gray;
+	color: white;
+	font-weight: bold;
+	font-size: 30px;
+	padding-left: 4px;
+}
+
+/*
 h1 {
 	background-color: gray;
 	color: white;
 	padding-left: 4px;
 	margin: 0px;
+}
+*/
+
+h2 {
+	padding-left: 4px;
+	border-left: 10px solid gray;
+	border-bottom: 1px solid gray;
 }
 
 div.content {

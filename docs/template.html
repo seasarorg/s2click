@@ -19,14 +19,13 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
-  <title>S2Click - Click Framework with Seasar2</title>
+  <title>S2Click - Apache Click with Seasar2</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link href="style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<h1>ページテンプレート</h1>
-
 <div class="content">
+<h1>ページテンプレート</h1>
 
 <h2>フォーマットオブジェクト</h2>
 
@@ -39,7 +38,7 @@
   <code>S2ClickFormat</code>はClick標準の<code>org.apache.click.util.Format</code>を拡張し、以下のような便利なメソッドを追加しています。
 </p>
 
-<table class="indent" border="1" cellspacing="0">
+<table class="indent" border="1" cellspacing="0" summary="S2ClickFormatのメソッド">
 <tr bgcolor="#D1F3F4">
   <th>メソッド</th>
   <th>説明</th>
@@ -79,6 +78,44 @@
   <td>引数の文字列と同じ長さのアスタリスクからなる文字列を返却します。</td>
 </tr>
 </table>
+
+<h2>JSPのサポート</h2>
+
+<p>
+  Apache Clickでは標準のビュー技術としてVelocityを採用していますが、
+  Velocity以外にもJSPとFreeMarkerを標準でサポートしています。
+  S2ClickではJSPの利用を支援するために、<strong>フォーマットオブジェクトをEL関数で呼び出す機能</strong>を提供しています。
+</p>
+<p>
+  Velocityでは<code>$format</code>でフォーマットオブジェクトを参照することができます。
+  フォーマットオブジェクトにはHTMLエスケープやURLエンコーディング、日付の整形など、
+  ビューを作成する上で便利なメソッドが用意されています。
+</p>
+<p>
+  ClickでJSPを利用する場合、フォーマットオブジェクトは<code>HttpServletRequest</code>に<code>"format"</code>という名前でセットされているので、
+  JSPでは以下のようなコードで呼び出すことが可能です。
+</p>
+<pre class="code">
+&lt;%
+  // フォーマットオブジェクトを取得
+  S2ClickFormat format = (S2ClickFormat) request.getAttribute("format");
+%&gt;
+&lt;%= format.html(value) %&gt; </pre>
+
+<p>
+  S2Clickではスクリプトレットを使用せずにフォーマットオブジェクトを呼び出すことができるよう、
+  JSP-ELでフォーマットオブジェクトのメソッドを呼び出すための関数を提供します。
+  先ほどの例は以下のようにELでスマートに記述することができます。
+</p>
+<pre class="code">
+&lt;%@ taglib uri="http://s2click.sandbox.seasar.org/format" prefix="format" %&gt;
+...
+${format:html(value)} </pre>
+<p>
+  S2Clickが提供するEL関数はフォーマットオブジェクトのメソッドと名称が異なるものが一部存在します。
+  詳細については<a href="javadoc/org/seasar/s2click/util/S2ClickFunctions.html">S2ClickFunctionのJavadoc</a>、
+  もしくは<a href="format.tld">format.tld</a>を参照してください。
+</p>
 
 </div>
 

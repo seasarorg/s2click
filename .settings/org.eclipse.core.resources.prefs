@@ -1,4 +1,4 @@
-#Tue Apr 28 23:25:29 JST 2009
+#Sun May 24 15:22:23 JST 2009
 eclipse.preferences.version=1
 encoding//WebContent/click/error.htm=UTF-8
 encoding//WebContent/controls-confirm.htm=UTF-8
@@ -21,7 +21,6 @@ encoding//docs/resource.html=UTF-8
 encoding//docs/template.html=UTF-8
 encoding//docs/test.html=UTF-8
 encoding//docs/top.html=UTF-8
-encoding//docs/transaction.html=UTF-8
 encoding//src/org/apache/velocity/tools/generic/introspection/package.html=UTF-8
 encoding//src/org/seasar/s2click/annotation/package.html=UTF-8
 encoding//src/org/seasar/s2click/control/package.html=UTF-8
