@@ -33,16 +33,16 @@ public class PublicFieldColumn extends Column {
 		super();
 	}
 
-	public PublicFieldColumn(String name, String title) {
-		super(name, title);
+	public PublicFieldColumn(CharSequence name, String title) {
+		super(name.toString(), title);
 	}
 
-	public PublicFieldColumn(String name) {
-		super(name);
+	public PublicFieldColumn(CharSequence name) {
+		super(name.toString());
 	}
 
-	public PublicFieldColumn(String name, String title, Decorator decorator) {
-		super(name, title);
+	public PublicFieldColumn(CharSequence name, String title, Decorator decorator) {
+		super(name.toString(), title);
 		setDecorator(decorator);
 	}
 
