@@ -352,12 +352,13 @@ public abstract class S2ClickForm extends Form {
         buffer.appendAttribute("action", getActionURL());
         buffer.appendAttribute("enctype", getEnctype());
 
-        appendAttributes(buffer);
-
         if (requiresJavaScript()) {
             String javaScript = "return on_" + getId() + "_submit();";
-            buffer.appendAttribute("onsubmit", javaScript);
+            setAttribute("onsubmit", javaScript);
         }
+        
+        appendAttributes(buffer);
+
         buffer.closeTag();
         buffer.append("\n");
     }
