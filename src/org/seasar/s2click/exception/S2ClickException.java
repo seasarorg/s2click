@@ -15,22 +15,46 @@
  */
 package org.seasar.s2click.exception;
 
+/**
+ * S2Clickがスローする例外の基底クラスです。
+ * 
+ * @author Naoki Takezoe
+ */
 public class S2ClickException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * コンストラクタ。
+	 */
 	public S2ClickException() {
 		super();
 	}
 
+	/**
+	 * コンストラクタ。
+	 * 
+	 * @param message メッセージ
+	 * @param cause 原因例外
+	 */
 	public S2ClickException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
+	/**
+	 * コンストラクタ。
+	 * 
+	 * @param message メッセージ
+	 */
 	public S2ClickException(String message) {
 		super(message);
 	}
 
+	/**
+	 * コンストラクタ。
+	 * 
+	 * @param cause 原因例外
+	 */
 	public S2ClickException(Throwable cause) {
 		super(cause);
 	}

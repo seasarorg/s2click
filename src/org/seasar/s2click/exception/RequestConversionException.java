@@ -16,6 +16,7 @@
 package org.seasar.s2click.exception;
 
 /**
+ * リクエストパラメータの型変換に失敗した場合に発生する例外です。
  * 
  * @author Naoki Takezoe
  */
@@ -23,6 +24,11 @@ public class RequestConversionException extends S2ClickException {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * コンストラクタ。
+	 * 
+	 * @param cause 原因例外
+	 */
 	public RequestConversionException(Throwable cause){
 		super("リクエストパラメータの型変換に失敗しました。", cause);
 	}

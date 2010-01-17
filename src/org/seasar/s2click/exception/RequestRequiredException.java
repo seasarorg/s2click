@@ -16,7 +16,7 @@
 package org.seasar.s2click.exception;
 
 /**
- * 
+ * リクエストパラメータの必須チェックエラー時に発生する例外です。
  * 
  * @author Naoki Takezoe
  */
@@ -24,6 +24,11 @@ public class RequestRequiredException extends S2ClickException {
 
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * コンストラクタ。
+	 * 
+	 * @param fieldName 必須チェックエラーのフィールド名
+	 */
 	public RequestRequiredException(String fieldName){
 		super("必須パラメータ " + fieldName + " が指定されていません。");
 	}
