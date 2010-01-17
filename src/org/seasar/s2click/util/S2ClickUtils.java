@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -38,41 +38,42 @@ import org.seasar.s2click.control.HiddenList;
 
 /**
  * S2Click内で使用するユーティリティメソッドを提供します。
- * 
+ *
  * @author Naoki Takezoe
  */
 public class S2ClickUtils {
-	
+
 	/**
 	 * <code>ClickApp</code>を取得します。
-	 * 
+	 *
 	 * @return <code>ClickApp</code>のインスタンス。
 	 */
 	public static ConfigService getConfigService(){
 		return (ConfigService) Context.getThreadLocalContext()
 			.getServletContext().getAttribute(ConfigService.CONTEXT_NAME);
 	}
-	
+
 	/**
 	 * フォームのコントロールを<code>HiddenField</code>（もしくは<code>HiddenList</code>）に変換します。
-	 * 
+	 *
 	 * @param form 変換するフォーム
 	 * @throws IllegalArgumentException hiddenに変換できないコントロールがフォームに含まれていた場合
 	 */
+	@SuppressWarnings("unchecked")
 	public static void convertToHidden(Form form) throws IllegalArgumentException {
 		for(Object obj: form.getFieldList().toArray()){
 			Field field = (Field) obj;
-			
+
 			// もともとhiddenの場合はなにもしない
 			if(field.isHidden()){
 				continue;
 			}
-			
+
 			// FileFieldの場合は変換できない
 			if(field instanceof FileField){
 				throw new IllegalArgumentException("FileFieldはHiddenFieldに変換できません。");
 			}
-			
+
 			// PickListの場合
 			if(field instanceof PickList){
 				Object values = ((PickList) field).getSelectedValues();
@@ -80,20 +81,20 @@ public class S2ClickUtils {
 				for(Object valueItem: List.class.cast(values)){
 					hidden.addValue(valueItem.toString());
 				}
-				
+
 				form.remove(field);
 				form.add(hidden);
-				
+
 				continue;
 			}
-			
+
 			Object value = field.getValueObject();
 			if(value == null){
 				value = "";
 			}
-			
+
 			form.remove(field);
-			
+
 			if(value instanceof List){
 				// 値がListの場合はHiddenListを使用
 				HiddenList hidden = new HiddenList(field.getName());
@@ -101,7 +102,7 @@ public class S2ClickUtils {
 					hidden.addValue(valueItem.toString());
 				}
 				form.add(hidden);
-				
+
 			} else {
 				// List以外の場合はHiddenFieldに文字列として格納
 				HiddenField hidden = new HiddenField(field.getName(), value.toString());
@@ -109,10 +110,10 @@ public class S2ClickUtils {
 			}
 		}
 	}
-	
+
 	/**
 	 * 引数に渡された文字列を<tt>s2click.dicon</tt>で指定された文字コードでURLエンコードします。
-	 * 
+	 *
 	 * @param value 文字列
 	 * @return URLエンコード後の文字列
 	 */
@@ -124,10 +125,10 @@ public class S2ClickUtils {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	/**
 	 * 連続する半角スペースの2文字目以降をを&nbspに変換します。
-	 * 
+	 *
 	 * @param value 文字列
 	 * @return 変換後の文字列
 	 */
@@ -153,7 +154,7 @@ public class S2ClickUtils {
 
 	/**
 	 * <code>SingletonS2ContainerFactory</code>からコンポーネントを取得します。
-	 * 
+	 *
 	 * @param <T> 取得するコンポーネントの型
 	 * @param clazz 取得するコンポーネントの型
 	 * @return コンポーネント
@@ -163,10 +164,10 @@ public class S2ClickUtils {
 		S2Container container = SingletonS2ContainerFactory.getContainer();
 		return (T) container.getComponent(clazz);
 	}
-	
+
 	/**
 	 * publicフィールドに対応した{@link ClickUtils#copyObjectToForm(Object, Form, boolean)}です。
-	 * 
+	 *
 	 * @param object コピー元のオブジェクト
 	 * @param form コピー先のフォーム
 	 * @param debug デバッグログを出力するかどうか
@@ -184,10 +185,10 @@ public class S2ClickUtils {
         new S2ClickCopy(object, map).execute();
         ClickUtils.copyObjectToForm(map, form, debug);
     }
-    
+
     /**
      * publicフィールドに対応した{@link ClickUtils#copyFormToObject(Form, Object, boolean)}です。
-     * 
+     *
      * @param form コピー元のフォーム
      * @param object コピー先のオブジェクト
      * @param debug デバッグログを出力するかどうか
@@ -201,7 +202,7 @@ public class S2ClickUtils {
         if (object == null) {
             throw new IllegalArgumentException("Null object parameter");
         }
-    	
+
         Map map = new HashMap();
         for(Field field: (List<Field>) form.getFieldList()){
         	map.put(field.getName(), "");
@@ -209,7 +210,7 @@ public class S2ClickUtils {
         ClickUtils.copyFormToObject(form, map, debug);
         new S2ClickCopy(map, object).execute();
     }
-    
+
     /**
      * 日付にデフォルトのコンバータを適用しない<code>Beans.copy()</code>の拡張。
      */
@@ -217,7 +218,7 @@ public class S2ClickUtils {
 
     	/**
     	 * コンストラクタ。
-    	 * 
+    	 *
     	 * @param src コピー元
     	 * @param dest コピー先
     	 * @throws NullPointerException
@@ -225,7 +226,7 @@ public class S2ClickUtils {
 		public S2ClickCopy(Object src, Object dest) throws NullPointerException {
 			super(src, dest);
 		}
-		
+
 		/**
 		 * 常にnullを返すことで日付にデフォルトのコンバータを適用しません。
 		 */
@@ -234,5 +235,5 @@ public class S2ClickUtils {
 			return null;
 		}
     }
-    
+
 }
