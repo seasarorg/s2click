@@ -16,31 +16,20 @@
 package org.seasar.s2click.test;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.transaction.TransactionManager;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.seasar.extension.dataset.DataSet;
-import org.seasar.extension.jdbc.JdbcContext;
+import org.seasar.extension.dataset.impl.SqlReader;
 import org.seasar.extension.jdbc.JdbcManager;
-import org.seasar.extension.jdbc.manager.JdbcManagerImplementor;
 import org.seasar.framework.container.SingletonS2Container;
 import org.seasar.framework.exception.ResourceNotFoundRuntimeException;
 import org.seasar.framework.util.ClassUtil;
+import org.seasar.framework.util.FileOutputStreamUtil;
+import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.tiger.GenericUtil;
 
 /**
@@ -173,6 +162,12 @@ public abstract class S2ClickServiceTestCase<T> extends S2ClickTestCase {
         return readXls(getClass().getSimpleName() + "_" + getTargetMethod().getName() + "_expect.xls");
 	}
     
+	/**
+	 * 期待値Excelファイルを自動生成します。
+	 * 
+	 * @param tables 生成するテーブルの情報
+	 * @throws Exception Excelファイルの生成に失敗した場合
+	 */
     private void createExcelFile(Table[] tables) throws Exception {
     	if(config == null){
     		System.err.println(
@@ -188,92 +183,39 @@ public abstract class S2ClickServiceTestCase<T> extends S2ClickTestCase {
     	String packageName = ClassUtil.getPackageName(getClass());
     	
     	String srcDir = config.sourceDir;
-    	File dir = new File(srcDir + "/" + packageName.replace('.', '/'));
     	
-    	File file = new File(dir, getClass().getSimpleName() + "_" + getTargetMethod().getName() + "_expect.xls");
+    	String packagePath = packageName.replace('.', '/');
+    	String fileName = getClass().getSimpleName() + "_" + getTargetMethod().getName() + "_expect.xls";
+    	
+    	File dir = new File(srcDir + "/" + packagePath);
+    	File file = new File(dir, fileName);
+    	
     	if(file.exists()){
     		return;
     	}
     	
-    	JdbcContext context = ((JdbcManagerImplementor) jdbcManager).getJdbcContext();
-    	
-		HSSFWorkbook wb = new HSSFWorkbook();
-		
+    	SqlReader reader = new SqlReader(getDataSource());
     	for(int i=0;i<tables.length;i++){
-    		HSSFSheet sheet = wb.createSheet();
-    		wb.setSheetName(i, tables[i].name());
-    		
-	    	PreparedStatement stmt = null;
-	    	ResultSet rs = null;
-	    	try {
-	    		String sql = "SELECT * FROM " + tables[i].name();
-	    		if(StringUtils.isNotEmpty(tables[i].where())){
-	    			sql = sql + " WHERE " + tables[i].where();
-	    		}
-	    		if(StringUtils.isNotEmpty(tables[i].orderBy())){
-	    			sql = sql + " ORDER BY " + tables[i].orderBy();
-	    		}
-	    		
-		    	stmt = context.getPreparedStatement(sql);
-		    	rs = stmt.executeQuery();
-		    	
-		    	ResultSetMetaData md = rs.getMetaData();
-		    	int columnCount = md.getColumnCount();
-		    	HSSFRow row = sheet.createRow(0);
-		    	
-		    	List<String> columnNames = new ArrayList<String>();
-		    	for(int j = 1; j <= columnCount; j++){
-		    		String columnName = md.getColumnName(j);
-		    		
-		    		if(tables[i].includeColumns().length > 0 &&
-		    				Arrays.binarySearch(tables[i].includeColumns(), columnName) < 0){
-		    			continue;
-		    		}
-		    		if(tables[i].excludeColumns().length > 0 &&
-		    				Arrays.binarySearch(tables[i].excludeColumns(), columnName) >= 0){
-		    			continue;
-		    		}
-		    		
-		    		HSSFCell cell = row.createCell((short) columnNames.size());
-		    		cell.setCellValue(new HSSFRichTextString(columnName));
-		    		columnNames.add(columnName);
-		    	}
-		    	
-		    	int rowCount = 1;
-		    	while(rs.next()){
-			    	HSSFRow dataRow = sheet.createRow(rowCount);
-			    	for(int j = 0; j < columnNames.size(); j++){
-			    		HSSFCell cell = dataRow.createCell((short) j);
-			    		String value = rs.getString(columnNames.get(j));
-			    		if(value != null){
-			    			cell.setCellValue(new HSSFRichTextString(value));
-			    		}
-			    	}
-			    	rowCount++;
-		    	}
-		    	
-	    	} finally {
-	    		if(rs != null){
-	    			try {
-	    				rs.close();
-	    			} catch(Exception ex){
-	    				;
-	    			}
-	    		}
-	    		if(stmt != null){
-	    			try {
-	    				stmt.close();
-	    			} catch(Exception ex){
-	    				;
-	    			}
-	    		}
-	    	}
+    		reader.addTable(tables[i].name(), tables[i].where(), tables[i].orderBy());
     	}
     	
-   		file.createNewFile();
-    	FileOutputStream out = new FileOutputStream(file);
-    	wb.write(out);
-    	out.close();
+    	DataSet result = reader.read();
+    	
+    	// ソースパスに生成
+    	XlsWriter writer = new XlsWriter(FileOutputStreamUtil.create(file));
+    	for(int i=0;i<tables.length;i++){
+    		writer.setIncludeColumns(tables[i].name(), tables[i].includeColumns());
+    		writer.setExcludeColumns(tables[i].name(), tables[i].excludeColumns());
+    	}
+        writer.write(result);
+        
+        // 同じファイルをクラスパスにも生成
+        File buildDir = ResourceUtil.getBuildDir(getClass());
+        
+        writer.setOutputStream(FileOutputStreamUtil.create(
+        		new File(buildDir, convertPath(packagePath + "/" + fileName))));
+        
+        writer.write(result);
     }
 	
 }
