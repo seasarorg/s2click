@@ -45,6 +45,7 @@ import org.seasar.s2click.control.AjaxLink;
 import org.seasar.s2click.exception.RequestConversionException;
 import org.seasar.s2click.exception.RequestRequiredException;
 import org.seasar.s2click.servlet.S2ClickServlet;
+import org.seasar.s2click.util.AjaxUtils;
 import org.seasar.s2click.util.S2ClickUtils;
 
 /**
@@ -69,7 +70,16 @@ public class S2ClickPage extends Page {
 	@Override
 	public void onInit() {
 		super.onInit();
+		
+		// リクエストパラメータをフィールドにバインド
 		bindPageFields();
+		
+		// @Ajaxアノテーションを付与したメソッドを呼び出すためのJavaScript関数を作成
+		String ajaxJavaScript = AjaxUtils.createAjaxJavaScript(this);
+		if(StringUtils.isNotEmpty(ajaxJavaScript)){
+			pageImports.addImport(AjaxUtils.getPrototypeJsImport());
+			pageImports.addImport("<script type=\"text/javascript\">" + ajaxJavaScript + "</script>");
+		}
 	}
 	
 	/**

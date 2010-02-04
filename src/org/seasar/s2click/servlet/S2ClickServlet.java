@@ -16,6 +16,7 @@
 package org.seasar.s2click.servlet;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -25,12 +26,15 @@ import javax.servlet.http.HttpServletRequest;
 import ognl.OgnlException;
 
 import org.apache.click.ClickServlet;
+import org.apache.click.Context;
 import org.apache.click.Page;
 import org.apache.click.util.ErrorPage;
+import org.apache.commons.lang.StringUtils;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.util.SmartDeployUtil;
 import org.seasar.s2click.S2ClickPage;
+import org.seasar.s2click.annotation.Ajax;
 import org.seasar.s2click.filter.UrlPatternFilter;
 
 /**
@@ -107,6 +111,45 @@ public class S2ClickServlet extends ClickServlet {
 			super.renderTemplate(page);
 		}
 	}
+	
+    protected void processPage(Page page) throws Exception {
+
+		final Context context = page.getContext();
+		final HttpServletRequest request = context.getRequest();
+		
+		String methodName = request.getParameter("ajax");
+		if(StringUtils.isNotEmpty(methodName)){
+			// Ajaxによる呼び出し
+			Method method = getAjaxMethod(page, methodName);
+			if(method != null){
+				// メソッドの引数
+				String[] args = new String[method.getParameterTypes().length];
+				for(int i=0;i<args.length;i++){
+					args[i] = request.getParameter("arg" + i);
+				}
+				
+				// メソッド呼び出し
+				method.invoke(page, (Object[]) args);
+				
+			} else {
+				// TODO Ajaxで呼び出すメソッドが見つからない（エラーにする）
+			}
+			
+		} else {
+			// 通常のページの処理
+			super.processPage(page);
+		}
+	}
+    
+    protected Method getAjaxMethod(Page page, String methodName){
+		Method[] methods = page.getClass().getMethods();
+		for(Method method: methods){
+			if(method.getName().equals(methodName) && method.getAnnotation(Ajax.class) != null){
+				return method;
+			}
+		}
+		return null;
+    }
 
 //	@Override
 //	protected VelocityContext createVelocityContext(Page page) {

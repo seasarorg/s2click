@@ -15,9 +15,15 @@
  */
 package org.seasar.s2click.util;
 
+import java.lang.reflect.Method;
+import java.text.MessageFormat;
 import java.util.Map;
 
+import org.apache.click.Context;
+import org.apache.click.Page;
+import org.apache.click.util.ClickUtils;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.seasar.s2click.annotation.Ajax;
 
 /**
  * Ajax関連のユーティリティメソッドを提供します。
@@ -123,6 +129,84 @@ public class AjaxUtils {
 			sb.append(entry.getKey()).append(": ").append(entry.getValue());
 		}
 		return sb.toString();
+	}
+	
+	/**
+	 * {@link Ajax}アノテーションを指定したpublicメソッドを呼び出すためのJavaScriptを生成します。
+	 * <p>
+	 * メソッド毎に以下のシグネチャを持つJavaScript関数を生成します。
+	 * この関数はprototype.jsのAjax.Requestを使用してリモートメソッドの呼び出しを行います。
+	 * <pre>
+	 * function メソッド名(resultHandler, arg0, arg1 ...)
+	 * </pre>
+	 * 第一引数にはAjax呼び出しの結果を処理する関数を指定します。
+	 * 第二引数以降はサーバ側のメソッドに渡す引数を指定します。
+	 * <p>
+	 * なお、エラー発生時のハンドラには以下の実装が使用されます。
+	 * このエラーハンドラは本メソッドが返却するJavaScriptに含まれています。
+	 * <pre>
+	 * function ajaxDefaultErrorHandler(transport){
+	 *   alert('通信に失敗しました。');
+	 * }
+	 * </pre>
+	 * 
+	 * @param page 対象のページクラス
+	 * @return {@link Ajax}アノテーションを指定したpublicメソッドを呼び出すためのJavaScript
+	 */
+	public static String createAjaxJavaScript(Page page){
+		// @Ajaxアノテーションを付与したメソッドを呼び出すためのJavaScript関数を作成
+		StringBuilder sb = new StringBuilder();
+		
+		Method[] methods = page.getClass().getMethods();
+		for(Method method: methods){
+			if(method.getAnnotation(Ajax.class) != null){
+				sb.append("function ").append(method.getName()).append("(");
+				sb.append("resultHandler");
+				int parameterLength = method.getParameterTypes().length;
+				for(int i=0; i < parameterLength; i++){
+					sb.append(", arg").append(i);
+				}
+				sb.append("){");
+				
+				sb.append("new Ajax.Request('").append(page.getContext().getRequest().getContextPath()).append(page.getPath()).append("', {");
+				sb.append("method: 'post',");
+				sb.append("onSuccess: resultHandler,");
+				sb.append("onFailure: ajaxDefaultErrorHandler,");
+				sb.append("parameters: {");
+				for(int i=0; i < parameterLength; i++){
+					sb.append("arg").append(i).append(": arg").append(i).append(",");
+				}
+				sb.append("ajax: '").append(method.getName()).append("'");
+				sb.append("}");
+				sb.append("});");
+				
+				sb.append("}");
+			}
+		}
+		
+		if(sb.length() > 0){
+			sb.append("function ajaxDefaultErrorHandler(transport){");
+			sb.append("alert('通信に失敗しました。');");
+			sb.append("}");
+		}
+		
+		return sb.toString();
+	}
+	
+	/**
+	 * <tt>prototype.js</tt>をインポートするための&lt;script&gt;タグを生成します。
+	 * 
+	 * @return <tt>prototype.js</tt>をインポートするためのタグ
+	 */
+	public static String getPrototypeJsImport(){
+		Context context = Context.getThreadLocalContext();
+		
+		Object[] args = {
+        	context.getRequest().getContextPath(),
+			ClickUtils.getResourceVersionIndicator(context)
+		};
+
+		return MessageFormat.format(AjaxUtils.HTML_IMPORTS, args);
 	}
 
 	

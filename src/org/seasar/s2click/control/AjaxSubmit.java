@@ -15,12 +15,10 @@
  */
 package org.seasar.s2click.control;
 
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.click.control.Submit;
-import org.apache.click.util.ClickUtils;
 import org.apache.click.util.HtmlStringBuffer;
 import org.seasar.s2click.util.AjaxUtils;
 
@@ -63,12 +61,7 @@ public class AjaxSubmit extends Submit {
 	}
 
     public String getHtmlImports() {
-        Object[] args = {
-            getContext().getRequest().getContextPath(),
-            ClickUtils.getResourceVersionIndicator(getContext()),
-        };
-        
-        return MessageFormat.format(AjaxUtils.HTML_IMPORTS, args);
+    	return AjaxUtils.getPrototypeJsImport();
     }
 	
 	public void addAjaxHandler(String event, String handler){
