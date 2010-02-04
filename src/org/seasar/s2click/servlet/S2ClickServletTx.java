@@ -15,9 +15,10 @@
  */
 package org.seasar.s2click.servlet;
 
+import javax.transaction.Status;
+import javax.transaction.UserTransaction;
+
 import org.apache.click.Page;
-import org.seasar.extension.tx.TransactionCallback;
-import org.seasar.extension.tx.TransactionManagerAdapter;
 import org.seasar.framework.container.SingletonS2Container;
 
 /**
@@ -31,26 +32,23 @@ public class S2ClickServletTx extends S2ClickServlet {
 
 	@Override
 	protected void processPage(final Page page) throws Exception {
-		TransactionManagerAdapter manager
-			= SingletonS2Container.getComponent(TransactionManagerAdapter.class);
+		
+		UserTransaction tx = SingletonS2Container.getComponent(UserTransaction.class);
+		tx.begin();
+		
 		try {
-			manager.requiresNew(new TransactionCallback(){
-				public Object execute(TransactionManagerAdapter adapter) throws Throwable {
-					try {
-						S2ClickServletTx.super.processPage(page);
-						return null;
-					} catch(Throwable ex){
-						adapter.setRollbackOnly();
-						throw ex;
-					}
-				}
-			});
-		} catch(Throwable ex){
-			if(ex instanceof Exception){
-				throw (Exception) ex;
+			super.processPage(page);
+			
+		} catch(Exception ex){
+			tx.setRollbackOnly();
+			
+		} finally {
+			if (tx.getStatus() == Status.STATUS_ACTIVE) {
+				// 問題なければコミット
+				tx.commit();
 			} else {
-				// TODO Exceptionでいいのかなぁ。
-				throw new Exception(ex);
+				// 問題があればロールバック
+				tx.rollback();
 			}
 		}
 	}
