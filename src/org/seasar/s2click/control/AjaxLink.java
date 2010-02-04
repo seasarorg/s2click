@@ -15,12 +15,10 @@
  */
 package org.seasar.s2click.control;
 
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.click.control.ActionLink;
-import org.apache.click.util.ClickUtils;
 import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringUtils;
 import org.seasar.s2click.util.AjaxUtils;
@@ -83,14 +81,9 @@ public class AjaxLink extends ActionLink {
 		super(name);
 	}
 	
-    public String getHtmlImports() {
-        Object[] args = {
-            getContext().getRequest().getContextPath(),
-            ClickUtils.getResourceVersionIndicator(getContext()),
-        };
-        
-        return MessageFormat.format(AjaxUtils.HTML_IMPORTS, args);
-    }
+	public String getHtmlImports() {
+		return AjaxUtils.getPrototypeJsImport();
+	}
 
 	public void addAjaxHandler(String event, String handler){
 		this.handlers.put(event, handler);
