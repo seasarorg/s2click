@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+  <title>S2Click - Apache Click with Seasar2</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="content">
+<h1>Ajax</h1>
+
+<h2>Ajax対応コントロール</h2>
+<p>
+  S2Clickが提供するAjax対応のコントロールとして<a href="javadoc/org/seasar/s2click/control/AjaxLink.html">AjaxLink</a>、
+  <a href="javadoc/org/seasar/s2click/control/AjaxButton.html">AjaxButton</a>、
+  <a href="javadoc/org/seasar/s2click/control/AjaxSubmit.html">AjaxSubmit</a>があります。
+  これらのコントロールをClick標準の<code>ActionLink</code>、<code>ActionButton</code>、
+  <code>Submit</code>の代りに使用することでXMLHttpRequestを用いたAjax通信が可能です。
+</p>
+
+<h3>AjaxLink、AjaxButton</h3>
+<p>
+  <code>AjaxLink</code>、<code>AjaxButton</code>は<tt>prototype.js</tt>の<code>Ajax.Request</code>、
+  <code>Ajax.Updater</code>を使用してAjaxを実現するためのリンク、ボタンを提供するコントロールです。
+  どちらも使い方は同じなので、ここでは<code>AjaxLink</code>を例にして説明します。
+</p>
+<p>
+  以下のコードは<code>Ajax.Request</code>を使ってページクラスの<code>onClick</code>メソッドを呼び出します。
+  また、正常にレスポンスが戻るとJavaScriptの<code>displayResult()</code>関数が呼び出されます。
+</p>
+<pre class="code">
+AjaxLink link = new AjaxLink("link", this, "onClick");
+link.addAjaxHandler(AjaxUtils.ON_COMPLETE, "displayResult");
+addControl(link);
+</pre>
+<p>
+  以下のコードは<code>Ajax.Updater</code>を使ってページクラスの<code>onClick</code>メソッドを呼び出し、
+  レスポンスの内容でHTMLのid属性が<code>result</code>の要素を内容を置き換えます。
+</p>
+<pre class="code">
+AjaxLink link = new AjaxLink("link", this, "onClick");
+link.setElementId("result");
+addControl(link);
+</pre>
+
+<h3>AjaxSubmit</h3>
+<p>
+  <code>AjaxSubmit</code>は<code>Submit</code>コントロールの代りに使用することでフォームの内容をAjaxで送信することができます。
+</p>
+
+<h2>ページクラスのメソッドをAjaxで呼び出す</h2>
+<p>
+  S2Clickのもう1つのAjax対応機能として、<a href="javadoc/org/seasar/s2click/annotation/Ajax.html">@Ajaxアノテーション</a>を用いて
+  ページクラスの任意のメソッドをAjaxで呼び出すための機能があります。
+</p>
+<p>
+  ページクラスのpublicメソッドに@Ajaxアノテーションを付与しておくと、
+  そのメソッドを<tt>prototype.js</tt>の<code>Ajax.Request</code>で呼び出すJavaScript関数がS2Clickによって自動生成されます
+  （HTMLテンプレートに$pageImpirtsを記述しておくと必要に応じて自動的に出力されます）。
+  このJavaScript関数を用いることでクライアントサイドJavaScriptからページクラスのメソッドをAjaxで呼び出すことができます。
+</p>
+<p>
+  たとえばページクラスに以下のようなメソッドがあったとします。
+</p>
+<pre class="code">
+@Ajax
+public void getContent(String id){
+  Article article = articleService.selectArticle(id);
+  renderText(article.content);
+}
+</pre>
+<p>
+  このとき、S2Clickは以下のようなJavaScript関数を生成します。
+  第一引数にはAjax呼び出しの結果を処理する関数を指定します。第二引数以降はサーバ側のメソッドに渡す引数を指定します。
+</p>
+<pre class="code">
+// S2Clickによって自動生成されたJavaScript関数
+function getContent(resultHandler, arg0){
+  // Ajax.Requestによる通信
+  ...
+}
+</pre>
+<p>
+  この関数を以下のように呼び出すことでページクラスのメソッドをAjaxで呼び出すことができます。
+</p>
+<pre class="code">
+// 自動生成されたJavaScript関数を使ってサーバのgetContentメソッドを呼び出し
+getContent(function(transport){
+  $('content').innerHTML = transport.responseText;
+}, '1');
+</pre>
+<p>
+  ただし、このアノテーションを付与したメソッドをAjaxで呼び出す場合、
+  通常のページの処理で行われる<code>onInit()</code>、<code>onSecurityCheck()</code>などの呼び出しは行われません。
+  アノテーションを付与したメソッドのみが呼び出されるという点に注意してください。
+</p>
+</div>
+</body>
+</html>
