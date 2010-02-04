@@ -41,6 +41,7 @@ public class S2ClickServletTx extends S2ClickServlet {
 			
 		} catch(Exception ex){
 			tx.setRollbackOnly();
+			throw ex;
 			
 		} finally {
 			if (tx.getStatus() == Status.STATUS_ACTIVE) {
