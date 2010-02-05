@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.click.ActionListener;
 import org.apache.click.Control;
+import org.seasar.s2click.annotation.Ajax;
 import org.seasar.s2click.control.AjaxButton;
 import org.seasar.s2click.example.form.JsonForm;
 import org.seasar.s2click.util.AjaxUtils;
@@ -39,6 +40,8 @@ public class JsonPage extends LayoutPage {
 			"button", "Ajax.Updaterのテスト", this, "onAjaxUpdater");
 
 	public void onInit(){
+		super.onInit();
+		
 		form.search.setActionListener(new ActionListener(){
 			public boolean onAction(Control source) {
 				return onSearch();
@@ -103,6 +106,11 @@ public class JsonPage extends LayoutPage {
 			this.author = author;
 			this.price = price;
 		}
+	}
+	
+	@Ajax
+	public String hello(String name){
+		return "こんにちは、" + name + "さん！";
 	}
 
 

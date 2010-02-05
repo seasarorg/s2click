@@ -13,11 +13,14 @@
 ## either express or implied. See the License for the specific language
 ## governing permissions and limitations under the License.
 ##
+<h2>AjaxSubmitによる検索</h2>
 $form
 
 <div id="result">
 </div>
+
 <hr>
+<h2>AjaxButtonによる要素の置換</h2>
 $button
 <div id="target">
 </div>
@@ -62,5 +65,19 @@ function startProgress(){
 
 function stopProgress(){
 	$('ajax_indicator').style.display = 'none';
+}
+</script>
+
+<hr>
+<h2>@Ajaxアノテーションによるメソッド呼び出し</h2>
+<form id="ajaxForm">
+  お名前をどうぞ：<input type="text" id="ajaxForm_name" name="name" />
+  <input type="button" value="クリック" onclick="invokeHello();"/>
+</form>
+<script type="text/javascript">
+function invokeHello(){
+	hello(function(transport){
+		alert(transport.responseText);
+	}, ajaxForm_name.value);
 }
 </script>
