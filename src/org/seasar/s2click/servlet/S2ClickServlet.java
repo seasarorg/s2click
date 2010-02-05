@@ -15,20 +15,26 @@
  */
 package org.seasar.s2click.servlet;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Method;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import net.arnx.jsonic.JSON;
 import ognl.OgnlException;
 
 import org.apache.click.ClickServlet;
 import org.apache.click.Context;
 import org.apache.click.Page;
 import org.apache.click.util.ErrorPage;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
@@ -129,7 +135,11 @@ public class S2ClickServlet extends ClickServlet {
 				}
 				
 				// メソッド呼び出し
-				method.invoke(page, (Object[]) args);
+				Object result = method.invoke(page, (Object[]) args);
+				
+				if(result != null){
+					renderAjaxResponse(context, result);
+				}
 				
 			} else {
 				// TODO Ajaxで呼び出すメソッドが見つからない（エラーにする）
@@ -141,6 +151,38 @@ public class S2ClickServlet extends ClickServlet {
 		}
 	}
     
+    protected void renderAjaxResponse(Context context, Object result) throws Exception {
+    	
+		final HttpServletResponse response = context.getResponse();
+    	
+		// 結果をレスポンスに出力
+		OutputStream out = null;
+		InputStream in = null;
+		
+		try {
+			if(result instanceof String){
+				// 文字列の場合はHTMLとして返却
+				in = new ByteArrayInputStream(((String) result).getBytes("UTF-8"));
+				response.setContentType("text/html; charset=utf-8");
+				
+			} else {
+				// それ以外の場合はJSONとして返却
+				String json = JSON.encode(result);
+				in = new ByteArrayInputStream(json.getBytes("UTF-8"));
+				response.setContentType("application/x-javascript; charset=utf-8");
+			}
+			
+			response.setContentLength(in.available());
+			out = response.getOutputStream();
+			IOUtils.copy(in, out);
+			response.flushBuffer();
+			
+		} finally {
+			IOUtils.closeQuietly(out);
+			IOUtils.closeQuietly(in);
+		}
+    }
+    
     protected Method getAjaxMethod(Page page, String methodName){
 		Method[] methods = page.getClass().getMethods();
 		for(Method method: methods){
@@ -150,28 +192,5 @@ public class S2ClickServlet extends ClickServlet {
 		}
 		return null;
     }
-
-//	@Override
-//	protected VelocityContext createVelocityContext(Page page) {
-//		VelocityContext context = super.createVelocityContext(page);
-//		S2ClickPageImports pageImports = new S2ClickPageImports(page);
-//		
-//		context.put("imports", pageImports.getAllIncludes());
-//		context.put("cssImports", pageImports.getCssImports());
-//		context.put("jsImports", pageImports.getJsImports());
-//		
-//		return context;
-//	}
-	
-//    protected void setRequestAttributes(Page page) {
-//    	super.setRequestAttributes(page);
-//    	
-//        HttpServletRequest request = page.getContext().getRequest();
-//		S2ClickPageImports pageImports = new S2ClickPageImports(page);
-//        
-//		request.setAttribute("imports", pageImports.getAllIncludes());
-//        request.setAttribute("cssImports", pageImports.getCssImports());
-//        request.setAttribute("jsImports", pageImports.getJsImports());
-//    }
 
 }
