@@ -64,7 +64,13 @@ addControl(link);
 <h3>AjaxSubmit</h3>
 <p>
   <code>AjaxSubmit</code>は<code>Submit</code>コントロールの代りに使用することでフォームの内容をAjaxで送信することができます。
+  基本的な利用方法は<code>AjaxLink</code>や<code>AjaxButton</code>の場合と同じです。
 </p>
+<pre class="code">
+AjaxSubmit submit = new AjaxSubmit("submit", this, "onClick");
+submit.addAjaxHandler(AjaxUtils.ON_COMPLETE, "displayResult");
+form.add(submit);
+</pre>
 
 <h2>ページクラスのメソッドをAjaxで呼び出す</h2>
 <p>
@@ -74,7 +80,7 @@ addControl(link);
 <p>
   ページクラスのpublicメソッドに@Ajaxアノテーションを付与しておくと、
   そのメソッドを<tt>prototype.js</tt>の<code>Ajax.Request</code>で呼び出すJavaScript関数がS2Clickによって自動生成されます
-  （HTMLテンプレートに$pageImpirtsを記述しておくと必要に応じて自動的に出力されます）。
+  （HTMLテンプレートに<code>$pageImports</code>を記述しておくと必要に応じて自動的に出力されます）。
   このJavaScript関数を用いることでクライアントサイドJavaScriptからページクラスのメソッドをAjaxで呼び出すことができます。
 </p>
 <p>
@@ -84,7 +90,7 @@ addControl(link);
 @Ajax
 public void getContent(String id){
   Article article = articleService.selectArticle(id);
-  renderText(article.content);
+  renderHTML(article.content);
 }
 </pre>
 <p>
@@ -111,6 +117,27 @@ getContent(function(transport){
   ただし、このアノテーションを付与したメソッドをAjaxで呼び出す場合、
   通常のページの処理で行われる<code>onInit()</code>、<code>onSecurityCheck()</code>などの呼び出しは行われません。
   アノテーションを付与したメソッドのみが呼び出されるという点に注意してください。
+</p>
+
+<h3>レスポンスを戻り値で返却する</h3>
+<p>
+  上記の例ではレスポンスの内容を<code>S2ClickPage#renderHTML()</code>メソッドで出力していますが、
+  メソッドの戻り値として返却することも可能です。
+</p>
+<ul>
+  <li>
+    メソッドの戻り値が<code>String</code>の場合は文字列をそのまま返却します。
+    コンテンツタイプは<code>&quot;text/html; charset=utf-8&quot;</code>になります。
+  </li>
+  <li>
+    メソッドの戻り値が<code>String</code>以外の場合はJSONに変換して返却します。
+    コンテンツタイプは<code>&quot;application/x-javascript; charset=utf-8&quot;</code>になります。
+  </li>
+</ul>
+<p>
+  上記以外の形式でAjaxリクエストに対するレスポンスを行いたい場合は
+  <a href="javadoc/org/seasar/s2click/servlet/S2ClickServlet.html#renderAjaxResponse(org.apache.click.Context, java.lang.Object)">S2ClickServlet#renderAjaxResponse()</a>
+  をオーバーライドしてください。
 </p>
 </div>
 </body>
