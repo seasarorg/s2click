@@ -33,6 +33,10 @@ import org.seasar.s2click.annotation.Ajax;
  */
 public class AjaxUtils {
 	
+	public static final String CONTENT_TYPE_JSON = "application/x-javascript; charset=utf-8";
+	public static final String CONTENT_TYPE_HTML = "text/html; charset=utf-8";
+	
+	
 	public static final String ON_CREATE = "onCreate";
 	
 	public static final String ON_COMPLETE = "onComplete";

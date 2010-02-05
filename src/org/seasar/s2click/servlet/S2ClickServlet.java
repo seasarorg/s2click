@@ -42,6 +42,7 @@ import org.seasar.framework.container.util.SmartDeployUtil;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.annotation.Ajax;
 import org.seasar.s2click.filter.UrlPatternFilter;
+import org.seasar.s2click.util.AjaxUtils;
 
 /**
  * Seasar2とClick Frameworkを連携させるためのサーブレット。
@@ -163,13 +164,13 @@ public class S2ClickServlet extends ClickServlet {
 			if(result instanceof String){
 				// 文字列の場合はHTMLとして返却
 				in = new ByteArrayInputStream(((String) result).getBytes("UTF-8"));
-				response.setContentType("text/html; charset=utf-8");
+				response.setContentType(AjaxUtils.CONTENT_TYPE_HTML);
 				
 			} else {
 				// それ以外の場合はJSONとして返却
 				String json = JSON.encode(result);
 				in = new ByteArrayInputStream(json.getBytes("UTF-8"));
-				response.setContentType("application/x-javascript; charset=utf-8");
+				response.setContentType(AjaxUtils.CONTENT_TYPE_JSON);
 			}
 			
 			response.setContentLength(in.available());

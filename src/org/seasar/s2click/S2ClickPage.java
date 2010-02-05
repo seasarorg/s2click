@@ -195,7 +195,7 @@ public class S2ClickPage extends Page {
 	protected void renderJSON(Object obj){
 		try {
 			byte[] json = JSON.encode(obj).getBytes("UTF-8");
-			renderResponse("application/x-javascript; charset=utf-8", 
+			renderResponse(AjaxUtils.CONTENT_TYPE_JSON, 
 					new ByteArrayInputStream(json));
 			
 		} catch(UnsupportedEncodingException ex){
@@ -210,7 +210,7 @@ public class S2ClickPage extends Page {
 	 */
 	protected void renderHTML(String html){
 		try {
-			renderResponse("text/html; charset=UTF-8", 
+			renderResponse(AjaxUtils.CONTENT_TYPE_HTML, 
 					new ByteArrayInputStream(html.getBytes("UTF-8")));
 		} catch(UnsupportedEncodingException ex){
 			// あり得ない
