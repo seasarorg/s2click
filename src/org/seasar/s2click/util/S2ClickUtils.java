@@ -15,8 +15,6 @@
  */
 package org.seasar.s2click.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +31,6 @@ import org.seasar.framework.beans.Converter;
 import org.seasar.framework.beans.util.Copy;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
-import org.seasar.s2click.S2ClickConfig;
 import org.seasar.s2click.control.HiddenList;
 
 /**
@@ -107,21 +104,6 @@ public class S2ClickUtils {
 				HiddenField hidden = new HiddenField(field.getName(), value.toString());
 				form.add(hidden);
 			}
-		}
-	}
-
-	/**
-	 * 引数に渡された文字列を<tt>s2click.dicon</tt>で指定された文字コードでURLエンコードします。
-	 *
-	 * @param value 文字列
-	 * @return URLエンコード後の文字列
-	 */
-	public static String urlEncode(String value){
-		try {
-			S2ClickConfig config = getComponent(S2ClickConfig.class);
-			return URLEncoder.encode(value, config.charset);
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
 		}
 	}
 

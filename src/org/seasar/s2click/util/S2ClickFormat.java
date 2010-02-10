@@ -53,16 +53,6 @@ public class S2ClickFormat extends Format {
 	}
 	
 	/**
-	 * 引数に渡された文字列をclick.xmlで指定された文字コードでURLエンコードします。
-	 * 
-	 * @param value 文字列
-	 * @return URLエンコード後の文字列
-	 */
-	public String url(String value){
-		return S2ClickUtils.urlEncode(value);
-	}
-	
-	/**
 	 * JavaオブジェクトをJSONに変換します。
 	 * 
 	 * @param obj オブジェクト

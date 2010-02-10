@@ -113,9 +113,9 @@ public class S2ClickFunctions {
 	 * @param value 文字列
 	 * @return URLエンコードされた文字列
 	 * 
-	 * @see S2ClickFormat#url(String)
+	 * @see Format#url(Object)
 	 */
-	public static String url(String value){
+	public static String url(Object value){
 		return getFormat().url(value);
 	}
 	
@@ -130,10 +130,6 @@ public class S2ClickFunctions {
 	public static String date(Date date){
 		return getFormat().date(date);
 	}
-	
-//	public static String getEmptyString(){
-//		return format.getEmptyString();
-//	}
 	
 	/**
 	 * 現在日時を指定したパターンでフォーマットします。
