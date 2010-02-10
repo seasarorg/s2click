@@ -34,7 +34,9 @@ import org.seasar.s2click.control.CodePrettify;
  */
 public class SourceViewerPage extends LayoutPage {
 	
-    /**
+	private static final long serialVersionUID = 1L;
+
+	/**
      * @see Page#onGet()
      */
     public void onGet() {

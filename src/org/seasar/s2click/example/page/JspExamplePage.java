@@ -26,12 +26,16 @@ import org.seasar.s2click.example.form.AddForm;
  */
 public class JspExamplePage extends JspLayoutPage {
 	
+	private static final long serialVersionUID = 1L;
+
 	public String title = "JSPのサンプル";
 	
 	public AddForm form = new AddForm("form");
 	
 	public JspExamplePage(){
 		form.submit.setActionListener(new ActionListener(){
+			private static final long serialVersionUID = 1L;
+
 			public boolean onAction(Control source) {
 				if(form.isValid()){
 					form.result.setInteger(form.num1.getInteger() + form.num2.getInteger());

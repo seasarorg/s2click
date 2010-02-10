@@ -26,6 +26,8 @@ import org.seasar.s2click.annotation.Path;
 @Path("/click/error.htm")
 public class CustomErrorPage extends ErrorPage {
 	
+	private static final long serialVersionUID = 1L;
+	
 	public String title = "エラーページ";
 	
 	public CustomErrorPage(){

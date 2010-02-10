@@ -34,6 +34,8 @@ import ognl.OgnlException;
 import ognl.TypeConverter;
 
 import org.apache.click.Page;
+import org.apache.click.element.JsImport;
+import org.apache.click.element.JsScript;
 import org.apache.click.service.ConfigService;
 import org.apache.click.util.PropertyUtils;
 import org.apache.click.util.RequestTypeConverter;
@@ -53,8 +55,10 @@ import org.seasar.s2click.util.S2ClickUtils;
  * @author Naoki Takezoe
  * @since 0.4.0
  */
-public class S2ClickPage extends Page {
+public abstract class S2ClickPage extends Page {
 	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * テンプレートのレンダリングをスキップする際にリクエストの属性にセットするフラグのキーです。
 	 * <p>
@@ -68,6 +72,7 @@ public class S2ClickPage extends Page {
 	protected static TypeConverter typeConverter = new RequestTypeConverter();
 	
 	@Override
+	@SuppressWarnings("unchecked")
 	public void onInit() {
 		super.onInit();
 		
@@ -77,8 +82,8 @@ public class S2ClickPage extends Page {
 		// @Ajaxアノテーションを付与したメソッドを呼び出すためのJavaScript関数を作成
 		String ajaxJavaScript = AjaxUtils.createAjaxJavaScript(this);
 		if(StringUtils.isNotEmpty(ajaxJavaScript)){
-			pageImports.addImport(AjaxUtils.getPrototypeJsImport());
-			pageImports.addImport("<script type=\"text/javascript\">" + ajaxJavaScript + "</script>");
+			getHeadElements().add(new JsImport("/resources/prototype.js"));
+			getHeadElements().add(new JsScript(ajaxJavaScript));
 		}
 	}
 	

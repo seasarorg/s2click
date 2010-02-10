@@ -17,6 +17,7 @@ package org.seasar.s2click.test;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ import org.apache.click.service.ConfigService;
 import org.apache.click.service.ConsoleLogService;
 import org.apache.click.service.FileUploadService;
 import org.apache.click.service.LogService;
+import org.apache.click.service.ResourceService;
 import org.apache.click.service.TemplateService;
 import org.apache.click.util.Format;
 
@@ -148,6 +150,26 @@ public class MockConfigService implements ConfigService {
 	public void onInit(ServletContext servletContext) throws Exception {
 		// TODO Auto-generated method stub
 
+	}
+
+	public AutoBinding getAutoBindingMode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List getPageClassList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ResourceService getResourceService() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean isTemplate(String path) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

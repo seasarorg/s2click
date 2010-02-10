@@ -26,6 +26,8 @@ import org.seasar.s2click.annotation.UrlPattern;
 @UrlPattern("/user/select/{userId}")
 public class UrlPatternPage extends LayoutPage {
 	
+	private static final long serialVersionUID = 1L;
+
 	public String title = "URLパターン";
 	
 	@Request(required=true)

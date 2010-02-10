@@ -27,6 +27,8 @@ import org.seasar.s2click.control.PaginateList;
  */
 public class PaginateListPage extends LayoutPage {
 	
+	private static final long serialVersionUID = 1L;
+
 	public String title = "PaginateList";
 	
 	public List<String> list = new ArrayList<String>();

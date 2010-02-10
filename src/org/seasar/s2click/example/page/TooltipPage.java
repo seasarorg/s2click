@@ -25,6 +25,8 @@ import org.seasar.s2click.control.ToolTip;
  */
 public class TooltipPage extends LayoutPage {
 	
+	private static final long serialVersionUID = 1L;
+
 	public String title = "ツールチップヘルプ";
 	
 	public ToolTip tooltipIcon = new ToolTip("tooltipIcon", 

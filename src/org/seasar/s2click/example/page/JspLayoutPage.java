@@ -24,6 +24,8 @@ import org.seasar.s2click.S2ClickPage;
  */
 public class JspLayoutPage extends S2ClickPage {
 	
+	private static final long serialVersionUID = 1L;
+
 	public JspLayoutPage(){
 		String className = getClass().getName();
 		String sourcePath = className.replaceAll("\\.", "/") + ".java";

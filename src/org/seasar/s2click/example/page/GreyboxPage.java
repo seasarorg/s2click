@@ -29,6 +29,8 @@ import org.seasar.s2click.example.form.GreyboxForm;
  */
 public class GreyboxPage extends LayoutPage {
 
+	private static final long serialVersionUID = 1L;
+
 	public String title = "GreyBox";
 	
 	public GreyboxLink link = new GreyboxLink("link", "参照...", "ユーザを選択", GreyboxSelectPage.class);

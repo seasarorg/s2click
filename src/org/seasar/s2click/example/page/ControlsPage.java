@@ -24,12 +24,16 @@ import org.seasar.s2click.example.form.ControlsForm;
 @Path("/controls.htm")
 public class ControlsPage extends LayoutPage {
 	
+	private static final long serialVersionUID = 1L;
+	
 	public String title = "Click標準のコントロール";
 	public String template = "/form.htm";
 	public ControlsForm form = new ControlsForm("form");
 	
 	public ControlsPage(){
 		form.submit.setActionListener(new ActionListener(){
+			private static final long serialVersionUID = 1L;
+
 			public boolean onAction(Control source) {
 				return doSubmit();
 			}

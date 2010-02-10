@@ -39,6 +39,8 @@ import org.seasar.s2click.example.form.FileUploadForm;
  */
 public class FileUploadPage extends LayoutPage {
 
+	private static final long serialVersionUID = 1L;
+	
 	public String title = "ファイルアップロード＆ダウンロード";
 	public FileUploadForm form = new FileUploadForm("form");
 	public ActionLink link = new ActionLink("link");
@@ -48,12 +50,16 @@ public class FileUploadPage extends LayoutPage {
 	
 	public FileUploadPage(){
 		form.submit.setActionListener(new ActionListener(){
+			private static final long serialVersionUID = 1L;
+
 			public boolean onAction(Control source) {
 				return doUpload();
 			}
 		});
 		
 		link.setActionListener(new ActionListener(){
+			private static final long serialVersionUID = 1L;
+
 			public boolean onAction(Control source) {
 				return doDownload();
 			}

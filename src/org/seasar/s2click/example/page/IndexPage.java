@@ -17,6 +17,8 @@ package org.seasar.s2click.example.page;
 
 public class IndexPage extends LayoutPage {
 	
+	private static final long serialVersionUID = 1L;
+
 	public String title = "Wellcome to S2Click";
 
 }

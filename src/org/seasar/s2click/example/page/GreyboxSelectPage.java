@@ -27,6 +27,8 @@ import org.seasar.s2click.S2ClickPage;
  */
 public class GreyboxSelectPage extends S2ClickPage {
 
+	private static final long serialVersionUID = 1L;
+
 	public GreyboxSelectPage(){
 		List<UserInfo> userList = new ArrayList<UserInfo>();
 		userList.add(new UserInfo("00001", "山田 一郎"));

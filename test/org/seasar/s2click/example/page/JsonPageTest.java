@@ -21,14 +21,21 @@ import java.util.Map;
 
 import net.arnx.jsonic.JSON;
 
+import org.seasar.s2click.test.MockConfigService;
 import org.seasar.s2click.test.S2ClickPageTestCase;
 import org.seasar.s2click.util.AjaxUtils;
 
 public class JsonPageTest extends S2ClickPageTestCase<JsonPage> {
 
+	@SuppressWarnings("unchecked")
 	public void testOnInit() {
+		setConfigService(new MockConfigService(){
+			@Override
+			public Map getPageFields(Class pageClass) {
+				return new HashMap();
+			}
+		});
 		page.onInit();
-		
 		assertEquals("target", page.button.getElementId());
 		assertEquals("startProgress", page.button.getAjaxHandlers().get(AjaxUtils.ON_CREATE));
 		assertEquals("stopProgress", page.button.getAjaxHandlers().get(AjaxUtils.ON_SUCCESS));
@@ -70,7 +77,7 @@ public class JsonPageTest extends S2ClickPageTestCase<JsonPage> {
 		page.setHeaders(new HashMap<String, String>());
 		page.onAjaxUpdater();
 		
-		assertEquals("text/html; charset=UTF-8", response.getContentType());
+		assertEquals("text/html; charset=utf-8", response.getContentType());
 		assertEquals("<h2>Ajaxでコンテンツを置換しました</h2>", 
 				new String(response.getBinaryContent(), "UTF-8"));
 	}

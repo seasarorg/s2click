@@ -26,6 +26,8 @@ import org.seasar.s2click.annotation.Path;
 @Path("/error-sample.htm")
 public class ErrorSamplePage extends S2ClickPage {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * {@link RuntimeException}をスローします。
 	 */

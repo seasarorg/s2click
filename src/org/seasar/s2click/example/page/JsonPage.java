@@ -33,6 +33,8 @@ import org.seasar.s2click.util.AjaxUtils;
  */
 public class JsonPage extends LayoutPage {
 
+	private static final long serialVersionUID = 1L;
+
 	public String title = "JSONを使用したAjaxアプリケーション";
 
 	public JsonForm form = new JsonForm("form");
@@ -43,11 +45,15 @@ public class JsonPage extends LayoutPage {
 		super.onInit();
 		
 		form.search.setActionListener(new ActionListener(){
+			private static final long serialVersionUID = 1L;
+
 			public boolean onAction(Control source) {
 				return onSearch();
 			}
 		});
 		form.searchAll.setActionListener(new ActionListener(){
+			private static final long serialVersionUID = 1L;
+
 			public boolean onAction(Control source) {
 				return onSearchAll();
 			}

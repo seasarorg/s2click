@@ -79,9 +79,9 @@ public class S2ClickFormTest extends S2ClickTestCase {
 
 		List<?> fields = form.getFieldList();
 		assertEquals(3, fields.size());
-		assertEquals(S2ClickForm.FORM_NAME, ((HiddenField) fields.get(0)).getName());
-		assertEquals("text1", ((TextField) fields.get(1)).getName());
-		assertEquals("text2", ((TextField) fields.get(2)).getName());
+		assertEquals("text1", ((TextField) fields.get(0)).getName());
+		assertEquals("text2", ((TextField) fields.get(1)).getName());
+		assertEquals(S2ClickForm.FORM_NAME, ((HiddenField) fields.get(2)).getName());
 
 		List<?> buttons = form.getButtonList();
 		assertEquals(1, buttons.size());
@@ -127,10 +127,10 @@ public class S2ClickFormTest extends S2ClickTestCase {
 		form.onInit();
 		List<?> fields = form.getFieldList();
 		assertEquals(4, fields.size());
-		assertEquals(S2ClickForm.FORM_NAME, ((HiddenField) fields.get(0)).getName());
-		assertEquals("action", ((HiddenField) fields.get(1)).getName());
-		assertEquals("text1", ((TextField) fields.get(2)).getName());
-		assertEquals("text2", ((TextField) fields.get(3)).getName());
+		assertEquals("action", ((HiddenField) fields.get(0)).getName());
+		assertEquals("text1", ((TextField) fields.get(1)).getName());
+		assertEquals("text2", ((TextField) fields.get(2)).getName());
+		assertEquals(S2ClickForm.FORM_NAME, ((HiddenField) fields.get(3)).getName());
 
 		List<?> buttons = form.getButtonList();
 		assertEquals(1, buttons.size());

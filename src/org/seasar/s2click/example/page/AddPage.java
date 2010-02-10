@@ -29,12 +29,16 @@ import org.seasar.s2click.example.form.AddForm;
 @Path("/add.htm")
 public class AddPage extends LayoutPage {
 	
+	private static final long serialVersionUID = 1L;
+	
 	public String title = "足し算アプリケーション";
 	public String template = "/form.htm";
 	public AddForm form = new AddForm("form");
 	
 	public AddPage(){
 		form.submit.setActionListener(new ActionListener(){
+			private static final long serialVersionUID = 1L;
+
 			public boolean onAction(Control source) {
 				if(form.isValid()){
 					form.result.setValue(String.valueOf(

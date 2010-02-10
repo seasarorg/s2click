@@ -32,6 +32,8 @@ import org.seasar.s2click.example.service.MessageService;
  */
 public class JdbcPage extends LayoutPage {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Resource
 	protected MessageService messageService;
 	
@@ -40,6 +42,8 @@ public class JdbcPage extends LayoutPage {
 
 	public JdbcPage(){
 		form.submit.setActionListener(new ActionListener(){
+			private static final long serialVersionUID = 1L;
+
 			public boolean onAction(Control source) {
 				return doAdd();
 			}

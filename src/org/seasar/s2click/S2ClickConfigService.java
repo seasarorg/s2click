@@ -42,6 +42,7 @@ import org.apache.click.service.ConfigService;
 import org.apache.click.service.ConsoleLogService;
 import org.apache.click.service.FileUploadService;
 import org.apache.click.service.LogService;
+import org.apache.click.service.ResourceService;
 import org.apache.click.service.TemplateService;
 import org.apache.click.util.ClickUtils;
 import org.apache.click.util.ErrorPage;
@@ -81,16 +82,41 @@ public class S2ClickConfigService implements ConfigService {
     static final String[] MODE_VALUES =
         { "production", "profile", "development", "debug", "trace" };
 	
-	protected ServletContext servletContext;
+//    /** The automatically bind controls, request parameters and models flag. */
+//    private AutoBinding autobinding;
+
+    /** The Commons FileUpload service class. */
+    private FileUploadService fileUploadService;
+
+    /** The format class. */
+    private Class formatClass;
+
+    /** The charcter encoding of this application. */
+    private String charset;
+
+    /** The default application locale.*/
+    private Locale locale;
+
+    /** The application log service. */
+    private LogService logService;
+
+    /**
+     * The application mode:
+     * [ PRODUCTION | PROFILE | DEVELOPMENT | DEBUG | TRACE ].
+     */
+    private int mode;
+
+    /** The ServletContext instance. */
+    private ServletContext servletContext;
+
+    /** The application ResourceService. */
+    private ResourceService resourceService;
+
+    /** The application TemplateService. */
+    private TemplateService templateService;
 	
 	protected boolean hotDeploy;
-	protected String charset;
-	protected int mode;
-	protected Locale locale;
-	protected LogService logService;
-	protected TemplateService templateService;
-	protected FileUploadService fileUploadService;
-	protected Class formatClass;
+	
 	protected Map commonHeaders;
 	
     protected final Map pageByPathMap = new HashMap();
@@ -321,6 +347,7 @@ public class S2ClickConfigService implements ConfigService {
 		
 		loadCharset(config);
 		loadLocale(config);
+		loadResourceService(config);
 		loadTemplateService(config);
 		loadFileUploadService(config);
 		loadFormat(config);
@@ -473,6 +500,21 @@ public class S2ClickConfigService implements ConfigService {
         }
 		
 		logService.onInit(servletContext);
+	}
+	
+	protected void loadResourceService(S2ClickConfig config) throws Exception {
+		resourceService = config.resourceService.newInstance();
+		
+		Map<String, String> propertyMap = config.resourceServicePropertyMap;
+        
+		for (Iterator<String> i = propertyMap.keySet().iterator(); i.hasNext();) {
+            String name = i.next();
+            String value = propertyMap.get(name);
+
+            Ognl.setValue(name, resourceService, value);
+        }
+		
+		resourceService.onInit(servletContext);
 	}
 	
 	protected void loadTemplateService(S2ClickConfig config) throws Exception {
@@ -835,5 +877,37 @@ public class S2ClickConfigService implements ConfigService {
             return path;
         }
     }
+
+    /**
+     * リクエストパラメータのバインディングはS2Click側で行うため、
+     * このメソッドは常に<code>AutoBinding.NONE</code>を返します。
+     */
+	public AutoBinding getAutoBindingMode() {
+		// TODO Auto-generated method stub
+		return AutoBinding.PUBLIC;
+	}
+
+	public List getPageClassList() {
+		List classList = new ArrayList(pageByClassMap.size());
+
+		Iterator i = pageByClassMap.keySet().iterator();
+		while (i.hasNext()) {
+			Class pageClass = (Class) i.next();
+			classList.add(pageClass);
+		}
+
+		return classList;
+	}
+
+	public ResourceService getResourceService() {
+		return this.resourceService;
+	}
+
+	public boolean isTemplate(String path) {
+        if (path.endsWith(".htm") || path.endsWith(".jsp")) {
+            return true;
+        }
+        return false;
+	}
 
 }

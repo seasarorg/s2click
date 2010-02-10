@@ -28,7 +28,9 @@ import org.seasar.s2click.test.S2ClickTestCase;
 public class S2ClickPageTest extends S2ClickTestCase {
 
 	public void testRenderJSON() throws Exception {
-		S2ClickPage page = new S2ClickPage();
+		@SuppressWarnings("serial")
+		S2ClickPage page = new S2ClickPage(){};
+		
 		page.setHeaders(new HashMap<Object, Object>());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -44,7 +46,9 @@ public class S2ClickPageTest extends S2ClickTestCase {
 	}
 
 	public void testRenderHTML() throws Exception {
-		S2ClickPage page = new S2ClickPage();
+		@SuppressWarnings("serial")
+		S2ClickPage page = new S2ClickPage(){};
+		
 		page.setHeaders(new HashMap<Object, Object>());
 		
 		page.renderHTML("<html>あああ</html>");
@@ -101,6 +105,7 @@ public class S2ClickPageTest extends S2ClickTestCase {
 		}
 	}
 	
+	@SuppressWarnings("serial")
 	public static class TestPage extends S2ClickPage {
 		
 		@Request

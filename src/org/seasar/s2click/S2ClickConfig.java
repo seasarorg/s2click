@@ -18,8 +18,10 @@ package org.seasar.s2click;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.click.service.ClickResourceService;
 import org.apache.click.service.ConsoleLogService;
 import org.apache.click.service.LogService;
+import org.apache.click.service.ResourceService;
 import org.apache.click.service.TemplateService;
 import org.apache.click.service.VelocityTemplateService;
 import org.apache.click.util.Format;
@@ -79,8 +81,19 @@ public class S2ClickConfig {
 	public Map<String, String> logServicePropertyMap = new HashMap<String, String>();
 	
 	/**
+	 * リソースサービス。
+	 * デフォルトは<code>ClickResourceService</code>です。
+	 */
+	public Class<? extends ResourceService> resourceService = ClickResourceService.class;
+	
+	/**
+	 * リソースサービスのプロパティ。
+	 */
+	public Map<String, String> resourceServicePropertyMap = new HashMap<String, String>();
+	
+	/**
 	 * テンプレートサービス。
-	 * デフォルトは<codeVelocityTemplateService></code>です。
+	 * デフォルトは<code>VelocityTemplateService></code>です。
 	 */
 	public Class<? extends TemplateService> templateService = VelocityTemplateService.class;
 	
