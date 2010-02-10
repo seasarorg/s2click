@@ -53,7 +53,7 @@ public class S2ClickPageTest extends S2ClickTestCase {
 		
 		page.renderHTML("<html>あああ</html>");
 		
-		assertEquals("text/html; charset=UTF-8", response.getContentType());
+		assertEquals("text/html; charset=utf-8", response.getContentType());
 		
 		String value = new String(response.getBinaryContent(), "UTF-8");
 		assertEquals("<html>あああ</html>", value);

@@ -18,9 +18,9 @@ package org.seasar.s2click.example.form;
 import org.apache.click.control.Option;
 import org.apache.click.control.Submit;
 import org.apache.click.extras.control.CheckList;
+import org.apache.click.extras.control.HiddenList;
 import org.apache.click.extras.control.PickList;
 import org.seasar.s2click.control.DateFieldYYYYMMDD;
-import org.seasar.s2click.control.HiddenList;
 import org.seasar.s2click.control.S2ClickForm;
 
 public class ControlsForm extends S2ClickForm {

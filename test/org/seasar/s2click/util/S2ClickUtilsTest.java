@@ -29,12 +29,12 @@ import org.apache.click.control.PasswordField;
 import org.apache.click.control.TextField;
 import org.apache.click.extras.control.CheckList;
 import org.apache.click.extras.control.DateField;
+import org.apache.click.extras.control.HiddenList;
 import org.apache.click.extras.control.IntegerField;
 import org.apache.click.service.ConfigService;
 import org.seasar.s2click.S2ClickConfig;
 import org.seasar.s2click.S2ClickConfigService;
 import org.seasar.s2click.control.DateFieldYYYYMMDD;
-import org.seasar.s2click.control.HiddenList;
 import org.seasar.s2click.test.S2ClickTestCase;
 
 public class S2ClickUtilsTest extends S2ClickTestCase {

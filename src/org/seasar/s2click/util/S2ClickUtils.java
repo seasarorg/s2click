@@ -24,6 +24,7 @@ import org.apache.click.control.Field;
 import org.apache.click.control.FileField;
 import org.apache.click.control.Form;
 import org.apache.click.control.HiddenField;
+import org.apache.click.extras.control.HiddenList;
 import org.apache.click.extras.control.PickList;
 import org.apache.click.service.ConfigService;
 import org.apache.click.util.ClickUtils;
@@ -31,7 +32,6 @@ import org.seasar.framework.beans.Converter;
 import org.seasar.framework.beans.util.Copy;
 import org.seasar.framework.container.S2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
-import org.seasar.s2click.control.HiddenList;
 
 /**
  * S2Click内で使用するユーティリティメソッドを提供します。
