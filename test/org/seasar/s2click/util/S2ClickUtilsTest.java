@@ -54,15 +54,6 @@ public class S2ClickUtilsTest extends S2ClickTestCase {
 		assertSame(configService, S2ClickUtils.getConfigService());
 	}
 
-	public void testUrlEncode() {
-		assertEquals("ABCDEFG", 
-				S2ClickUtils.urlEncode("ABCDEFG"));
-		assertEquals("Click+Framework", 
-				S2ClickUtils.urlEncode("Click Framework"));
-		assertEquals("%E3%81%82%E3%81%84%E3%81%86%E3%81%88%E3%81%8A", 
-				S2ClickUtils.urlEncode("あいうえお"));
-	}
-
 	public void testConvertNbsp() {
 		assertEquals(" &nbsp;&nbsp;&nbsp;", S2ClickUtils.convertNbsp("    "));
 		assertEquals("a &nbsp;&nbsp;&nbsp;b", S2ClickUtils.convertNbsp("a    b"));
