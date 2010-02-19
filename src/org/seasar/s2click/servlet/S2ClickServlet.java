@@ -152,6 +152,18 @@ public class S2ClickServlet extends ClickServlet {
 		}
 	}
     
+    /**
+     * {@link Ajax}アノテーションによって呼び出されたメソッドの戻り値をレンダリングします。
+     * <p>
+     * 戻り値がStringの場合は文字列をそのまま返却します。コンテンツタイプは<code>"text/html; charset=utf-8"</code>になります。 
+     * String以外の場合はJSONに変換して返却します。コンテンツタイプは<code>"application/x-javascript; charset=utf-8"</code>になります。 
+     * <p>
+     * 上記以外のレスポンスを返却したい場合は本メソッドをオーバーライドしてください。
+     * 
+     * @param context コンテキスト
+     * @param result Ajaxで呼び出されたメソッドの戻り値
+     * @throws Exception レンダリング中にエラーが発生した場合
+     */
     protected void renderAjaxResponse(Context context, Object result) throws Exception {
     	
 		final HttpServletResponse response = context.getResponse();
@@ -184,6 +196,14 @@ public class S2ClickServlet extends ClickServlet {
 		}
     }
     
+    /**
+     * ページクラスからAjaxで呼び出すメソッドを取得します。
+     * 
+     * @param page ページクラスのインスタンス
+     * @param methodName Ajaxで呼び出すメソッド名
+     * @return {@link Ajax}アノテーションが付与されており、メソッド名が一致するpublicメソッドを返却します。
+     *   メソッドが見つからない場合は<code>null</code>を返します。
+     */
     protected Method getAjaxMethod(Page page, String methodName){
 		Method[] methods = page.getClass().getMethods();
 		for(Method method: methods){
