@@ -41,6 +41,7 @@ import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.util.SmartDeployUtil;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.annotation.Ajax;
+import org.seasar.s2click.exception.AjaxException;
 import org.seasar.s2click.filter.UrlPatternFilter;
 import org.seasar.s2click.util.AjaxUtils;
 
@@ -143,7 +144,8 @@ public class S2ClickServlet extends ClickServlet {
 				}
 				
 			} else {
-				// TODO Ajaxで呼び出すメソッドが見つからない（エラーにする）
+				throw new AjaxException(
+						"Ajaxで呼び出すメソッドが見つかりません。メソッド名: " + methodName);
 			}
 			
 		} else {
