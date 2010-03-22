@@ -56,6 +56,7 @@ public class S2ClickUtils {
 	 * @param form 変換するフォーム
 	 * @throws IllegalArgumentException hiddenに変換できないコントロールがフォームに含まれていた場合
 	 */
+	@SuppressWarnings("unchecked")
 	public static void convertToHidden(Form form) throws IllegalArgumentException {
 		for(Object obj: form.getFieldList().toArray()){
 			Field field = (Field) obj;
