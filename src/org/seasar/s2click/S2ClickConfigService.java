@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -61,9 +61,9 @@ import org.w3c.dom.Element;
 
 @SuppressWarnings("unchecked")
 public class S2ClickConfigService implements ConfigService {
-	
+
     private static final Object PAGE_LOAD_LOCK = new Object();
-    
+
     /** The production application mode. */
     static final int PRODUCTION = 0;
 
@@ -81,7 +81,7 @@ public class S2ClickConfigService implements ConfigService {
 
     static final String[] MODE_VALUES =
         { "production", "profile", "development", "debug", "trace" };
-	
+
 //    /** The automatically bind controls, request parameters and models flag. */
 //    private AutoBinding autobinding;
 
@@ -114,15 +114,15 @@ public class S2ClickConfigService implements ConfigService {
 
     /** The application TemplateService. */
     private TemplateService templateService;
-	
+
 	protected boolean hotDeploy;
-	
+
 	protected Map commonHeaders;
-	
+
     protected final Map pageByPathMap = new HashMap();
     protected final Map pageByClassMap = new HashMap();
     protected String pagesPackage;
-    
+
     static final Map DEFAULT_HEADERS;
     /** Initialize the default headers. */
     static {
@@ -131,11 +131,11 @@ public class S2ClickConfigService implements ConfigService {
         DEFAULT_HEADERS.put("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
         DEFAULT_HEADERS.put("Expires", new Date(1L));
     }
-	
+
 	public Format createFormat() {
 		try {
 			return (Format) formatClass.newInstance();
-			
+
 		} catch(Exception ex){
 			throw new RuntimeException(ex);
 		}
@@ -333,18 +333,18 @@ public class S2ClickConfigService implements ConfigService {
 
 	public void onDestroy() {
 	}
-    
+
 	public void onInit(ServletContext servletContext) throws Exception {
 		this.servletContext = servletContext;
-		
+
         this.hotDeploy = !SmartDeployUtil.isHotdeployMode(SingletonS2ContainerFactory.getContainer());
 		S2ClickConfig config = S2ClickUtils.getComponent(S2ClickConfig.class);
-		
+
 		loadLogService(config);
 		loadModel(config);
-		
-		deployFiles();
-		
+
+//		deployFiles();
+
 		loadCharset(config);
 		loadLocale(config);
 		loadResourceService(config);
@@ -354,7 +354,7 @@ public class S2ClickConfigService implements ConfigService {
 		loadHeaders(config);
 		loadPages(config);
 	}
-	
+
     private void deployFiles() throws Exception {
 
         // Deploy application files if they are not already present.
@@ -385,7 +385,7 @@ public class S2ClickConfigService implements ConfigService {
             getLogService().warn(msg);
         }
     }
-    
+
     private Element getResourceRootElement(String path) throws IOException {
         Document document = null;
         InputStream inputStream = null;
@@ -407,7 +407,7 @@ public class S2ClickConfigService implements ConfigService {
             return null;
         }
     }
-	
+
     private void deployControls(Element rootElm) throws Exception {
 
         if (rootElm == null) {
@@ -438,11 +438,11 @@ public class S2ClickConfigService implements ConfigService {
             control.onDeploy(servletContext);
         }
     }
-    
+
 	protected void loadCharset(S2ClickConfig config){
 		charset = config.charset;
 	}
-	
+
 	protected void loadModel(S2ClickConfig config){
         String modeValue = "development";
 
@@ -486,58 +486,58 @@ public class S2ClickConfigService implements ConfigService {
             ((ConsoleLogService) logService).setLevel(logLevel);
         }
 	}
-	
+
 	protected void loadLogService(S2ClickConfig config) throws Exception {
 		logService = config.logService.newInstance();
-		
+
 		Map<String, String> propertyMap = config.logServicePropertyMap;
-        
+
 		for (Iterator<String> i = propertyMap.keySet().iterator(); i.hasNext();) {
             String name = i.next();
             String value = propertyMap.get(name);
 
             Ognl.setValue(name, logService, value);
         }
-		
+
 		logService.onInit(servletContext);
 	}
-	
+
 	protected void loadResourceService(S2ClickConfig config) throws Exception {
 		resourceService = config.resourceService.newInstance();
-		
+
 		Map<String, String> propertyMap = config.resourceServicePropertyMap;
-        
+
 		for (Iterator<String> i = propertyMap.keySet().iterator(); i.hasNext();) {
             String name = i.next();
             String value = propertyMap.get(name);
 
             Ognl.setValue(name, resourceService, value);
         }
-		
+
 		resourceService.onInit(servletContext);
 	}
-	
+
 	protected void loadTemplateService(S2ClickConfig config) throws Exception {
 		templateService = config.templateService.newInstance();
-		
+
 		Map<String, String> propertyMap = config.templateServicePropertyMap;
-        
+
 		for (Iterator<String> i = propertyMap.keySet().iterator(); i.hasNext();) {
             String name = i.next();
             String value = propertyMap.get(name);
 
             Ognl.setValue(name, templateService, value);
         }
-		
+
 		templateService.onInit(servletContext);
 	}
-	
+
 	protected void loadFileUploadService(S2ClickConfig config) throws Exception {
 		fileUploadService = new CommonsFileUploadService();
 		fileUploadService.onInit(servletContext);
 	}
-	
-	
+
+
 	protected void loadLocale(S2ClickConfig config){
         String value = config.locale;
         if (value != null && value.length() > 0) {
@@ -552,7 +552,7 @@ public class S2ClickConfigService implements ConfigService {
             }
         }
 	}
-	
+
     protected void loadHeaders(S2ClickConfig config) {
         if (config.headers != null || !config.headers.isEmpty()) {
             commonHeaders = Collections.unmodifiableMap(config.headers);
@@ -560,25 +560,25 @@ public class S2ClickConfigService implements ConfigService {
             commonHeaders = Collections.unmodifiableMap(DEFAULT_HEADERS);
         }
     }
-	
+
 	protected void loadFormat(S2ClickConfig config){
 		formatClass = config.formatClass;
 	}
-	
+
     protected void loadPages(S2ClickConfig config) throws ClassNotFoundException {
-    	
+
     	// URLパターンの情報をクリア
     	UrlPatternManager.getAll().clear();
-    	
-    	NamingConvention naming = (NamingConvention) 
+
+    	NamingConvention naming = (NamingConvention)
     		SingletonS2ContainerFactory.getContainer().getComponent(NamingConventionImpl.class);
         pagesPackage = naming.getRootPackageNames()[0] + "." + naming.getPageSuffix().toLowerCase();
-        
+
         // Build list of automap path page class overrides
         if (logService.isDebugEnabled()) {
         	logService.debug("automapped pages:");
         }
-        
+
         // @Pathアノテーションを処理
         List<String> classes = new PageClassLoader(pagesPackage).getPageClasses();
         for(String className: classes){
@@ -623,7 +623,7 @@ public class S2ClickConfigService implements ConfigService {
                 }
             }
         }
-        
+
         // @UrlPatternアノテーションを処理
         for(Map.Entry entry: (Set<Map.Entry>) pageByPathMap.entrySet()){
         	PageElm pageElm = (PageElm) entry.getValue();
@@ -640,7 +640,7 @@ public class S2ClickConfigService implements ConfigService {
         		}
         	}
         }
-        
+
         // Build pages by class map
         for (Iterator<PageElm> i = pageByPathMap.values().iterator(); i.hasNext();) {
             PageElm page = (PageElm) i.next();
@@ -664,7 +664,7 @@ public class S2ClickConfigService implements ConfigService {
             }
         }
     }
-    
+
     /**
      * Return the list of templates within the web application.
      *
@@ -693,7 +693,7 @@ public class S2ClickConfigService implements ConfigService {
 
         return fileList;
     }
-    
+
     private void processDirectory(String dirPath, List<String> fileList) {
         Set<?> resources = servletContext.getResourcePaths(dirPath);
 
@@ -710,7 +710,7 @@ public class S2ClickConfigService implements ConfigService {
             }
         }
     }
-    
+
     private String getPageClassName(String pagePath, String pagesPackage) {
         String packageName = pagesPackage + ".";
 		String className = "";
@@ -781,15 +781,15 @@ public class S2ClickConfigService implements ConfigService {
 				return null;
 			}
 		}
-		
+
 		// abstractクラスは登録しない
     	if(Modifier.isAbstract(pageClass.getModifiers())){
     		return null;
     	}
-		
+
         return className;
     }
-    
+
     private String getRawClassname(Class clazz){
     	String className = clazz.getName();
     	int index = className.indexOf("$$EnhancedByS2AOP$$");
@@ -798,7 +798,7 @@ public class S2ClickConfigService implements ConfigService {
     	}
     	return className;
     }
-    
+
     private static Class<?> loadClass(String className){
     	try {
     		return Thread.currentThread().getContextClassLoader().loadClass(className);
@@ -808,8 +808,8 @@ public class S2ClickConfigService implements ConfigService {
 			return null;
 		}
     }
-    
-    
+
+
     static class PageElm {
 
         private final Map headers;
@@ -823,7 +823,7 @@ public class S2ClickConfigService implements ConfigService {
             headers = Collections.unmodifiableMap(commonHeaders);
             this.path = path;
             this.pageClassName = pageClassName;
-            
+
             if(!hotDeploy){
             	pageClass = loadClass(pageClassName);
                 fieldArray = pageClass.getFields();
@@ -832,12 +832,12 @@ public class S2ClickConfigService implements ConfigService {
                 for (int i = 0; i < fieldArray.length; i++) {
                     Field field = fieldArray[i];
                     fields.put(field.getName(), field);
-                }            	
+                }
             } else {
             	pageClass = null;
             	fields = null;
             	fieldArray = null;
-            }            
+            }
         }
 
         public Field[] getFieldArray() {

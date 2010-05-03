@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="S2Click" default="compile">
 
-	<property name="version" value="1.0.2"/>
+	<property name="version" value="1.0.3"/>
 	<property name="jar.name" value="s2click-${version}.jar"/>
 	<property name="src.dir" value="../src"/>
 	<property name="bin.dir" value="./bin"/>
@@ -79,10 +79,10 @@
 	<!--==================================================-->
     <target name="test" depends="compile">
     	<mkdir dir="${test.bin.dir}"/>
-    	
+
     	<javac srcdir="${test.src.dir}" destdir="${test.bin.dir}" source="1.5"
     		target="1.5" encoding="UTF-8" debug="true" classpathref="classpath"/>
-    	
+
     	<copy todir="${test.bin.dir}">
     		<fileset dir="${src.dir}" includes="**/*.dicon" />
     		<fileset dir="${src.dir}" includes="**/*.properties" />
@@ -102,7 +102,7 @@
     	<junit printsummary="true" haltonfailure="true" haltonerror="true">
     		<classpath refid="classpath" />
     		<classpath location="lib/cobertura/cobertura.jar" />
-    		
+
     		<batchtest fork="false">
     			<formatter type="plain"/>
 				<fileset dir="${test.src.dir}">
@@ -135,7 +135,7 @@
     		<fileset dir="${src.dir}" includes="**/*.java"
     			excludes="org/seasar/s2click/example/**"/>
     	</copy>
-		<jar destfile="${release.dir}/${jar.name}" basedir="${bin.dir}" 
+		<jar destfile="${release.dir}/${jar.name}" basedir="${bin.dir}"
 			excludes="org/seasar/s2click/example/**"/>
 	</target>
 
@@ -208,7 +208,7 @@
     	<copy todir="${release.dir}/doc/javadoc">
     		<fileset dir="${javadoc.dir}" includes="**"/>
     	</copy>
-		
+
 		<zip destfile="${release.zip.name}" basedir="."
 			includes="${release.dir}/**"/>
 	</target>
