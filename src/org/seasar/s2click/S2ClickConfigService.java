@@ -343,7 +343,7 @@ public class S2ClickConfigService implements ConfigService {
 		loadLogService(config);
 		loadModel(config);
 
-//		deployFiles();
+		deployFiles();
 
 		loadCharset(config);
 		loadLocale(config);
@@ -363,11 +363,9 @@ public class S2ClickConfigService implements ConfigService {
 
         if (resourcesDeployable) {
             String[] resources = {
-                "/org/apache/click/control/control.css",
-                "/org/apache/click/control/control.js",
-                "/org/apache/click/util/error.htm",
-                "/org/apache/click/not-found.htm",
-                "/org/apache/click/control/VM_global_library.vm"
+                "/META-INF/resources/error.htm",
+                "/META-INF/resources/click/not-found.htm",
+                "/META-INF/resources/click/VM_global_library.vm"
             };
 
             ClickUtils.deployFiles(servletContext, resources, "click");
