@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -31,16 +31,16 @@ import org.apache.click.service.ResourceService;
 import org.apache.click.service.TemplateService;
 import org.apache.click.util.Format;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings("rawtypes")
 public class MockConfigService implements ConfigService {
-	
+
 	private TemplateService templateService;
 	private Map<Class, String> pagePathMap = new HashMap<Class, String>();
-	
+
 	public void setPagePath(Class pageClass, String pagePath){
 		this.pagePathMap.put(pageClass, pagePath);
 	}
-	
+
 	public Format createFormat() {
 		// TODO Auto-generated method stub
 		return null;
@@ -117,7 +117,7 @@ public class MockConfigService implements ConfigService {
 	public void setTemplateService(TemplateService templateService){
 		this.templateService = templateService;
 	}
-	
+
 	public TemplateService getTemplateService() {
 		return templateService;
 	}

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -23,13 +23,13 @@ import javax.servlet.ServletContext;
 import org.apache.click.Page;
 import org.apache.click.service.TemplateService;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings("rawtypes")
 public class MockTemplateService implements TemplateService {
-	
+
 	private Page page;
 	private String templatePath;
 	private Map model;
-	
+
 	public void onDestroy() {
 	}
 
@@ -45,15 +45,15 @@ public class MockTemplateService implements TemplateService {
 		this.templatePath = templatePath;
 		this.model = model;
 	}
-	
+
 	public Page getPage(){
 		return this.page;
 	}
-	
+
 	public String getTemplatePath(){
 		return this.templatePath;
 	}
-	
+
 	public Map getModel(){
 		return this.model;
 	}

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -194,23 +194,23 @@ public abstract class S2ClickForm extends Form {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	protected void renderTagEnd(List formFields, HtmlStringBuffer buffer) {
 		renderHiddenFields(buffer, formFields);
 		super.renderTagEnd(formFields, buffer);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see net.sf.click.control.Form#renderValidationJavaScript(net.sf.click.util.HtmlStringBuffer, java.util.List)
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
     protected void renderValidationJavaScript(HtmlStringBuffer buffer, List formFields) {
 
         // Render JavaScript form validation code
         if (requiresJavaScript()) {
-            List functionNames = new ArrayList();
+            List<String> functionNames = new ArrayList<String>();
 
             buffer.append("<script type=\"text/javascript\"><!--\n");
 
@@ -297,7 +297,7 @@ public abstract class S2ClickForm extends Form {
 		if(requiresJavaScript()){
 			add(new HiddenField("action", ""));
 		}
-		
+
 		if(isFieldAutoRegistration()){
 	    	for(java.lang.reflect.Field field: getClass().getFields()){
 	       		if(Field.class.isAssignableFrom(field.getType())){
@@ -309,7 +309,7 @@ public abstract class S2ClickForm extends Form {
 	    		}
 	    	}
 		}
-		
+
 		super.onInit();
 	}
 
@@ -332,7 +332,7 @@ public abstract class S2ClickForm extends Form {
 	public void copyTo(Object object) {
 		copyTo(object, false);
 	}
-	
+
 	/**
 	 * このフォームのフィールドをすべてhiddenフィールドに変換します。
 	 */
@@ -341,7 +341,7 @@ public abstract class S2ClickForm extends Form {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
     protected void renderHeader(HtmlStringBuffer buffer, List formFields) {
 
         buffer.elementStart("form");
@@ -356,14 +356,14 @@ public abstract class S2ClickForm extends Form {
             String javaScript = "return on_" + getId() + "_submit();";
             setAttribute("onsubmit", javaScript);
         }
-        
+
         appendAttributes(buffer);
 
         buffer.closeTag();
         buffer.append("\n");
     }
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	protected void renderHiddenFields(HtmlStringBuffer buffer, List formFields) {
       // Render hidden fields
       for (int i = 0, size = formFields.size(); i < size; i++) {
@@ -374,27 +374,27 @@ public abstract class S2ClickForm extends Form {
           }
       }
     }
-    
+
     @Override
     public String getActionURL() {
         HttpServletRequest request = getContext().getRequest();
         HttpServletResponse response = getContext().getResponse();
-        
+
         String requestURI = request.getRequestURI();
-        
+
         // JSPの場合
         if(requestURI.endsWith(".jsp")){
         	// TODO c:importしている場合はこれだけじゃダメかも…
         	String forwardURI = (String) request.getAttribute("javax.servlet.forward.request_uri");
-        	
+
         	if(StringUtils.isNotEmpty(forwardURI)){
         		requestURI = forwardURI;
-        		
+
         	} else {
         		requestURI = requestURI.replaceFirst("\\.jsp$", ".htm");
         	}
         }
-        
+
         return response.encodeURL(requestURI);
     }
 

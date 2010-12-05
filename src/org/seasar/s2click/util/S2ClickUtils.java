@@ -56,7 +56,6 @@ public class S2ClickUtils {
 	 * @param form 変換するフォーム
 	 * @throws IllegalArgumentException hiddenに変換できないコントロールがフォームに含まれていた場合
 	 */
-	@SuppressWarnings("unchecked")
 	public static void convertToHidden(Form form) throws IllegalArgumentException {
 		for(Object obj: form.getFieldList().toArray()){
 			Field field = (Field) obj;
@@ -185,7 +184,7 @@ public class S2ClickUtils {
             throw new IllegalArgumentException("Null object parameter");
         }
 
-        Map map = new HashMap();
+        Map<String, String> map = new HashMap<String, String>();
         for(Field field: (List<Field>) form.getFieldList()){
         	map.put(field.getName(), "");
         }

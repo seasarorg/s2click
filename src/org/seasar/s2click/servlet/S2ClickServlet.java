@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -73,26 +73,26 @@ public class S2ClickServlet extends ClickServlet {
 	@Override
 	public void service(ServletRequest req, ServletResponse res)
 			throws ServletException, IOException {
-		
+
 		String hotDeployInitStatus = (String) req.getAttribute(UrlPatternFilter.HOTDEPLOY_INIT_KEY);
-		
+
 		if(initialized == false && !"initialized".equals(hotDeployInitStatus)){
 			super.init();
 			req.setAttribute(UrlPatternFilter.HOTDEPLOY_INIT_KEY, "initialized");
-			
+
 			if("initialize".equals(hotDeployInitStatus)){
 				return;
 			}
 		}
-		
+
 		super.service(new S2ClickRequestWrapper((HttpServletRequest) req), res);
 	}
 
 	/**
 	 * S2Containerからページクラスのインスタンスを取得します。
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
+	@SuppressWarnings("rawtypes")
 	protected Page newPageInstance(String path, Class pageClass,
 			HttpServletRequest request) throws Exception {
 		if(pageClass == Page.class || pageClass == ErrorPage.class){
@@ -119,12 +119,12 @@ public class S2ClickServlet extends ClickServlet {
 			super.renderTemplate(page);
 		}
 	}
-	
+
     protected void processPage(Page page) throws Exception {
 
 		final Context context = page.getContext();
 		final HttpServletRequest request = context.getRequest();
-		
+
 		String methodName = request.getParameter("ajax");
 		if(StringUtils.isNotEmpty(methodName)){
 			// Ajaxによる呼び出し
@@ -135,72 +135,72 @@ public class S2ClickServlet extends ClickServlet {
 				for(int i=0;i<args.length;i++){
 					args[i] = request.getParameter("arg" + i);
 				}
-				
+
 				// メソッド呼び出し
 				Object result = method.invoke(page, (Object[]) args);
-				
+
 				if(result != null){
 					renderAjaxResponse(context, result);
 				}
-				
+
 			} else {
 				throw new AjaxException(
 						"Ajaxで呼び出すメソッドが見つかりません。メソッド名: " + methodName);
 			}
-			
+
 		} else {
 			// 通常のページの処理
 			super.processPage(page);
 		}
 	}
-    
+
     /**
      * {@link Ajax}アノテーションによって呼び出されたメソッドの戻り値をレンダリングします。
      * <p>
-     * 戻り値がStringの場合は文字列をそのまま返却します。コンテンツタイプは<code>"text/html; charset=utf-8"</code>になります。 
-     * String以外の場合はJSONに変換して返却します。コンテンツタイプは<code>"application/x-javascript; charset=utf-8"</code>になります。 
+     * 戻り値がStringの場合は文字列をそのまま返却します。コンテンツタイプは<code>"text/html; charset=utf-8"</code>になります。
+     * String以外の場合はJSONに変換して返却します。コンテンツタイプは<code>"application/x-javascript; charset=utf-8"</code>になります。
      * <p>
      * 上記以外のレスポンスを返却したい場合は本メソッドをオーバーライドしてください。
-     * 
+     *
      * @param context コンテキスト
      * @param result Ajaxで呼び出されたメソッドの戻り値
      * @throws Exception レンダリング中にエラーが発生した場合
      */
     protected void renderAjaxResponse(Context context, Object result) throws Exception {
-    	
+
 		final HttpServletResponse response = context.getResponse();
-    	
+
 		// 結果をレスポンスに出力
 		OutputStream out = null;
 		InputStream in = null;
-		
+
 		try {
 			if(result instanceof String){
 				// 文字列の場合はHTMLとして返却
 				in = new ByteArrayInputStream(((String) result).getBytes("UTF-8"));
 				response.setContentType(AjaxUtils.CONTENT_TYPE_HTML);
-				
+
 			} else {
 				// それ以外の場合はJSONとして返却
 				String json = JSON.encode(result);
 				in = new ByteArrayInputStream(json.getBytes("UTF-8"));
 				response.setContentType(AjaxUtils.CONTENT_TYPE_JSON);
 			}
-			
+
 			response.setContentLength(in.available());
 			out = response.getOutputStream();
 			IOUtils.copy(in, out);
 			response.flushBuffer();
-			
+
 		} finally {
 			IOUtils.closeQuietly(out);
 			IOUtils.closeQuietly(in);
 		}
     }
-    
+
     /**
      * ページクラスからAjaxで呼び出すメソッドを取得します。
-     * 
+     *
      * @param page ページクラスのインスタンス
      * @param methodName Ajaxで呼び出すメソッド名
      * @return {@link Ajax}アノテーションが付与されており、メソッド名が一致するpublicメソッドを返却します。

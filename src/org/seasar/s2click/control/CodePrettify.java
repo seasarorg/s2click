@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -28,18 +28,18 @@ import org.apache.commons.lang.StringUtils;
 /**
  * <a href="http://code.google.com/p/google-code-prettify/">google-code-prettify</a>
  * を使ってソースコードをハイライト表示するコントロールです。
- * 
+ *
  * @author Naoki Takezoe
  * @since 0.4.0
  */
 public class CodePrettify extends AbstractControl {
-	
+
 	private static final long serialVersionUID = 1L;
 
-	public static final String HTML_IMPORTS = 
+	public static final String HTML_IMPORTS =
 		"<script type=\"text/javascript\" src=\"{0}/resources/prettify/prettify.js\"></script>\n" +
 	    "<link href=\"{0}/resources/prettify/prettify.css\" rel=\"stylesheet\" type=\"text/css\"/>\n";
-	
+
 	public static final String LANG_C = "c";
 	public static final String LANG_CC = "cc";
 	public static final String LANG_CPP = "cpp";
@@ -60,46 +60,46 @@ public class CodePrettify extends AbstractControl {
 	public static final String LANG_XHTML = "xhtml";
 	public static final String LANG_XML = "xml";
 	public static final String LANG_XSL = "xsl";
-	
+
 	protected String code;
-	
+
 	protected String lang;
-	
+
 	public CodePrettify(){
 	}
-	
+
 	public CodePrettify(String name){
 		setName(name);
 	}
-	
+
 	/**
 	 * ハイライト表示するプログラムコードをセットします。
-	 * 
+	 *
 	 * @param code プログラムコード
 	 */
 	public void setCode(String code){
 		this.code = code;
 	}
-	
+
 	/**
 	 * プログラムコードを取得します。
-	 * 
+	 *
 	 * @return プログラムコード
 	 */
 	public String getCode(){
 		return this.code;
 	}
-	
+
 	public void setLang(String lang){
 		this.lang = lang;
 	}
-	
+
 	public String getLang(){
 		return this.lang;
 	}
-	
+
 	public String getHtmlImports() {
-        return MessageFormat.format(HTML_IMPORTS, 
+        return MessageFormat.format(HTML_IMPORTS,
         		new Object[]{ getContext().getRequest().getContextPath() }
         );
 	}
@@ -129,7 +129,7 @@ public class CodePrettify extends AbstractControl {
 		render(buffer);
 		return buffer.toString();
 	}
-	
+
 	@Override
 	public void render(HtmlStringBuffer buffer) {
 		StringBuilder sb = new StringBuilder();
@@ -140,10 +140,10 @@ public class CodePrettify extends AbstractControl {
 		sb.append("\">");
 		sb.append(ClickUtils.escapeHtml(code));
 		sb.append("</pre>");
-		
-		@SuppressWarnings("unchecked")
+
+		@SuppressWarnings("rawtypes")
 		List controls = getPage().getControls();
-		
+
 		int count = 0;
 		for(Object control: controls){
 			if(control instanceof CodePrettify){
@@ -160,8 +160,8 @@ public class CodePrettify extends AbstractControl {
 			sb.append("}\n");
 			sb.append("</script>\n");
 		}
-		
+
 		buffer.append(sb.toString());
 	}
-	
+
 }
