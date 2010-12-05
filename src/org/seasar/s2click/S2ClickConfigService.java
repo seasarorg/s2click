@@ -59,7 +59,7 @@ import org.seasar.s2click.util.S2ClickUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class S2ClickConfigService implements ConfigService {
 
     private static final Object PAGE_LOAD_LOCK = new Object();

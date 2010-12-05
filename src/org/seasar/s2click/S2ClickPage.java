@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -51,12 +51,12 @@ import org.seasar.s2click.util.AjaxUtils;
 import org.seasar.s2click.util.S2ClickUtils;
 
 /**
- * 
+ *
  * @author Naoki Takezoe
  * @since 0.4.0
  */
 public abstract class S2ClickPage extends Page {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -68,17 +68,17 @@ public abstract class S2ClickPage extends Page {
 	 * テンプレートのレンダリングをスキップします。
 	 */
 	public static final String SKIP_RENDERING = S2ClickPage.class.getName() + "_skipRendering";
-	
+
 	protected static TypeConverter typeConverter = new RequestTypeConverter();
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public void onInit() {
 		super.onInit();
-		
+
 		// リクエストパラメータをフィールドにバインド
 		bindPageFields();
-		
+
 		// @Ajaxアノテーションを付与したメソッドを呼び出すためのJavaScript関数を作成
 		String ajaxJavaScript = AjaxUtils.createAjaxJavaScript(this);
 		if(StringUtils.isNotEmpty(ajaxJavaScript)){
@@ -86,7 +86,7 @@ public abstract class S2ClickPage extends Page {
 			getHeadElements().add(new JsScript(ajaxJavaScript));
 		}
 	}
-	
+
 	/**
 	 * OGNLの型コンバータを取得します
 	 * @return OGNLの型コンバータ
@@ -95,7 +95,7 @@ public abstract class S2ClickPage extends Page {
         return typeConverter;
     }
 
-	
+
 	/**
 	 * リクエストパラメータをバインドするページクラスのフィールドを取得します。
 	 *
@@ -120,17 +120,17 @@ public abstract class S2ClickPage extends Page {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * {@link Request}アノテーションでリクエストパラメータをフィールドにバインドします。
-	 * 
+	 *
 	 * @throws RequestConversionException リクエストパラメータの型変換に失敗した場合
 	 * @throws RequestRequiredException 必須のリクエストパラメータが指定されていなかった場合
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	protected void bindPageFields() throws RequestConversionException, RequestRequiredException {
 		ConfigService configService = S2ClickUtils.getConfigService();
-		
+
         if (configService.getPageFields(getClass()).isEmpty()) {
             return;
         }
@@ -173,11 +173,11 @@ public abstract class S2ClickPage extends Page {
 //                        }
                     }
                 }
-                
-                
+
+
             }
         }
-		
+
 		// 必須パラメータのチェック
 		for(Field field: configService.getPageFieldArray(getClass())){
 			Request ann = field.getAnnotation(Request.class);
@@ -194,49 +194,49 @@ public abstract class S2ClickPage extends Page {
 
 	/**
 	 * レスポンスにJSONをレンダリングします。{@link AjaxLink}などと組み合わせて使用します。
-	 * 
+	 *
 	 * @param obj JSONとしてレスポンスするオブジェクト
 	 */
 	protected void renderJSON(Object obj){
 		try {
 			byte[] json = JSON.encode(obj).getBytes("UTF-8");
-			renderResponse(AjaxUtils.CONTENT_TYPE_JSON, 
+			renderResponse(AjaxUtils.CONTENT_TYPE_JSON,
 					new ByteArrayInputStream(json));
-			
+
 		} catch(UnsupportedEncodingException ex){
 			// あり得ない
 		}
 	}
-	
+
 	/**
 	 * レスポンスにHTMLをレンダリングします。{@link AjaxLink}などと組み合わせて使用します。
-	 * 
+	 *
 	 * @param html 返却するHTML
 	 */
 	protected void renderHTML(String html){
 		try {
-			renderResponse(AjaxUtils.CONTENT_TYPE_HTML, 
+			renderResponse(AjaxUtils.CONTENT_TYPE_HTML,
 					new ByteArrayInputStream(html.getBytes("UTF-8")));
 		} catch(UnsupportedEncodingException ex){
 			// あり得ない
 		}
 	}
-	
+
 	/**
 	 * レスポンスにファイルをレンダリングします。ファイルダウンロード時に使用します。
 	 * コンテンツタイプには<code>application/octet-stream</code>が用いられます。
-	 * 
+	 *
 	 * @param fileName ファイル名
 	 * @param file ファイルの内容
 	 */
 	protected void renderFile(String fileName, InputStream file){
 		renderFile(null, fileName, file);
 	}
-	
-	
+
+
 	/**
 	 * レスポンスにファイルをレンダリングします。ファイルダウンロード時に使用します。
-	 * 
+	 *
 	 * @param contentType コンテンツタイプ（nullの場合は<code>application/octet-stream</code>が用いられます）
 	 * @param fileName ファイル名
 	 * @param file ファイルの内容
@@ -245,40 +245,40 @@ public abstract class S2ClickPage extends Page {
 		try {
 			String contentDisposition = "attachment";
 			String userAgent = getContext().getRequest().getHeader("USER-AGENT");
-			
+
 			if(userAgent.indexOf("MSIE") >= 0 && userAgent.indexOf("Opera") < 0){
 				fileName = new String(fileName.getBytes("Windows-31J"), "ISO8859_1");
 			} else {
 				fileName = new String(fileName.getBytes("UTF-8"), "ISO8859_1");
 			}
 			contentDisposition = contentDisposition + "; filename=\"" + fileName + "\"";
-			
+
 			getContext().getResponse().setHeader("Content-Disposition", contentDisposition);
-			
+
 			if(contentType == null){
 				renderResponse("application/octet-stream", file);
 			} else {
 				renderResponse(contentType, file);
 			}
-			
+
 		} catch(UnsupportedEncodingException ex){
 			// あり得ない
 		}
 	}
-	
+
 	/**
 	 * レスポンスをレンダリングします。
-	 * 
+	 *
 	 * @param contentType コンテンツタイプ
 	 * @param contents レスポンスの内容
 	 */
 	protected void renderResponse(String contentType, InputStream contents) {
 		HttpServletResponse res = getContext().getResponse();
-		
+
 		// ヘッダもここで書き出します。
 		@SuppressWarnings("unchecked")
 		Map<String, Object> headers = getHeaders();
-		
+
         for (Iterator<Map.Entry<String, Object>> i = headers.entrySet().iterator(); i.hasNext();) {
             Map.Entry<String, Object> entry = i.next();
             String name = entry.getKey().toString();
@@ -299,24 +299,24 @@ public abstract class S2ClickPage extends Page {
                 res.setIntHeader(name, intValue);
             }
         }
-        
+
 		OutputStream out = null;
-		
+
 		try {
 			res.setContentLength(contents.available());
 			res.setContentType(contentType);
 			out = res.getOutputStream();
 			IOUtils.copy(contents, out);
 			res.flushBuffer();
-			
+
 		} catch(Exception ex){
 			throw new RuntimeException(ex);
-			
+
 		} finally {
 			IOUtils.closeQuietly(contents);
 			IOUtils.closeQuietly(out);
 			getContext().setRequestAttribute(SKIP_RENDERING, "true");
 		}
 	}
-	
+
 }
