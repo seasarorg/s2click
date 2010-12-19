@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,7 +20,7 @@ import junit.framework.TestSuite;
 
 /**
  * S2Clickのすべてのテストケースを実行します。
- * 
+ *
  * @author Naoki Takezoe
  */
 public class AllTests {
@@ -30,9 +30,10 @@ public class AllTests {
 		//$JUnit-BEGIN$
 		suite.addTest(org.seasar.s2click.control.AllTests.suite());
 		suite.addTest(org.seasar.s2click.filter.AllTests.suite());
+		suite.addTest(org.seasar.s2click.servlet.AllTests.suite());
 		suite.addTest(org.seasar.s2click.util.AllTests.suite());
 		suite.addTest(org.seasar.s2click.example.page.AllTests.suite());
-//		suite.addTest(org.seasar.s2click.example.service.AllTests.suite());
+		suite.addTest(org.seasar.s2click.example.service.AllTests.suite());
 		suite.addTestSuite(S2ClickPageTest.class);
 		//$JUnit-END$
 		return suite;
