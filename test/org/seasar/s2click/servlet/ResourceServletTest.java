@@ -18,7 +18,7 @@ public class ResourceServletTest extends TestCase {
 		MockServletConfigImpl config = new MockServletConfigImpl();
 		config.setInitParameter("rootPackage", "org.seasar.s2click.servlet");
 
-		ResourceServlet servlet = new ResourceServlet();
+		ResourceServlet servlet = new TestResourceServlet();
 		servlet.init(config);
 
 		MockRequest request = new MockRequest();
@@ -36,7 +36,7 @@ public class ResourceServletTest extends TestCase {
 		MockServletConfigImpl config = new MockServletConfigImpl();
 		config.setInitParameter("rootPackage", "org.seasar.s2click.servlet");
 
-		ResourceServlet servlet = new ResourceServlet();
+		ResourceServlet servlet = new TestResourceServlet();
 		servlet.init(config);
 
 		MockRequest request = new MockRequest();
@@ -56,7 +56,7 @@ public class ResourceServletTest extends TestCase {
 		MockServletConfigImpl config = new MockServletConfigImpl();
 		config.setInitParameter("rootPackage", "org.seasar.s2click.servlet");
 
-		ResourceServlet servlet = new ResourceServlet();
+		ResourceServlet servlet = new TestResourceServlet();
 		servlet.init(config);
 
 		MockRequest request = new MockRequest();
@@ -76,7 +76,7 @@ public class ResourceServletTest extends TestCase {
 		MockServletConfigImpl config = new MockServletConfigImpl();
 		config.setInitParameter("rootPackage", "org.seasar.s2click.example.page");
 
-		ResourceServlet servlet = new ResourceServlet();
+		ResourceServlet servlet = new TestResourceServlet();
 		servlet.init(config);
 
 		Field field = ReflectionUtil.getDeclaredField(ResourceServlet.class, "rootPathArray");
@@ -92,7 +92,7 @@ public class ResourceServletTest extends TestCase {
 		config.setInitParameter("rootPackage",
 			"org.seasar.s2click.example.page,org.seasar.s2click.example.resource");
 
-		ResourceServlet servlet = new ResourceServlet();
+		ResourceServlet servlet = new TestResourceServlet();
 		servlet.init(config);
 
 		Field field = ReflectionUtil.getDeclaredField(ResourceServlet.class, "rootPathArray");
@@ -107,7 +107,7 @@ public class ResourceServletTest extends TestCase {
 	public void testInit_rootPackageが指定されていない場合() throws Exception {
 		MockServletConfigImpl config = new MockServletConfigImpl();
 
-		ResourceServlet servlet = new ResourceServlet();
+		ResourceServlet servlet = new TestResourceServlet();
 		try {
 			servlet.init(config);
 			fail();
@@ -120,12 +120,25 @@ public class ResourceServletTest extends TestCase {
 		MockServletConfigImpl config = new MockServletConfigImpl();
 		config.setInitParameter("rootPackage", ",");
 
-		ResourceServlet servlet = new ResourceServlet();
+		ResourceServlet servlet = new TestResourceServlet();
 		try {
 			servlet.init(config);
 			fail();
 		} catch(ServletException ex){
 			assertEquals("初期化パラメータ 'rootPackage' が指定されていません。", ex.getMessage());
+		}
+	}
+
+	private class TestResourceServlet extends ResourceServlet {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void log(String message, Throwable t) {
+		}
+
+		@Override
+		public void log(String msg) {
 		}
 	}
 }
