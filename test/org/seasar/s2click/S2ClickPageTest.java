@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -30,17 +30,17 @@ public class S2ClickPageTest extends S2ClickTestCase {
 	public void testRenderJSON() throws Exception {
 		@SuppressWarnings("serial")
 		S2ClickPage page = new S2ClickPage(){};
-		
+
 		page.setHeaders(new HashMap<Object, Object>());
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", "Tarou");
 		map.put("age", 20);
-		
+
 		page.renderJSON(map);
-		
+
 		assertEquals("application/x-javascript; charset=utf-8", response.getContentType());
-		
+
 		String value = new String(response.getBinaryContent(), "UTF-8");
 		assertEquals("{\"age\":20,\"name\":\"Tarou\"}", value);
 	}
@@ -48,23 +48,23 @@ public class S2ClickPageTest extends S2ClickTestCase {
 	public void testRenderHTML() throws Exception {
 		@SuppressWarnings("serial")
 		S2ClickPage page = new S2ClickPage(){};
-		
+
 		page.setHeaders(new HashMap<Object, Object>());
-		
+
 		page.renderHTML("<html>あああ</html>");
-		
+
 		assertEquals("text/html; charset=utf-8", response.getContentType());
-		
+
 		String value = new String(response.getBinaryContent(), "UTF-8");
 		assertEquals("<html>あああ</html>", value);
 	}
-	
+
 	public void testValidatePageFields_エラー(){
 		setConfigService(new TestConfigService());
 		request.setParameter("password", "password");
-		
+
 		TestPage page = new TestPage();
-		
+
 		try {
 			page.bindPageFields();
 			fail();
@@ -72,20 +72,20 @@ public class S2ClickPageTest extends S2ClickTestCase {
 			assertEquals("必須パラメータ userName が指定されていません。", ex.getMessage());
 		}
 	}
-	
+
 	public void testValidatePageFields_エラーなし(){
 		request.setParameter("userName", "たけぞう");
 		request.setParameter("password", "password");
 		setConfigService(new TestConfigService());
-		
+
 		TestPage page = new TestPage();
-		
+
 		page.bindPageFields();
 	}
-	
+
 	public static class TestConfigService extends MockConfigService {
 		@Override
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings("rawtypes")
 		public Field[] getPageFieldArray(Class pageClass) {
 			return new Field[]{
 				ReflectionUtil.getField(TestPage.class, "userId"),
@@ -95,7 +95,7 @@ public class S2ClickPageTest extends S2ClickTestCase {
 		}
 
 		@Override
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings("rawtypes")
 		public Map getPageFields(Class pageClass) {
 			Map<String, Field> fields = new HashMap<String, Field>();
 			for(Field field: getPageFieldArray(pageClass)){
@@ -104,20 +104,20 @@ public class S2ClickPageTest extends S2ClickTestCase {
 			return fields;
 		}
 	}
-	
+
 	@SuppressWarnings("serial")
 	public static class TestPage extends S2ClickPage {
-		
+
 		@Request
 		public String userId;
-		
+
 		@Request(required=true)
 		public String userName;
-		
+
 		@Request(required=true)
 		public String password;
 	}
-	
+
 //
 //	public void testRenderFile() {
 //		fail("Not yet implemented");

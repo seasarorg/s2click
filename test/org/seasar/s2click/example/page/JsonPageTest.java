@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -27,7 +27,7 @@ import org.seasar.s2click.util.AjaxUtils;
 
 public class JsonPageTest extends S2ClickPageTestCase<JsonPage> {
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public void testOnInit() {
 		setConfigService(new MockConfigService(){
 			@Override
@@ -45,13 +45,13 @@ public class JsonPageTest extends S2ClickPageTestCase<JsonPage> {
 		page.setHeaders(new HashMap<String, String>());
 		page.form.keyword.setValue("Wiki");
 		page.onSearch();
-		
+
 		assertEquals("application/x-javascript; charset=utf-8", response.getContentType());
-		
+
 		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> books = List.class.cast(
 				JSON.decode(new String(response.getBinaryContent(), "UTF-8")));
-		
+
 		assertEquals(1, books.size());
 		assertEquals("入門Wiki", books.get(0).get("title"));
 	}
@@ -59,13 +59,13 @@ public class JsonPageTest extends S2ClickPageTestCase<JsonPage> {
 	public void testOnSearchAll() throws Exception {
 		page.setHeaders(new HashMap<String, String>());
 		page.onSearchAll();
-		
+
 		assertEquals("application/x-javascript; charset=utf-8", response.getContentType());
-		
+
 		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> books = List.class.cast(
 				JSON.decode(new String(response.getBinaryContent(), "UTF-8")));
-		
+
 		assertEquals(4, books.size());
 		assertEquals("入門Wiki", books.get(0).get("title"));
 		assertEquals("Eclipseプラグイン開発徹底攻略", books.get(1).get("title"));
@@ -76,9 +76,9 @@ public class JsonPageTest extends S2ClickPageTestCase<JsonPage> {
 	public void testOnAjaxUpdater() throws Exception {
 		page.setHeaders(new HashMap<String, String>());
 		page.onAjaxUpdater();
-		
+
 		assertEquals("text/html; charset=utf-8", response.getContentType());
-		assertEquals("<h2>Ajaxでコンテンツを置換しました</h2>", 
+		assertEquals("<h2>Ajaxでコンテンツを置換しました</h2>",
 				new String(response.getBinaryContent(), "UTF-8"));
 	}
 
