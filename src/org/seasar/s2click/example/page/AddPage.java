@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,24 +17,27 @@ package org.seasar.s2click.example.page;
 
 import org.apache.click.ActionListener;
 import org.apache.click.Control;
+import org.seasar.s2click.S2ClickPage;
+import org.seasar.s2click.annotation.Layout;
 import org.seasar.s2click.annotation.Path;
 import org.seasar.s2click.example.form.AddForm;
 
 /**
  * 足し算アプリケーションのページクラス。
- * 
+ *
  * @see AddForm
  * @author Naoki Takezoe
  */
+@Layout
 @Path("/add.htm")
-public class AddPage extends LayoutPage {
-	
+public class AddPage extends S2ClickPage {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public String title = "足し算アプリケーション";
 	public String template = "/form.htm";
 	public AddForm form = new AddForm("form");
-	
+
 	public AddPage(){
 		form.submit.setActionListener(new ActionListener(){
 			private static final long serialVersionUID = 1L;
@@ -48,5 +51,5 @@ public class AddPage extends LayoutPage {
 			}
 		});
 	}
-	
+
 }

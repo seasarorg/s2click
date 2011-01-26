@@ -9,14 +9,18 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.s2click.example.page;
 
-public class IndexPage extends LayoutPage {
-	
+import org.seasar.s2click.S2ClickPage;
+import org.seasar.s2click.annotation.Layout;
+
+@Layout
+public class IndexPage extends S2ClickPage {
+
 	private static final long serialVersionUID = 1L;
 
 	public String title = "Wellcome to S2Click";

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.click.Page;
 import org.apache.click.util.ClickUtils;
 import org.apache.commons.io.IOUtils;
+import org.seasar.s2click.S2ClickPage;
+import org.seasar.s2click.annotation.Layout;
 import org.seasar.s2click.control.CodePrettify;
 
 /**
@@ -32,8 +34,9 @@ import org.seasar.s2click.control.CodePrettify;
  * @author Malcolm Edgar
  * @author Naoki Takezoe
  */
-public class SourceViewerPage extends LayoutPage {
-	
+@Layout
+public class SourceViewerPage extends S2ClickPage {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -74,9 +77,9 @@ public class SourceViewerPage extends LayoutPage {
             }
 
             if (in != null) {
-            	String lang = filename.endsWith(".java") ? 
+            	String lang = filename.endsWith(".java") ?
             			CodePrettify.LANG_JAVA : CodePrettify.LANG_HTML;
-            	
+
             	String code = IOUtils.toString(in, "UTF-8");
             	CodePrettify codePrettify = new CodePrettify("codePrettify");
             	codePrettify.setCode(code);

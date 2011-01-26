@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -18,32 +18,35 @@ package org.seasar.s2click.example.page;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.seasar.s2click.S2ClickPage;
+import org.seasar.s2click.annotation.Layout;
 import org.seasar.s2click.control.PaginateList;
 
 /**
  * PaginateListのサンプルページです。
- * 
+ *
  * @author Naoki Takezoe
  */
-public class PaginateListPage extends LayoutPage {
-	
+@Layout
+public class PaginateListPage extends S2ClickPage {
+
 	private static final long serialVersionUID = 1L;
 
 	public String title = "PaginateList";
-	
+
 	public List<String> list = new ArrayList<String>();
 	public PaginateList paginateList = new PaginateList("paginateList");
-	
+
 	public PaginateListPage(){
 		list.add("Java");
 		list.add("C#");
 		list.add("Perl");
 		list.add("Ruby");
 		list.add("Python");
-		
+
 		paginateList.setRowList(list);
 		paginateList.setPageSize(3);
 		paginateList.setTemplatePath("/paginate.htm");
 	}
-	
+
 }

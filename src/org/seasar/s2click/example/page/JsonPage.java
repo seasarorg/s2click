@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -20,7 +20,9 @@ import java.util.List;
 
 import org.apache.click.ActionListener;
 import org.apache.click.Control;
+import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.annotation.Ajax;
+import org.seasar.s2click.annotation.Layout;
 import org.seasar.s2click.control.AjaxButton;
 import org.seasar.s2click.example.form.JsonForm;
 import org.seasar.s2click.util.AjaxUtils;
@@ -31,7 +33,8 @@ import org.seasar.s2click.util.AjaxUtils;
  * @author Naoki Takezoe
  * @see JsonSamplePage
  */
-public class JsonPage extends LayoutPage {
+@Layout
+public class JsonPage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +46,7 @@ public class JsonPage extends LayoutPage {
 
 	public void onInit(){
 		super.onInit();
-		
+
 		form.search.setActionListener(new ActionListener(){
 			private static final long serialVersionUID = 1L;
 
@@ -113,7 +116,7 @@ public class JsonPage extends LayoutPage {
 			this.price = price;
 		}
 	}
-	
+
 	@Ajax
 	public String hello(String name){
 		return "こんにちは、" + name + "さん！";

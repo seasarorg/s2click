@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -21,22 +21,25 @@ import javax.annotation.Resource;
 
 import org.apache.click.ActionListener;
 import org.apache.click.Control;
+import org.seasar.s2click.S2ClickPage;
+import org.seasar.s2click.annotation.Layout;
 import org.seasar.s2click.example.entity.Message;
 import org.seasar.s2click.example.form.MessageForm;
 import org.seasar.s2click.example.service.MessageService;
 
 /**
  * S2Click + S2JDBCのテストページ。
- * 
+ *
  * @author Naoki Takezoe
  */
-public class JdbcPage extends LayoutPage {
-	
+@Layout
+public class JdbcPage extends S2ClickPage {
+
 	private static final long serialVersionUID = 1L;
 
 	@Resource
 	protected MessageService messageService;
-	
+
 	public String title = "S2JDBC";
 	public MessageForm form = new MessageForm("form");
 
@@ -49,12 +52,12 @@ public class JdbcPage extends LayoutPage {
 			}
 		});
 	}
-	
+
 	@Override
 	public void onRender() {
 		addModel("messageList", messageService.getMessages());
 	}
-	
+
 	protected boolean doAdd(){
 		if(form.isValid()){
 			Message message = new Message();
@@ -62,11 +65,11 @@ public class JdbcPage extends LayoutPage {
 			message.message = form.message.getValue();
 			message.date = new Date();
 			messageService.insert(message);
-			
+
 			setRedirect(JdbcPage.class);
 			return false;
 		}
 		return true;
 	}
-	
+
 }

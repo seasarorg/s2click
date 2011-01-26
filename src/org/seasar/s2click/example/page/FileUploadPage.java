@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -28,26 +28,29 @@ import org.apache.click.control.ActionLink;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.seasar.s2click.S2ClickPage;
+import org.seasar.s2click.annotation.Layout;
 import org.seasar.s2click.annotation.Request;
 import org.seasar.s2click.example.form.FileUploadForm;
 
 /**
  * ファイルアップロードのサンプルページ。
- * 
+ *
  * @see FileUploadForm
  * @author Naoki Takezoe
  */
-public class FileUploadPage extends LayoutPage {
+@Layout
+public class FileUploadPage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public String title = "ファイルアップロード＆ダウンロード";
 	public FileUploadForm form = new FileUploadForm("form");
 	public ActionLink link = new ActionLink("link");
-	
+
 	/** ファイルのダウンロード時にファイル名を受け取るためのフィールド */
 	@Request public String name;
-	
+
 	public FileUploadPage(){
 		form.submit.setActionListener(new ActionListener(){
 			private static final long serialVersionUID = 1L;
@@ -56,7 +59,7 @@ public class FileUploadPage extends LayoutPage {
 				return doUpload();
 			}
 		});
-		
+
 		link.setActionListener(new ActionListener(){
 			private static final long serialVersionUID = 1L;
 
@@ -65,7 +68,7 @@ public class FileUploadPage extends LayoutPage {
 			}
 		});
 	}
-	
+
 	private static synchronized File getFolder(Context context){
 		String path = context.getServletContext().getRealPath("WEB-INF/files");
 		File folder = new File(path);
@@ -76,7 +79,7 @@ public class FileUploadPage extends LayoutPage {
 		}
 		return folder;
 	}
-	
+
 	@Override
 	public void onRender() {
 		File folder = getFolder(getContext());
@@ -90,14 +93,14 @@ public class FileUploadPage extends LayoutPage {
 		if(form.isValid()){
 			FileItem item = form.file.getFileItem();
 			File folder = getFolder(getContext());
-			
+
 			String fileName = item.getName();
 			if(fileName.indexOf("/") >= 0){
 				fileName = fileName.substring(fileName.lastIndexOf("/") + 1, fileName.length());
 			} else if(fileName.indexOf("\\") >= 0){
 				fileName = fileName.substring(fileName.lastIndexOf("\\") + 1, fileName.length());
 			}
-			
+
 			File file = new File(folder, fileName);
 			InputStream in = null;
 			FileOutputStream out = null;
@@ -114,24 +117,24 @@ public class FileUploadPage extends LayoutPage {
 		}
 		return true;
 	}
-	
+
 	protected boolean doDownload(){
 		if(StringUtils.isEmpty(name)){
 			throw new RuntimeException("ファイル名が指定されていません。");
 		}
-		
+
 		File folder = new File(getContext().getServletContext().getRealPath("WEB-INF/files"));
 		if(!folder.exists()){
 			throw new RuntimeException("ファイルを保存するフォルダが存在しません。");
 		}
-		
+
 		try {
 			File file = new File(folder, name);
 			renderFile(name, new FileInputStream(file));
 		} catch(Exception ex){
 			throw new RuntimeException(ex);
 		}
-		
+
 		return false;
 	}
 }
