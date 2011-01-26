@@ -188,6 +188,45 @@ public class FileDonwloadPage extends S2ClickPage {
   </dd>
 </dl>
 
+<h2>共通レイアウト</h2>
+<p>
+  <a href="javadoc/org/seasar/s2click/annotation/Layout.html">@Layout</a>アノテーションを使用することでページに共通テンプレートを適用することができます。
+  共通テンプレートのパスは <a href="javadoc/org/seasar/s2click/interceptor/LayoutInterceptor.html">LayoutInterceptor</a>のtemplateプロパティに設定します。
+  LayoutInterceptorはs2click.diconに定義されています。
+</p>
+<pre class="code">
+&lt;component name="layoutInterceptor"
+    class="org.seasar.s2click.interceptor.LayoutInterceptor"&gt;
+  &lt;property name="template"&gt;"/layout.htm"&lt;/property&gt;
+&lt;/component&gt;
+</pre>
+<p>
+  ページクラスには以下のようにアノテーションを付与します。
+</p>
+<pre class="code">
+@Layout
+public class HelloPage extends S2ClickPage {
+   ...
+</pre>
+<p>
+  すると、ページクラスに対応するHTMLテンプレートではなく、
+  LayoutInterceptorのtemplateプロパティに設定された共通HTMLテンプレート（この場合は/layout.htm）が使用されます。
+  以下に共通テンプレートの実装例を示します。<code>#parse($path)</code>の部分にページクラスに対応する本来のテンプレートのレンダリング結果が出力されます。
+</p>
+<pre class="code">
+&lt;div class="header"&gt;ヘッダ&lt;/div&gt;
+#parse($path)
+&lt;div class="footer"&gt;フッタ&lt;/div&gt;
+</pre>
+<p>
+  なお、@Layoutアノテーションでテンプレートのパスを指定した場合はそちらが優先されます。
+</p>
+<pre class="code">
+@Layout("/template.htm")
+public class HelloPage extends S2ClickPage {
+   ...
+</pre>
+
 </div>
 
 </body>
