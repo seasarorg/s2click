@@ -24,6 +24,10 @@
 			<arg>"layoutInterceptor"</arg>
 			<arg>"getTemplate"</arg>
 		</initMethod>
+		<initMethod name="addAspectCustomizer">
+			<arg>"setSourcePathInterceptor"</arg>
+			<arg>"onInit"</arg>
+		</initMethod>
 		<!--
 		<initMethod name="addAspectCustomizer">
 			<arg>"aop.traceInterceptor"</arg>

@@ -22,6 +22,10 @@
 		<property name="template">"/layout.htm"</property>
 	</component>
 
+	<component name="setSourcePathInterceptor"
+		class="org.seasar.s2click.example.util.SetSourcePathInterceptor">
+	</component>
+
 	<component class="org.seasar.s2click.S2ClickConfig">
 		<property name="mode">"debug"</property>
 	</component>
