@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN" 
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
 	<include path="default-customizer.dicon"/>
 	<component name="pageCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
+		<initMethod name="addAspectCustomizer">
+			<arg>"layoutInterceptor"</arg>
+			<arg>"getTemplate"</arg>
+		</initMethod>
 		<initMethod name="addAspectCustomizer">
 			<arg>"aop.traceInterceptor"</arg>
 		</initMethod>
