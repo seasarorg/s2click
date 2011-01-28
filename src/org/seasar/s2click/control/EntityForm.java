@@ -9,20 +9,22 @@ import javax.persistence.Id;
 
 import org.apache.click.control.Field;
 import org.apache.click.control.HiddenField;
+import org.apache.click.control.Submit;
 import org.apache.click.control.TextField;
 import org.apache.click.extras.control.IntegerField;
 import org.seasar.framework.beans.BeanDesc;
 import org.seasar.framework.beans.PropertyDesc;
 import org.seasar.framework.beans.factory.BeanDescFactory;
-import org.seasar.framework.container.factory.aspect.MetaAnnotationAspectDefBuilder;
-import org.seasar.framework.util.tiger.AnnotationUtil;
 
 public class EntityForm extends S2ClickForm {
+
+	private static final long serialVersionUID = 1L;
 
 	protected Class<?> entityClass;
 	protected EntityFormMode mode;
 
-	public EntityForm(Class<?> entityClass, EntityFormMode mode){
+	public EntityForm(String name, Class<?> entityClass, EntityFormMode mode){
+		super(name);
 		this.entityClass = entityClass;
 		this.mode = mode;
 	}
@@ -30,8 +32,11 @@ public class EntityForm extends S2ClickForm {
 	@Override
 	public void onInit() {
 		super.onInit();
+		createFields();
+		createButtons();
+	}
 
-		// フィールドの作成
+	protected void createFields(){
 		BeanDesc beanDesc = BeanDescFactory.getBeanDesc(entityClass);
 		int size = beanDesc.getPropertyDescSize();
 		for(int i=0; i < size; i++){
@@ -41,17 +46,25 @@ public class EntityForm extends S2ClickForm {
 				add(field);
 			}
 		}
-
-		// ボタンの作成
-		if(mode == EntityFormMode.REGISTER){
-
-		} else if(mode == EntityFormMode.EDIT){
-
-		} else if(mode == EntityFormMode.DELETE){
-
-		}
 	}
 
+	protected void createButtons(){
+		Submit submit = null;
+		if(mode == EntityFormMode.REGISTER){
+			submit = new Submit("submit", "Register");
+		} else if(mode == EntityFormMode.EDIT){
+			submit = new Submit("submit", "Update");
+		} else if(mode == EntityFormMode.DELETE){
+			submit = new Submit("submit", "Delete");
+		}
+		add(submit);
+	}
+
+	public Submit getSubmit(){
+		return (Submit) getField("submit");
+	}
+
+	// TODO 別クラスにしてDIして使うようにしたほうがいいかも
 	protected Field createField(PropertyDesc propertyDesc){
 		String name = propertyDesc.getPropertyName();
 		Class<?> type = propertyDesc.getPropertyType();
@@ -59,16 +72,27 @@ public class EntityForm extends S2ClickForm {
 
 		Id id = getAnnotation(propertyDesc, Id.class);
 		if(id != null){
-			GeneratedValue generatedValue = getAnnotation(propertyDesc, GeneratedValue.class);
-			if(generatedValue != null){
-				if(mode == EntityFormMode.EDIT || mode == EntityFormMode.DELETE){
+			// 削除モード時はIDをHiddenFieldとして生成
+			if(mode == EntityFormMode.DELETE){
+				field = new HiddenField(name, "");
+				return field;
+			}
+			// 更新モード時かつIDが自動採番の場合はIDをHiddenFieldとして生成
+			if(mode == EntityFormMode.EDIT){
+				GeneratedValue generatedValue = getAnnotation(propertyDesc, GeneratedValue.class);
+				if(generatedValue != null){
 					field = new HiddenField(name, "");
 					return field;
 				}
-				return null;
 			}
 		}
 
+		// 削除モード時はIDのHiddenField以外は作成しない
+		if(mode == EntityFormMode.DELETE){
+			return null;
+		}
+
+		// プロパティの型に応じたフィールドを生成
 		if(type == String.class){
 			field = new TextField();
 		} else if(type == Integer.class){
@@ -89,6 +113,7 @@ public class EntityForm extends S2ClickForm {
 		return field;
 	}
 
+	// TODO ユーティリティにしたほうがいいかも
 	protected <T extends Annotation> T getAnnotation(PropertyDesc propertyDesc, Class<T> type){
 		java.lang.reflect.Field field = propertyDesc.getField();
 		if(field != null){
