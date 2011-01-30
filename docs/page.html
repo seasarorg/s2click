@@ -191,13 +191,12 @@ public class FileDonwloadPage extends S2ClickPage {
 <h2>共通レイアウト</h2>
 <p>
   <a href="javadoc/org/seasar/s2click/annotation/Layout.html">@Layout</a>アノテーションを使用することでページに共通テンプレートを適用することができます。
-  共通テンプレートのパスは <a href="javadoc/org/seasar/s2click/interceptor/LayoutInterceptor.html">LayoutInterceptor</a>のtemplateプロパティに設定します。
-  LayoutInterceptorはs2click.diconに定義されています。
+  共通テンプレートのパスはs2click.diconのlayoutTemplatePathプロパティで設定します。
 </p>
 <pre class="code">
-&lt;component name="layoutInterceptor"
-    class="org.seasar.s2click.interceptor.LayoutInterceptor"&gt;
-  &lt;property name="template"&gt;"/layout.htm"&lt;/property&gt;
+&lt;component class="org.seasar.s2click.S2ClickConfig"&gt;
+  &lt;property name="mode"&gt;"debug"&lt;/property&gt;
+  &lt;property name="layoutTemplatePath"&gt;"/layout.htm"&lt;/property&gt;
 &lt;/component&gt;
 </pre>
 <p>
