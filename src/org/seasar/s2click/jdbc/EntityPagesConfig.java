@@ -46,22 +46,47 @@ public class EntityPagesConfig {
 		this.deletePageClass   = deletePageClass;
 	}
 
+	/**
+	 * エンティティの型を取得します。
+	 *
+	 * @return エンティティの型
+	 */
 	public Class<?> getEntityClass() {
 		return entityClass;
 	}
 
+	/**
+	 * 一覧画面のページクラスを取得します。
+	 *
+	 * @return 一覧画面のページクラス
+	 */
 	public Class<?> getListPageClass() {
 		return listPageClass;
 	}
 
+	/**
+	 * 登録画面のページクラスを取得します。
+	 *
+	 * @return 登録画面のページクラス
+	 */
 	public Class<?> getRegisterPageClass() {
 		return registerPageClass;
 	}
 
+	/**
+	 * 編集画面のページクラスを取得します。
+	 *
+	 * @return 編集画面のページクラス
+	 */
 	public Class<?> getEditPageClass() {
 		return editPageClass;
 	}
 
+	/**
+	 * 削除画面のページクラスを取得します。
+	 *
+	 * @return 削除画面のページクラス
+	 */
 	public Class<?> getDeletePageClass() {
 		return deletePageClass;
 	}
