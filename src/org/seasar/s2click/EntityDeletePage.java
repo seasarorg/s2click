@@ -1,23 +1,29 @@
 package org.seasar.s2click;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
+import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.JdbcManager;
+import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.s2click.control.EntityForm;
 import org.seasar.s2click.control.EntityForm.EntityFormMode;
 
-public abstract class EntityRegisterPage extends S2ClickPage {
+public class EntityDeletePage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;
 
 	public EntityForm form;
 
 	@Resource
-	protected JdbcManager jdbcManager;
+	protected EntityMetaFactory entityMetaFactory;
 
 	@Resource
-	protected EntityMetaFactory entityMetaFactory;
+	protected JdbcManager jdbcManager;
 
 	protected Class<?> entityClass;
 
@@ -29,28 +35,49 @@ public abstract class EntityRegisterPage extends S2ClickPage {
 	 * @param entityClass エンティティクラス
 	 * @param listPageClass 一覧画面のページクラス
 	 */
-	public EntityRegisterPage(Class<?> entityClass, Class<?> listPageClass){
-		form = new EntityForm("form", entityClass, EntityFormMode.REGISTER);
-		form.getSubmit().setListener(this, "onRegister");
+	public EntityDeletePage(Class<?> entityClass, Class<?> listPageClass){
+		form = new EntityForm("form", entityClass, EntityFormMode.DELETE);
+		form.getSubmit().setListener(this, "onDelete");
 		form.getCancel().setListener(this, "onCancel");
 
 		this.entityClass = entityClass;
 		this.listPageClass = listPageClass;
 	}
 
+	@Override
+	public void onInit() {
+		super.onInit();
+
+		// IDの取得
+		EntityMeta em = entityMetaFactory.getEntityMeta(entityClass);
+		List<String> idList = new ArrayList<String>();
+		for(PropertyMeta pm: em.getIdPropertyMetaList()){
+			String value = getContext().getRequestParameter(pm.getName());
+			if(StringUtils.isEmpty(value)){
+				throw new RuntimeException(pm.getName() + " is not specified.");
+			}
+			idList.add(value);
+		}
+
+		Object entity = jdbcManager.from(entityClass)
+			.id(idList.toArray()).disallowNoResult().getSingleResult();
+
+		form.copyFrom(entity);
+	}
+
 	/**
-	 * エンティティの登録処理を行い、一覧画面に戻ります。
+	 * エンティティの削除処理を行い、一覧画面に戻ります。
 	 *
 	 * @return
 	 */
-	public boolean onRegister(){
+	public boolean onDelete(){
 		if(form.isValid()){
 			try {
 				Object entity = entityClass.newInstance();
 				form.copyTo(entity);
 
 				// TODO 結果が1件じゃなかったらエラーにする？
-				jdbcManager.insert(entity).execute();
+				jdbcManager.delete(entity).execute();
 
 				setRedirect(listPageClass);
 				return false;

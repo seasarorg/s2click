@@ -1,9 +1,15 @@
 package org.seasar.s2click;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
+import org.seasar.extension.jdbc.EntityMeta;
+import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.JdbcManager;
-import org.seasar.s2click.annotation.Request;
+import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.s2click.control.EntityForm;
 import org.seasar.s2click.control.EntityForm.EntityFormMode;
 
@@ -13,8 +19,8 @@ public class EntityEditPage extends S2ClickPage {
 
 	public EntityForm form;
 
-	@Request(required=true)
-	public String id;
+	@Resource
+	protected EntityMetaFactory entityMetaFactory;
 
 	@Resource
 	protected JdbcManager jdbcManager;
@@ -32,15 +38,30 @@ public class EntityEditPage extends S2ClickPage {
 	public EntityEditPage(Class<?> entityClass, Class<?> listPageClass){
 		form = new EntityForm("form", entityClass, EntityFormMode.EDIT);
 		form.getSubmit().setListener(this, "onUpdate");
+		form.getCancel().setListener(this, "onCancel");
+
 		this.entityClass = entityClass;
+		this.listPageClass = listPageClass;
 	}
 
 	@Override
 	public void onInit() {
 		super.onInit();
-		// TODO 初期データのセット（型変換が必要？）
-		// TODO IDの分割が必要
-		Object entity = jdbcManager.from(entityClass).id(id).disallowNoResult().getSingleResult();
+
+		// IDの取得
+		EntityMeta em = entityMetaFactory.getEntityMeta(entityClass);
+		List<String> idList = new ArrayList<String>();
+		for(PropertyMeta pm: em.getIdPropertyMetaList()){
+			String value = getContext().getRequestParameter(pm.getName());
+			if(StringUtils.isEmpty(value)){
+				throw new RuntimeException(pm.getName() + " is not specified.");
+			}
+			idList.add(value);
+		}
+
+		Object entity = jdbcManager.from(entityClass)
+			.id(idList.toArray()).disallowNoResult().getSingleResult();
+
 		form.copyFrom(entity);
 	}
 
@@ -68,5 +89,10 @@ public class EntityEditPage extends S2ClickPage {
 			}
 		}
 		return true;
+	}
+
+	public boolean onCancel(){
+		setRedirect(listPageClass);
+		return false;
 	}
 }

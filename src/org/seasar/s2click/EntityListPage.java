@@ -1,6 +1,8 @@
 package org.seasar.s2click;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -103,28 +105,27 @@ public class EntityListPage extends S2ClickPage {
 		Column column = new Column("operations", "");
 		column.setDecorator(new Decorator(){
 			public String render(Object object, Context context) {
-				// TODO パラメータをセット
-				String idValue = getIdValue(object);
-				editLink.setParameter("id", idValue);
-				deleteLink.setParameter("id", idValue);
+				Map<String, String> map = getIdValueMap(object);
+				for(Map.Entry<String, String> entry: map.entrySet()){
+					editLink.setParameter(entry.getKey(), entry.getValue());
+					deleteLink.setParameter(entry.getKey(), entry.getValue());
+				}
 				return editLink.toString() + " | " + deleteLink.toString();
 			}
 		});
 		table.addColumn(column);
+		table.setClass("blue1");
 	}
 
-	protected String getIdValue(Object entity){
+	protected Map<String, String> getIdValueMap(Object entity){
 		try {
-			StringBuilder sb = new StringBuilder();
+			Map<String, String> map = new HashMap<String, String>();
 			EntityMeta em = entityMetaFactory.getEntityMeta(entityClass);
 			for(PropertyMeta pm: em.getIdPropertyMetaList()){
 				Object value = pm.getField().get(entity);
-				if(sb.length() != 0){
-					sb.append(":");
-				}
-				sb.append(value);
+				map.put(pm.getName(), String.valueOf(value));
 			}
-			return sb.toString();
+			return map;
 		} catch(Exception ex){
 			throw new RuntimeException(ex);
 		}

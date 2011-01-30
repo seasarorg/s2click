@@ -71,6 +71,9 @@ public class EntityForm extends S2ClickForm {
 			submit = new Submit("submit", "Delete");
 		}
 		add(submit);
+
+		Submit cancel = new Submit("cancel", "Cancel");
+		add(cancel);
 	}
 
 	/**
@@ -80,6 +83,10 @@ public class EntityForm extends S2ClickForm {
 	 */
 	public Submit getSubmit(){
 		return (Submit) getField("submit");
+	}
+
+	public Submit getCancel(){
+		return (Submit) getField("cancel");
 	}
 
 	// TODO 別クラスにしてDIして使うようにしたほうがいいかも
