@@ -53,6 +53,24 @@ public abstract class EntityRegisterPage extends S2ClickPage {
 	}
 
 	/**
+	 * 登録処理の前に呼び出されます。
+	 * サブクラスで必要に応じてオーバーライドしてください。
+	 *
+	 * @param entity エンティティ
+	 */
+	protected void preRegister(Object entity){
+	}
+
+	/**
+	 * 登録処理の後で呼び出されます。
+	 * サブクラスで必要に応じてオーバーライドしてください。
+	 *
+	 * @param entity エンティティ
+	 */
+	protected void postRegister(Object entity){
+	}
+
+	/**
 	 * エンティティの登録処理を行い、一覧画面に戻ります。
 	 *
 	 * @return
@@ -63,8 +81,15 @@ public abstract class EntityRegisterPage extends S2ClickPage {
 				Object entity = config.getEntityClass().newInstance();
 				form.copyTo(entity);
 
+				// 前処理
+				preRegister(entity);
+
+				// 登録処理
 				// TODO 結果が1件じゃなかったらエラーにする？
 				jdbcManager.insert(entity).execute();
+
+				// 後処理
+				postRegister(entity);
 
 				setRedirect(config.getListPageClass());
 				return false;

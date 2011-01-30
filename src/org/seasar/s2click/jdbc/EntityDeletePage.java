@@ -80,6 +80,24 @@ public class EntityDeletePage extends S2ClickPage {
 	}
 
 	/**
+	 * 削除処理の前に呼び出されます。
+	 * サブクラスで必要に応じてオーバーライドしてください。
+	 *
+	 * @param entity エンティティ
+	 */
+	protected void preDelete(Object entity){
+	}
+
+	/**
+	 * 削除処理の後で呼び出されます。
+	 * サブクラスで必要に応じてオーバーライドしてください。
+	 *
+	 * @param entity エンティティ
+	 */
+	protected void postDelete(Object entity){
+	}
+
+	/**
 	 * エンティティの削除処理を行い、一覧画面に戻ります。
 	 *
 	 * @return
@@ -90,8 +108,15 @@ public class EntityDeletePage extends S2ClickPage {
 				Object entity = config.getEntityClass().newInstance();
 				form.copyTo(entity);
 
+				// 前処理
+				preDelete(entity);
+
+				// 削除処理
 				// TODO 結果が1件じゃなかったらエラーにする？
 				jdbcManager.delete(entity).execute();
+
+				// 後処理
+				postDelete(entity);
 
 				setRedirect(config.getListPageClass());
 				return false;

@@ -80,6 +80,24 @@ public class EntityEditPage extends S2ClickPage {
 	}
 
 	/**
+	 * 更新処理の前に呼び出されます。
+	 * サブクラスで必要に応じてオーバーライドしてください。
+	 *
+	 * @param entity エンティティ
+	 */
+	protected void preUpdate(Object entity){
+	}
+
+	/**
+	 * 更新処理の後で呼び出されます。
+	 * サブクラスで必要に応じてオーバーライドしてください。
+	 *
+	 * @param entity エンティティ
+	 */
+	protected void postUpdate(Object entity){
+	}
+
+	/**
 	 * エンティティの更新処理を行い、一覧画面に戻ります。
 	 *
 	 * @return
@@ -90,8 +108,15 @@ public class EntityEditPage extends S2ClickPage {
 				Object entity = config.getEntityClass().newInstance();
 				form.copyTo(entity);
 
+				// 前処理
+				preUpdate(entity);
+
+				// 更新処理
 				// TODO 結果が1件じゃなかったらエラーにする？
 				jdbcManager.update(entity).execute();
+
+				// 後処理
+				postUpdate(entity);
 
 				setRedirect(config.getListPageClass());
 				return false;
