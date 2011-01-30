@@ -38,7 +38,7 @@ import org.seasar.s2click.S2ClickPage;
  *
  * @author Naoki Takezoe
  */
-public class EntityListPage extends S2ClickPage {
+public abstract class EntityListPage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;
 

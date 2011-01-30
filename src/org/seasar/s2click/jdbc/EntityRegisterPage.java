@@ -51,6 +51,10 @@ public abstract class EntityRegisterPage extends S2ClickPage {
 
 		this.config = config;
 	}
+	
+	protected void validate(){
+		
+	}
 
 	/**
 	 * 登録処理の前に呼び出されます。

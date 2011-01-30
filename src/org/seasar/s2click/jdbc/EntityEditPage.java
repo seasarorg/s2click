@@ -28,7 +28,7 @@ import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.jdbc.EntityForm.EntityFormMode;
 
-public class EntityEditPage extends S2ClickPage {
+public abstract class EntityEditPage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;
 
