@@ -2,6 +2,7 @@ package org.seasar.s2click.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
@@ -19,11 +20,12 @@ import org.seasar.s2click.S2ClickPage;
  * ただし、このアノテーションを付与したメソッドをAjaxで呼び出す場合、
  * 通常のページの処理で行われる<code>onInit()</code>、<code>onSecurityCheck()</code>などの呼び出しは行われません。
  * アノテーションを付与したメソッドのみが呼び出されます。
- * 
+ *
  * @author Naoki Takezoe
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
+@Inherited
 @Documented
 public @interface Ajax {
 
