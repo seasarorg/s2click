@@ -50,29 +50,15 @@ public class EntityListPage extends S2ClickPage {
 	@Resource
 	protected EntityMetaFactory entityMetaFactory;
 
-	protected Class<?> entityClass;
-
-	protected Class<?> registerPageClass;
-
-	protected Class<?> editPageClass;
-
-	protected Class<?> deletePageClass;
+	protected EntityPagesConfig config;
 
 	/**
 	 * コンストラクタ。
 	 *
-	 * @param entityClass エンティティクラス
-	 * @param registerPageClass 登録画面のページクラス
-	 * @param editPageClass 編集画面のページクラス
-	 * @param deletePageClass 削除画面のページクラス
+	 * @param config 設定
 	 */
-	public EntityListPage(Class<?> entityClass,
-			Class<?> registerPageClass, Class<?> editPageClass, Class<?> deletePageClass){
-
-		this.entityClass = entityClass;
-		this.registerPageClass = registerPageClass;
-		this.editPageClass = editPageClass;
-		this.deletePageClass = deletePageClass;
+	public EntityListPage(EntityPagesConfig config){
+		this.config = config;
 	}
 
 	@Override
@@ -84,13 +70,13 @@ public class EntityListPage extends S2ClickPage {
 	}
 
 	protected void createLinks(){
-		registerLink = new PageLink("registerLink", "Register", registerPageClass);
-		editLink = new PageLink("editLink", "Edit", editPageClass);
-		deleteLink = new PageLink("deleteLink", "Delete", deletePageClass);
+		registerLink = new PageLink("registerLink", "Register", config.getRegisterPageClass());
+		editLink = new PageLink("editLink", "Edit", config.getEditPageClass());
+		deleteLink = new PageLink("deleteLink", "Delete", config.getDeletePageClass());
 	}
 
 	protected void createTable(){
-		EntityMeta em = entityMetaFactory.getEntityMeta(entityClass);
+		EntityMeta em = entityMetaFactory.getEntityMeta(config.getEntityClass());
 		int size = em.getColumnPropertyMetaSize();
 
 		for(int i=0; i < size; i++){
@@ -120,7 +106,7 @@ public class EntityListPage extends S2ClickPage {
 	protected Map<String, String> getIdValueMap(Object entity){
 		try {
 			Map<String, String> map = new HashMap<String, String>();
-			EntityMeta em = entityMetaFactory.getEntityMeta(entityClass);
+			EntityMeta em = entityMetaFactory.getEntityMeta(config.getEntityClass());
 			for(PropertyMeta pm: em.getIdPropertyMetaList()){
 				Object value = pm.getField().get(entity);
 				map.put(pm.getName(), String.valueOf(value));
@@ -135,7 +121,7 @@ public class EntityListPage extends S2ClickPage {
 	 * 一覧表示用のテーブルにデータを設定します。
 	 */
 	protected void setTableData(){
-		AutoSelect<?> autoSelect = jdbcManager.from(entityClass);
+		AutoSelect<?> autoSelect = jdbcManager.from(config.getEntityClass());
 
 		String orderByColumn = getOrderByColumn();
 		if(StringUtils.isNotEmpty(orderByColumn)){
@@ -153,7 +139,7 @@ public class EntityListPage extends S2ClickPage {
 	 * @return ソート用のカラム名
 	 */
 	protected String getOrderByColumn(){
-		EntityMeta em = entityMetaFactory.getEntityMeta(entityClass);
+		EntityMeta em = entityMetaFactory.getEntityMeta(config.getEntityClass());
 		StringBuilder sb = new StringBuilder();
 		for(PropertyMeta pm: em.getIdPropertyMetaList()){
 			if(sb.length() != 0){

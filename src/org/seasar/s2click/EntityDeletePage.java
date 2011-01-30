@@ -25,23 +25,19 @@ public class EntityDeletePage extends S2ClickPage {
 	@Resource
 	protected JdbcManager jdbcManager;
 
-	protected Class<?> entityClass;
-
-	protected Class<?> listPageClass;
+	protected EntityPagesConfig config;
 
 	/**
 	 * コンストラクタ。
 	 *
-	 * @param entityClass エンティティクラス
-	 * @param listPageClass 一覧画面のページクラス
+	 * @param config 設定
 	 */
-	public EntityDeletePage(Class<?> entityClass, Class<?> listPageClass){
-		form = new EntityForm("form", entityClass, EntityFormMode.DELETE);
+	public EntityDeletePage(EntityPagesConfig config){
+		form = new EntityForm("form", config.getEntityClass(), EntityFormMode.DELETE);
 		form.getSubmit().setListener(this, "onDelete");
 		form.getCancel().setListener(this, "onCancel");
 
-		this.entityClass = entityClass;
-		this.listPageClass = listPageClass;
+		this.config = config;
 	}
 
 	@Override
@@ -49,7 +45,7 @@ public class EntityDeletePage extends S2ClickPage {
 		super.onInit();
 
 		// IDの取得
-		EntityMeta em = entityMetaFactory.getEntityMeta(entityClass);
+		EntityMeta em = entityMetaFactory.getEntityMeta(config.getEntityClass());
 		List<String> idList = new ArrayList<String>();
 		for(PropertyMeta pm: em.getIdPropertyMetaList()){
 			String value = getContext().getRequestParameter(pm.getName());
@@ -59,7 +55,7 @@ public class EntityDeletePage extends S2ClickPage {
 			idList.add(value);
 		}
 
-		Object entity = jdbcManager.from(entityClass)
+		Object entity = jdbcManager.from(config.getEntityClass())
 			.id(idList.toArray()).disallowNoResult().getSingleResult();
 
 		form.copyFrom(entity);
@@ -73,13 +69,13 @@ public class EntityDeletePage extends S2ClickPage {
 	public boolean onDelete(){
 		if(form.isValid()){
 			try {
-				Object entity = entityClass.newInstance();
+				Object entity = config.getEntityClass().newInstance();
 				form.copyTo(entity);
 
 				// TODO 結果が1件じゃなかったらエラーにする？
 				jdbcManager.delete(entity).execute();
 
-				setRedirect(listPageClass);
+				setRedirect(config.getListPageClass());
 				return false;
 
 			} catch(IllegalAccessException ex){
@@ -92,7 +88,7 @@ public class EntityDeletePage extends S2ClickPage {
 	}
 
 	public boolean onCancel(){
-		setRedirect(listPageClass);
+		setRedirect(config.getListPageClass());
 		return false;
 	}
 

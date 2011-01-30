@@ -19,23 +19,19 @@ public abstract class EntityRegisterPage extends S2ClickPage {
 	@Resource
 	protected EntityMetaFactory entityMetaFactory;
 
-	protected Class<?> entityClass;
-
-	protected Class<?> listPageClass;
+	protected EntityPagesConfig config;
 
 	/**
 	 * コンストラクタ。
 	 *
-	 * @param entityClass エンティティクラス
-	 * @param listPageClass 一覧画面のページクラス
+	 * @param config 設定
 	 */
-	public EntityRegisterPage(Class<?> entityClass, Class<?> listPageClass){
-		form = new EntityForm("form", entityClass, EntityFormMode.REGISTER);
+	public EntityRegisterPage(EntityPagesConfig config){
+		form = new EntityForm("form", config.getEntityClass(), EntityFormMode.REGISTER);
 		form.getSubmit().setListener(this, "onRegister");
 		form.getCancel().setListener(this, "onCancel");
 
-		this.entityClass = entityClass;
-		this.listPageClass = listPageClass;
+		this.config = config;
 	}
 
 	/**
@@ -46,13 +42,13 @@ public abstract class EntityRegisterPage extends S2ClickPage {
 	public boolean onRegister(){
 		if(form.isValid()){
 			try {
-				Object entity = entityClass.newInstance();
+				Object entity = config.getEntityClass().newInstance();
 				form.copyTo(entity);
 
 				// TODO 結果が1件じゃなかったらエラーにする？
 				jdbcManager.insert(entity).execute();
 
-				setRedirect(listPageClass);
+				setRedirect(config.getListPageClass());
 				return false;
 
 			} catch(IllegalAccessException ex){
@@ -65,7 +61,7 @@ public abstract class EntityRegisterPage extends S2ClickPage {
 	}
 
 	public boolean onCancel(){
-		setRedirect(listPageClass);
+		setRedirect(config.getListPageClass());
 		return false;
 	}
 
