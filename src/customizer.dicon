@@ -21,10 +21,6 @@
 
 	<component name="pageCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
 		<initMethod name="addAspectCustomizer">
-			<arg>"layoutInterceptor"</arg>
-			<arg>"getTemplate"</arg>
-		</initMethod>
-		<initMethod name="addAspectCustomizer">
 			<arg>"setSourcePathInterceptor"</arg>
 			<arg>"onInit"</arg>
 		</initMethod>

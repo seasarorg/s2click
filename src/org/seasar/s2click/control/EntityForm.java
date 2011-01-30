@@ -1,21 +1,24 @@
 package org.seasar.s2click.control;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
+import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 import org.apache.click.control.Field;
 import org.apache.click.control.HiddenField;
 import org.apache.click.control.Submit;
 import org.apache.click.control.TextField;
 import org.apache.click.extras.control.IntegerField;
-import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.PropertyDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.extension.jdbc.EntityMeta;
+import org.seasar.extension.jdbc.EntityMetaFactory;
+import org.seasar.extension.jdbc.PropertyMeta;
+import org.seasar.framework.container.SingletonS2Container;
 
+/**
+ * エンティティを登録、更新、削除するための入力フォームです。
+ *
+ * @author Naoki Takezoe
+ */
 public class EntityForm extends S2ClickForm {
 
 	private static final long serialVersionUID = 1L;
@@ -23,31 +26,41 @@ public class EntityForm extends S2ClickForm {
 	protected Class<?> entityClass;
 	protected EntityFormMode mode;
 
+	/**
+	 * コンストラクタ。
+	 *
+	 * @param name フォーム名
+	 * @param entityClass エンティティの型
+	 * @param mode モード
+	 */
 	public EntityForm(String name, Class<?> entityClass, EntityFormMode mode){
 		super(name);
 		this.entityClass = entityClass;
 		this.mode = mode;
-	}
 
-	@Override
-	public void onInit() {
-		super.onInit();
 		createFields();
 		createButtons();
 	}
 
+	/**
+	 * エンティティを編集するフォームのフィールドを作成します。
+	 */
 	protected void createFields(){
-		BeanDesc beanDesc = BeanDescFactory.getBeanDesc(entityClass);
-		int size = beanDesc.getPropertyDescSize();
+		EntityMetaFactory factory = SingletonS2Container.getComponent(EntityMetaFactory.class);
+		EntityMeta em = factory.getEntityMeta(entityClass);
+		int size = em.getColumnPropertyMetaSize();
 		for(int i=0; i < size; i++){
-			PropertyDesc propertyDesc = beanDesc.getPropertyDesc(i);
-			Field field = createField(propertyDesc);
+			PropertyMeta pm = em.getColumnPropertyMeta(i);
+			Field field = createField(em, pm);
 			if(field != null){
 				add(field);
 			}
 		}
 	}
 
+	/**
+	 * エンティティを編集するフォームのボタンを作成します。
+	 */
 	protected void createButtons(){
 		Submit submit = null;
 		if(mode == EntityFormMode.REGISTER){
@@ -60,30 +73,37 @@ public class EntityForm extends S2ClickForm {
 		add(submit);
 	}
 
+	/**
+	 * 送信ボタンのインスタンスを取得します。
+	 *
+	 * @return 送信ボタン
+	 */
 	public Submit getSubmit(){
 		return (Submit) getField("submit");
 	}
 
 	// TODO 別クラスにしてDIして使うようにしたほうがいいかも
-	protected Field createField(PropertyDesc propertyDesc){
-		String name = propertyDesc.getPropertyName();
-		Class<?> type = propertyDesc.getPropertyType();
+	protected Field createField(EntityMeta em, PropertyMeta pm){
+
+		String name = pm.getName();
+		Class<?> type = pm.getPropertyClass();
 		Field field = null;
 
-		Id id = getAnnotation(propertyDesc, Id.class);
-		if(id != null){
+		if(pm.isId()){
 			// 削除モード時はIDをHiddenFieldとして生成
 			if(mode == EntityFormMode.DELETE){
-				field = new HiddenField(name, "");
+				field = new HiddenField(name, pm.getPropertyClass());
 				return field;
 			}
-			// 更新モード時かつIDが自動採番の場合はIDをHiddenFieldとして生成
+			// 更新モード時の場合はIDをHiddenFieldとして生成
 			if(mode == EntityFormMode.EDIT){
-				GeneratedValue generatedValue = getAnnotation(propertyDesc, GeneratedValue.class);
-				if(generatedValue != null){
-					field = new HiddenField(name, "");
-					return field;
-				}
+				field = new HiddenField(name, pm.getPropertyClass());
+				return field;
+			}
+			// 挿入モード時かつIDが自動採番の場合はフィールドを生成しない
+			if(mode == EntityFormMode.REGISTER && pm.hasIdGenerator()){
+				// TODO 自動採番かどうかを判定する
+				return null;
 			}
 		}
 
@@ -97,12 +117,14 @@ public class EntityForm extends S2ClickForm {
 			field = new TextField();
 		} else if(type == Integer.class){
 			field = new IntegerField();
+		} else if(type == Date.class){
+			field = new DateFieldYYYYMMDD();
 		}
 
 		if(field != null){
 			field.setName(name);
 
-			Column column = getAnnotation(propertyDesc, Column.class);
+			Column column = pm.getField().getAnnotation(Column.class);
 			if(column != null){
 				if(column.nullable() == false){
 					field.setRequired(true);
@@ -113,34 +135,18 @@ public class EntityForm extends S2ClickForm {
 		return field;
 	}
 
-	// TODO ユーティリティにしたほうがいいかも
-	protected <T extends Annotation> T getAnnotation(PropertyDesc propertyDesc, Class<T> type){
-		java.lang.reflect.Field field = propertyDesc.getField();
-		if(field != null){
-			T ann = field.getAnnotation(type);
-			if(ann != null){
-				return ann;
-			}
-		}
-		Method getter = propertyDesc.getReadMethod();
-		if(getter != null){
-			T ann = getter.getAnnotation(type);
-			if(ann != null){
-				return ann;
-			}
-		}
-		Method setter = propertyDesc.getReadMethod();
-		if(setter != null){
-			T ann = setter.getAnnotation(type);
-			if(ann != null){
-				return ann;
-			}
-		}
-		return null;
-	}
-
+	/**
+	 * {@link EntityForm}のモードを指定するための列挙型です。
+	 *
+	 * @author Naoki Takezoe
+	 */
 	public static enum EntityFormMode {
-		REGISTER, EDIT, DELETE
+		/** 登録モード */
+		REGISTER,
+		/** 編集モード */
+		EDIT,
+		/** 削除モード */
+		DELETE
 	}
 
 }

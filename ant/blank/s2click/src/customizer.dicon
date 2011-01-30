@@ -5,10 +5,6 @@
 	<include path="default-customizer.dicon"/>
 	<component name="pageCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
 		<initMethod name="addAspectCustomizer">
-			<arg>"layoutInterceptor"</arg>
-			<arg>"getTemplate"</arg>
-		</initMethod>
-		<initMethod name="addAspectCustomizer">
 			<arg>"aop.traceInterceptor"</arg>
 		</initMethod>
 	</component>

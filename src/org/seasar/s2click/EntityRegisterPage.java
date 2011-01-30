@@ -2,6 +2,7 @@ package org.seasar.s2click;
 
 import javax.annotation.Resource;
 
+import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.s2click.control.EntityForm;
 import org.seasar.s2click.control.EntityForm.EntityFormMode;
@@ -14,6 +15,9 @@ public abstract class EntityRegisterPage extends S2ClickPage {
 
 	@Resource
 	protected JdbcManager jdbcManager;
+
+	@Resource
+	protected EntityMetaFactory entityMetaFactory;
 
 	protected Class<?> entityClass;
 
@@ -28,7 +32,9 @@ public abstract class EntityRegisterPage extends S2ClickPage {
 	public EntityRegisterPage(Class<?> entityClass, Class<?> listPageClass){
 		form = new EntityForm("form", entityClass, EntityFormMode.REGISTER);
 		form.getSubmit().setListener(this, "onRegister");
+
 		this.entityClass = entityClass;
+		this.listPageClass = listPageClass;
 	}
 
 	public boolean onRegister(){

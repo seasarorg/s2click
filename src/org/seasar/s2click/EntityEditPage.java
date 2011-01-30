@@ -9,6 +9,8 @@ import org.seasar.s2click.control.EntityForm.EntityFormMode;
 
 public class EntityEditPage extends S2ClickPage {
 
+	private static final long serialVersionUID = 1L;
+
 	public EntityForm form;
 
 	@Request(required=true)
@@ -37,10 +39,16 @@ public class EntityEditPage extends S2ClickPage {
 	public void onInit() {
 		super.onInit();
 		// TODO 初期データのセット（型変換が必要？）
+		// TODO IDの分割が必要
 		Object entity = jdbcManager.from(entityClass).id(id).disallowNoResult().getSingleResult();
 		form.copyFrom(entity);
 	}
 
+	/**
+	 * エンティティの更新処理を行い、一覧画面に戻ります。
+	 *
+	 * @return
+	 */
 	public boolean onUpdate(){
 		if(form.isValid()){
 			try {

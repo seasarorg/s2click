@@ -11,20 +11,42 @@ import org.apache.click.control.PageLink;
 import org.apache.click.control.Table;
 import org.apache.commons.lang.StringUtils;
 import org.seasar.extension.jdbc.AutoSelect;
+import org.seasar.extension.jdbc.EntityMeta;
+import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.JdbcManager;
-import org.seasar.framework.beans.BeanDesc;
-import org.seasar.framework.beans.PropertyDesc;
-import org.seasar.framework.beans.factory.BeanDescFactory;
+import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.s2click.control.PublicFieldColumn;
 
+/**
+ *
+ * @author Naoki Takezoe
+ */
 public class EntityListPage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;
 
 	public Table table = new Table("table");
 
+	/**
+	 * 登録画面に遷移するためのリンク。
+	 */
+	public PageLink registerLink;
+
+	/**
+	 * 編集画面に遷移するためのリンク。
+	 */
+	public PageLink editLink;
+
+	/**
+	 * 削除画面に遷移するためのリンク。
+	 */
+	public PageLink deleteLink;
+
 	@Resource
 	protected JdbcManager jdbcManager;
+
+	@Resource
+	protected EntityMetaFactory entityMetaFactory;
 
 	protected Class<?> entityClass;
 
@@ -33,12 +55,6 @@ public class EntityListPage extends S2ClickPage {
 	protected Class<?> editPageClass;
 
 	protected Class<?> deletePageClass;
-
-	protected PageLink registerLink;
-
-	protected PageLink editLink;
-
-	protected PageLink deleteLink;
 
 	/**
 	 * コンストラクタ。
@@ -72,12 +88,15 @@ public class EntityListPage extends S2ClickPage {
 	}
 
 	protected void createTable(){
-		BeanDesc beanDesc = BeanDescFactory.getBeanDesc(entityClass);
-		int size = beanDesc.getPropertyDescSize();
+		EntityMeta em = entityMetaFactory.getEntityMeta(entityClass);
+		int size = em.getColumnPropertyMetaSize();
+
 		for(int i=0; i < size; i++){
-			PropertyDesc propertyDesc = beanDesc.getPropertyDesc(i);
+			PropertyMeta pm = em.getColumnPropertyMeta(i);
+
 			PublicFieldColumn column = new PublicFieldColumn(
-					propertyDesc.getPropertyName(), propertyDesc.getPropertyName());
+					pm.getName(), pm.getName());
+
 			table.addColumn(column);
 		}
 
@@ -85,11 +104,35 @@ public class EntityListPage extends S2ClickPage {
 		column.setDecorator(new Decorator(){
 			public String render(Object object, Context context) {
 				// TODO パラメータをセット
-				return editLink.toString() + "|" + deleteLink.toString();
+				String idValue = getIdValue(object);
+				editLink.setParameter("id", idValue);
+				deleteLink.setParameter("id", idValue);
+				return editLink.toString() + " | " + deleteLink.toString();
 			}
 		});
+		table.addColumn(column);
 	}
 
+	protected String getIdValue(Object entity){
+		try {
+			StringBuilder sb = new StringBuilder();
+			EntityMeta em = entityMetaFactory.getEntityMeta(entityClass);
+			for(PropertyMeta pm: em.getIdPropertyMetaList()){
+				Object value = pm.getField().get(entity);
+				if(sb.length() != 0){
+					sb.append(":");
+				}
+				sb.append(value);
+			}
+			return sb.toString();
+		} catch(Exception ex){
+			throw new RuntimeException(ex);
+		}
+	}
+
+	/**
+	 * 一覧表示用のテーブルにデータを設定します。
+	 */
 	protected void setTableData(){
 		AutoSelect<?> autoSelect = jdbcManager.from(entityClass);
 
@@ -102,8 +145,22 @@ public class EntityListPage extends S2ClickPage {
 		table.setRowList(rowList);
 	}
 
+	/**
+	 * 特定のカラムでソートする場合にこのメソッドをオーバーライドしてソート用のカラム名を返却します。
+	 * デフォルトでは主キーの照準でソートします。
+	 *
+	 * @return ソート用のカラム名
+	 */
 	protected String getOrderByColumn(){
-		return null;
+		EntityMeta em = entityMetaFactory.getEntityMeta(entityClass);
+		StringBuilder sb = new StringBuilder();
+		for(PropertyMeta pm: em.getIdPropertyMetaList()){
+			if(sb.length() != 0){
+				sb.append(", ");
+			}
+			sb.append(pm.getName());
+		}
+		return sb.toString();
 	}
 
 }
