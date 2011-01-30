@@ -11,6 +11,9 @@ public abstract class EntityRegisterPage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * エンティティを登録するためのフォーム。
+	 */
 	public EntityForm form;
 
 	@Resource
@@ -60,6 +63,11 @@ public abstract class EntityRegisterPage extends S2ClickPage {
 		return true;
 	}
 
+	/**
+	 * エンティティの登録処理をキャンセルし、一覧画面に戻ります。
+	 *
+	 * @return
+	 */
 	public boolean onCancel(){
 		setRedirect(config.getListPageClass());
 		return false;

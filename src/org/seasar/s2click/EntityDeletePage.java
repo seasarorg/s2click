@@ -17,6 +17,9 @@ public class EntityDeletePage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * エンティティを削除するためのフォーム。
+	 */
 	public EntityForm form;
 
 	@Resource
@@ -87,6 +90,11 @@ public class EntityDeletePage extends S2ClickPage {
 		return true;
 	}
 
+	/**
+	 * エンティティの削除処理をキャンセルし、一覧画面に戻ります。
+	 *
+	 * @return
+	 */
 	public boolean onCancel(){
 		setRedirect(config.getListPageClass());
 		return false;

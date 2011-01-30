@@ -17,6 +17,9 @@ public class EntityEditPage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * エンティティを編集するためのフォーム。
+	 */
 	public EntityForm form;
 
 	@Resource
@@ -87,6 +90,11 @@ public class EntityEditPage extends S2ClickPage {
 		return true;
 	}
 
+	/**
+	 * エンティティの更新処理をキャンセルし、一覧画面に戻ります。
+	 *
+	 * @return
+	 */
 	public boolean onCancel(){
 		setRedirect(config.getListPageClass());
 		return false;
