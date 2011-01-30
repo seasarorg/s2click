@@ -11,6 +11,12 @@ public class MessagePagesConfig extends EntityPagesConfig {
 				MessageRegisterPage.class,
 				MessageEditPage.class,
 				MessageDeletePage.class);
+
+		// 表示用ラベルの設定
+		putLabel("messageId", "ID");
+		putLabel("name", "名前");
+		putLabel("message", "メッセージ");
+		putLabel("date", "登録日");
 	}
 
 }

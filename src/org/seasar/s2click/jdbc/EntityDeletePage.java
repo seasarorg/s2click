@@ -51,7 +51,7 @@ public class EntityDeletePage extends S2ClickPage {
 	 * @param config 設定
 	 */
 	public EntityDeletePage(EntityPagesConfig config){
-		form = new EntityForm("form", config.getEntityClass(), EntityFormMode.DELETE);
+		form = new EntityForm("form", config, EntityFormMode.DELETE);
 		form.getSubmitButton().setListener(this, "onDelete");
 		form.getCancelButton().setListener(this, "onCancel");
 

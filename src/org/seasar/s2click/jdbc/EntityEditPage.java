@@ -51,7 +51,7 @@ public class EntityEditPage extends S2ClickPage {
 	 * @param config 設定
 	 */
 	public EntityEditPage(EntityPagesConfig config){
-		form = new EntityForm("form", config.getEntityClass(), EntityFormMode.EDIT);
+		form = new EntityForm("form", config, EntityFormMode.EDIT);
 		form.getSubmitButton().setListener(this, "onUpdate");
 		form.getCancelButton().setListener(this, "onCancel");
 

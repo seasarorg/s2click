@@ -86,9 +86,9 @@ public class EntityListPage extends S2ClickPage {
 	}
 
 	protected void createLinks(){
-		registerLink = new PageLink("registerLink", "Register", config.getRegisterPageClass());
-		editLink = new PageLink("editLink", "Edit", config.getEditPageClass());
-		deleteLink = new PageLink("deleteLink", "Delete", config.getDeletePageClass());
+		registerLink = new PageLink("registerLink", getMessage("link.register"), config.getRegisterPageClass());
+		editLink = new PageLink("editLink", getMessage("link.edit"), config.getEditPageClass());
+		deleteLink = new PageLink("deleteLink", getMessage("link.delete"), config.getDeletePageClass());
 	}
 
 	protected void createTable(){
@@ -99,12 +99,12 @@ public class EntityListPage extends S2ClickPage {
 			PropertyMeta propertyMeta = entityMeta.getColumnPropertyMeta(i);
 
 			PublicFieldColumn column = new PublicFieldColumn(
-					propertyMeta.getName(), propertyMeta.getName());
+					propertyMeta.getName(), config.getLabel(propertyMeta));
 
 			table.addColumn(column);
 		}
 
-		Column column = new Column("operations", "");
+		Column column = new Column("operations", getMessage("label.operations"));
 		column.setDecorator(new Decorator(){
 			public String render(Object object, Context context) {
 				Map<String, String> map = getIdValueMap(object);

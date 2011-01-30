@@ -15,21 +15,12 @@
  */
 package org.seasar.s2click.jdbc;
 
-import java.util.Date;
-
-import javax.persistence.Column;
-
 import org.apache.click.control.Field;
-import org.apache.click.control.HiddenField;
 import org.apache.click.control.Submit;
-import org.apache.click.control.TextField;
-import org.apache.click.extras.control.IntegerField;
 import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.framework.container.SingletonS2Container;
-import org.seasar.s2click.control.DateFieldYYYYMMDD;
-import org.seasar.s2click.control.LabelField;
 import org.seasar.s2click.control.S2ClickForm;
 
 /**
@@ -41,19 +32,20 @@ public class EntityForm extends S2ClickForm {
 
 	private static final long serialVersionUID = 1L;
 
-	protected Class<?> entityClass;
+	protected EntityPagesConfig config;
+
 	protected EntityFormMode mode;
 
 	/**
 	 * コンストラクタ。
 	 *
 	 * @param name フォーム名
-	 * @param entityClass エンティティの型
+	 * @param config 設定
 	 * @param mode モード
 	 */
-	public EntityForm(String name, Class<?> entityClass, EntityFormMode mode){
+	public EntityForm(String name, EntityPagesConfig config, EntityFormMode mode){
 		super(name);
-		this.entityClass = entityClass;
+		this.config = config;
 		this.mode = mode;
 
 		createFields();
@@ -65,11 +57,11 @@ public class EntityForm extends S2ClickForm {
 	 */
 	protected void createFields(){
 		EntityMetaFactory factory = SingletonS2Container.getComponent(EntityMetaFactory.class);
-		EntityMeta entityMeta = factory.getEntityMeta(entityClass);
+		EntityMeta entityMeta = factory.getEntityMeta(config.getEntityClass());
 		int size = entityMeta.getColumnPropertyMetaSize();
 		for(int i=0; i < size; i++){
 			PropertyMeta propertyMeta = entityMeta.getColumnPropertyMeta(i);
-			Field field = createField(entityMeta, propertyMeta);
+			Field field = config.createField(mode, propertyMeta);
 			if(field != null){
 				add(field);
 			}
@@ -82,15 +74,15 @@ public class EntityForm extends S2ClickForm {
 	protected void createButtons(){
 		Submit submit = null;
 		if(mode == EntityFormMode.REGISTER){
-			submit = new Submit("submit", "Register");
+			submit = new Submit("submit", getMessage("button.register"));
 		} else if(mode == EntityFormMode.EDIT){
-			submit = new Submit("submit", "Update");
+			submit = new Submit("submit", getMessage("button.update"));
 		} else if(mode == EntityFormMode.DELETE){
-			submit = new Submit("submit", "Delete");
+			submit = new Submit("submit", getMessage("button.delete"));
 		}
 		add(submit);
 
-		Submit cancel = new Submit("cancel", "Cancel");
+		Submit cancel = new Submit("cancel", getMessage("button.cancel"));
 		add(cancel);
 	}
 
@@ -110,62 +102,6 @@ public class EntityForm extends S2ClickForm {
 	 */
 	public Submit getCancelButton(){
 		return (Submit) getField("cancel");
-	}
-
-	// TODO 別クラスにしてDIして使うようにしたほうがいいかも
-	protected Field createField(EntityMeta em, PropertyMeta pm){
-
-		String name = pm.getName();
-		Class<?> type = pm.getPropertyClass();
-		Field field = null;
-
-		if(pm.isId()){
-			// 削除モード時はIDをHiddenFieldとして生成
-			if(mode == EntityFormMode.DELETE){
-				field = new HiddenField(name, pm.getPropertyClass());
-				return field;
-			}
-			// 更新モード時の場合はIDをHiddenFieldとして生成
-			if(mode == EntityFormMode.EDIT){
-				field = new HiddenField(name, pm.getPropertyClass());
-				return field;
-			}
-			// 挿入モード時かつIDが自動採番の場合はフィールドを生成しない
-			if(mode == EntityFormMode.REGISTER && pm.hasIdGenerator()){
-				return null;
-			}
-		}
-
-		// 削除モード時はIDのHiddenField以外は作成しない
-		if(mode == EntityFormMode.DELETE){
-			field = new LabelField();
-
-		} else {
-			// プロパティの型に応じたフィールドを生成
-			if(type == String.class){
-				field = new TextField();
-			} else if(type == Integer.class){
-				field = new IntegerField();
-			} else if(type == Date.class){
-				field = new DateFieldYYYYMMDD();
-			}
-		}
-
-		if(field != null){
-			field.setName(name);
-
-			// 削除モード以外の場合は必須フィールドの設定を行う
-			if(mode != EntityFormMode.DELETE){
-				Column column = pm.getField().getAnnotation(Column.class);
-				if(column != null){
-					if(column.nullable() == false){
-						field.setRequired(true);
-					}
-				}
-			}
-		}
-
-		return field;
 	}
 
 	/**

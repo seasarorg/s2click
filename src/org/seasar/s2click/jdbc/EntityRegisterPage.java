@@ -45,7 +45,7 @@ public abstract class EntityRegisterPage extends S2ClickPage {
 	 * @param config 設定
 	 */
 	public EntityRegisterPage(EntityPagesConfig config){
-		form = new EntityForm("form", config.getEntityClass(), EntityFormMode.REGISTER);
+		form = new EntityForm("form", config, EntityFormMode.REGISTER);
 		form.getSubmitButton().setListener(this, "onRegister");
 		form.getCancelButton().setListener(this, "onCancel");
 
