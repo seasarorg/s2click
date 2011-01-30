@@ -109,32 +109,35 @@ public class EntityForm extends S2ClickForm {
 			}
 			// 挿入モード時かつIDが自動採番の場合はフィールドを生成しない
 			if(mode == EntityFormMode.REGISTER && pm.hasIdGenerator()){
-				// TODO 自動採番かどうかを判定する
 				return null;
 			}
 		}
 
 		// 削除モード時はIDのHiddenField以外は作成しない
 		if(mode == EntityFormMode.DELETE){
-			return null;
-		}
+			field = new LabelField();
 
-		// プロパティの型に応じたフィールドを生成
-		if(type == String.class){
-			field = new TextField();
-		} else if(type == Integer.class){
-			field = new IntegerField();
-		} else if(type == Date.class){
-			field = new DateFieldYYYYMMDD();
+		} else {
+			// プロパティの型に応じたフィールドを生成
+			if(type == String.class){
+				field = new TextField();
+			} else if(type == Integer.class){
+				field = new IntegerField();
+			} else if(type == Date.class){
+				field = new DateFieldYYYYMMDD();
+			}
 		}
 
 		if(field != null){
 			field.setName(name);
 
-			Column column = pm.getField().getAnnotation(Column.class);
-			if(column != null){
-				if(column.nullable() == false){
-					field.setRequired(true);
+			// 削除モード以外の場合は必須フィールドの設定を行う
+			if(mode != EntityFormMode.DELETE){
+				Column column = pm.getField().getAnnotation(Column.class);
+				if(column != null){
+					if(column.nullable() == false){
+						field.setRequired(true);
+					}
 				}
 			}
 		}
