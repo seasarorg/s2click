@@ -33,7 +33,6 @@ import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.s2click.S2ClickPage;
-import org.seasar.s2click.control.PublicFieldColumn;
 
 /**
  *
@@ -97,11 +96,10 @@ public class EntityListPage extends S2ClickPage {
 
 		for(int i=0; i < size; i++){
 			PropertyMeta propertyMeta = entityMeta.getColumnPropertyMeta(i);
-
-			PublicFieldColumn column = new PublicFieldColumn(
-					propertyMeta.getName(), config.getLabel(propertyMeta));
-
-			table.addColumn(column);
+			Column column = config.createColumn(propertyMeta);
+			if(column != null){
+				table.addColumn(column);
+			}
 		}
 
 		Column column = new Column("operations", getMessage("label.operations"));

@@ -30,6 +30,7 @@ import org.apache.commons.lang.StringUtils;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.s2click.control.DateFieldYYYYMMDD;
 import org.seasar.s2click.control.LabelField;
+import org.seasar.s2click.control.PublicFieldColumn;
 import org.seasar.s2click.jdbc.EntityForm.EntityFormMode;
 
 /**
@@ -110,6 +111,13 @@ public class EntityPagesConfig {
 		return deletePageClass;
 	}
 
+	/**
+	 * エンティティのプロパティに対応した{@link Field}オブジェクトを作成します。
+	 *
+	 * @param mode フォームのモード
+	 * @param propertyMeta エンティティのプロパティ
+	 * @return フォームのフィールド（nullの場合はフォームに追加されません）
+	 */
 	public Field createField(EntityFormMode mode, PropertyMeta propertyMeta){
 		String name = propertyMeta.getName();
 		Class<?> type = propertyMeta.getPropertyClass();
@@ -162,18 +170,41 @@ public class EntityPagesConfig {
 			}
 		}
 
-		return field;	}
+		return field;
+	}
 
 	protected void putLabel(String propertyName, String label){
 		this.labelMap.put(propertyName, label);
 	}
 
+	/**
+	 * エンティティのプロパティの表示用文字列を取得します。
+	 * <p>
+	 * {@link #putLabel(String, String)}で設定した文字列があればそれを、
+	 * 設定されていなければプロパティ名を{@link ClickUtils#toLabel(String)}で変換した文字列を返します。
+	 *
+	 * @param propertyMeta プロパティ
+	 * @return 表示用文字列
+	 */
 	public String getLabel(PropertyMeta propertyMeta){
 		String label = this.labelMap.get(propertyMeta.getName());
 		if(StringUtils.isNotEmpty(label)){
 			return label;
 		}
 		return ClickUtils.toLabel(propertyMeta.getName());
+	}
+
+	/**
+	 * エンティティのプロパティに対応した{@link org.apache.click.control.Column}オブジェクトを生成します。
+	 *
+	 * @param propertyMeta エンティティのプロパティ
+	 * @return テーブルのカラム（nullの場合はテーブルに追加されません）
+	 */
+	public org.apache.click.control.Column createColumn(PropertyMeta propertyMeta){
+		PublicFieldColumn column = new PublicFieldColumn(
+				propertyMeta.getName(), getLabel(propertyMeta));
+
+		return column;
 	}
 
 }
