@@ -1,7 +1,7 @@
 package org.seasar.s2click.example.page;
 
-import org.seasar.s2click.EntityDeletePage;
 import org.seasar.s2click.annotation.Layout;
+import org.seasar.s2click.jdbc.EntityDeletePage;
 
 @Layout
 public class MessageDeletePage extends EntityDeletePage {

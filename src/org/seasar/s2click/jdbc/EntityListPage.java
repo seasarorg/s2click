@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.s2click;
+package org.seasar.s2click.jdbc;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +32,7 @@ import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.PropertyMeta;
+import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.control.PublicFieldColumn;
 
 /**
@@ -91,14 +92,14 @@ public class EntityListPage extends S2ClickPage {
 	}
 
 	protected void createTable(){
-		EntityMeta em = entityMetaFactory.getEntityMeta(config.getEntityClass());
-		int size = em.getColumnPropertyMetaSize();
+		EntityMeta entityMeta = entityMetaFactory.getEntityMeta(config.getEntityClass());
+		int size = entityMeta.getColumnPropertyMetaSize();
 
 		for(int i=0; i < size; i++){
-			PropertyMeta pm = em.getColumnPropertyMeta(i);
+			PropertyMeta propertyMeta = entityMeta.getColumnPropertyMeta(i);
 
 			PublicFieldColumn column = new PublicFieldColumn(
-					pm.getName(), pm.getName());
+					propertyMeta.getName(), propertyMeta.getName());
 
 			table.addColumn(column);
 		}
@@ -121,10 +122,10 @@ public class EntityListPage extends S2ClickPage {
 	protected Map<String, String> getIdValueMap(Object entity){
 		try {
 			Map<String, String> map = new HashMap<String, String>();
-			EntityMeta em = entityMetaFactory.getEntityMeta(config.getEntityClass());
-			for(PropertyMeta pm: em.getIdPropertyMetaList()){
-				Object value = pm.getField().get(entity);
-				map.put(pm.getName(), String.valueOf(value));
+			EntityMeta entityMeta = entityMetaFactory.getEntityMeta(config.getEntityClass());
+			for(PropertyMeta propertyMeta: entityMeta.getIdPropertyMetaList()){
+				Object value = propertyMeta.getField().get(entity);
+				map.put(propertyMeta.getName(), String.valueOf(value));
 			}
 			return map;
 		} catch(Exception ex){

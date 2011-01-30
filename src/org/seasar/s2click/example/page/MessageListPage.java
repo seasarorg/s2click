@@ -1,7 +1,7 @@
 package org.seasar.s2click.example.page;
 
-import org.seasar.s2click.EntityListPage;
 import org.seasar.s2click.annotation.Layout;
+import org.seasar.s2click.jdbc.EntityListPage;
 
 @Layout
 public class MessageListPage extends EntityListPage {

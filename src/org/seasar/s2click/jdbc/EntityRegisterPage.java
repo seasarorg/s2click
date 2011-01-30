@@ -13,35 +13,29 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.s2click;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.seasar.s2click.jdbc;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
-import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.JdbcManager;
-import org.seasar.extension.jdbc.PropertyMeta;
-import org.seasar.s2click.control.EntityForm;
-import org.seasar.s2click.control.EntityForm.EntityFormMode;
+import org.seasar.s2click.S2ClickPage;
+import org.seasar.s2click.jdbc.EntityForm.EntityFormMode;
 
-public class EntityEditPage extends S2ClickPage {
+public abstract class EntityRegisterPage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * エンティティを編集するためのフォーム。
+	 * エンティティを登録するためのフォーム。
 	 */
 	public EntityForm form;
 
 	@Resource
-	protected EntityMetaFactory entityMetaFactory;
+	protected JdbcManager jdbcManager;
 
 	@Resource
-	protected JdbcManager jdbcManager;
+	protected EntityMetaFactory entityMetaFactory;
 
 	protected EntityPagesConfig config;
 
@@ -50,48 +44,27 @@ public class EntityEditPage extends S2ClickPage {
 	 *
 	 * @param config 設定
 	 */
-	public EntityEditPage(EntityPagesConfig config){
-		form = new EntityForm("form", config.getEntityClass(), EntityFormMode.EDIT);
-		form.getSubmit().setListener(this, "onUpdate");
-		form.getCancel().setListener(this, "onCancel");
+	public EntityRegisterPage(EntityPagesConfig config){
+		form = new EntityForm("form", config.getEntityClass(), EntityFormMode.REGISTER);
+		form.getSubmitButton().setListener(this, "onRegister");
+		form.getCancelButton().setListener(this, "onCancel");
 
 		this.config = config;
 	}
 
-	@Override
-	public void onInit() {
-		super.onInit();
-
-		// IDの取得
-		EntityMeta em = entityMetaFactory.getEntityMeta(config.getEntityClass());
-		List<String> idList = new ArrayList<String>();
-		for(PropertyMeta pm: em.getIdPropertyMetaList()){
-			String value = getContext().getRequestParameter(pm.getName());
-			if(StringUtils.isEmpty(value)){
-				throw new RuntimeException(pm.getName() + " is not specified.");
-			}
-			idList.add(value);
-		}
-
-		Object entity = jdbcManager.from(config.getEntityClass())
-			.id(idList.toArray()).disallowNoResult().getSingleResult();
-
-		form.copyFrom(entity);
-	}
-
 	/**
-	 * エンティティの更新処理を行い、一覧画面に戻ります。
+	 * エンティティの登録処理を行い、一覧画面に戻ります。
 	 *
 	 * @return
 	 */
-	public boolean onUpdate(){
+	public boolean onRegister(){
 		if(form.isValid()){
 			try {
 				Object entity = config.getEntityClass().newInstance();
 				form.copyTo(entity);
 
 				// TODO 結果が1件じゃなかったらエラーにする？
-				jdbcManager.update(entity).execute();
+				jdbcManager.insert(entity).execute();
 
 				setRedirect(config.getListPageClass());
 				return false;
@@ -106,7 +79,7 @@ public class EntityEditPage extends S2ClickPage {
 	}
 
 	/**
-	 * エンティティの更新処理をキャンセルし、一覧画面に戻ります。
+	 * エンティティの登録処理をキャンセルし、一覧画面に戻ります。
 	 *
 	 * @return
 	 */
@@ -114,4 +87,5 @@ public class EntityEditPage extends S2ClickPage {
 		setRedirect(config.getListPageClass());
 		return false;
 	}
+
 }

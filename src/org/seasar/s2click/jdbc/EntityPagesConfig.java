@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.s2click;
+package org.seasar.s2click.jdbc;
 
 /**
  * エンティティの一覧、登録、編集、削除を行うページの設定を行うクラスです。

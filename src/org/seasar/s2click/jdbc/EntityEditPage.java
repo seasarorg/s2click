@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.s2click;
+package org.seasar.s2click.jdbc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +25,15 @@ import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.PropertyMeta;
-import org.seasar.s2click.control.EntityForm;
-import org.seasar.s2click.control.EntityForm.EntityFormMode;
+import org.seasar.s2click.S2ClickPage;
+import org.seasar.s2click.jdbc.EntityForm.EntityFormMode;
 
-public class EntityDeletePage extends S2ClickPage {
+public class EntityEditPage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * エンティティを削除するためのフォーム。
+	 * エンティティを編集するためのフォーム。
 	 */
 	public EntityForm form;
 
@@ -50,10 +50,10 @@ public class EntityDeletePage extends S2ClickPage {
 	 *
 	 * @param config 設定
 	 */
-	public EntityDeletePage(EntityPagesConfig config){
-		form = new EntityForm("form", config.getEntityClass(), EntityFormMode.DELETE);
-		form.getSubmit().setListener(this, "onDelete");
-		form.getCancel().setListener(this, "onCancel");
+	public EntityEditPage(EntityPagesConfig config){
+		form = new EntityForm("form", config.getEntityClass(), EntityFormMode.EDIT);
+		form.getSubmitButton().setListener(this, "onUpdate");
+		form.getCancelButton().setListener(this, "onCancel");
 
 		this.config = config;
 	}
@@ -63,12 +63,12 @@ public class EntityDeletePage extends S2ClickPage {
 		super.onInit();
 
 		// IDの取得
-		EntityMeta em = entityMetaFactory.getEntityMeta(config.getEntityClass());
+		EntityMeta entityMeta = entityMetaFactory.getEntityMeta(config.getEntityClass());
 		List<String> idList = new ArrayList<String>();
-		for(PropertyMeta pm: em.getIdPropertyMetaList()){
-			String value = getContext().getRequestParameter(pm.getName());
+		for(PropertyMeta propertyMeta: entityMeta.getIdPropertyMetaList()){
+			String value = getContext().getRequestParameter(propertyMeta.getName());
 			if(StringUtils.isEmpty(value)){
-				throw new RuntimeException(pm.getName() + " is not specified.");
+				throw new RuntimeException(propertyMeta.getName() + " is not specified.");
 			}
 			idList.add(value);
 		}
@@ -80,18 +80,18 @@ public class EntityDeletePage extends S2ClickPage {
 	}
 
 	/**
-	 * エンティティの削除処理を行い、一覧画面に戻ります。
+	 * エンティティの更新処理を行い、一覧画面に戻ります。
 	 *
 	 * @return
 	 */
-	public boolean onDelete(){
+	public boolean onUpdate(){
 		if(form.isValid()){
 			try {
 				Object entity = config.getEntityClass().newInstance();
 				form.copyTo(entity);
 
 				// TODO 結果が1件じゃなかったらエラーにする？
-				jdbcManager.delete(entity).execute();
+				jdbcManager.update(entity).execute();
 
 				setRedirect(config.getListPageClass());
 				return false;
@@ -106,7 +106,7 @@ public class EntityDeletePage extends S2ClickPage {
 	}
 
 	/**
-	 * エンティティの削除処理をキャンセルし、一覧画面に戻ります。
+	 * エンティティの更新処理をキャンセルし、一覧画面に戻ります。
 	 *
 	 * @return
 	 */
@@ -114,5 +114,4 @@ public class EntityDeletePage extends S2ClickPage {
 		setRedirect(config.getListPageClass());
 		return false;
 	}
-
 }

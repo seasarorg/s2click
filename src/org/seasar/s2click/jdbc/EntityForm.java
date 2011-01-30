@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.seasar.s2click.control;
+package org.seasar.s2click.jdbc;
 
 import java.util.Date;
 
@@ -28,6 +28,9 @@ import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.framework.container.SingletonS2Container;
+import org.seasar.s2click.control.DateFieldYYYYMMDD;
+import org.seasar.s2click.control.LabelField;
+import org.seasar.s2click.control.S2ClickForm;
 
 /**
  * エンティティを登録、更新、削除するための入力フォームです。
@@ -62,11 +65,11 @@ public class EntityForm extends S2ClickForm {
 	 */
 	protected void createFields(){
 		EntityMetaFactory factory = SingletonS2Container.getComponent(EntityMetaFactory.class);
-		EntityMeta em = factory.getEntityMeta(entityClass);
-		int size = em.getColumnPropertyMetaSize();
+		EntityMeta entityMeta = factory.getEntityMeta(entityClass);
+		int size = entityMeta.getColumnPropertyMetaSize();
 		for(int i=0; i < size; i++){
-			PropertyMeta pm = em.getColumnPropertyMeta(i);
-			Field field = createField(em, pm);
+			PropertyMeta propertyMeta = entityMeta.getColumnPropertyMeta(i);
+			Field field = createField(entityMeta, propertyMeta);
 			if(field != null){
 				add(field);
 			}
@@ -96,11 +99,16 @@ public class EntityForm extends S2ClickForm {
 	 *
 	 * @return 送信ボタン
 	 */
-	public Submit getSubmit(){
+	public Submit getSubmitButton(){
 		return (Submit) getField("submit");
 	}
 
-	public Submit getCancel(){
+	/**
+	 * キャンセルボタンのインスタンスを取得します。
+	 *
+	 * @return キャンセルボタン
+	 */
+	public Submit getCancelButton(){
 		return (Submit) getField("cancel");
 	}
 
