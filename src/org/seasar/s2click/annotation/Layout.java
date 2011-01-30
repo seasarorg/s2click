@@ -21,13 +21,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.seasar.s2click.interceptor.LayoutInterceptor;
-
 /**
  * 共通テンプレートを使用するページクラスに付与するアノテーションです。
  *
  * @author Naoki Takezoe
- * @see LayoutInterceptor
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

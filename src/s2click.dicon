@@ -17,16 +17,12 @@
 <!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
-	<component name="layoutInterceptor"
-		class="org.seasar.s2click.interceptor.LayoutInterceptor">
-		<property name="template">"/layout.htm"</property>
-	</component>
-
 	<component name="setSourcePathInterceptor"
 		class="org.seasar.s2click.example.util.SetSourcePathInterceptor">
 	</component>
 
 	<component class="org.seasar.s2click.S2ClickConfig">
 		<property name="mode">"debug"</property>
+		<property name="layoutTemplatePath">"/layout.htm"</property>
 	</component>
 </components>

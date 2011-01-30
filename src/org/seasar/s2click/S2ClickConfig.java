@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -68,58 +68,63 @@ public class S2ClickConfig {
 	 * ロケール。
 	 */
 	public String locale;
-	
+
 	/**
 	 * ログサービス。
 	 * デフォルトは<code>ConsoleLogService</code>です。
 	 */
 	public Class<? extends LogService> logService = ConsoleLogService.class;
-	
+
 	/**
 	 * ログサービスのプロパティ。
 	 */
 	public Map<String, String> logServicePropertyMap = new HashMap<String, String>();
-	
+
 	/**
 	 * リソースサービス。
 	 * デフォルトは<code>ClickResourceService</code>です。
 	 */
 	public Class<? extends ResourceService> resourceService = ClickResourceService.class;
-	
+
 	/**
 	 * リソースサービスのプロパティ。
 	 */
 	public Map<String, String> resourceServicePropertyMap = new HashMap<String, String>();
-	
+
 	/**
 	 * テンプレートサービス。
 	 * デフォルトは<code>VelocityTemplateService></code>です。
 	 */
 	public Class<? extends TemplateService> templateService = VelocityTemplateService.class;
-	
+
 	/**
 	 * テンプレートサービスのプロパティ。
 	 */
 	public Map<String, String> templateServicePropertyMap = new HashMap<String, String>();
-	
+
 	/**
 	 * ログサービスのプロパティを追加します。
-	 * 
+	 *
 	 * @param name プロパティ名
 	 * @param value プロパティ値
 	 */
 	public void addLogServiceProperty(String name, String value){
 		this.logServicePropertyMap.put(name, value);
 	}
-	
+
 	/**
 	 * テンプレートサービスのプロパティを追加します。
-	 * 
+	 *
 	 * @param name プロパティ名
 	 * @param value プロパティ値
 	 */
 	public void addTemplateServiceProperty(String name, String value){
 		this.templateServicePropertyMap.put(name, value);
 	}
+
+	/**
+	 * 共通レイアウトのテンプレートのパス。
+	 */
+	public String layoutTemplatePath = null;
 
 }

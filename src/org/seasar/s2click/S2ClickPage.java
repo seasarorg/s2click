@@ -41,7 +41,9 @@ import org.apache.click.util.PropertyUtils;
 import org.apache.click.util.RequestTypeConverter;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.seasar.framework.container.SingletonS2Container;
 import org.seasar.framework.util.tiger.ReflectionUtil;
+import org.seasar.s2click.annotation.Layout;
 import org.seasar.s2click.annotation.Request;
 import org.seasar.s2click.control.AjaxLink;
 import org.seasar.s2click.exception.RequestConversionException;
@@ -318,5 +320,27 @@ public abstract class S2ClickPage extends Page {
 			getContext().setRequestAttribute(SKIP_RENDERING, "true");
 		}
 	}
+
+	@Override
+	public String getTemplate() {
+		Layout layout = getClass().getAnnotation(Layout.class);
+		if(layout == null){
+			return super.getTemplate();
+		}
+
+		String path = layout.value();
+		if(StringUtils.isNotEmpty(path)){
+			return path;
+		}
+
+		S2ClickConfig config = SingletonS2Container.getComponent(S2ClickConfig.class);
+		if(StringUtils.isNotEmpty(config.layoutTemplatePath)){
+			return config.layoutTemplatePath;
+		}
+
+		throw new RuntimeException("layoutTemplatePath is not configured.");
+	}
+
+
 
 }
