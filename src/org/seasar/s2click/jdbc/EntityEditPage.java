@@ -28,6 +28,12 @@ import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.jdbc.EntityForm.EntityFormMode;
 
+/**
+ * エンティティの編集を行うページクラスの抽象基底クラスです。
+ *
+ * @author Naoki Takezoe
+ * @since 1.0.4
+ */
 public abstract class EntityEditPage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;

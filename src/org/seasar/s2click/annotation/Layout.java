@@ -26,6 +26,7 @@ import java.lang.annotation.Target;
  * 共通テンプレートを使用するページクラスに付与するアノテーションです。
  *
  * @author Naoki Takezoe
+ * @since 1.0.4
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

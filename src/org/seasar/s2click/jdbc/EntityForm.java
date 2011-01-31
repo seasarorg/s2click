@@ -27,6 +27,7 @@ import org.seasar.s2click.control.S2ClickForm;
  * エンティティを登録、更新、削除するための入力フォームです。
  *
  * @author Naoki Takezoe
+ * @since 1.0.4
  */
 public class EntityForm extends S2ClickForm {
 

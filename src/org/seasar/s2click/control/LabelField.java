@@ -22,6 +22,7 @@ import org.apache.click.util.HtmlStringBuffer;
  * フォームに編集不可の値を表示するためのラベルコントロールです。
  *
  * @author Naoki Takezoe
+ * @since 1.0.4
  */
 public class LabelField extends Field {
 
