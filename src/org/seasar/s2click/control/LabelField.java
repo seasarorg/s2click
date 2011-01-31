@@ -18,6 +18,11 @@ package org.seasar.s2click.control;
 import org.apache.click.control.Field;
 import org.apache.click.util.HtmlStringBuffer;
 
+/**
+ * フォームに編集不可の値を表示するためのラベルコントロールです。
+ *
+ * @author Naoki Takezoe
+ */
 public class LabelField extends Field {
 
     private static final long serialVersionUID = 1L;
