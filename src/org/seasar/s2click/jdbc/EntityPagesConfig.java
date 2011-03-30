@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.persistence.Column;
 
+import org.apache.click.Page;
 import org.apache.click.control.Field;
 import org.apache.click.control.HiddenField;
 import org.apache.click.control.TextField;
@@ -42,10 +43,10 @@ import org.seasar.s2click.jdbc.EntityForm.EntityFormMode;
 public class EntityPagesConfig {
 
 	private Class<?> entityClass;
-	private Class<?> listPageClass;
-	private Class<?> registerPageClass;
-	private Class<?> editPageClass;
-	private Class<?> deletePageClass;
+	private Class<? extends Page> listPageClass;
+	private Class<? extends Page> registerPageClass;
+	private Class<? extends Page> editPageClass;
+	private Class<? extends Page> deletePageClass;
 
 	private Map<String, String> labelMap = new HashMap<String, String>();
 
@@ -59,7 +60,10 @@ public class EntityPagesConfig {
 	 * @param deletePageClass 削除画面のページクラス
 	 */
 	public EntityPagesConfig(Class<?> entityClass,
-			Class<?> listPageClass, Class<?> regiserPageClass, Class<?> editPageClass, Class<?> deletePageClass){
+			Class<? extends Page> listPageClass,
+			Class<? extends Page> regiserPageClass,
+			Class<? extends Page> editPageClass,
+			Class<? extends Page> deletePageClass){
 		this.entityClass       = entityClass;
 		this.listPageClass     = listPageClass;
 		this.registerPageClass = regiserPageClass;
@@ -81,7 +85,7 @@ public class EntityPagesConfig {
 	 *
 	 * @return 一覧画面のページクラス
 	 */
-	public Class<?> getListPageClass() {
+	public Class<? extends Page> getListPageClass() {
 		return listPageClass;
 	}
 
@@ -90,7 +94,7 @@ public class EntityPagesConfig {
 	 *
 	 * @return 登録画面のページクラス
 	 */
-	public Class<?> getRegisterPageClass() {
+	public Class<? extends Page> getRegisterPageClass() {
 		return registerPageClass;
 	}
 
@@ -99,7 +103,7 @@ public class EntityPagesConfig {
 	 *
 	 * @return 編集画面のページクラス
 	 */
-	public Class<?> getEditPageClass() {
+	public Class<? extends Page> getEditPageClass() {
 		return editPageClass;
 	}
 
@@ -108,7 +112,7 @@ public class EntityPagesConfig {
 	 *
 	 * @return 削除画面のページクラス
 	 */
-	public Class<?> getDeletePageClass() {
+	public Class<? extends Page> getDeletePageClass() {
 		return deletePageClass;
 	}
 

@@ -19,6 +19,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.click.Page;
 import org.seasar.framework.util.tiger.ReflectionUtil;
 import org.seasar.s2click.annotation.Request;
 import org.seasar.s2click.exception.RequestRequiredException;
@@ -31,7 +32,7 @@ public class S2ClickPageTest extends S2ClickTestCase {
 		@SuppressWarnings("serial")
 		S2ClickPage page = new S2ClickPage(){};
 
-		page.setHeaders(new HashMap<Object, Object>());
+		page.setHeaders(new HashMap<String, Object>());
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", "Tarou");
@@ -49,7 +50,7 @@ public class S2ClickPageTest extends S2ClickTestCase {
 		@SuppressWarnings("serial")
 		S2ClickPage page = new S2ClickPage(){};
 
-		page.setHeaders(new HashMap<Object, Object>());
+		page.setHeaders(new HashMap<String, Object>());
 
 		page.renderHTML("<html>あああ</html>");
 
@@ -95,8 +96,7 @@ public class S2ClickPageTest extends S2ClickTestCase {
 		}
 
 		@Override
-		@SuppressWarnings("rawtypes")
-		public Map getPageFields(Class pageClass) {
+		public Map<String, Field> getPageFields(Class<? extends Page> pageClass) {
 			Map<String, Field> fields = new HashMap<String, Field>();
 			for(Field field: getPageFieldArray(pageClass)){
 				fields.put(field.getName(), field);

@@ -74,7 +74,6 @@ public abstract class S2ClickPage extends Page {
 	protected static TypeConverter typeConverter = new RequestTypeConverter();
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public void onInit() {
 		super.onInit();
 
@@ -278,7 +277,6 @@ public abstract class S2ClickPage extends Page {
 		HttpServletResponse res = getContext().getResponse();
 
 		// ヘッダもここで書き出します。
-		@SuppressWarnings("unchecked")
 		Map<String, Object> headers = getHeaders();
 
         for (Iterator<Map.Entry<String, Object>> i = headers.entrySet().iterator(); i.hasNext();) {

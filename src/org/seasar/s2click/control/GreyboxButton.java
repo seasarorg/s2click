@@ -9,16 +9,20 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.s2click.control;
 
-import java.text.MessageFormat;
+import java.util.List;
 
 import org.apache.click.Page;
 import org.apache.click.control.Button;
+import org.apache.click.element.CssImport;
+import org.apache.click.element.Element;
+import org.apache.click.element.JsImport;
+import org.apache.click.element.JsScript;
 import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -64,14 +68,17 @@ public class GreyboxButton extends Button {
 		setDialogTitle(dialogTitle);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public String getHtmlImports() {
-        return MessageFormat.format(HTML_IMPORTS,
-        		new Object[]{ getContext().getRequest().getContextPath() }
-        );
+	public List<Element> getHeadElements() {
+		if (headElements == null) {
+			headElements = super.getHeadElements();
+			headElements.add(new JsImport("/resources/greybox/AJS.js"));
+			headElements.add(new JsImport("/resources/greybox/AJS_fx.js"));
+			headElements.add(new JsImport("/resources/greybox/gb_scripts.js"));
+			headElements.add(new CssImport("/click/greybox/gb_styles.css"));
+			headElements.add(new JsScript("function S2Click_GB_SetResult(data, id)'{ AJS.$(id).value = data; }'"));
+		}
+		return headElements;
 	}
 
 	/**

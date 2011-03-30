@@ -23,10 +23,13 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import org.apache.click.Page;
+import org.apache.click.PageInterceptor;
 import org.apache.click.service.ConfigService;
 import org.apache.click.service.ConsoleLogService;
 import org.apache.click.service.FileUploadService;
 import org.apache.click.service.LogService;
+import org.apache.click.service.MessagesMapService;
 import org.apache.click.service.ResourceService;
 import org.apache.click.service.TemplateService;
 import org.apache.click.util.Format;
@@ -42,32 +45,26 @@ public class MockConfigService implements ConfigService {
 	}
 
 	public Format createFormat() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public String getApplicationMode() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public String getCharset() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Class getErrorPageClass() {
-		// TODO Auto-generated method stub
+	public Class<? extends Page> getErrorPageClass() {
 		return null;
 	}
 
 	public FileUploadService getFileUploadService() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public Locale getLocale() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -75,42 +72,35 @@ public class MockConfigService implements ConfigService {
 		return new ConsoleLogService();
 	}
 
-	public Class getNotFoundPageClass() {
-		// TODO Auto-generated method stub
+	public Class<? extends Page> getNotFoundPageClass() {
 		return null;
 	}
 
-	public Class getPageClass(String path) {
-		// TODO Auto-generated method stub
+	public Class<? extends Page> getPageClass(String path) {
 		return null;
 	}
 
-	public Field getPageField(Class pageClass, String fieldName) {
-		// TODO Auto-generated method stub
+	public Field getPageField(Class<? extends Page> pageClass, String fieldName) {
 		return null;
 	}
 
-	public Field[] getPageFieldArray(Class pageClass) {
-		// TODO Auto-generated method stub
+	public Field[] getPageFieldArray(Class<? extends Page> pageClass) {
 		return null;
 	}
 
-	public Map getPageFields(Class pageClass) {
-		// TODO Auto-generated method stub
+	public Map<String, Field> getPageFields(Class<? extends Page> pageClass) {
 		return null;
 	}
 
-	public Map getPageHeaders(String path) {
-		// TODO Auto-generated method stub
+	public Map<String, Object> getPageHeaders(String path) {
 		return null;
 	}
 
-	public String getPagePath(Class pageClass) {
+	public String getPagePath(Class<? extends Page> pageClass) {
 		return this.pagePathMap.get(pageClass);
 	}
 
 	public ServletContext getServletContext() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -123,53 +113,49 @@ public class MockConfigService implements ConfigService {
 	}
 
 	public boolean isJspPage(String path) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean isPagesAutoBinding() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean isProductionMode() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean isProfileMode() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public void onDestroy() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void onInit(ServletContext servletContext) throws Exception {
-		// TODO Auto-generated method stub
-
 	}
 
 	public AutoBinding getAutoBindingMode() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public List getPageClassList() {
-		// TODO Auto-generated method stub
+	public List<Class<? extends Page>> getPageClassList() {
 		return null;
 	}
 
 	public ResourceService getResourceService() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public boolean isTemplate(String path) {
-		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public MessagesMapService getMessagesMapService() {
+		return null;
+	}
+
+	public List<PageInterceptor> getPageInterceptors() {
+		return null;
 	}
 
 }

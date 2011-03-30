@@ -33,15 +33,15 @@ import java.util.StringTokenizer;
 
 import javax.servlet.ServletContext;
 
-import ognl.Ognl;
-
 import org.apache.click.Control;
 import org.apache.click.Page;
+import org.apache.click.PageInterceptor;
 import org.apache.click.service.CommonsFileUploadService;
 import org.apache.click.service.ConfigService;
 import org.apache.click.service.ConsoleLogService;
 import org.apache.click.service.FileUploadService;
 import org.apache.click.service.LogService;
+import org.apache.click.service.MessagesMapService;
 import org.apache.click.service.ResourceService;
 import org.apache.click.service.TemplateService;
 import org.apache.click.util.ClickUtils;
@@ -115,15 +115,18 @@ public class S2ClickConfigService implements ConfigService {
     /** The application TemplateService. */
     private TemplateService templateService;
 
+    /** The application MessagesMapService. */
+    private MessagesMapService messagesMapService;
+
 	protected boolean hotDeploy;
 
-	protected Map commonHeaders;
+	protected Map<String, Object> commonHeaders;
 
     protected final Map pageByPathMap = new HashMap();
     protected final Map pageByClassMap = new HashMap();
     protected String pagesPackage;
 
-    static final Map DEFAULT_HEADERS;
+    static final Map<String, Object> DEFAULT_HEADERS;
     /** Initialize the default headers. */
     static {
         DEFAULT_HEADERS = new HashMap();
@@ -237,11 +240,11 @@ public class S2ClickConfigService implements ConfigService {
         }
     }
 
-	public Field getPageField(Class pageClass, String fieldName) {
+	public Field getPageField(Class<? extends Page> pageClass, String fieldName){
         return (Field) getPageFields(pageClass).get(fieldName);
 	}
 
-	public Field[] getPageFieldArray(Class pageClass) {
+    public Field[] getPageFieldArray(Class<? extends Page> pageClass){
     	Object object = pageByClassMap.get(getRawClassname(pageClass));
 
         if (object instanceof PageElm) {
@@ -258,7 +261,7 @@ public class S2ClickConfigService implements ConfigService {
         }
 	}
 
-	public Map getPageFields(Class pageClass) {
+    public Map<String, Field> getPageFields(Class<? extends Page> pageClass){
         Object object = pageByClassMap.get(getRawClassname(pageClass));
 
         if (object instanceof PageElm) {
@@ -275,7 +278,7 @@ public class S2ClickConfigService implements ConfigService {
         }
     }
 
-	public Map getPageHeaders(String path) {
+	public Map<String, Object> getPageHeaders(String path) {
         PageElm page = (PageElm) pageByPathMap.get(path);
         if (page == null) {
             String jspPath = StringUtils.replace(path, ".htm", ".jsp");
@@ -289,7 +292,7 @@ public class S2ClickConfigService implements ConfigService {
         }
 	}
 
-	public String getPagePath(Class pageClass) {
+	public String getPagePath(Class<? extends Page> pageClass) {
         Object object = pageByClassMap.get(pageClass.getName());
 
         if (object instanceof PageElm) {
@@ -353,6 +356,7 @@ public class S2ClickConfigService implements ConfigService {
 		loadFormat(config);
 		loadHeaders(config);
 		loadPages(config);
+		loadMessageMapService(config);
 	}
 
     private void deployFiles() throws Exception {
@@ -486,47 +490,17 @@ public class S2ClickConfigService implements ConfigService {
 	}
 
 	protected void loadLogService(S2ClickConfig config) throws Exception {
-		logService = config.logService.newInstance();
-
-		Map<String, String> propertyMap = config.logServicePropertyMap;
-
-		for (Iterator<String> i = propertyMap.keySet().iterator(); i.hasNext();) {
-            String name = i.next();
-            String value = propertyMap.get(name);
-
-            Ognl.setValue(name, logService, value);
-        }
-
+		logService = config.logService;
 		logService.onInit(servletContext);
 	}
 
 	protected void loadResourceService(S2ClickConfig config) throws Exception {
-		resourceService = config.resourceService.newInstance();
-
-		Map<String, String> propertyMap = config.resourceServicePropertyMap;
-
-		for (Iterator<String> i = propertyMap.keySet().iterator(); i.hasNext();) {
-            String name = i.next();
-            String value = propertyMap.get(name);
-
-            Ognl.setValue(name, resourceService, value);
-        }
-
+		resourceService = config.resourceService;
 		resourceService.onInit(servletContext);
 	}
 
 	protected void loadTemplateService(S2ClickConfig config) throws Exception {
-		templateService = config.templateService.newInstance();
-
-		Map<String, String> propertyMap = config.templateServicePropertyMap;
-
-		for (Iterator<String> i = propertyMap.keySet().iterator(); i.hasNext();) {
-            String name = i.next();
-            String value = propertyMap.get(name);
-
-            Ognl.setValue(name, templateService, value);
-        }
-
+		templateService = config.templateService;
 		templateService.onInit(servletContext);
 	}
 
@@ -535,6 +509,10 @@ public class S2ClickConfigService implements ConfigService {
 		fileUploadService.onInit(servletContext);
 	}
 
+	protected void loadMessageMapService(S2ClickConfig config) throws Exception {
+		this.messagesMapService = config.messagesMapService;
+		this.messagesMapService.onInit(servletContext);
+	}
 
 	protected void loadLocale(S2ClickConfig config){
         String value = config.locale;
@@ -561,6 +539,10 @@ public class S2ClickConfigService implements ConfigService {
 
 	protected void loadFormat(S2ClickConfig config){
 		formatClass = config.formatClass;
+	}
+
+	protected void loadPageInterceptors(S2ClickConfig config){
+
 	}
 
     protected void loadPages(S2ClickConfig config) throws ClassNotFoundException {
@@ -797,9 +779,9 @@ public class S2ClickConfigService implements ConfigService {
     	return className;
     }
 
-    private static Class<?> loadClass(String className){
+    private static Class<? extends Page> loadClass(String className){
     	try {
-    		return Thread.currentThread().getContextClassLoader().loadClass(className);
+    		return (Class<? extends Page>) Thread.currentThread().getContextClassLoader().loadClass(className);
 		} catch (SecurityException e) {
 			return null;
 		} catch(ClassNotFoundException e){
@@ -810,14 +792,14 @@ public class S2ClickConfigService implements ConfigService {
 
     static class PageElm {
 
-        private final Map headers;
+        private final Map<String, Object> headers;
         private final String path;
         private final String pageClassName;
-        private final Class pageClass;
-        private final Map fields;
+        private final Class<? extends Page> pageClass;
+        private final Map<String, Field> fields;
         private final Field[] fieldArray;
 
-        private PageElm(String path, String pageClassName, Map commonHeaders, boolean hotDeploy) {
+        private PageElm(String path, String pageClassName, Map<String, Object> commonHeaders, boolean hotDeploy) {
             headers = Collections.unmodifiableMap(commonHeaders);
             this.path = path;
             this.pageClassName = pageClassName;
@@ -849,7 +831,7 @@ public class S2ClickConfigService implements ConfigService {
 			}
         }
 
-        public Map getFields() {
+        public Map<String, Field> getFields() {
         	if(fields != null){
         		return fields;
         	}
@@ -860,11 +842,11 @@ public class S2ClickConfigService implements ConfigService {
 			return fields;
         }
 
-        public Map getHeaders() {
+        public Map<String, Object> getHeaders() {
             return headers;
         }
 
-        public Class getPageClass() {
+        public Class<? extends Page> getPageClass() {
         	if(pageClass != null){
         		return pageClass;
         	}
@@ -881,16 +863,16 @@ public class S2ClickConfigService implements ConfigService {
      * このメソッドは常に<code>AutoBinding.NONE</code>を返します。
      */
 	public AutoBinding getAutoBindingMode() {
-		// TODO Auto-generated method stub
-		return AutoBinding.PUBLIC;
+		return AutoBinding.DEFAULT;
 	}
 
-	public List getPageClassList() {
-		List classList = new ArrayList(pageByClassMap.size());
+	public List<Class<? extends Page>> getPageClassList() {
+		List<Class<? extends Page>> classList
+			= new ArrayList<Class<? extends Page>>(pageByClassMap.size());
 
 		Iterator i = pageByClassMap.keySet().iterator();
 		while (i.hasNext()) {
-			Class pageClass = (Class) i.next();
+			Class<? extends Page> pageClass = (Class<? extends Page>) i.next();
 			classList.add(pageClass);
 		}
 
@@ -906,6 +888,15 @@ public class S2ClickConfigService implements ConfigService {
             return true;
         }
         return false;
+	}
+
+	public MessagesMapService getMessagesMapService() {
+		return messagesMapService;
+	}
+
+	public List<PageInterceptor> getPageInterceptors() {
+		// TODO 設定で変えられるようにする？
+		return Collections.emptyList();
 	}
 
 }

@@ -15,12 +15,14 @@
  */
 package org.seasar.s2click.control;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 
 import org.apache.click.control.AbstractControl;
+import org.apache.click.element.CssImport;
+import org.apache.click.element.Element;
+import org.apache.click.element.JsImport;
 import org.apache.click.util.ClickUtils;
 import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringUtils;
@@ -36,9 +38,9 @@ public class CodePrettify extends AbstractControl {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String HTML_IMPORTS =
-		"<script type=\"text/javascript\" src=\"{0}/resources/prettify/prettify.js\"></script>\n" +
-	    "<link href=\"{0}/resources/prettify/prettify.css\" rel=\"stylesheet\" type=\"text/css\"/>\n";
+//	public static final String HTML_IMPORTS =
+//		"<script type=\"text/javascript\" src=\"{0}/resources/prettify/prettify.js\"></script>\n" +
+//	    "<link href=\"{0}/resources/prettify/prettify.css\" rel=\"stylesheet\" type=\"text/css\"/>\n";
 
 	public static final String LANG_C = "c";
 	public static final String LANG_CC = "cc";
@@ -98,11 +100,22 @@ public class CodePrettify extends AbstractControl {
 		return this.lang;
 	}
 
-	public String getHtmlImports() {
-        return MessageFormat.format(HTML_IMPORTS,
-        		new Object[]{ getContext().getRequest().getContextPath() }
-        );
+//	public String getHtmlImports() {
+//        return MessageFormat.format(HTML_IMPORTS,
+//        		new Object[]{ getContext().getRequest().getContextPath() }
+//        );
+//	}
+
+	@Override
+	public List<Element> getHeadElements() {
+		if (headElements == null) {
+			headElements = super.getHeadElements();
+			headElements.add(new JsImport("/resources/prettify/prettify.js"));
+			headElements.add(new CssImport("/resources/prettify/prettify.css"));
+		}
+		return headElements;
 	}
+
 
 	public void onDeploy(ServletContext servletContext) {
 	}

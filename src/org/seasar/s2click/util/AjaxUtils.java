@@ -9,62 +9,60 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.s2click.util;
 
 import java.lang.reflect.Method;
-import java.text.MessageFormat;
 import java.util.Map;
 
-import org.apache.click.Context;
 import org.apache.click.Page;
-import org.apache.click.util.ClickUtils;
+import org.apache.click.element.JsScript;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.seasar.s2click.annotation.Ajax;
 
 /**
  * Ajax関連のユーティリティメソッドを提供します。
- * 
+ *
  * @author Naoki Takezoe
  * @since 0.4.0
  */
 public class AjaxUtils {
-	
+
 	public static final String CONTENT_TYPE_JSON = "application/x-javascript; charset=utf-8";
 	public static final String CONTENT_TYPE_HTML = "text/html; charset=utf-8";
-	
-	
+
+
 	public static final String ON_CREATE = "onCreate";
-	
+
 	public static final String ON_COMPLETE = "onComplete";
-	
+
 	public static final String ON_EXCEPTION = "onException";
-	
+
 	public static final String ON_FAILURE = "onFailure";
-	
+
 	public static final String ON_SUCCESS = "onSuccess";
-	
+
 
 	// public static final String HTML_IMPORTS =
 	// "<script type=\"text/javascript\"
 	// src=\"{0}/click/prototype/prototype{1}.js\"></script>\n";
 	// TODO Click付属のprototype.jsはバージョンが古い…
-	public static final String HTML_IMPORTS = 
+	public static final String HTML_IMPORTS =
 		"<script type=\"text/javascript\" src=\"{0}/resources/prototype.js\"></script>\n";
 
 	/**
 	 * <tt>prototype.js</tt>の<code>Ajax.Request</code>を呼び出すJavaScriptを生成します。
-	 * 
+	 *
 	 * @param url URL
 	 * @param options オプション
 	 * @param parameters パラメータ
 	 * @return <code>Ajax.Request</code>を呼び出すJavaScript
 	 */
 	public static String createAjaxRequest(String url, Map<String, String> options,
-			Map<String, String> parameters){
+			Map<String, Object> parameters){
 		StringBuilder sb = new StringBuilder();
 		sb.append("new Ajax.Request(");
 		sb.append("'").append(url).append("', ");
@@ -77,13 +75,13 @@ public class AjaxUtils {
 			sb.append(", ").append(getOptions(options));
 		}
 		sb.append("})");
-		
+
 		return sb.toString();
 	}
-	
+
 	/**
 	 * <tt>prototype.js</tt>の<code>Ajax.Updater</code>を呼び出すJavaScriptを生成します。
-	 * 
+	 *
 	 * @param id 置換するHTML要素のid属性
 	 * @param url URL
 	 * @param options オプション
@@ -91,7 +89,7 @@ public class AjaxUtils {
 	 * @return <code>Ajax.Updater</code>を呼び出すJavaScript
 	 */
 	public static String createAjaxUpdater(String id, String url, Map<String, String> options,
-			Map<String, String> parameters){
+			Map<String, Object> parameters){
 		StringBuilder sb = new StringBuilder();
 		sb.append("new Ajax.Updater(");
 		sb.append("'").append(id).append("', ");
@@ -105,25 +103,25 @@ public class AjaxUtils {
 			sb.append(", ").append(getOptions(options));
 		}
 		sb.append("})");
-		
+
 		return sb.toString();
 	}
-	
-	private static String encodeParameters(Map<String, String> parameters){
+
+	private static String encodeParameters(Map<String, Object> parameters){
 		StringBuilder sb = new StringBuilder();
-		for(Map.Entry<String, String> entry: parameters.entrySet()){
+		for(Map.Entry<String, Object> entry: parameters.entrySet()){
 			if(sb.length() != 0){
 				sb.append(", ");
 			}
 			sb.append("'");
 			sb.append(StringEscapeUtils.escapeJavaScript(entry.getKey()));
 			sb.append("': '");
-			sb.append(StringEscapeUtils.escapeJavaScript(entry.getValue()));
+			sb.append(StringEscapeUtils.escapeJavaScript(entry.getValue().toString())); // TODO nullチェック？
 			sb.append("'");
 		}
 		return "{" + sb.toString() + "}";
 	}
-	
+
 	public static String getOptions(Map<String, String> options){
 		StringBuilder sb = new StringBuilder();
 		for(Map.Entry<String, String> entry: options.entrySet()){
@@ -134,7 +132,7 @@ public class AjaxUtils {
 		}
 		return sb.toString();
 	}
-	
+
 	/**
 	 * {@link Ajax}アノテーションを指定したpublicメソッドを呼び出すためのJavaScriptを生成します。
 	 * <p>
@@ -153,14 +151,14 @@ public class AjaxUtils {
 	 *   alert('通信に失敗しました。');
 	 * }
 	 * </pre>
-	 * 
+	 *
 	 * @param page 対象のページクラス
 	 * @return {@link Ajax}アノテーションを指定したpublicメソッドを呼び出すためのJavaScript
 	 */
 	public static String createAjaxJavaScript(Page page){
 		// @Ajaxアノテーションを付与したメソッドを呼び出すためのJavaScript関数を作成
 		StringBuilder sb = new StringBuilder();
-		
+
 		Method[] methods = page.getClass().getMethods();
 		for(Method method: methods){
 			if(method.getAnnotation(Ajax.class) != null){
@@ -171,7 +169,7 @@ public class AjaxUtils {
 					sb.append(", arg").append(i);
 				}
 				sb.append("){");
-				
+
 				sb.append("new Ajax.Request('").append(page.getContext().getRequest().getContextPath()).append(page.getPath()).append("', {");
 				sb.append("method: 'post',");
 				sb.append("onSuccess: resultHandler,");
@@ -183,35 +181,35 @@ public class AjaxUtils {
 				sb.append("ajax: '").append(method.getName()).append("'");
 				sb.append("}");
 				sb.append("});");
-				
+
 				sb.append("}");
 			}
 		}
-		
+
 		if(sb.length() > 0){
 			sb.append("function ajaxDefaultErrorHandler(transport){");
 			sb.append("alert('通信に失敗しました。');");
 			sb.append("}");
 		}
-		
+
 		return sb.toString();
 	}
-	
+
 	/**
 	 * <tt>prototype.js</tt>をインポートするための&lt;script&gt;タグを生成します。
-	 * 
+	 *
 	 * @return <tt>prototype.js</tt>をインポートするためのタグ
 	 */
-	public static String getPrototypeJsImport(){
-		Context context = Context.getThreadLocalContext();
-		
-		Object[] args = {
-        	context.getRequest().getContextPath(),
-			ClickUtils.getResourceVersionIndicator(context)
-		};
+	public static JsScript getPrototypeJsImport(){
+//		Context context = Context.getThreadLocalContext();
+//
+//		Object[] args = {
+//        	context.getRequest().getContextPath(),
+//			ClickUtils.getResourceVersionIndicator(context)
+//		};
 
-		return MessageFormat.format(AjaxUtils.HTML_IMPORTS, args);
+		return new JsScript("/resources/prototype.js");
 	}
 
-	
+
 }

@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -25,13 +25,13 @@ public class AjaxUtilsTest extends TestCase {
 	public void testCreateAjaxRequest() {
 		Map<String, String> options = new HashMap<String, String>();
 		options.put(AjaxUtils.ON_COMPLETE, "onCompleteFunction");
-		
-		Map<String, String> parameters = new HashMap<String, String>();
+
+		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("id", "001");
-		
+
 		String result = AjaxUtils.createAjaxRequest(
 				"http://www.example.com", options, parameters);
-		
+
 		assertEquals("new Ajax.Request('http://www.example.com', "
 				+ "{method: 'post', parameters: {'id': '001'}, "
 				+ "onComplete: onCompleteFunction})", result);
@@ -40,13 +40,13 @@ public class AjaxUtilsTest extends TestCase {
 	public void testCreateAjaxUpdater() {
 		Map<String, String> options = new HashMap<String, String>();
 		options.put(AjaxUtils.ON_COMPLETE, "onCompleteFunction");
-		
-		Map<String, String> parameters = new HashMap<String, String>();
+
+		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("id", "001");
-		
+
 		String result = AjaxUtils.createAjaxUpdater("result",
 				"http://www.example.com", options, parameters);
-		
+
 		assertEquals("new Ajax.Updater('result', 'http://www.example.com', "
 				+ "{method: 'post', parameters: {'id': '001'}, "
 				+ "onComplete: onCompleteFunction})", result);
@@ -60,7 +60,7 @@ public class AjaxUtilsTest extends TestCase {
 		Map<String, String> options = new HashMap<String, String>();
 		options.put(AjaxUtils.ON_COMPLETE, "onCompleteFunction");
 		options.put(AjaxUtils.ON_FAILURE, "onFilureFunction");
-		
+
 		String result = AjaxUtils.getOptions(options);
 		assertEquals("onComplete: onCompleteFunction, onFailure: onFilureFunction", result);
 	}
@@ -72,7 +72,7 @@ public class AjaxUtilsTest extends TestCase {
 	 */
 	public void testGetOptions_2() {
 		Map<String, String> options = new HashMap<String, String>();
-		
+
 		String result = AjaxUtils.getOptions(options);
 		assertEquals("", result);
 	}

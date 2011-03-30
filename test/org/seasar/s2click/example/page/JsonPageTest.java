@@ -15,24 +15,25 @@
  */
 package org.seasar.s2click.example.page;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.arnx.jsonic.JSON;
 
+import org.apache.click.Page;
 import org.seasar.s2click.test.MockConfigService;
 import org.seasar.s2click.test.S2ClickPageTestCase;
 import org.seasar.s2click.util.AjaxUtils;
 
 public class JsonPageTest extends S2ClickPageTestCase<JsonPage> {
 
-	@SuppressWarnings("rawtypes")
 	public void testOnInit() {
 		setConfigService(new MockConfigService(){
 			@Override
-			public Map getPageFields(Class pageClass) {
-				return new HashMap();
+			public Map<String, Field> getPageFields(Class<? extends Page> pageClass) {
+				return new HashMap<String, Field>();
 			}
 		});
 		page.onInit();
@@ -42,7 +43,7 @@ public class JsonPageTest extends S2ClickPageTestCase<JsonPage> {
 	}
 
 	public void testOnSearch() throws Exception {
-		page.setHeaders(new HashMap<String, String>());
+		page.setHeaders(new HashMap<String, Object>());
 		page.form.keyword.setValue("Wiki");
 		page.onSearch();
 
@@ -57,7 +58,7 @@ public class JsonPageTest extends S2ClickPageTestCase<JsonPage> {
 	}
 
 	public void testOnSearchAll() throws Exception {
-		page.setHeaders(new HashMap<String, String>());
+		page.setHeaders(new HashMap<String, Object>());
 		page.onSearchAll();
 
 		assertEquals("application/x-javascript; charset=utf-8", response.getContentType());
@@ -74,7 +75,7 @@ public class JsonPageTest extends S2ClickPageTestCase<JsonPage> {
 	}
 
 	public void testOnAjaxUpdater() throws Exception {
-		page.setHeaders(new HashMap<String, String>());
+		page.setHeaders(new HashMap<String, Object>());
 		page.onAjaxUpdater();
 
 		assertEquals("text/html; charset=utf-8", response.getContentType());

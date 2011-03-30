@@ -9,16 +9,18 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.s2click.control;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.click.control.ActionLink;
+import org.apache.click.element.Element;
 import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringUtils;
 import org.seasar.s2click.util.AjaxUtils;
@@ -27,7 +29,7 @@ import org.seasar.s2click.util.AjaxUtils;
 /**
  * <tt>prototype.js</tt>の<code>Ajax.Request</code>、<code>Ajax.Updater</code>を使用して
  * Ajaxを実現するためのアクションリンクです。
- * 
+ *
  * <h2>Ajax.Requestを使用する場合</h2>
  * 以下のコードは<code>Ajax.Request</code>を使ってページクラスの<code>onClickメソッドを呼び出します。
  * また、正常にレスポンスが戻るとJavaScriptの<code>displayResult()</code>関数が呼び出されます。
@@ -36,7 +38,7 @@ import org.seasar.s2click.util.AjaxUtils;
  * link.addAjaxHandler(AjaxUtils.ON_COMPLETE, "displayResult");
  * addControl(link);
  * </pre>
- * 
+ *
  * <h2>Ajax.Updaterを使用する場合</h2>
  * 以下のコードは<code>Ajax.Updater</code>を使ってページクラスの<code>onClickメソッドを呼び出し、
  * レスポンスの内容でHTMLのid属性が<code>result</code>の要素を内容を置き換えます。
@@ -45,18 +47,18 @@ import org.seasar.s2click.util.AjaxUtils;
  * link.setElementId("result");
  * addControl(link);
  * </pre>
- * 
+ *
  * @author Naoki Takezoe
  * @since 0.4.0
  */
 public class AjaxLink extends ActionLink {
-	
+
 	protected Map<String, String> handlers = new HashMap<String, String>();
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	protected String elementId;
-	
+
 	public AjaxLink() {
 		super();
 	}
@@ -80,23 +82,28 @@ public class AjaxLink extends ActionLink {
 	public AjaxLink(String name) {
 		super(name);
 	}
-	
-	public String getHtmlImports() {
-		return AjaxUtils.getPrototypeJsImport();
+
+	@Override
+	public List<Element> getHeadElements() {
+		if (headElements == null) {
+			headElements = super.getHeadElements();
+			headElements.add(AjaxUtils.getPrototypeJsImport());
+		}
+		return headElements;
 	}
 
 	public void addAjaxHandler(String event, String handler){
 		this.handlers.put(event, handler);
 	}
-	
+
 	public Map<String, String> getAjaxHandlers(){
 		return this.handlers;
 	}
-	
+
 	@Override public String getHref() {
 		return "javascript:void(0)";
-	}	
-	
+	}
+
 	/**
 	 * 更新するHTML要素のidを取得します。
 	 * @return 更新するHTML要素のid
@@ -112,8 +119,7 @@ public class AjaxLink extends ActionLink {
 	public void setElementId(String elementId) {
 		this.elementId = elementId;
 	}
-	
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public void render(HtmlStringBuffer buffer){
 		if(StringUtils.isEmpty(getElementId())){
@@ -125,5 +131,5 @@ public class AjaxLink extends ActionLink {
 		}
 		super.render(buffer);
 	}
-	
+
 }

@@ -152,7 +152,7 @@ public abstract class S2ClickForm extends Form {
 	 * @return JavaScriptを使用する必要がある場合true、必要ない場合false
 	 */
 	protected boolean requiresJavaScript(){
-		return (getValidate() && getJavaScriptValidation()) || !confirmMessages.isEmpty();
+		return (getValidate() && isJavaScriptValidation()) || !confirmMessages.isEmpty();
 	}
 
 	/*
@@ -185,7 +185,7 @@ public abstract class S2ClickForm extends Form {
 		renderErrors(buffer, true);
 		buffer.append("</table>");
 
-		if(getJavaScriptValidation()){
+		if(isJavaScriptValidation()){
 			String script = "on_" + getId() + "_submit()";
 			setAttribute("onsubmit", "return " + script + ";");
 		}
@@ -194,8 +194,7 @@ public abstract class S2ClickForm extends Form {
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
-	protected void renderTagEnd(List formFields, HtmlStringBuffer buffer) {
+	protected void renderTagEnd(List<Field> formFields, HtmlStringBuffer buffer) {
 		renderHiddenFields(buffer, formFields);
 		super.renderTagEnd(formFields, buffer);
 	}
@@ -214,7 +213,7 @@ public abstract class S2ClickForm extends Form {
 
             buffer.append("<script type=\"text/javascript\"><!--\n");
 
-            if(getValidate() && getJavaScriptValidation()){
+            if(getValidate() && isJavaScriptValidation()){
 	            // Render field validation functions & build list of function names
 	            for (Iterator i = formFields.iterator(); i.hasNext();) {
 	                Field field = (Field) i.next();

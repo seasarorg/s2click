@@ -9,16 +9,20 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.s2click.control;
 
-import java.text.MessageFormat;
+import java.util.List;
 
 import org.apache.click.Page;
 import org.apache.click.control.AbstractLink;
+import org.apache.click.element.CssImport;
+import org.apache.click.element.Element;
+import org.apache.click.element.JsImport;
+import org.apache.click.element.JsScript;
 import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -30,22 +34,22 @@ import org.apache.commons.lang.StringEscapeUtils;
  * @since 0.4.0
  */
 public class GreyboxLink extends AbstractLink {
-	
+
 	private static final long serialVersionUID = 1L;
 
-	public static final String HTML_IMPORTS =
-//		"<script type=\"text/javascript\">var GB_ROOT_DIR = \"{0}/js/greybox/\";</script>\n" +
-		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/AJS.js\"></script>\n" +
-		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/AJS_fx.js\"></script>\n" +
-		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/gb_scripts.js\"></script>\n" +
-		"<link href=\"{0}/click/greybox/gb_styles.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />\n" +
-		"<script type=\"text/javascript\">function S2Click_GB_SetResult(data, id)'{ AJS.$(id).value = data; }'</script>\n";
+//	public static final String HTML_IMPORTS =
+////		"<script type=\"text/javascript\">var GB_ROOT_DIR = \"{0}/js/greybox/\";</script>\n" +
+//		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/AJS.js\"></script>\n" +
+//		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/AJS_fx.js\"></script>\n" +
+//		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/gb_scripts.js\"></script>\n" +
+//		"<link href=\"{0}/click/greybox/gb_styles.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />\n" +
+//		"<script type=\"text/javascript\">function S2Click_GB_SetResult(data, id)'{ AJS.$(id).value = data; }'</script>\n";
 
 	protected String dialogTitle = "";
 	protected int width = 400;
 	protected int height = 300;
 	protected Class<? extends Page> pageClass;
-    
+
 	public GreyboxLink() {
 		super();
 	}
@@ -65,15 +69,18 @@ public class GreyboxLink extends AbstractLink {
 		setPageClass(pageClass);
 		setTitle(title);
 	}
-    
-	/**
-	 * {@inheritDoc}
-	 */
+
 	@Override
-	public String getHtmlImports() {
-        return MessageFormat.format(HTML_IMPORTS,
-        		new Object[]{ getContext().getRequest().getContextPath() }
-        );
+	public List<Element> getHeadElements() {
+		if (headElements == null) {
+			headElements = super.getHeadElements();
+			headElements.add(new JsImport("/resources/greybox/AJS.js"));
+			headElements.add(new JsImport("/resources/greybox/AJS_fx.js"));
+			headElements.add(new JsImport("/resources/greybox/gb_scripts.js"));
+			headElements.add(new CssImport("/click/greybox/gb_styles.css"));
+			headElements.add(new JsScript("function S2Click_GB_SetResult(data, id)'{ AJS.$(id).value = data; }'"));
+		}
+		return headElements;
 	}
 
 	/**
@@ -150,7 +157,7 @@ public class GreyboxLink extends AbstractLink {
 	public int getDialogHeight(){
 		return this.height;
 	}
-    
+
 	public String getHref() {
 		return "javascript:void(0);";
 	}
@@ -162,7 +169,7 @@ public class GreyboxLink extends AbstractLink {
 	public void setListener(Object listener, String method) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	@Override
 	public void render(HtmlStringBuffer buffer){
 		// ページクラスのパスを取得

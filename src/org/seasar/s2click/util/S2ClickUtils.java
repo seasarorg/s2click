@@ -174,7 +174,6 @@ public class S2ClickUtils {
      * @param object コピー先のオブジェクト
      * @param debug デバッグログを出力するかどうか
      */
-    @SuppressWarnings("unchecked")
     public static void copyFormToObject(Form form, Object object,
             boolean debug) {
         if (form == null) {

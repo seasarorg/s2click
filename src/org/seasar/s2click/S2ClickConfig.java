@@ -20,7 +20,9 @@ import java.util.Map;
 
 import org.apache.click.service.ClickResourceService;
 import org.apache.click.service.ConsoleLogService;
+import org.apache.click.service.DefaultMessagesMapService;
 import org.apache.click.service.LogService;
+import org.apache.click.service.MessagesMapService;
 import org.apache.click.service.ResourceService;
 import org.apache.click.service.TemplateService;
 import org.apache.click.service.VelocityTemplateService;
@@ -62,7 +64,7 @@ public class S2ClickConfig {
 	/**
 	 * 共通レスポンスヘッダ。
 	 */
-	public Map<String, String> headers = new HashMap<String, String>();
+	public Map<String, Object> headers = new HashMap<String, Object>();
 
 	/**
 	 * ロケール。
@@ -73,54 +75,60 @@ public class S2ClickConfig {
 	 * ログサービス。
 	 * デフォルトは<code>ConsoleLogService</code>です。
 	 */
-	public Class<? extends LogService> logService = ConsoleLogService.class;
+	public LogService logService = new ConsoleLogService();
 
-	/**
-	 * ログサービスのプロパティ。
-	 */
-	public Map<String, String> logServicePropertyMap = new HashMap<String, String>();
+//	/**
+//	 * ログサービスのプロパティ。
+//	 */
+//	public Map<String, String> logServicePropertyMap = new HashMap<String, String>();
 
 	/**
 	 * リソースサービス。
 	 * デフォルトは<code>ClickResourceService</code>です。
 	 */
-	public Class<? extends ResourceService> resourceService = ClickResourceService.class;
+	public ResourceService resourceService = new ClickResourceService();
 
-	/**
-	 * リソースサービスのプロパティ。
-	 */
-	public Map<String, String> resourceServicePropertyMap = new HashMap<String, String>();
+//	/**
+//	 * リソースサービスのプロパティ。
+//	 */
+//	public Map<String, String> resourceServicePropertyMap = new HashMap<String, String>();
 
 	/**
 	 * テンプレートサービス。
 	 * デフォルトは<code>VelocityTemplateService></code>です。
 	 */
-	public Class<? extends TemplateService> templateService = VelocityTemplateService.class;
+	public TemplateService templateService = new VelocityTemplateService();
+
+//	/**
+//	 * テンプレートサービスのプロパティ。
+//	 */
+//	public Map<String, String> templateServicePropertyMap = new HashMap<String, String>();
 
 	/**
-	 * テンプレートサービスのプロパティ。
+	 * メッセージマップサービス。
+	 * デフォルトは<code>DefaultMessagesMapService</code>です。
 	 */
-	public Map<String, String> templateServicePropertyMap = new HashMap<String, String>();
+	public MessagesMapService messagesMapService = new DefaultMessagesMapService();
 
-	/**
-	 * ログサービスのプロパティを追加します。
-	 *
-	 * @param name プロパティ名
-	 * @param value プロパティ値
-	 */
-	public void addLogServiceProperty(String name, String value){
-		this.logServicePropertyMap.put(name, value);
-	}
+//	/**
+//	 * ログサービスのプロパティを追加します。
+//	 *
+//	 * @param name プロパティ名
+//	 * @param value プロパティ値
+//	 */
+//	public void addLogServiceProperty(String name, String value){
+//		this.logServicePropertyMap.put(name, value);
+//	}
 
-	/**
-	 * テンプレートサービスのプロパティを追加します。
-	 *
-	 * @param name プロパティ名
-	 * @param value プロパティ値
-	 */
-	public void addTemplateServiceProperty(String name, String value){
-		this.templateServicePropertyMap.put(name, value);
-	}
+//	/**
+//	 * テンプレートサービスのプロパティを追加します。
+//	 *
+//	 * @param name プロパティ名
+//	 * @param value プロパティ値
+//	 */
+//	public void addTemplateServiceProperty(String name, String value){
+//		this.templateServicePropertyMap.put(name, value);
+//	}
 
 	/**
 	 * 共通レイアウトのテンプレートのパス。

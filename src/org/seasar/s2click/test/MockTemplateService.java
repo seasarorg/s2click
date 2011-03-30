@@ -15,12 +15,14 @@
  */
 package org.seasar.s2click.test;
 
+import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
 
 import org.apache.click.Page;
+import org.apache.click.service.TemplateException;
 import org.apache.click.service.TemplateService;
 
 @SuppressWarnings("rawtypes")
@@ -36,12 +38,14 @@ public class MockTemplateService implements TemplateService {
 	public void onInit(ServletContext servletContext) throws Exception {
 	}
 
-	public void renderTemplate(Page page, Map model, Writer writer) throws Exception {
+	public void renderTemplate(Page page, Map model, Writer writer)
+			throws IOException, TemplateException {
 		this.page = page;
 		this.model = model;
 	}
 
-	public void renderTemplate(String templatePath, Map model, Writer writer) throws Exception {
+	public void renderTemplate(String templatePath, Map model, Writer writer)
+			throws IOException, TemplateException {
 		this.templatePath = templatePath;
 		this.model = model;
 	}
