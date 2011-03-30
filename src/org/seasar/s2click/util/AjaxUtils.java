@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 import org.apache.click.Page;
-import org.apache.click.element.JsScript;
+import org.apache.click.element.JsImport;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.seasar.s2click.annotation.Ajax;
 
@@ -200,7 +200,7 @@ public class AjaxUtils {
 	 *
 	 * @return <tt>prototype.js</tt>をインポートするためのタグ
 	 */
-	public static JsScript getPrototypeJsImport(){
+	public static JsImport getPrototypeJsImport(){
 //		Context context = Context.getThreadLocalContext();
 //
 //		Object[] args = {
@@ -208,7 +208,7 @@ public class AjaxUtils {
 //			ClickUtils.getResourceVersionIndicator(context)
 //		};
 
-		return new JsScript("/resources/prototype.js");
+		return new JsImport("/resources/prototype.js");
 	}
 
 

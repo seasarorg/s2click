@@ -16,6 +16,7 @@
 package org.seasar.s2click.test;
 
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -27,6 +28,7 @@ import org.apache.click.Page;
 import org.apache.click.PageInterceptor;
 import org.apache.click.service.ConfigService;
 import org.apache.click.service.ConsoleLogService;
+import org.apache.click.service.DefaultMessagesMapService;
 import org.apache.click.service.FileUploadService;
 import org.apache.click.service.LogService;
 import org.apache.click.service.MessagesMapService;
@@ -38,6 +40,7 @@ import org.apache.click.util.Format;
 public class MockConfigService implements ConfigService {
 
 	private TemplateService templateService;
+	private MessagesMapService messagesMapService;
 	private Map<Class, String> pagePathMap = new HashMap<Class, String>();
 
 	public void setPagePath(Class pageClass, String pagePath){
@@ -151,11 +154,14 @@ public class MockConfigService implements ConfigService {
 	}
 
 	public MessagesMapService getMessagesMapService() {
-		return null;
+		if(messagesMapService == null){
+			messagesMapService = new DefaultMessagesMapService();
+		}
+		return messagesMapService;
 	}
 
 	public List<PageInterceptor> getPageInterceptors() {
-		return null;
+		return Collections.emptyList();
 	}
 
 }

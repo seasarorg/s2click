@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -31,30 +31,30 @@ import org.seasar.extension.unit.S2TestCase;
 
 /**
  * S2Clickのテストケースの抽象基底クラスです。
- * 
+ *
  * @author Naoki Takezoe
  */
 public abstract class S2ClickTestCase extends S2TestCase {
-	
+
 	protected MockServletConfig config;
-	
+
 	protected MockServletContext context;
-	
+
 	protected MockRequest request;
-	
+
 	protected MockResponse response;
-	
+
 	protected ClickServlet servlet;
-	
+
 	protected MockConfigService configService;
-	
+
 	protected MockTemplateService templateService;
-	
+
 	@Override
 	protected String getRootDicon() throws Throwable {
-		return "app_ut.dicon";
+		return "app.dicon";
 	}
-	
+
 	/**
 	 * テストケースの初期化を行います。
 	 * <p>
@@ -62,31 +62,31 @@ public abstract class S2ClickTestCase extends S2TestCase {
 	 */
 	public void setUp() throws Exception {
 		super.setUp();
-		
+
 		context = new MockServletContext();
 		config = new MockServletConfig(context);
-		
+
 		request = new MockRequest();
 		request.setContextPath("/sample");
 		request.setServletPath("/sample.htm");
-		
+
 		response = new MockResponse();
 		templateService = new MockTemplateService();
 		configService = new MockConfigService();
 		configService.setTemplateService(templateService);
 		servlet = new TestClickServlet();
-		
+
 		MockContext.initContext(config, request, response, servlet);
 		setConfigService(configService);
 	}
-	
+
 	/**
 	 * テストケースで個別の<code>ConfigService</code>を使用する場合は、
 	 * <code>setUp()</code>メソッド内でこのメソッドを使用して設定してください。
 	 * <p>
 	 * なお、このメソッドで設定する<code>ConfigService</code>オブジェクトは
 	 * {@link MockConfigService}を継承している必要があります。
-	 * 
+	 *
 	 * @param configService <code>ConfigService</code>実装オブジェクト
 	 */
 	protected void setConfigService(ConfigService configService){
@@ -94,10 +94,10 @@ public abstract class S2ClickTestCase extends S2TestCase {
 		MockContext.getThreadLocalContext().getServletContext().setAttribute(
 				ConfigService.CONTEXT_NAME, configService);
 	}
-	
+
 	/**
 	 * オブジェクトからフィールド名を指定してフィールドの値を取得するためのユーティリティメソッドです。
-	 * 
+	 *
 	 * @param obj 対象オブジェクト
 	 * @param fieldName フィールド名
 	 * @return フィールドの値
@@ -115,17 +115,17 @@ public abstract class S2ClickTestCase extends S2TestCase {
 				clazz = clazz.getSuperclass();
 			}
 			throw new RuntimeException("フィールドが存在しません。");
-			
+
 		} catch(Exception ex){
 			throw new RuntimeException(ex);
 		}
 	}
-	
+
 	/**
 	 * テストケースと同じパッケージにあるテキストファイルを読み込み、文字列として返却します。
 	 * テキストファイルの文字コードはUTF-8である必要があります。
 	 * また、改行コードはLFに統一されます。
-	 * 
+	 *
 	 * @param fileName ファイル名
 	 * @return ファイルの内容
 	 * @throws RuntimeException ファイルの読み込みに失敗した場合
@@ -141,17 +141,17 @@ public abstract class S2ClickTestCase extends S2TestCase {
 			throw new RuntimeException(ex);
 		}
 	}
-	
+
 	/**
 	 * ユニットテスト用の<code>ClickServlet</code>拡張クラスです。
 	 */
 	@SuppressWarnings("serial")
 	private class TestClickServlet extends ClickServlet {
-		
+
 		@Override
 		protected ConfigService getConfigService() {
 			return S2ClickTestCase.this.configService;
 		}
 	}
-	
+
 }

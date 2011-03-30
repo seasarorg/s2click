@@ -9,46 +9,63 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.s2click.control;
 
+import java.util.List;
+
+import org.apache.click.element.Element;
+import org.apache.click.util.HtmlStringBuffer;
 import org.seasar.s2click.S2ClickPage;
 import org.seasar.s2click.test.S2ClickTestCase;
 
 public class GreyboxLinkTest extends S2ClickTestCase {
 
-	public void testGetHtmlImports() {
+	public void testGetHeadElements(){
 		GreyboxLink link = new GreyboxLink();
-		
-		assertEquals("<script type=\"text/javascript\" src=\"/sample/resources/greybox/AJS.js\"></script>\n" + 
-				"<script type=\"text/javascript\" src=\"/sample/resources/greybox/AJS_fx.js\"></script>\n" + 
-				"<script type=\"text/javascript\" src=\"/sample/resources/greybox/gb_scripts.js\"></script>\n" + 
-				"<link href=\"/sample/click/greybox/gb_styles.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />\n" + 
-				"<script type=\"text/javascript\">function S2Click_GB_SetResult(data, id){ AJS.$(id).value = data; }</script>\n",
-				link.getHtmlImports());
+		List<Element> elements = link.getHeadElements();
+		assertEquals(5, elements.size());
+
+		HtmlStringBuffer buffer = new HtmlStringBuffer();
+		elements.get(0).render(buffer);
+		elements.get(1).render(buffer);
+		elements.get(2).render(buffer);
+		elements.get(3).render(buffer);
+		elements.get(4).render(buffer);
+
+		assertEquals(
+				"<script src=\"/sample/resources/greybox/AJS.js\" type=\"text/javascript\"></script>" +
+				"<script src=\"/sample/resources/greybox/AJS_fx.js\" type=\"text/javascript\"></script>" +
+				"<script src=\"/sample/resources/greybox/gb_scripts.js\" type=\"text/javascript\"></script>" +
+				"<link href=\"/sample/click/greybox/gb_styles.css\" rel=\"stylesheet\" type=\"text/css\"/>" +
+				"<script type=\"text/javascript\">\n" +
+				"function S2Click_GB_SetResult(data, id)'{ AJS.$(id).value = data; }'\n" +
+				"</script>",
+				buffer.toString());
 	}
+
 
 	public void testSetPageClass() {
 		GreyboxLink link = new GreyboxLink();
 		link.setPageClass(S2ClickPage.class);
-		
+
 		assertSame(S2ClickPage.class, link.getPageClass());
 	}
 
 	public void testSetDialogTitle() {
 		GreyboxLink link = new GreyboxLink();
 		link.setDialogTitle("タイトル");
-		
+
 		assertEquals("タイトル", link.getDialogTitle());
 	}
 
 	public void testSetDialogWidth() {
 		GreyboxLink link = new GreyboxLink();
 		assertEquals(400, link.getDialogWidth());
-		
+
 		link.setDialogWidth(600);
 		assertEquals(600, link.getDialogWidth());
 	}
@@ -56,7 +73,7 @@ public class GreyboxLinkTest extends S2ClickTestCase {
 	public void testSetDialogHeight() {
 		GreyboxLink link = new GreyboxLink();
 		assertEquals(300, link.getDialogHeight());
-		
+
 		link.setDialogHeight(400);
 		assertEquals(400, link.getDialogHeight());
 	}
@@ -82,11 +99,11 @@ public class GreyboxLinkTest extends S2ClickTestCase {
 
 	public void testToString() {
 		configService.setPagePath(S2ClickPage.class, "/test.htm");
-		
+
 		GreyboxLink link = new GreyboxLink("link", "リンク", "title", S2ClickPage.class);
-		
+
 		assertEquals("<a href=\"javascript:void(0);\" title=\"title\" " +
-				"onclick=\"GB_showCenter('title', '../../test.htm', 300, 400)\">リンク</a>", 
+				"onclick=\"GB_showCenter('title', '../../test.htm', 300, 400)\">リンク</a>",
 				link.toString());
 	}
 

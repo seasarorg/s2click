@@ -15,18 +15,29 @@
  */
 package org.seasar.s2click.control;
 
+import java.util.List;
 import java.util.Map;
 
+import org.apache.click.element.Element;
+import org.apache.click.util.HtmlStringBuffer;
 import org.seasar.s2click.test.S2ClickTestCase;
 import org.seasar.s2click.util.AjaxUtils;
 
 public class AjaxLinkTest extends S2ClickTestCase {
 
-	public void testGetHtmlImports() {
+	public void testGetHeadElements(){
 		AjaxLink link = new AjaxLink();
-		assertEquals("<script type=\"text/javascript\" src=\"/sample/resources/prototype.js\"></script>\n",
-				link.getHtmlImports());
+		List<Element> elements = link.getHeadElements();
+		assertEquals(1, elements.size());
+
+		HtmlStringBuffer buffer = new HtmlStringBuffer();
+		elements.get(0).render(buffer);
+
+		assertEquals(
+				"<script src=\"/sample/resources/prototype.js\" type=\"text/javascript\"></script>",
+				buffer.toString());
 	}
+
 
 	public void testGetAjaxHandlers() {
 		AjaxLink link = new AjaxLink();
