@@ -45,14 +45,6 @@ public class AjaxUtils {
 
 	public static final String ON_SUCCESS = "onSuccess";
 
-
-	// public static final String HTML_IMPORTS =
-	// "<script type=\"text/javascript\"
-	// src=\"{0}/click/prototype/prototype{1}.js\"></script>\n";
-	// TODO Click付属のprototype.jsはバージョンが古い…
-	public static final String HTML_IMPORTS =
-		"<script type=\"text/javascript\" src=\"{0}/resources/prototype.js\"></script>\n";
-
 	/**
 	 * <tt>prototype.js</tt>の<code>Ajax.Request</code>を呼び出すJavaScriptを生成します。
 	 *
