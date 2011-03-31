@@ -36,6 +36,8 @@ import org.seasar.s2click.S2ClickPage;
 
 /**
  * エンティティを一覧表示するページクラスの抽象基底クラスです。
+ * <p>
+ * このクラスは開発中であるため、今後大幅に変更される可能性があります。
  *
  * @author Naoki Takezoe
  * @since 1.0.4

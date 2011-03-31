@@ -24,6 +24,8 @@ import org.seasar.s2click.jdbc.EntityForm.EntityFormMode;
 
 /**
  * エンティティの登録を行うページクラスの抽象基底クラスです。
+ * <p>
+ * このクラスは開発中であるため、今後大幅に変更される可能性があります。
  *
  * @author Naoki Takezoe
  * @since 1.0.4

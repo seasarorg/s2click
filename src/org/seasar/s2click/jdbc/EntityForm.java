@@ -25,6 +25,8 @@ import org.seasar.s2click.control.S2ClickForm;
 
 /**
  * エンティティを登録、更新、削除するための入力フォームです。
+ * <p>
+ * このクラスは開発中であるため、今後大幅に変更される可能性があります。
  *
  * @author Naoki Takezoe
  * @since 1.0.4

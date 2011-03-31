@@ -36,6 +36,8 @@ import org.seasar.s2click.jdbc.EntityForm.EntityFormMode;
 
 /**
  * エンティティの一覧、登録、編集、削除を行うページの設定を行うクラスです。
+ * <p>
+ * このクラスは開発中であるため、今後大幅に変更される可能性があります。
  *
  * @author Naoki Takezoe
  * @since 1.0.4
