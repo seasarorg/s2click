@@ -67,7 +67,7 @@
   @example.util.S2ClickFormat@class
 &lt;/property&gt;</pre>
   </dd>
-  
+
   <dt>mode</dt>
   <dd>Clickの動作モード。production、profile、development、debug、traceのいずれかを指定します。デフォルトはdevelopmentです。
     モードによってClickの動作（HTMLテンプレートのリロードを行うかどうか等）やログに出力される内容が変化します。
@@ -88,27 +88,52 @@
   <dd>ログ出力を行うサービスクラスを指定します。省略した場合は<code>org.apache.click.service.ConsoleLogService</code>が用いられます。
   <pre class="code">
 &lt;property name="logService"&gt;
-  @sample.service.SampleLogService@class
+  &lt;component class="sample.service.SampleLogService"/&gt;
 &lt;/property&gt;
-&lt;!-- プロパティを指定する場合 --&gt;
-&lt;initMethod name="addLogServiceProperty"&gt;
-  &lt;arg&gt;"プロパティ名"&lt;/arg&gt;
-  &lt;arg&gt;"プロパティ値"&lt;/arg&gt;
-&lt;/initMethod&gt;
 </pre>
   </dd>
-  
+
   <dt>templateService</dt>
   <dd>テンプレート処理を行うサービスクラスを指定します。省略した場合は<code>org.apache.click.service.VelocityTemplateService</code>が用いられます。
   <pre class="code">
 &lt;property name="templateService"&gt;
-  @sample.service.SampleTemplateService@class
+  &lt;component class="sample.service.SampleTemplateService"/&gt;
 &lt;/property&gt;
-&lt;!-- プロパティを指定する場合 --&gt;
-&lt;initMethod name="addTemplateServiceProperty"&gt;
-  &lt;arg&gt;"プロパティ名"&lt;/arg&gt;
-  &lt;arg&gt;"プロパティ値"&lt;/arg&gt;
-&lt;/initMethod&gt;
+</pre>
+  </dd>
+
+  <dt>resourceService</dt>
+  <dd>静的リソースを提供するサービスクラスを指定します。省略した場合は<code>org.apache.click.service.ClickResourceService</code>が用いられます。
+  <pre class="code">
+&lt;property name="resourceService"&gt;
+  &lt;component class="sample.service.SampleResourceService"/&gt;
+&lt;/property&gt;
+</pre>
+  </dd>
+
+  <dt>messageMapService</dt>
+  <dd>メッセージマップを作成するサービスクラスを指定します。省略した場合は<code>org.apache.click.service.DefaultMessagesMapService</code>が用いられます。
+  <pre class="code">
+&lt;property name="resourceService"&gt;
+  &lt;component class="sample.service.SampleMessageMapService"/&gt;
+&lt;/property&gt;
+</pre>
+  </dd>
+
+  <dt>addPageInterceptor</dt>
+  <dd>ページクラスの作成、廃棄などのタイミングで処理を行いたい場合に<code>org.apache.click.PageInterceptor</code>を実装したコンポーネントを指定します。
+  <pre class="code">
+&lt;!-- ページインターセプターをコンポーネントとして定義 --&gt;
+&lt;component name="samplePageInterceptor"
+  class="org.seasar.s2click.example.util.SamplePageInterceptor"&gt;
+&lt;/component&gt;
+
+&lt;component class="org.seasar.s2click.S2ClickConfig"&gt;
+  &lt;!-- ページインターセプターのコンポーネント名を指定 --&gt;
+  &lt;initMethod name="addPageInterceptor"&gt;
+    &lt;arg&gt;"samplePageInterceptor"&lt;/arg&gt;
+  &lt;/initMethod&gt;
+&lt;/component&gt;
 </pre>
   </dd>
 </dl>
