@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.arnx.jsonic.JSON;
 import ognl.OgnlException;
+import ognl.TypeConverter;
 
 import org.apache.click.ClickServlet;
 import org.apache.click.Context;
@@ -131,9 +132,12 @@ public class S2ClickServlet extends ClickServlet {
 			Method method = getAjaxMethod(page, methodName);
 			if(method != null){
 				// メソッドの引数
-				String[] args = new String[method.getParameterTypes().length];
+				Class<?>[] types = method.getParameterTypes();
+				Object[] args = new Object[method.getParameterTypes().length];
+				TypeConverter converter = getTypeConverter();
 				for(int i=0;i<args.length;i++){
-					args[i] = request.getParameter("arg" + i);
+					args[i] = converter.convertValue(
+							null, null, null, null, request.getParameter("arg" + i), types[i]);
 				}
 
 				// メソッド呼び出し
