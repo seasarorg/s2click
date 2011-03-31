@@ -48,6 +48,7 @@ import org.apache.click.util.ClickUtils;
 import org.apache.click.util.ErrorPage;
 import org.apache.click.util.Format;
 import org.apache.commons.lang.StringUtils;
+import org.seasar.framework.container.SingletonS2Container;
 import org.seasar.framework.container.factory.SingletonS2ContainerFactory;
 import org.seasar.framework.container.util.SmartDeployUtil;
 import org.seasar.framework.convention.NamingConvention;
@@ -121,6 +122,8 @@ public class S2ClickConfigService implements ConfigService {
 	protected boolean hotDeploy;
 
 	protected Map<String, Object> commonHeaders;
+
+	protected List<String> pageInterceptorList;
 
     protected final Map pageByPathMap = new HashMap();
     protected final Map pageByClassMap = new HashMap();
@@ -357,6 +360,7 @@ public class S2ClickConfigService implements ConfigService {
 		loadHeaders(config);
 		loadPages(config);
 		loadMessageMapService(config);
+		loadPageInterceptors(config);
 	}
 
     private void deployFiles() throws Exception {
@@ -514,6 +518,10 @@ public class S2ClickConfigService implements ConfigService {
 		this.messagesMapService.onInit(servletContext);
 	}
 
+	protected void loadPageInterceptors(S2ClickConfig config){
+		this.pageInterceptorList = config.pageInterceptorList;
+	}
+
 	protected void loadLocale(S2ClickConfig config){
         String value = config.locale;
         if (value != null && value.length() > 0) {
@@ -539,10 +547,6 @@ public class S2ClickConfigService implements ConfigService {
 
 	protected void loadFormat(S2ClickConfig config){
 		formatClass = config.formatClass;
-	}
-
-	protected void loadPageInterceptors(S2ClickConfig config){
-
 	}
 
     protected void loadPages(S2ClickConfig config) throws ClassNotFoundException {
@@ -895,8 +899,12 @@ public class S2ClickConfigService implements ConfigService {
 	}
 
 	public List<PageInterceptor> getPageInterceptors() {
-		// TODO 設定で変えられるようにする？
-		return Collections.emptyList();
+		List<PageInterceptor> pageInterceptors = new ArrayList<PageInterceptor>();
+		for(String componentName: this.pageInterceptorList){
+			PageInterceptor pageInterceptor = SingletonS2Container.getComponent(componentName);
+			pageInterceptors.add(pageInterceptor);
+		}
+		return pageInterceptors;
 	}
 
 }

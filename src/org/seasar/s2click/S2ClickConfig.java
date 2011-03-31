@@ -15,7 +15,9 @@
  */
 package org.seasar.s2click;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.click.service.ClickResourceService;
@@ -77,21 +79,11 @@ public class S2ClickConfig {
 	 */
 	public LogService logService = new ConsoleLogService();
 
-//	/**
-//	 * ログサービスのプロパティ。
-//	 */
-//	public Map<String, String> logServicePropertyMap = new HashMap<String, String>();
-
 	/**
 	 * リソースサービス。
 	 * デフォルトは<code>ClickResourceService</code>です。
 	 */
 	public ResourceService resourceService = new ClickResourceService();
-
-//	/**
-//	 * リソースサービスのプロパティ。
-//	 */
-//	public Map<String, String> resourceServicePropertyMap = new HashMap<String, String>();
 
 	/**
 	 * テンプレートサービス。
@@ -99,36 +91,25 @@ public class S2ClickConfig {
 	 */
 	public TemplateService templateService = new VelocityTemplateService();
 
-//	/**
-//	 * テンプレートサービスのプロパティ。
-//	 */
-//	public Map<String, String> templateServicePropertyMap = new HashMap<String, String>();
-
 	/**
 	 * メッセージマップサービス。
 	 * デフォルトは<code>DefaultMessagesMapService</code>です。
 	 */
 	public MessagesMapService messagesMapService = new DefaultMessagesMapService();
 
-//	/**
-//	 * ログサービスのプロパティを追加します。
-//	 *
-//	 * @param name プロパティ名
-//	 * @param value プロパティ値
-//	 */
-//	public void addLogServiceProperty(String name, String value){
-//		this.logServicePropertyMap.put(name, value);
-//	}
+	/**
+	 * ページインターセプターのコンポーネント名のリスト。
+	 */
+	public List<String> pageInterceptorList = new ArrayList<String>();
 
-//	/**
-//	 * テンプレートサービスのプロパティを追加します。
-//	 *
-//	 * @param name プロパティ名
-//	 * @param value プロパティ値
-//	 */
-//	public void addTemplateServiceProperty(String name, String value){
-//		this.templateServicePropertyMap.put(name, value);
-//	}
+	/**
+	 * ページインターセプターを追加します。
+	 *
+	 * @param componentName ページインターセプターのコンポーネント名
+	 */
+	public void addPageInterceptor(String componentName){
+		pageInterceptorList.add(componentName);
+	}
 
 	/**
 	 * 共通レイアウトのテンプレートのパス。
