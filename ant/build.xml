@@ -26,7 +26,7 @@
 		<pathelement location="${lib.dir}/click-extras-2.3.0.jar"/>
 		<pathelement location="${lib.dir}/commons-logging-1.1.jar"/>
 		<pathelement location="${lib.dir}/javassist-3.4.ga.jar"/>
-		<pathelement location="${lib.dir}/jsonic-1.1.0.jar"/>
+		<pathelement location="${lib.dir}/jsonic-1.2.5.jar"/>
 		<pathelement location="${lib.dir}/log4j-1.2.13.jar"/>
 		<pathelement location="${lib.dir}/ognl-2.6.9-patch-20090427.jar"/>
 		<pathelement location="${lib.dir}/s2-extension-2.4.43.jar"/>
