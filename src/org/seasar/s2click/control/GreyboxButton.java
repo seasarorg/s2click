@@ -37,13 +37,13 @@ public class GreyboxButton extends Button {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String HTML_IMPORTS =
+//	public static final String HTML_IMPORTS =
 //		"<script type=\"text/javascript\">var GB_ROOT_DIR = \"{0}/js/greybox/\";</script>\n" +
-		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/AJS.js\"></script>\n" +
-		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/AJS_fx.js\"></script>\n" +
-		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/gb_scripts.js\"></script>\n" +
-		"<link href=\"{0}/resources/greybox/gb_styles.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />\n" +
-		"<script type=\"text/javascript\">function S2Click_GB_SetResult(data, id)'{ AJS.$(id).value = data; }'</script>\n";
+//		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/AJS.js\"></script>\n" +
+//		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/AJS_fx.js\"></script>\n" +
+//		"<script type=\"text/javascript\" src=\"{0}/resources/greybox/gb_scripts.js\"></script>\n" +
+//		"<link href=\"{0}/resources/greybox/gb_styles.css\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />\n" +
+//		"<script type=\"text/javascript\">function S2Click_GB_SetResult(data, id)'{ AJS.$(id).value = data; }'</script>\n";
 
 	protected String dialogTitle = "";
 	protected int width = 400;
@@ -75,8 +75,8 @@ public class GreyboxButton extends Button {
 			headElements.add(new JsImport("/resources/greybox/AJS.js"));
 			headElements.add(new JsImport("/resources/greybox/AJS_fx.js"));
 			headElements.add(new JsImport("/resources/greybox/gb_scripts.js"));
-			headElements.add(new CssImport("/click/greybox/gb_styles.css"));
-			headElements.add(new JsScript("function S2Click_GB_SetResult(data, id)'{ AJS.$(id).value = data; }'"));
+			headElements.add(new CssImport("/resources/greybox/gb_styles.css"));
+			headElements.add(new JsScript("function S2Click_GB_SetResult(data, id){ AJS.$(id).value = data; }"));
 		}
 		return headElements;
 	}

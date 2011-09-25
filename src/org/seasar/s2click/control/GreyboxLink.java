@@ -77,8 +77,8 @@ public class GreyboxLink extends AbstractLink {
 			headElements.add(new JsImport("/resources/greybox/AJS.js"));
 			headElements.add(new JsImport("/resources/greybox/AJS_fx.js"));
 			headElements.add(new JsImport("/resources/greybox/gb_scripts.js"));
-			headElements.add(new CssImport("/click/greybox/gb_styles.css"));
-			headElements.add(new JsScript("function S2Click_GB_SetResult(data, id)'{ AJS.$(id).value = data; }'"));
+			headElements.add(new CssImport("/resources/greybox/gb_styles.css"));
+			headElements.add(new JsScript("function S2Click_GB_SetResult(data, id){ AJS.$(id).value = data; }"));
 		}
 		return headElements;
 	}
