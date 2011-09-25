@@ -17,7 +17,7 @@
    specific language governing permissions and limitations
    under the License.
 -->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
 <head>
   <title>S2Click - Apache Click with Seasar2</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -31,6 +31,7 @@
 <ul>
   <li>JSONICを1.2.5にバージョンアップ。</li>
   <li>GreyboxLinkとGreyboxButtonが動作しないバグを修正。</li>
+  <li>フォームクラスのフィールドとして定義したコントロールのプロパティを指定するための@Attributesアノテーション、@AjaxHandlerアノテーションを追加。</li>
 </ul>
 
 <h2>Version 1.0.4 - 2011/04/01</h2>
@@ -76,31 +77,31 @@
 
 <h2>Version 0.5.0 - 2009/02/25</h2>
 <ul>
-  <li><code>@Path</code>アノテーションを使ったページクラスがあるとproductionモード、profileモードで動作しないバグを修正しました。</li>
-  <li><code>ClickApp</code>をpublicクラスに変更し、<code>S2ClickUtils#getClickApp()</code>で<code>ClickApp</code>を取得できるようにしました。</li>
-  <li><code>@Request</code>によるリクエストパラメータのバインド処理を<code>S2ClickServlet</code>ではなく<code>S2ClickPage#onInit()</code>で行うようにしました。</li>
-  <li>クラスパス内のリソースを参照するための<code>ResourceServlet</code>を追加しました。</li>
-  <li><code>MobileForm</code>コントロールを追加しました。</li>
-  <li><code>PaginateList</code>コントロールを追加しました。</li>
+  <li>@Pathアノテーションを使ったページクラスがあるとproductionモード、profileモードで動作しないバグを修正しました。</li>
+  <li>ClickAppをpublicクラスに変更し、S2ClickUtils#getClickApp()でClickAppを取得できるようにしました。</li>
+  <li>@Requestによるリクエストパラメータのバインド処理をS2ClickServletではなくS2ClickPage#onInit()で行うようにしました。</li>
+  <li>クラスパス内のリソースを参照するためのResourceServletを追加しました。</li>
+  <li>MobileFormコントロールを追加しました。</li>
+  <li>PaginateListコントロールを追加しました。</li>
   <li>同梱のS2Containerを2.4.34にバージョンアップしました。</li>
-  <li><code>S2ClickEncodingFilter</code>を追加しました。</li>
+  <li>S2ClickEncodingFilterを追加しました。</li>
 </ul>
 
 <h2>Version 0.4.0 - 2009/01/12</h2>
 <ul>
   <li>Ajaxサポートとファイルダウンロードサポートを追加しました。</li>
-  <li><code>CodePrettify</code>コントロールを追加しました。</li>
-  <li><code>S2ClickFormat</code>に<code>ognl()</code>メソッドと<code>mask()</code>メソッドを追加しました。</li>
-  <li><code>ToolTip</code>コントロールで使用するJavaScriptライブラリをjTipからoverLIBに変更しました。</li>
-  <li><code>ConfirmSubmit</code>コントロールを削除し、<code>S2ClickForm</code>の<code>addConfirmMessage()</code>で確認メッセージを設定できるようにしました。</li>
-  <li><code>S2ClickForm</code>で制御用のhiddenフィールドをフォームの一番最後に出力するようにしました。</li>
-  <li><code>FCKEditor</code>コントロールを追加しました。</li>
-  <li><code>S2ClickFormat</code>に<code>date()</code>メソッドと<code>datetime()</code>メソッドを追加しました。</li>
-  <li><code>@Request</code>アノテーションに<code>required()</code>パラメータを追加しました。</li>
+  <li>CodePrettifyコントロールを追加しました。</li>
+  <li>S2ClickFormatにognl()メソッドとmask()メソッドを追加しました。</li>
+  <li>ToolTipコントロールで使用するJavaScriptライブラリをjTipからoverLIBに変更しました。</li>
+  <li>ConfirmSubmitコントロールを削除し、S2ClickFormのaddConfirmMessage()で確認メッセージを設定できるようにしました。</li>
+  <li>S2ClickFormで制御用のhiddenフィールドをフォームの一番最後に出力するようにしました。</li>
+  <li>FCKEditorコントロールを追加しました。</li>
+  <li>S2ClickFormatにdate()メソッドとdatetime()メソッドを追加しました。</li>
+  <li>@Requestアノテーションにrequired()パラメータを追加しました。</li>
   <li><a href="http://orangoo.com/labs/GreyBox/">GreyBox</a>を使用したモーダルダイアログを実現するためのコントロール群を追加しました。</li>
-  <li><code>@UrlPattern</code>アノテーションでURLパターン機能を利用できるようにしました。</li>
-  <li><code>HiddenList</code>コントロールを追加しました。</li>
-  <li>フォームのフィールドをhiddenに変換するための<code>S2ClickUtils#convertToHidden()</code>、<code>S2ClickForm#toHidden()</code>を追加しました。</li>
+  <li>@UrlPatternアノテーションでURLパターン機能を利用できるようにしました。</li>
+  <li>HiddenListコントロールを追加しました。</li>
+  <li>フォームのフィールドをhiddenに変換するためのS2ClickUtils#convertToHidden()、S2ClickForm#toHidden()を追加しました。</li>
 </ul>
 0.4.0での変更点は<a href="https://www.seasar.org/issues/browse/CLICK/fixforversion/10771">こちら</a>も参照してください。
 
