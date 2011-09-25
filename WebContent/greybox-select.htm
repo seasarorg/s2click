@@ -9,7 +9,7 @@
 ##
 ## Unless required by applicable law or agreed to in writing, software
 ## distributed under the License is distributed on an "AS IS" BASIS,
-## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
 ## either express or implied. See the License for the specific language
 ## governing permissions and limitations under the License.
 ##
@@ -20,13 +20,13 @@
   <script type="text/javascript">
   // 親画面への参照
   var S2CLICK_GB_PARENT = parent.parent;
-  
+
   /**
    * ユーザIDを親画面のテキストフィールドに反映します。
    */
   function performApply(userId){
-	  S2CLICK_GB_PARENT.S2Click_GB_SetResult(userId, 'form_userId');
-	  S2CLICK_GB_PARENT.GB_hide();
+    S2CLICK_GB_PARENT.S2Click_GB_SetResult(userId, 'form_userId');
+    S2CLICK_GB_PARENT.GB_hide();
   }
   </script>
 </head>
@@ -37,7 +37,6 @@
   <th>ユーザ名</th>
 </tr>
 #foreach($user in $userList)
-  #set($link.value = $user.userId)
   <tr>
     <td><a href="javascript:performApply('$format.javascript($user.userId)')">$format.html($user.userId)</a></td>
     <td>$format.html($user.userName)</td>
