@@ -1,23 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <!--
-   Licensed to the Apache Software Foundation (ASF) under one
-   or more contributor license agreements.  See the NOTICE file
-   distributed with this work for additional information
-   regarding copyright ownership.  The ASF licenses this file
-   to you under the Apache License, Version 2.0 (the
-   "License"); you may not use this file except in compliance
-   with the License.  You may obtain a copy of the License at
+ Copyright 2006-2011 the Seasar Foundation and the Others.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
      http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing,
-   software distributed under the License is distributed on an
-   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-   KIND, either express or implied.  See the License for the
-   specific language governing permissions and limitations
-   under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ either express or implied. See the License for the specific language
+ governing permissions and limitations under the License.
 -->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
 <head>
   <title>S2Click - Apache Click with Seasar2</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -55,19 +52,19 @@ import org.apache.click.ActionListener;
 import org.seasar.s2click.test.S2ClickPageTestCase;
 
 public class AddPageTest extends S2ClickPageTestCase&lt;AddPage&gt; {
-    
+
     @Override
     protected void initPage(AddPage page){
         super.initPage(page);
-        
+
         page.form.num1.setValueObject(1);
         page.form.num2.setValueObject(2);
     }
-    
+
     public void testAddPage(){
         ActionListener listener = page.form.submit.getActionListener();
         listener.onAction(page.form.submit);
-        
+
         assertEquals(3, page.form.result.getInteger().intValue());
     }
 
@@ -101,7 +98,7 @@ public class AddPageTest extends S2ClickPageTestCase&lt;AddPage&gt; {
     <code>GenerateExcel</code>アノテーションは主にデータベースの検索処理の結果を検証する際に使用するExcelファイルの生成に利用できます。
     アノテーションの記述によってExcel生成時の検索条件やソート順、対象カラムを指定できるので、検証したいデータに応じたExcelを生成することができます。
   </dd>
-  
+
   <dt>DBの内容とExcelをアノテーションで比較</dt>
   <dd>
     テストメソッドに<a href="javadoc/org/seasar/s2click/test/Assert.html">Assert</a>アノテーションを付与しておくことで、
@@ -112,7 +109,7 @@ public class AddPageTest extends S2ClickPageTestCase&lt;AddPage&gt; {
     テストメソッドの実行直後になります。<br>
     <code>Assert</code>アノテーションは主にデータベースの更新処理を行った結果が正しいかどうかの検証に使用します。
   </dd>
-  
+
 </dl>
 
 <p>
@@ -142,17 +139,17 @@ import org.seasar.s2click.test.S2ClickServiceTestCase;
 import org.seasar.s2click.example.entity.Message;
 
 public class MessageServiceTest extends S2ClickServiceTestCase&lt;MessageService&gt; {
-    
+
     @Assert(tables = @Table(name="MESSAGE", excludeColumns={"MESSAGE_ID", "DATE"}))
     public void testInsertTx() throws Exception {
         Message message = new Message();
         message.name = "たけぞう";
         message.message = "テスト";
         message.date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2009/01/01 12:34:56");
-        
+
         service.insert(message);
     }
-    
+
 } </pre>
 
 </div>

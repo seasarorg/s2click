@@ -1,23 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <!--
-   Licensed to the Apache Software Foundation (ASF) under one
-   or more contributor license agreements.  See the NOTICE file
-   distributed with this work for additional information
-   regarding copyright ownership.  The ASF licenses this file
-   to you under the Apache License, Version 2.0 (the
-   "License"); you may not use this file except in compliance
-   with the License.  You may obtain a copy of the License at
+ Copyright 2006-2011 the Seasar Foundation and the Others.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
      http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing,
-   software distributed under the License is distributed on an
-   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-   KIND, either express or implied.  See the License for the
-   specific language governing permissions and limitations
-   under the License.
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ either express or implied. See the License for the specific language
+ governing permissions and limitations under the License.
 -->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
 <head>
   <title>S2Click - Apache Click with Seasar2</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -37,7 +34,7 @@
   Clickに関する基礎知識については<a href="http://amateras.sourceforge.jp/cgi-bin/fswiki/wiki.cgi/click" target="_blank">Click Wiki</a>などを参照してください。
 </p>
 
-<table class="indent" border="1" cellspacing="0">
+<table class="indent" border="1" cellspacing="0" summary="S2Clickアプリケーションのコンポーネント">
 <tr bgcolor="#D1F3F4">
   <th>コンポーネント</th>
   <th>命名規則</th>
@@ -92,11 +89,11 @@ import org.seasar.s2click.control.S2ClickForm;
 public class MessageForm extends S2ClickForm {
 
   private static final long serialVersionUID = 1L;
-  
+
   public TextField name = new TextField("name", true);
   public TextField message = new TextField("message", true);
   public Submit submit = new Submit("add");
-  
+
   public MessageForm(String name){
     super(name);
     setFieldAutoRegisteration(true);
@@ -127,21 +124,21 @@ import org.seasar.s2click.example.form.MessageForm;
 import org.seasar.s2click.example.service.MessageService;
 
 public class MessagePage extends S2ClickPage {
-    
+
     @Resource
     protected MessageService messageService;
-    
+
     public MessageForm form = new MessageForm("form");
 
     public MessagePage(){
         form.submit.setListener(this, "doAdd");
     }
-    
+
     @Override
     public void onRender() {
         addModel("messageList", messageService.getMessages());
     }
-    
+
     public boolean doAdd(){
         if(form.isValid()){
             Message message = new Message();
@@ -149,13 +146,13 @@ public class MessagePage extends S2ClickPage {
             message.message = form.message.getValue();
             message.date = new Date();
             messageService.insert(message);
-            
+
             setRedirect(MessagePage.class);
             return false;
         }
         return true;
     }
-    
+
 } </pre>
 
 <h2>サービスクラス</h2>
@@ -176,11 +173,11 @@ import org.seasar.extension.jdbc.service.S2AbstractService;
 import org.seasar.s2click.example.entity.Message;
 
 public class MessageService extends S2AbstractService&lt;Message&gt; {
-    
+
     public List&lt;Message&gt; getMessages(){
         return jdbcManager.from(Message.class).orderBy("messageId desc").getResultList();
     }
-    
+
 } </pre>
 
 </div>
