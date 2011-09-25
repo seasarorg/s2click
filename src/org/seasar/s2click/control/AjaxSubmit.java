@@ -31,7 +31,7 @@ import org.seasar.s2click.util.AjaxUtils;
  * @author Naoki Takezoe
  * @since 0.4.0
  */
-public class AjaxSubmit extends Submit {
+public class AjaxSubmit extends Submit implements AjaxControl {
 
 	private static final long serialVersionUID = 1L;
 

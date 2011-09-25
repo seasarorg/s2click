@@ -34,6 +34,8 @@ import org.apache.click.control.HiddenField;
 import org.apache.click.control.Submit;
 import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringUtils;
+import org.seasar.s2click.annotation.AjaxHandler;
+import org.seasar.s2click.annotation.Attributes;
 import org.seasar.s2click.util.S2ClickUtils;
 
 /**
@@ -293,20 +295,35 @@ public abstract class S2ClickForm extends Form {
 
 	@Override
 	public void onInit() {
-		if(requiresJavaScript()){
+		if (requiresJavaScript()) {
 			add(new HiddenField("action", ""));
 		}
 
-		if(isFieldAutoRegistration()){
-	    	for(java.lang.reflect.Field field: getClass().getFields()){
-	       		if(Field.class.isAssignableFrom(field.getType())){
-	       			try {
-	       				add((Field) field.get(this));
-	       			} catch(IllegalAccessException ex){
-	       				ex.printStackTrace();
-	       			}
-	    		}
-	    	}
+		for (java.lang.reflect.Field field : getClass().getFields()) {
+			if (Field.class.isAssignableFrom(field.getType())) {
+				try {
+					Field value = (Field) field.get(this);
+
+					Attributes attrs = field.getAnnotation(Attributes.class);
+					if (attrs != null) {
+						Attributes.AttributesProcessor.process(attrs, value);
+					}
+
+					if (value instanceof AjaxControl) {
+						AjaxHandler handler = field.getAnnotation(AjaxHandler.class);
+						if (handler != null) {
+							AjaxHandler.AjaxHandlerProcessor.process(handler, (AjaxControl) value);
+						}
+					}
+
+					if (isFieldAutoRegistration()) {
+						add(value);
+					}
+
+				} catch (IllegalAccessException ex) {
+					ex.printStackTrace();
+				}
+			}
 		}
 
 		super.onInit();

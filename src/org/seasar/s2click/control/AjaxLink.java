@@ -51,7 +51,7 @@ import org.seasar.s2click.util.AjaxUtils;
  * @author Naoki Takezoe
  * @since 0.4.0
  */
-public class AjaxLink extends ActionLink {
+public class AjaxLink extends ActionLink implements AjaxControl {
 
 	protected Map<String, String> handlers = new HashMap<String, String>();
 

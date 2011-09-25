@@ -9,13 +9,14 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.s2click.example.form;
 
 import org.apache.click.control.TextField;
+import org.seasar.s2click.annotation.Attributes;
 import org.seasar.s2click.control.GreyboxButton;
 import org.seasar.s2click.control.S2ClickForm;
 import org.seasar.s2click.example.page.GreyboxSelectPage;
@@ -29,13 +30,13 @@ public class GreyboxForm extends S2ClickForm {
 
 	private static final long serialVersionUID = 1L;
 
+	@Attributes(readonly=true)
 	public TextField userId = new TextField("userId", "ユーザID");
 
 	public GreyboxButton button = new GreyboxButton("button", "参照...", "ユーザを選択", GreyboxSelectPage.class);
 
 	public GreyboxForm(String name){
 		super(name);
-		userId.setReadonly(true);
 		setFieldAutoRegisteration(true);
 	}
 

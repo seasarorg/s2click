@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -17,19 +17,20 @@ package org.seasar.s2click.example.form;
 
 import org.apache.click.control.Submit;
 import org.apache.click.control.TextField;
+import org.seasar.s2click.annotation.Attributes;
 import org.seasar.s2click.control.S2ClickForm;
 
 public class MessageForm extends S2ClickForm {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public TextField name = new TextField("name", true);
+	@Attributes(size=40)
 	public TextField message = new TextField("message", true);
 	public Submit submit = new Submit("add");
-	
+
 	public MessageForm(String name){
 		super(name);
-		message.setSize(40);
 		addConfirmMessage(submit.getName(), "メッセージを送信します。よろしいですか？");
 		setFieldAutoRegisteration(true);
 		setJavaScriptValidation(true);
