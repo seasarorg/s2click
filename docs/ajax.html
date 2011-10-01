@@ -69,6 +69,35 @@ submit.addAjaxHandler(AjaxUtils.ON_COMPLETE, "displayResult");
 form.add(submit);
 </pre>
 
+<h3>@AjaxHandlerアノテーション</h3>
+<p>
+  Ajaxコントロールをフォームクラスのpublicフィールドとして定義する場合、
+  <code>addAjaxHandler()</code>メソッドでの設定を
+  <a href="javadoc/org/seasar/s2click/annotation/AjaxHandler.html">@AjaxHandler</a>アノテーションで行うことができます。
+</p>
+<pre class="code">
+public class JsonForm extends S2ClickForm {
+
+  private static final long serialVersionUID = 1L;
+
+  public TextField keyword = new TextField("keyword", "書籍名");
+
+  @AjaxHandler(onCreate="startProgress", onComplete="displayResult")
+  public AjaxSubmit search = new AjaxSubmit("submit", "検索");
+
+  @AjaxHandler(onCreate="startProgress", onComplete="displayResult")
+  public AjaxButton searchAll = new AjaxButton("searchAll", "全件検索");
+
+  @Attributes({@Attribute(name="onclick", value="clearResult()")})
+  public Button clear = new Button("clear", "クリア");
+
+  public JsonForm(String name){
+    super(name);
+    setFieldAutoRegisteration(true);
+  }
+}
+</pre>
+
 <h2>ページクラスのメソッドをAjaxで呼び出す</h2>
 <p>
   S2Clickのもう1つのAjax対応機能として、<a href="javadoc/org/seasar/s2click/annotation/Ajax.html">@Ajaxアノテーション</a>を用いて
