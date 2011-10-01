@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<!--
+ Copyright 2006-2011 the Seasar Foundation and the Others.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ either express or implied. See the License for the specific language
+ governing permissions and limitations under the License.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+  <title>S2Click - Apache Click with Seasar2</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="content">
+<h1>フォームクラス</h1>
+
+<h2>フィールドの自動登録</h2>
+<p>
+  <a href="design.html">設計方針</a>での説明の通り、
+  S2Clickでは <a href="javadoc/org/seasar/s2click/control/S2ClickForm.html">org.seasar.s2click.control.S2ClickForm</a>
+  を継承してフォームクラスを作成することを推奨しています。
+</p>
+<p>
+  入力フィールドに対応するコントロールはフォームクラスに <code>add()</code> する必要がありますが、
+  <code>setFieldAutoRegisteration()</code> メソッドに <code>true</code> を設定しておくことで
+  フォームクラスのpublicフィールドとして定義されたコントロールが自動的に自分自身に追加されます。
+</p>
+<pre class="code">
+public class MessageForm extends S2ClickForm {
+
+  public TextField name = new TextField("name", true);
+  public TextField message = new TextField("message", true);
+  public Submit submit = new Submit("add");
+
+  public MessageForm(String name){
+    super(name);
+    setFieldAutoRegisteration(true);
+    setJavaScriptValidation(true);
+  }
+
+}
+</pre>
+
+<h2>フィールドのプロパティの設定</h2>
+<p>
+  フォームに追加するコントロールのプロパティは通常は以下のようにフォームクラスの初期化時に
+  setterメソッドを呼び出して設定を行う必要があります。
+</p>
+<pre class="code">
+public class MessageForm extends S2ClickForm {
+
+  public TextField name = new TextField("name", true);
+  public TextField message = new TextField("message", true);
+  public Submit submit = new Submit("add");
+
+  public MessageForm(String name){
+    super(name);
+
+    name.setSize(10);
+    name.setMaxLength(10);
+
+    message.setSize(40);
+    message.setMaxLength(200);
+
+    setFieldAutoRegisteration(true);
+    setJavaScriptValidation(true);
+  }
+}
+</pre>
+<p>
+  これらの設定を <a href="javadoc/org/seasar/s2click/annotation/Attributes.html">@Attributes</a>
+  アノテーションで行うことができます。
+  以下のコードは前述のコードとまったく同じ設定を行っていることになります。
+</p>
+<pre class="code">
+public class MessageForm extends S2ClickForm {
+
+  @Attributes(size=10, maxLength=10)
+  public TextField name = new TextField("name", true);
+
+  @Attributes(size=40, maxLength=200)
+  public TextField message = new TextField("message", true);
+
+  public Submit submit = new Submit("add");
+
+  public MessageForm(String name){
+    super(name);
+    setFieldAutoRegisteration(true);
+    setJavaScriptValidation(true);
+  }
+}
+</pre>
+<p>
+  これによってコントロールのsetterメソッドを呼び出すコードをスマートにまとめることができます。
+  ただし、 <code>@Attributes</code> アノテーションはフィールドのすべてのプロパティを設定できるというわけではありません。
+  <code>@Attributes</code> アノテーションで設定できないプロパティについては通常通りsetterメソッドを呼び出して設定する必要があります。
+</p>
+
+</div>
+
+</body>
+</html>
