@@ -31,6 +31,7 @@ import org.seasar.framework.util.ClassUtil;
 import org.seasar.framework.util.FileOutputStreamUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.tiger.GenericUtil;
+import org.seasar.s2click.annotation.Experimental;
 
 /**
  * サービスクラスのテストケースの抽象基底クラスです。
@@ -78,6 +79,7 @@ import org.seasar.framework.util.tiger.GenericUtil;
  *
  * @param <T> テスト対象のサービスクラス
  */
+@Experimental
 public abstract class S2ClickServiceTestCase<T> extends S2ClickTestCase {
 
 	/**

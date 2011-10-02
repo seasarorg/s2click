@@ -28,12 +28,14 @@ import org.apache.click.servlet.MockServletConfig;
 import org.apache.click.servlet.MockServletContext;
 import org.apache.commons.io.IOUtils;
 import org.seasar.extension.unit.S2TestCase;
+import org.seasar.s2click.annotation.Experimental;
 
 /**
  * S2Clickのテストケースの抽象基底クラスです。
  *
  * @author Naoki Takezoe
  */
+@Experimental
 public abstract class S2ClickTestCase extends S2TestCase {
 
 	protected MockServletConfig config;

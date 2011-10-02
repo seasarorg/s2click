@@ -35,7 +35,9 @@ import org.apache.click.service.MessagesMapService;
 import org.apache.click.service.ResourceService;
 import org.apache.click.service.TemplateService;
 import org.apache.click.util.Format;
+import org.seasar.s2click.annotation.Experimental;
 
+@Experimental
 @SuppressWarnings("rawtypes")
 public class MockConfigService implements ConfigService {
 

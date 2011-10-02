@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -21,22 +21,25 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.seasar.s2click.annotation.Experimental;
+
 /**
  * {@link S2ClickServiceTestCase}を継承したテストケースのテストメソッドに付与することで、
  * 指定したテーブルの内容とExcelの内容を比較することができます。
  * <p>
  * また、テストケース実行時に期待値を記述したExcelが存在しない場合は自動的に生成されます。
- * 
+ *
  * @author Naoki Takezoe
  */
 @Documented
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
+@Experimental
 public @interface Assert {
-	
+
 	/**
 	 * 比較対象のテーブル。
 	 */
 	Table[] tables();
-	
+
 }

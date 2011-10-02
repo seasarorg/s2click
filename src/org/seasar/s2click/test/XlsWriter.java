@@ -24,17 +24,19 @@ import org.seasar.framework.util.Base64Util;
 import org.seasar.framework.util.FileOutputStreamUtil;
 import org.seasar.framework.util.ResourceUtil;
 import org.seasar.framework.util.StringConversionUtil;
+import org.seasar.s2click.annotation.Experimental;
 
 /**
  * S2TestCaseの<code>XlsWriter</code>を拡張し、書き出すカラムを制御できるようにしたものです。
  * <p>
  * {@link #setIncludeColumns(String, String[])}を指定すると、指定したカラムのみ書き出されます。
  * {@link #setExcludeColumns(String, String[])}を指定すると、指定したカラムが書き出されなくなります。
- * 
+ *
  * @author higa
  * @author azusa
  * @author Naoki Takezoe
  */
+@Experimental
 public class XlsWriter implements DataWriter, DataSetConstants {
 
     /**
@@ -56,14 +58,14 @@ public class XlsWriter implements DataWriter, DataSetConstants {
      * Base64用のスタイルです。
      */
     protected HSSFCellStyle base64Style;
-    
+
     protected Map<String, String[]> includeColumns = new HashMap<String, String[]>();
-    
+
     protected Map<String, String[]> excludeColumns = new HashMap<String, String[]>();
 
     /**
      * {@link XlsWriter}を作成します。
-     * 
+     *
      * @param path
      *            パス
      */
@@ -73,7 +75,7 @@ public class XlsWriter implements DataWriter, DataSetConstants {
 
     /**
      * {@link XlsWriter}を作成します。
-     * 
+     *
      * @param dirName
      *            ディレクトリ名
      * @param fileName
@@ -85,7 +87,7 @@ public class XlsWriter implements DataWriter, DataSetConstants {
 
     /**
      * {@link XlsWriter}を作成します。
-     * 
+     *
      * @param dir
      *            ディレクトリ
      * @param fileName
@@ -97,7 +99,7 @@ public class XlsWriter implements DataWriter, DataSetConstants {
 
     /**
      * {@link XlsWriter}を作成します。
-     * 
+     *
      * @param file
      *            ファイル
      */
@@ -107,7 +109,7 @@ public class XlsWriter implements DataWriter, DataSetConstants {
 
     /**
      * {@link XlsWriter}を作成します。
-     * 
+     *
      * @param out
      *            出力ストリーム
      */
@@ -117,7 +119,7 @@ public class XlsWriter implements DataWriter, DataSetConstants {
 
     /**
      * 出力ストリームを設定します。
-     * 
+     *
      * @param out
      *            出力ストリーム
      */
@@ -130,10 +132,10 @@ public class XlsWriter implements DataWriter, DataSetConstants {
         base64Style = workbook.createCellStyle();
         base64Style.setDataFormat(df.getFormat(BASE64_FORMAT));
     }
-    
+
     /**
 	 * 書き出すカラム名を指定します。
-	 * 
+	 *
 	 * @param tableName テーブル名
 	 * @param includeColumns 書き出すカラム名の配列
 	 */
@@ -148,7 +150,7 @@ public class XlsWriter implements DataWriter, DataSetConstants {
 
     /**
 	 * 書き出さないカラム名を指定します。
-	 * 
+	 *
 	 * @param tableName テーブル名
 	 * @param excludeColumns 書き出さないカラム名の配列
 	 */
@@ -161,10 +163,10 @@ public class XlsWriter implements DataWriter, DataSetConstants {
 
 		this.excludeColumns.put(tableName.toUpperCase(), newArray);
 	}
-	
+
 	private static boolean containsColumn(String[] columnNames, String searchName){
 		searchName = searchName.toUpperCase();
-		
+
 		for(String columnName: columnNames){
 			if(columnName.equals(searchName)){
 				return true;
@@ -172,22 +174,22 @@ public class XlsWriter implements DataWriter, DataSetConstants {
 		}
 		return false;
 	}
-	
+
 	public void write(DataSet dataSet) {
         for (int i = 0; i < dataSet.getTableSize(); ++i) {
             DataTable table = dataSet.getTable(i);
-            
+
             String[] includeColumns = this.includeColumns.get(table.getTableName().toUpperCase());
             String[] excludeColumns = this.excludeColumns.get(table.getTableName().toUpperCase());
-            
+
             HSSFSheet sheet = workbook.createSheet();
             workbook.setSheetName(i, table.getTableName());
             HSSFRow headerRow = sheet.createRow(0);
-            
+
             int count = 0;
-            
+
             for (int j = 0; j < table.getColumnSize(); ++j) {
-            	
+
             	if(includeColumns != null && includeColumns.length > 0){
             		String columnName = table.getColumnName(j);
             		if(!containsColumn(includeColumns, columnName)){
@@ -199,18 +201,18 @@ public class XlsWriter implements DataWriter, DataSetConstants {
             			continue;
             		}
             	}
-            	
+
                 HSSFCell cell = headerRow.createCell((short) count);
                 cell.setCellValue(new HSSFRichTextString(table .getColumnName(j)));
-                
+
                 count++;
             }
-            
+
             for (int j = 0; j < table.getRowSize(); ++j) {
                 HSSFRow row = sheet.createRow(j + 1);
-                
+
                 count = 0;
-                
+
                 for (int k = 0; k < table.getColumnSize(); ++k) {
                 	if(includeColumns != null && includeColumns.length > 0){
                 		String columnName = table.getColumnName(k);
@@ -223,14 +225,14 @@ public class XlsWriter implements DataWriter, DataSetConstants {
                 			continue;
                 		}
                 	}
-                	
+
                     DataRow dataRow = table.getRow(j);
                     Object value = dataRow.getValue(k);
                     if (value != null) {
                         HSSFCell cell = row.createCell((short) count);
                         setValue(cell, value);
                     }
-                    
+
                     count++;
                 }
             }
@@ -246,7 +248,7 @@ public class XlsWriter implements DataWriter, DataSetConstants {
 
     /**
      * セルに値を設定します。
-     * 
+     *
      * @param cell
      *            セル
      * @param value

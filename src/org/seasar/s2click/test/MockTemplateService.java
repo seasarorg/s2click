@@ -24,7 +24,9 @@ import javax.servlet.ServletContext;
 import org.apache.click.Page;
 import org.apache.click.service.TemplateException;
 import org.apache.click.service.TemplateService;
+import org.seasar.s2click.annotation.Experimental;
 
+@Experimental
 @SuppressWarnings("rawtypes")
 public class MockTemplateService implements TemplateService {
 

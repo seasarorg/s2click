@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -21,19 +21,22 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.seasar.s2click.annotation.Experimental;
+
 /**
  * 初期データの自動投入直後に指定したテーブルのデータを期待値比較用のExcelにエクスポートします。
  * <p>
  * データベース検索処理の結果を検証するためのExcelファイルを作成する場合に使用します。
  * すでに期待値のExcelが存在する場合は何も行いません。
- * 
+ *
  * @author Naoki Takezoe
  */
 @Documented
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
+@Experimental
 public @interface GenerateExcel {
-	
+
 	/**
 	 * 生成対象のテーブル。
 	 */

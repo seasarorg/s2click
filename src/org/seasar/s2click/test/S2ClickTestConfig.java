@@ -9,23 +9,26 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
 package org.seasar.s2click.test;
 
+import org.seasar.s2click.annotation.Experimental;
+
 /**
  * テストに関する設定情報を保持するクラスです。
- * 
+ *
  * @author Naoki Takezoe
  */
+@Experimental
 public class S2ClickTestConfig {
-	
+
 	/**
 	 * テストケースのソースフォルダを指定します。
 	 * 省略した場合は<code>"test"</code>を指定したものとみなされます。
 	 */
 	public String sourceDir = "test";
-	
+
 }
