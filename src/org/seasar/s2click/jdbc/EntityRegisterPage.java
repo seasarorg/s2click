@@ -20,6 +20,7 @@ import javax.annotation.Resource;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.s2click.S2ClickPage;
+import org.seasar.s2click.annotation.Experimental;
 import org.seasar.s2click.jdbc.EntityForm.EntityFormMode;
 
 /**
@@ -30,6 +31,7 @@ import org.seasar.s2click.jdbc.EntityForm.EntityFormMode;
  * @author Naoki Takezoe
  * @since 1.0.4
  */
+@Experimental
 public abstract class EntityRegisterPage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;

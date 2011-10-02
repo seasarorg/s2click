@@ -29,6 +29,7 @@ import org.apache.click.extras.control.IntegerField;
 import org.apache.click.util.ClickUtils;
 import org.apache.commons.lang.StringUtils;
 import org.seasar.extension.jdbc.PropertyMeta;
+import org.seasar.s2click.annotation.Experimental;
 import org.seasar.s2click.control.DateFieldYYYYMMDD;
 import org.seasar.s2click.control.LabelField;
 import org.seasar.s2click.control.PublicFieldColumn;
@@ -42,6 +43,7 @@ import org.seasar.s2click.jdbc.EntityForm.EntityFormMode;
  * @author Naoki Takezoe
  * @since 1.0.4
  */
+@Experimental
 public class EntityPagesConfig {
 
 	private Class<?> entityClass;

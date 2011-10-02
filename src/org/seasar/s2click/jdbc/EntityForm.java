@@ -21,6 +21,7 @@ import org.seasar.extension.jdbc.EntityMeta;
 import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.framework.container.SingletonS2Container;
+import org.seasar.s2click.annotation.Experimental;
 import org.seasar.s2click.control.S2ClickForm;
 
 /**
@@ -31,6 +32,7 @@ import org.seasar.s2click.control.S2ClickForm;
  * @author Naoki Takezoe
  * @since 1.0.4
  */
+@Experimental
 public class EntityForm extends S2ClickForm {
 
 	private static final long serialVersionUID = 1L;

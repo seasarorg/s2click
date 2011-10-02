@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
@@ -24,38 +24,38 @@ import org.seasar.s2click.control.DateFieldYYYYMMDD;
 import org.seasar.s2click.control.S2ClickForm;
 
 public class ControlsForm extends S2ClickForm {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public ControlsForm(String name){
 		super(name);
 		setFieldAutoRegisteration(true);
-		
+
 		checkList.add("Click Framework");
 		checkList.add("Wicket");
 		checkList.add("Grails");
-		
+
 		pickList.add(new Option("Java"));
 		pickList.add(new Option("C#"));
 		pickList.add(new Option("Ruby"));
 		pickList.add(new Option("Perl"));
 		pickList.add(new Option("Python"));
-		
+
 		hiddenList.addValue("Eclipse");
 		hiddenList.addValue("NetBeans");
 	}
-	
+
 	public DateFieldYYYYMMDD dateField = new DateFieldYYYYMMDD("date", "日付");
 	public CheckList checkList = new CheckList("checkList", "チェックリスト");
 	public PickList pickList = new PickList("pickList", "ピックリスト");
 	public HiddenList hiddenList = new HiddenList("hiddenList");
 	public Submit submit = new Submit("submit", "送信");
-	
-//	public AutoCompleteTextField completion 
+
+//	public AutoCompleteTextField completion
 //		= new AutoCompleteTextField("completion", "入力補完"){
 //
 //		private static final long serialVersionUID = 1L;
-//		
+//
 //		@SuppressWarnings("unchecked")
 //		@Override public List getAutoCompleteList(String criteria) {
 //			List<String> list = new ArrayList<String>();
@@ -67,5 +67,5 @@ public class ControlsForm extends S2ClickForm {
 //			return list;
 //		}
 //	};
-	
+
 }

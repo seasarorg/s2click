@@ -33,6 +33,7 @@ import org.seasar.extension.jdbc.EntityMetaFactory;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.extension.jdbc.PropertyMeta;
 import org.seasar.s2click.S2ClickPage;
+import org.seasar.s2click.annotation.Experimental;
 
 /**
  * エンティティを一覧表示するページクラスの抽象基底クラスです。
@@ -42,6 +43,7 @@ import org.seasar.s2click.S2ClickPage;
  * @author Naoki Takezoe
  * @since 1.0.4
  */
+@Experimental
 public abstract class EntityListPage extends S2ClickPage {
 
 	private static final long serialVersionUID = 1L;
