@@ -19,7 +19,7 @@ import org.apache.click.control.Button;
 import org.apache.click.control.TextField;
 import org.seasar.s2click.annotation.AjaxHandler;
 import org.seasar.s2click.annotation.Attribute;
-import org.seasar.s2click.annotation.Attributes;
+import org.seasar.s2click.annotation.Properties;
 import org.seasar.s2click.control.AjaxButton;
 import org.seasar.s2click.control.AjaxSubmit;
 import org.seasar.s2click.control.S2ClickForm;
@@ -36,7 +36,7 @@ public class JsonForm extends S2ClickForm {
 	@AjaxHandler(onCreate="startProgress", onComplete="displayResult")
 	public AjaxButton searchAll = new AjaxButton("searchAll", "全件検索");
 
-	@Attributes({@Attribute(name="onclick", value="clearResult()")})
+	@Properties({@Attribute(name="onclick", value="clearResult()")})
 	public Button clear = new Button("clear", "クリア");
 
 	public JsonForm(String name){

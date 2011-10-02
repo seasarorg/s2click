@@ -16,7 +16,7 @@
 package org.seasar.s2click.example.form;
 
 import org.apache.click.control.TextField;
-import org.seasar.s2click.annotation.Attributes;
+import org.seasar.s2click.annotation.Properties;
 import org.seasar.s2click.control.GreyboxButton;
 import org.seasar.s2click.control.S2ClickForm;
 import org.seasar.s2click.example.page.GreyboxSelectPage;
@@ -30,7 +30,7 @@ public class GreyboxForm extends S2ClickForm {
 
 	private static final long serialVersionUID = 1L;
 
-	@Attributes(readonly=true)
+	@Properties(readonly=true)
 	public TextField userId = new TextField("userId", "ユーザID");
 
 	public GreyboxButton button = new GreyboxButton("button", "参照...", "ユーザを選択", GreyboxSelectPage.class);

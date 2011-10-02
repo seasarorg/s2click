@@ -17,7 +17,7 @@ package org.seasar.s2click.example.form;
 
 import org.apache.click.control.Submit;
 import org.apache.click.control.TextField;
-import org.seasar.s2click.annotation.Attributes;
+import org.seasar.s2click.annotation.Properties;
 import org.seasar.s2click.control.S2ClickForm;
 
 public class MessageForm extends S2ClickForm {
@@ -25,7 +25,7 @@ public class MessageForm extends S2ClickForm {
 	private static final long serialVersionUID = 1L;
 
 	public TextField name = new TextField("name", true);
-	@Attributes(size=40)
+	@Properties(size=40)
 	public TextField message = new TextField("message", true);
 	public Submit submit = new Submit("add");
 

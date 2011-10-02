@@ -23,13 +23,13 @@ import java.lang.annotation.RetentionPolicy;
 import org.apache.click.control.Field;
 
 /**
- * {@link Attributes}アノテーションと組み合わせることで
+ * {@link Properties}アノテーションと組み合わせることで
  * フォームクラスのpublicフィールドとして宣言した{@link Field}コントロールの
  * 属性を指定することのできるアノテーションです。
  *
  * @author Naoki Takezoe
  * @since 1.0.5
- * @see Attributes
+ * @see Properties
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited

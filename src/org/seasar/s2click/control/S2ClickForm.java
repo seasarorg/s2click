@@ -35,7 +35,7 @@ import org.apache.click.control.Submit;
 import org.apache.click.util.HtmlStringBuffer;
 import org.apache.commons.lang.StringUtils;
 import org.seasar.s2click.annotation.AjaxHandler;
-import org.seasar.s2click.annotation.Attributes;
+import org.seasar.s2click.annotation.Properties;
 import org.seasar.s2click.util.S2ClickUtils;
 
 /**
@@ -304,9 +304,9 @@ public abstract class S2ClickForm extends Form {
 				try {
 					Field value = (Field) field.get(this);
 
-					Attributes attrs = field.getAnnotation(Attributes.class);
+					Properties attrs = field.getAnnotation(Properties.class);
 					if (attrs != null) {
-						Attributes.AttributesProcessor.process(attrs, value);
+						Properties.PropertiesProcessor.process(attrs, value);
 					}
 
 					if (value instanceof AjaxControl) {

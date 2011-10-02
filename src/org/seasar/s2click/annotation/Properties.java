@@ -34,13 +34,13 @@ import org.apache.commons.lang.StringUtils;
  * @author Naoki Takezoe
  * @since 1.0.5
  * @see Attribute
- * @see AttributesProcessor
+ * @see PropertiesProcessor
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-public @interface Attributes {
+public @interface Properties {
 
 	String id() default "";
 
@@ -69,14 +69,14 @@ public @interface Attributes {
 	Attribute[] value() default {};
 
 	/**
-	 * {@link Attributes}アノテーションの処理を行います。
+	 * {@link Properties}アノテーションの処理を行います。
 	 *
 	 * @author Naoki Takezoe
 	 * @since 1.0.5
 	 */
-	public static class AttributesProcessor {
+	public static class PropertiesProcessor {
 
-		public static void process(Attributes attrs, Field field){
+		public static void process(Properties attrs, Field field){
 			if(StringUtils.isNotEmpty(attrs.id())){
 				field.setId(attrs.id());
 			}
