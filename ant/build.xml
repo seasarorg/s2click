@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="S2Click" default="compile">
 
-	<property name="version" value="1.0.5"/>
+	<property name="version" value="1.0.6"/>
 	<property name="jar.name" value="s2click-${version}.jar"/>
 	<property name="src.dir" value="../src"/>
 	<property name="bin.dir" value="./bin"/>
@@ -226,14 +226,10 @@
 		<delete dir="${release.dir}"/>
 		<delete file="${release.zip.name}"/>
 		<delete>
-			<fileset dir="${blank.dir}/s2click/WebContent/WEB-INF/lib"
-				includes="*.jar" />
-			<fileset dir="${blank-s2jdbc.dir}/s2click/WebContent/WEB-INF/lib"
-				includes="*.jar" />
-			<fileset dir="."
-				includes="TEST-*.*" />
-			<fileset dir="."
-				includes="*.zip" />
+			<fileset dir="${blank.dir}/s2click/WebContent/WEB-INF/lib" includes="*.jar" />
+			<fileset dir="${blank-s2jdbc.dir}/s2click/WebContent/WEB-INF/lib" includes="*.jar" />
+			<fileset dir="." includes="TEST-*.*" />
+			<fileset dir="." includes="*.zip" />
 		</delete>
 	</target>
 </project>
