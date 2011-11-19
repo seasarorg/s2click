@@ -104,7 +104,7 @@
     		<classpath location="lib/cobertura/cobertura.jar" />
 
     		<batchtest fork="false">
-    			<formatter type="plain"/>
+    			<formatter type="xml"/>
 				<fileset dir="${test.src.dir}">
 					<include name="**/*Test.java"/>
 					<exclude name="**/AllTests.java"/>
@@ -231,7 +231,9 @@
 			<fileset dir="${blank-s2jdbc.dir}/s2click/WebContent/WEB-INF/lib"
 				includes="*.jar" />
 			<fileset dir="."
-				includes="TEST-*.txt" />
+				includes="TEST-*.*" />
+			<fileset dir="."
+				includes="*.zip" />
 		</delete>
 	</target>
 </project>

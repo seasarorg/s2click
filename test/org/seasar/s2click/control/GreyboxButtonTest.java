@@ -40,9 +40,9 @@ public class GreyboxButtonTest extends S2ClickTestCase {
 				"<script src=\"/sample/resources/greybox/AJS.js\" type=\"text/javascript\"></script>" +
 				"<script src=\"/sample/resources/greybox/AJS_fx.js\" type=\"text/javascript\"></script>" +
 				"<script src=\"/sample/resources/greybox/gb_scripts.js\" type=\"text/javascript\"></script>" +
-				"<link href=\"/sample/click/greybox/gb_styles.css\" rel=\"stylesheet\" type=\"text/css\"/>" +
+				"<link href=\"/sample/resources/greybox/gb_styles.css\" rel=\"stylesheet\" type=\"text/css\"/>" +
 				"<script type=\"text/javascript\">\n" +
-				"function S2Click_GB_SetResult(data, id)'{ AJS.$(id).value = data; }'\n" +
+				"function S2Click_GB_SetResult(data, id){ AJS.$(id).value = data; }\n" +
 				"</script>",
 				buffer.toString());
 	}
